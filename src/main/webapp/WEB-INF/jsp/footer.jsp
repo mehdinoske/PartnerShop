@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <footer>
-    <a href="."><img class="logo" src="images/utilities/logo_transparent.png"></a>
+    <a href="."><img class="logo" src="images/logo_transparent.png"></a>
     <div class="footer">
         <h4> &#169 2022 PartnerShop by G34. Tutti i diritti riservati.</h4>
     </div>

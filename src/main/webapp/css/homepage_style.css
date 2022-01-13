@@ -9,7 +9,7 @@
 }
 
 body {
-    background-color: #4e3d53;
+    background-color: #353535;
 }
 main {
     min-height: calc(100vh - 80px - 110px);
@@ -19,7 +19,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #351f39;
+    background-color: #101010;
 }
 
 footer{
@@ -27,7 +27,7 @@ footer{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #0f1123;
+    background-color: #000000;
 }
 
 .footer h4{
@@ -45,9 +45,9 @@ li, a, button{
 }
 
 .logo {
-    margin-left: 30%;
+    margin-left: 20%;
     cursor: pointer;
-    height: 100px;
+    height: 30px;
 }
 
 
@@ -73,13 +73,13 @@ li, a, button{
     background-color: white;
     height: 28px;
     width: 200px;
-    border-radius: 35px;
+    border-radius: 10px;
     text-transform: uppercase;
 }
 
 .ul_nav li form select option{
     text-transform: capitalize;
-    border-radius: 35px;
+    border-radius: 0px;
 }
 
 
@@ -94,10 +94,10 @@ li, a, button{
 }
 
 #searchTop{
-    width: 30px;
+    width: 130px;
     height: 32px;
     border: 1px solid #4e3d53;
-    border-radius: 40px;
+    border-radius: 10px;
     font-size: 20px;
     background-color: white;
     background-image: url("magnifying-glass.svg");
@@ -105,11 +105,12 @@ li, a, button{
     background-position: 4px 5px;
     background-repeat: no-repeat;
     padding-left: 30px;
+    margin-right: 485px;
     transition: width 1s;
 }
 
 #searchTop:hover{
-    width: 130px;
+    width: 230px;
 }
 
 .error_display404{

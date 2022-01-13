@@ -5,9 +5,15 @@
     <jsp:param name="pageTitle" value="Home"/>
 </jsp:include>
 <main>
-<h1><%= "Ciao Mondo!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+                <img src="images/categorie/elettronica.jpg" alt="Avatar" style="width:300px;height:300px;">
+            </div>
+            <div class="flip-card-back">
+                <h1>ELETTRONICA</h1>
+            </div>
+        </div>
+    </div>
 </main>
 <%@include file="footer.jsp"%>
