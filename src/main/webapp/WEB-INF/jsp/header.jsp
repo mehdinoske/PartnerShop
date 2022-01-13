@@ -46,9 +46,9 @@
                     <div class="dropdown">
                         <button>ACCOUNT</button>
                         <div class="dropdown-content">
-                            <a href="AdminOrdini">Registra Cliente</a>
-                            <a href="AdminUtenti">Registra Venditore</a>
-                            <a href="Logout">LOGIN</a>
+                            <a href="RegistraUtente">Registra Cliente </a>
+                            <a href="RegistraVenditore">Registra Venditore  </a>
+                            <a href="Login">LOGIN</a>
                         </div>
                     </div>
                 <%--</c:if>--%>
