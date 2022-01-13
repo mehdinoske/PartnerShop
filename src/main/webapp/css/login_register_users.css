@@ -1,0 +1,182 @@
+
+.form_container_login{
+    display: none;
+    justify-content: center;
+}
+
+.inner_form_container_login{
+    height: 270px;
+    width: 300px;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.inner_form_container_login h5{
+    margin-top: 2%;
+}
+
+.inner_form_container_login input[type=text],input[type=password]{
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+    border-bottom: 4px solid blueviolet;
+}
+
+.inner_form_container_login input[type=submit]{
+    font-family: 'Montserrat';
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 9px 11px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 5%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #4e3d53;
+    color: white;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+
+.form_container_registrazione{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    text-shadow: 2px 2px #0f1123;
+}
+
+.inner_form_container_registrazione input[type=text]{
+    border-bottom: 3px solid black;
+}
+
+.inner_form_container_registrazione label{
+    margin-top: 10px;
+    color: white;
+    float: left;
+    text-align: left;
+}
+
+.inner_form_container_registrazione{
+    height: auto;
+    width: 550px;
+    align-items: center;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.inner_form_container_registrazione input[type=text],input[type=password],input[type=email]{
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 10px 0;
+    background: #f1f1f1;
+    border-bottom: 4px solid blueviolet;
+}
+
+.inner_form_container_registrazione input[type=submit]{
+    font-family: 'Montserrat';
+    margin-bottom: 20px;
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 10px 12px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 1%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+input[type=date]{
+    text-shadow: none;
+    align-self: center;
+}
+
+input{
+    border: none;
+}
+
+.inner_form_container_registrazione span{
+    text-shadow: none;
+    color: white;
+}
+
+/*STYLING PER TABELLA IN UTENTI E ORDINI PER ADMIN*/
+
+
+table {
+    font-family: Montserrat sans-serif;
+    border-collapse: collapse;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+table tr:nth-child(odd){
+    background-color: #c4f29d;
+}
+table tr:hover {
+    background-color: #ddd;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}

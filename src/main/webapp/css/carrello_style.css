@@ -1,0 +1,80 @@
+.carrello_container{
+    display: flex;
+    justify-content: center;
+}
+
+.carrello_layout{
+    align-content: center;
+    display: grid;
+    grid-template-columns: 700px;
+    grid-column-gap: 15px;
+    grid-row-gap: 30px;
+    padding: 10px;
+}
+
+.carrello_layout > div{
+    width: 600px;
+    height: 140px;
+    display: inline;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.carrello_layout > div img {
+    border-radius: 10px;
+    border: 2px solid green;
+    display: inline-block;
+    margin-top: 2%;
+    margin-left: 10px;
+    max-height: 110px;
+}
+
+.carrello_layout > div #inner_div{
+    margin-top: 2%;
+    margin-right: 5%;
+    float: right;
+    text-align: right;
+    min-width: 360px;
+}
+
+.carrello_layout > div #inner_div button{
+    font-family: 'Montserrat';
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 9px 11px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 3%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+.prezzoFinale{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.prezzoFinale h1{
+    color: white;
+}
+
+input[type=submit]{
+    font-family: 'Montserrat';
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 9px 11px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 3%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
