@@ -5,14 +5,14 @@
   Time: 17:43
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" --%>
 <!DOCTYPE html>
 <html>
 <head>
     <title>PartnerShop Homepage</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
-    <link rel="stylesheet" href="css/home_style.css" type="text/css"/>
+    <link rel="stylesheet" href="css/homepage_style.css" type="text/css"/>
     <link rel="stylesheet" href="css/login_register_users.css" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="scripts.js"></script>
