@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PartnerShop</title>
+    <title>PartnerShop Homepage</title>
 </head>
 <body>
 <h1><%= "Ciao Mondo!" %>
