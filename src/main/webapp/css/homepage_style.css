@@ -1,0 +1,347 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;1,400&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: Montserrat;
+    outline: none;
+}
+
+body {
+    background-color: #4e3d53;
+}
+main {
+    min-height: calc(100vh - 80px - 110px);
+}
+header {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #351f39;
+}
+
+footer{
+    height: 110px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #0f1123;
+}
+
+.footer h4{
+    display: inline-block;
+    padding: 0px 20px;
+    color: white;
+}
+
+li, a, button{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color :white;
+    cursor: pointer;
+}
+
+.logo {
+    margin-left: 30%;
+    cursor: pointer;
+    height: 100px;
+}
+
+
+.ul_nav li{
+    display: inline-block;
+    padding: 0px 20px;
+}
+.ul_nav li img{
+    vertical-align: middle;
+    height: 20px;
+}
+
+.ul_nav li a img{
+    transition: height 0.5s;
+}
+
+.ul_nav li a img:hover{
+    height: 22px;
+}
+
+.ul_nav li form select{
+    color: black;
+    background-color: white;
+    height: 28px;
+    width: 200px;
+    border-radius: 35px;
+    text-transform: uppercase;
+}
+
+.ul_nav li form select option{
+    text-transform: capitalize;
+    border-radius: 35px;
+}
+
+
+.ul_nav li button{
+    background: transparent;
+    border: none;
+    transition: font-size 0.5s;
+}
+
+.ul_nav li button#btn:hover{
+    font-size: 17px;
+}
+
+#searchTop{
+    width: 30px;
+    height: 32px;
+    border: 1px solid #4e3d53;
+    border-radius: 40px;
+    font-size: 20px;
+    background-color: white;
+    background-image: url("magnifying-glass.svg");
+    background-size: 20px 20px;
+    background-position: 4px 5px;
+    background-repeat: no-repeat;
+    padding-left: 30px;
+    transition: width 1s;
+}
+
+#searchTop:hover{
+    width: 130px;
+}
+
+.error_display404{
+    display: flex;
+    justify-content: center;
+}
+
+.error_display404 img{
+    height: 500px;
+    margin-top: 0;
+}
+
+.error_display{
+    margin-top: 5%;
+    margin-left: 8%;
+    display: inline-block;
+    color: white;
+    text-align: left;
+    font-size: 30px;
+}
+
+.grid_container{
+    display: flex;
+    justify-content: center;
+}
+
+.grid_layout {
+    align-content: center;
+    display: grid;
+    grid-template-columns: 130px 130px 130px 130px;
+    grid-column-gap: 15px;
+    grid-row-gap: 30px;
+    padding: 10px;
+}
+
+.grid_layout div{
+    width: 120px;
+    height: 170px;
+    display: block;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    transition: width 0.5s, height 0.5s;
+}
+
+.grid_layout div:hover{
+    width: 130px;
+    height: 180px;
+}
+
+.grid_layout div img {
+    border-radius: 10px;
+    border: 2px solid green;
+    display: block;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 110px;
+}
+
+
+.grid_layout div input[type=submit]{
+    font-family: 'Montserrat';
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 9px 11px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 5%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+
+.visualizza_gioco {
+    align-content: center;
+    display: grid;
+    grid-template-columns: 300px 450px;
+    grid-column-gap: 15px;
+    grid-row-gap: 30px;
+    padding: 10px;
+}
+
+.image_game img{
+    border-radius: 8px;
+}
+
+.div_descrizione{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 450px;
+    border-radius: 8px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    background-color: white;
+}
+
+.div_descrizione div#titolo{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.div_descrizione div#prezzo{
+    padding: 10px 10px 10px 10px;
+    color: white;
+    background-color: darkviolet;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.div_descrizione div{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    word-break: break-word;
+}
+
+.div_descrizione p{
+    padding:20px 10px 0px 10px;
+    word-break: break-word;
+    text-align: center;
+    vertical-align: middle;
+    color: black;
+}
+
+.div_descrizione p h3{
+    margin-bottom: 30px;
+}
+
+.div_descrizione p h4{
+
+}
+
+.form_container_gioco form{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.form_container_gioco form input[type=submit]{
+    font-family: 'Montserrat';
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 18px 18px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.info_container{
+    display: inline-block;
+    align-items: center;
+}
+
+
+.info_container h4{
+    text-align: center;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    color: black;
+    display: inline-block;
+    width: 150px;
+    height: 20px;
+    background-color: white;
+    border-radius: 3px;
+    transition: width 0.5s,height 0.5s;
+}
+
+.info_container h4:hover{
+    width: 180px;
+    height: 25px;
+}
+
+.info_container h4 span{
+    color: darkslategrey;
+}
+
+.info_container a{
+    display: inline;
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+select{
+    background-color: green;
+    color: white;
+    width: 150px;
+    height: 40px;
+    font-size: 18px;
+    margin-bottom: 8px;
+    border: none;
+}
+
+
+@media only screen and (max-width: 900px) and (min-device-width: 900px){
+    nav .ul_nav {
+        float: none;
+    }
+
+    .grid_layout {
+        grid-template-columns: 130px 130px 130px;
+    }
+}
+
+@media only screen and (max-width: 700px) and (min-device-width: 900px){
+    nav .ul_nav{
+        display: block;
+    }
+
+    .grid_layout {
+        grid-template-columns: 130px 130px;
+    }
+}
+
+@media only screen and (max-width: 600px) and (min-device-width: 900px){
+    nav .ul_nav{
+        float: none;
+    }
+
+    .grid_container{
+        display: block;
+    }
+
+    .grid_layout {
+        grid-template-columns: 100%;
+    }
+
+    .grid_layout div{
+        width: 500px;
+    }
+}
+

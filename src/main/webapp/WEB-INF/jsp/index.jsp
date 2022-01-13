@@ -4,11 +4,10 @@
 <jsp:include page="header.jsp">
     <jsp:param name="pageTitle" value="Home"/>
 </jsp:include>
-
+<main>
 <h1><%= "Ciao Mondo!" %>
 </h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
-</body>
-</html>
+</main>
 <%@include file="footer.jsp"%>
