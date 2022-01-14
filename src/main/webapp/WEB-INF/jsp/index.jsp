@@ -8,10 +8,11 @@
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front">
-                <img src="images/categorie/elettronica.jpg" alt="Avatar" style="width:300px;height:300px;">
+                <img src="images/categorie/elettronica.jpg" alt="Avatar" style="width:300px;height:200px;">
             </div>
             <div class="flip-card-back">
                 <h1>ELETTRONICA</h1>
+                <p>Scopri il meglio della tecnologia!</p>
             </div>
         </div>
     </div>
