@@ -1,4 +1,4 @@
-package com.example.partnershop;
+package com.example.partnershop.autenticazione;
 
 
 
@@ -8,14 +8,13 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-@WebServlet(name = "helloServlet", urlPatterns = "", loadOnStartup = 1)
-public class HelloServlet extends HttpServlet {
-    private String message;
+@WebServlet(name = "HomePageServlet", urlPatterns = "", loadOnStartup = 1)
+public class HomePageServlet extends HttpServlet {
+
 
     public void init() {
-        message = "Hello World!";
+
     }
 
 
