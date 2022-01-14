@@ -48,7 +48,7 @@
                         <div class="dropdown-content">
                             <a href="RegistraUtente">Registra Cliente </a>
                             <a href="RegistraVenditore">Registra Venditore  </a>
-                            <a href="Login">LOGIN</a>
+                            <a onclick="toggleForm()" href="">LOGIN</a>
                         </div>
                     </div>
                 <%--</c:if>--%>
