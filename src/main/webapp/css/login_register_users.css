@@ -5,30 +5,34 @@
 }
 
 .inner_form_container_login{
-    height: 270px;
-    width: 300px;
+    height: 250px;
+    width: 350px;
     align-items: center;
     text-align: center;
-    background-color: white;
+    background-color: #343a40;
     border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .inner_form_container_login h5{
     margin-top: 2%;
 }
 
-.inner_form_container_login input[type=text],input[type=password]{
-    width: 100%;
+.inner_form_container_login input[type=password],input[type=text]{
+    width: 90%;
+    justify-content: center;
     padding: 15px;
     margin: 5px 0 22px 0;
+    margin-top: 21px;
     border: none;
     background: #f1f1f1;
-    border-bottom: 4px solid blueviolet;
+    border-bottom: 4px solid coral;
 }
+
 
 .inner_form_container_login input[type=submit]{
     font-family: 'Montserrat';
-    background-color: green;
+    background-color: coral;
     border: none;
     color: white;
     padding: 9px 11px;
@@ -39,6 +43,7 @@
     margin-right: auto;
     margin-left: auto;
     display: block;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .dropbtn {
@@ -114,13 +119,13 @@
     padding: 15px;
     margin: 5px 0 10px 0;
     background: #f1f1f1;
-    border-bottom: 4px solid blueviolet;
+    border-bottom: 4px solid coral;
 }
 
 .inner_form_container_registrazione input[type=submit]{
     font-family: 'Montserrat';
     margin-bottom: 20px;
-    background-color: green;
+    background-color: coral;
     border: none;
     color: white;
     padding: 10px 12px;
@@ -131,6 +136,7 @@
     margin-right: auto;
     margin-left: auto;
     display: block;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 input[type=date]{
