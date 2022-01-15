@@ -1,25 +1,31 @@
 package model.dao;
 
+import model.entity.UtenteRegistrato;
+import utils.ConPool;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class UtenteDAO{
         public UtenteDAO() {
 
         }
- /*
-        public ArrayList<Utente> doRetrieveAll() {
-            ArrayList<Utente> list = new ArrayList<>();
+        public ArrayList<UtenteRegistrato> doRetrieveAll() {
+            ArrayList<UtenteRegistrato> list = new ArrayList<>();
             try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement("SELECT id,nome, cognome, ddn, username,email, passworduser,admin  FROM Utente");
+                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn, username,email, passwordhash  FROM UtenteRegistrato");
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    Utente ut = new Utente();
-                    ut.setId(rs.getInt(1));
-                    ut.setNome(rs.getString(2));
-                    ut.setCognome(rs.getString(3));
-                    ut.setDdn(rs.getDate(4));
-                    ut.setUsername(rs.getString(5));
-                    ut.setEmail(rs.getString(6));
-                    ut.setPassword(rs.getString(7));
-                    ut.setAdmin(rs.getBoolean(8));
+                    UtenteRegistrato ut = new UtenteRegistrato();
+                    ut.setNome(rs.getString(1));
+                    ut.setCognome(rs.getString(2));
+                    ut.setDataDiNascita(rs.getString(3));
+                    ut.setUsername(rs.getString(4));
+                    ut.setEmail(rs.getString(5));
+                    ut.setPassword(rs.getString(6));
                     list.add(ut);
                 }
             } catch (SQLException e) {
@@ -27,7 +33,7 @@ public class UtenteDAO{
             }
             return list;
         }
-
+    /*
         public Utente doRetrieveByUsernamePass(String user, String pass) {
             Utente ut = new Utente();
             try (Connection con = ConPool.getConnection()) {

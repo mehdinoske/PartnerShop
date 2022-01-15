@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Login")
 public class LoginController {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = request.getParameter("usernameLogin");
+        String password = request.getParameter("passwordLogin");
         UtenteRegistrato ut = null;
         if (username != null && password != null) {
             //ut = utDB.doRetrieveByUsernamePass(username, password);

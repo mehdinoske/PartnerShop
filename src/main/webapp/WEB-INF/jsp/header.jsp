@@ -48,7 +48,7 @@
                         <div class="dropdown-content">
                             <a href="RegistraUtente">Registra Cliente </a>
                             <a href="RegistraVenditore">Registra Venditore  </a>
-                            <a onclick="toggleForm()" href="">LOGIN</a>
+                            <a onclick="toggleForm()" >LOGIN</a>
                         </div>
                     </div>
                 <%--</c:if>--%>
@@ -89,9 +89,5 @@
              <input type="password" name="passwordLogin" placeholder="Enter password" required>
              <input type="submit" value="Login">
         </form>
-            <h5>Oppure</h5>
-<form action="RegistratiForm" method="get">
-<input type="submit" value="Registrati">
-</form>
 </div>
 </div>

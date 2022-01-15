@@ -7,6 +7,4 @@ public class Cliente extends UtenteRegistrato{
         super(nome, cognome, dataDiNascita, username, password, email, indirizzo);
         this.cartaDiCredito = cartaDiCredito;
     }
-
-
 }
