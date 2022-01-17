@@ -1,4 +1,4 @@
-package com.example.partnershop.autenticazione;
+package PartnerShop.autenticazione;
 
 
 

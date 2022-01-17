@@ -1,6 +1,6 @@
-package com.example.partnershop.autenticazione;
+package PartnerShop.autenticazione;
 
-import model.entity.UtenteRegistrato;
+import PartnerShop.model.entity.UtenteRegistrato;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;

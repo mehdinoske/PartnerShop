@@ -1,4 +1,4 @@
-package model.entity;
+package PartnerShop.model.entity;
 
 import java.util.ArrayList;
 

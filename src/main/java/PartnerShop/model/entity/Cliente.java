@@ -1,4 +1,4 @@
-package model.entity;
+package PartnerShop.model.entity;
 
 public class Cliente extends UtenteRegistrato{
    private int cartaDiCredito;

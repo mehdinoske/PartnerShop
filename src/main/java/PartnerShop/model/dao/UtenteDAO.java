@@ -1,7 +1,7 @@
-package model.dao;
+package PartnerShop.model.dao;
 
-import model.entity.UtenteRegistrato;
-import utils.ConPool;
+import PartnerShop.model.entity.UtenteRegistrato;
+import PartnerShop.utils.ConPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

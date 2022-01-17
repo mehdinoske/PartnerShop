@@ -1,6 +1,4 @@
-package model.entity;
-
-import java.util.Date;
+package PartnerShop.model.entity;
 
 public class UtenteRegistrato {
     private String nome;
