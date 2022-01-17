@@ -3,11 +3,12 @@ package PartnerShop.autenticazione.controller;
 import PartnerShop.model.entity.UtenteRegistrato;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/Login")
-public class LoginController {
+public class LoginController  {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String username = request.getParameter("usernameLogin");
         String password = request.getParameter("passwordLogin");
