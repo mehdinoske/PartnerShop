@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/Login")
-public class LoginController {
+public class AutenticazioneController {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String username = request.getParameter("usernameLogin");
         String password = request.getParameter("passwordLogin");
