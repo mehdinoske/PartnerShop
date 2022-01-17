@@ -1,4 +1,4 @@
-package PartnerShop.autenticazione;
+package PartnerShop.autenticazione.controller;
 
 import PartnerShop.model.entity.UtenteRegistrato;
 
