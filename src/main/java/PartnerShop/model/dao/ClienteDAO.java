@@ -3,11 +3,9 @@ package PartnerShop.model.dao;
 import PartnerShop.model.entity.Cliente;
 import PartnerShop.utils.ConPool;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class ClienteDAO {
+public class ClienteDAO extends UtenteRegistratoDAO{
 /*
     public Cliente findByEmail(String email) {
             Cliente ct = new Cliente();
@@ -34,4 +32,5 @@ public class ClienteDAO {
         }
     }
 */
+
 }

@@ -38,7 +38,7 @@ function ricerca(str) {
 
 var borderOk = '4px solid green';
 var borderNo = '4px solid red';
-var usernameOk = false;
+var usernameOk = true;
 var passwordOk = false;
 var emailOk = false;
 var nomeOk = false;
