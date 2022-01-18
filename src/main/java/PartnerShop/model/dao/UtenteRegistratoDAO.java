@@ -1,12 +1,10 @@
 package PartnerShop.model.dao;
 
+import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.utils.ConPool;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class UtenteRegistratoDAO {
@@ -34,6 +32,29 @@ public class UtenteRegistratoDAO {
             }
             return list;
         }
+
+    public void doSave(UtenteRegistrato ut) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO utenteregistrato (nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo) VALUES(?,?,?,?,?,?,?,0)",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, ut.getNome());
+            ps.setString(2, ut.getCognome());
+            ps.setString(3, ut.getDataDiNascita());
+            ps.setString(4, ut.getEmail());
+            ps.setString(5, ut.getDataDiNascita());
+            ps.setString(6, ut.getUsername());
+            ps.setString(7, ut.getPassword());
+            ClienteDAO ct = new ClienteDAO();
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     /*
         public Utente doRetrieveByUsernamePass(String user, String pass) {
             Utente ut = new Utente();

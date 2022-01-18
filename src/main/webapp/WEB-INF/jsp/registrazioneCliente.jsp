@@ -14,7 +14,7 @@
 <main>
     <div class="form_container_registrazione">
         <div class="inner_form_container_registrazione">
-            <form action="RegistratiServlet" method="post">
+            <form action="Registrazione" method="post">
                 <label for="nome">Nome (Solo lettere e spazi)</label>
                 <input type="text" name="nome" id="nome" value="" oninput="validaNome()"/>
                 <label for="cognome">Cognome (Solo lettere e spazi)</label>
@@ -23,7 +23,7 @@
                 <label for="email">Email</label>
                 <input type="text" name="email" id="email" value="" oninput="validaEmail()"/>
                 <label for="username">Username (almeno 6 caratteri,solo lettere e numeri)</label>
-                <input type="text" name="username" value="" oninput="validaUsername()" id="username"/>
+                <input type="text" name="username" value="" id="username"/>
                 <label for="cell">Cellulare</label>
                 <input type="text" name="cellulare" id="cell" value="" oninput="validaCellulare()"/>
                 <label for="indir">Indirizzo</label>
