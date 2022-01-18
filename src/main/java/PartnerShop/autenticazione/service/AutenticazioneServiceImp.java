@@ -6,18 +6,23 @@ import PartnerShop.model.entity.UtenteRegistrato;
 
 public class AutenticazioneServiceImp implements AutenticazioneService{
 
-    /*@Override
+    @Override
     public UtenteRegistrato login(String email, String password) {
-        UtenteRegistrato u = new UtenteRegistrato() ;
-        if ((u = ClienteDAO.findByEmailPassword(email, password)) != null) {
-            return u;
-        } else  ((u =
-                bibliotecaDAO.findByEmailAndPassword(email, password)) != null) {
-            return u;
-        }
-
+        return null;
     }
-*/
+
+    /*@Override
+        public UtenteRegistrato login(String email, String password) {
+            UtenteRegistrato u = new UtenteRegistrato() ;
+            if ((u = ClienteDAO.findByEmailPassword(email, password)) != null) {
+                return u;
+            } else  ((u =
+                    bibliotecaDAO.findByEmailAndPassword(email, password)) != null) {
+                return u;
+            }
+
+        }
+    */
     @Override
     public Cliente findClienteByUsernamePass(String username, String password) {
         //Cliente cliente = ClienteDAO.
