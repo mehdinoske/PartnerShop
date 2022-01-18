@@ -46,8 +46,8 @@
                     <div class="dropdown">
                         <button>ACCOUNT</button>
                         <div class="dropdown-content">
-                            <a href="RegistraUtente">Registra Cliente </a>
-                            <a href="RegistraVenditore">Registra Venditore  </a>
+                            <a href="Registrazione?id=cliente" >Registra Cliente </a>
+                            <a href="Registrazione?id=venditore" >Registra Venditore  </a>
                             <a onclick="toggleForm()">LOGIN</a>
                         </div>
                     </div>

@@ -6,4 +6,5 @@ import PartnerShop.model.entity.Venditore;
 public interface RegistrazioneService {
     public Cliente RegistrazioneCliente();
     public Venditore RegistrazioneVenditore();
+
 }
