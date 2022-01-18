@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PartnerShop Homepage</title>
+    <title>PartnerShop</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
     <link rel="stylesheet" href="css/homepage_style.css" type="text/css"/>
     <link rel="stylesheet" href="css/login_register_users.css" type="text/css"/>
