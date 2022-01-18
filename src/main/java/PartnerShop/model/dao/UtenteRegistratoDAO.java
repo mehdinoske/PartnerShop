@@ -9,10 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UtenteDAO{
-        public UtenteDAO() {
+public class UtenteRegistratoDAO {
+        public UtenteRegistratoDAO() {
 
         }
+
         public ArrayList<UtenteRegistrato> doRetrieveAll() {
             ArrayList<UtenteRegistrato> list = new ArrayList<>();
             try (Connection con = ConPool.getConnection()) {
