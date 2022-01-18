@@ -1,4 +1,7 @@
 package PartnerShop.registrazione.controller;
 
-public class RegistrazioneController {
+import javax.servlet.http.HttpServlet;
+
+public class RegistrazioneController extends HttpServlet {
+
 }
