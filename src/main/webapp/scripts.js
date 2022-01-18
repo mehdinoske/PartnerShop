@@ -45,6 +45,8 @@ var nomeOk = false;
 var cognomeOk = false;
 var cellulareOk = false;
 var indirizzoOk = false;
+var nomenegozioOk = false;
+var pivaOk = false;
 
 function validaUsername() {
     var input = document.getElementById("username");
@@ -61,6 +63,7 @@ function validaUsername() {
                 input.style.borderBottom = borderNo;
             }
             cambiaStatoSubmit();
+            cambiaStatoSubmit2();
         }
         xmlHttpReq.open("GET", "usernameServlet?username=" + encodeURIComponent(input.value), true);
         xmlHttpReq.send();
@@ -69,6 +72,7 @@ function validaUsername() {
         input.style.borderBottom = borderNo;
     }
     cambiaStatoSubmit();
+    cambiaStatoSubmit2();
 }
 
 function validaPassword() {
@@ -90,6 +94,7 @@ function validaPassword() {
         input.style.borderBottom = borderNo;
     }
     cambiaStatoSubmit();
+    cambiaStatoSubmit2();
 }
 
 function validaNome() {
@@ -102,6 +107,7 @@ function validaNome() {
         nomeOk = false;
     }
     cambiaStatoSubmit();
+    cambiaStatoSubmit2();
 }
 
 function validaCognome() {
@@ -114,6 +120,7 @@ function validaCognome() {
         cognomeOk = false;
     }
     cambiaStatoSubmit();
+    cambiaStatoSubmit2();
 }
 
 
@@ -127,6 +134,7 @@ function validaEmail() {
         emailOk = false;
     }
     cambiaStatoSubmit();
+    cambiaStatoSubmit2();
 }
 
 function validaCellulare() {
@@ -139,6 +147,7 @@ function validaCellulare() {
         cellulareOk = false;
     }
     cambiaStatoSubmit();
+    cambiaStatoSubmit2();
 }
 
 function validaIndirizzo() {
@@ -151,14 +160,52 @@ function validaIndirizzo() {
         indirizzoOk = false;
     }
     cambiaStatoSubmit();
+    cambiaStatoSubmit2();
+}
+
+
+function validaNomeDelNegozio() {
+    var input = document.getElementById("nomedelnegozio");
+    if (input.value.trim().length > 0 && input.value.match(/^[ a-zA-Z\u00C0-\u00ff]+$/)) {
+        input.style.borderBottom = borderOk;
+        nomenegozioOk = true;
+    } else {
+        input.style.borderBottom = borderNo;
+       nomenegozioOk = false;
+    }
+    cambiaStatoSubmit();
+    cambiaStatoSubmit2();
+}
+
+function validaPIVA() {
+    var input = document.getElementById("p.iva");
+    if (input.value.trim().length > 0 && input.value.match(/^[ a-zA-Z\u00C0-\u00ff]+$/)) {
+        input.style.borderBottom = borderOk;
+        pivaOk = true;
+    } else {
+        input.style.borderBottom = borderNo;
+        pivaOk = false;
+    }
+    cambiaStatoSubmit();
+    cambiaStatoSubmit2();
 }
 
 function cambiaStatoSubmit() {
-    if (usernameOk && passwordOk && emailOk && nomeOk && cognomeOk && cellulareOk && indirizzoOk) {
+    if (!usernameOk && passwordOk && emailOk && nomeOk && cognomeOk && cellulareOk && indirizzoOk) {
         document.getElementById('registrami').disabled = false;
         document.getElementById('notificaMes').innerHTML = '';
     } else {
         document.getElementById('registrami').disabled = true;
         document.getElementById('notificaMes').innerHTML = ' Verifica che tutti i campi siano in verde';
+    }
+}
+
+function cambiaStatoSubmit2() {
+    if (!usernameOk && passwordOk && emailOk && nomeOk && cognomeOk && cellulareOk && indirizzoOk && nomenegozioOk && pivaOk) {
+        document.getElementById('registrami2').disabled = false;
+        document.getElementById('notificaMes2').innerHTML = '';
+    } else {
+        document.getElementById('registrami2').disabled = true;
+        document.getElementById('notificaMes2').innerHTML = ' Verifica che tutti i campi siano in verde';
     }
 }
