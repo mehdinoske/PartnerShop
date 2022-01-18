@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: galax
@@ -42,7 +43,7 @@
 
 
             <li>
-                <%--<c:if test="${utente == null}">--%>
+                <c:if test="${utente == null}">
                     <div class="dropdown">
                         <button>ACCOUNT</button>
                         <div class="dropdown-content">
@@ -51,8 +52,8 @@
                             <a onclick="toggleForm()">LOGIN</a>
                         </div>
                     </div>
-                <%--</c:if>--%>
-<%--<c:if test="${utente != null && utente.admin}">--%>
+                </c:if>
+<c:if test="${utente != null}">
    <div class="dropdown">
        <button>${Utente.nome}</button>
        <div class="dropdown-content">
