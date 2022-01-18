@@ -43,6 +43,8 @@ var passwordOk = false;
 var emailOk = false;
 var nomeOk = false;
 var cognomeOk = false;
+var cellulareOk = false;
+var indirizzoOk = false;
 
 function validaUsername() {
     var input = document.getElementById("username");
@@ -127,8 +129,32 @@ function validaEmail() {
     cambiaStatoSubmit();
 }
 
+function validaCellulare() {
+    var input = document.getElementById("cell");
+    if (input.value.trim().length > 0 && input.value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/)) {
+        input.style.borderBottom = borderOk;
+        cellulareOk = true;
+    } else {
+        input.style.borderBottom = borderNo;
+        cellulareOk = false;
+    }
+    cambiaStatoSubmit();
+}
+
+function validaIndirizzo() {
+    var input = document.getElementById("indir");
+    if (input.value.trim().length > 0 && input.value.match(/^[ a-zA-Z\u00C0-\u00ff]+$/)) {
+        input.style.borderBottom = borderOk;
+        indirizzoOk = true;
+    } else {
+        input.style.borderBottom = borderNo;
+        indirizzoOk = false;
+    }
+    cambiaStatoSubmit();
+}
+
 function cambiaStatoSubmit() {
-    if (usernameOk && passwordOk && emailOk && nomeOk && cognomeOk) {
+    if (usernameOk && passwordOk && emailOk && nomeOk && cognomeOk && cellulareOk && indirizzoOk) {
         document.getElementById('registrami').disabled = false;
         document.getElementById('notificaMes').innerHTML = '';
     } else {

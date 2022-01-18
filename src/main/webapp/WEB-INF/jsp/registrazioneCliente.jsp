@@ -24,11 +24,16 @@
                 <input type="text" name="email" id="email" value="" oninput="validaEmail()"/>
                 <label for="username">Username (almeno 6 caratteri,solo lettere e numeri)</label>
                 <input type="text" name="username" value="" oninput="validaUsername()" id="username"/>
+                <label for="cell">Cellulare</label>
+                <input type="text" name="cellulare" id="cell" value="" oninput="validaCellulare()"/>
+                <label for="indir">Indirizzo</label>
+                <input type="text" name="indirizzo" id="indir" value="" oninput="validaIndirizzo()"/>
                 <label for="pass">Password (almeno 8 caratteri tra cui: una lettera minuscola, una lettera maiuscola, un numero)</label>
                 <input type="password" name="password" id="pass" value="" oninput="validaPassword()"/>
                 <label for="passConf">Conferma Password</label>
                 <input type="password" name="passwordConferma" id="passConf" value="" oninput="validaPassword()"/>
                 <input type="submit" value="Registrami" id="registrami" disabled><span id="notificaMes"></span>
+
             </form>
         </div>
     </div>
