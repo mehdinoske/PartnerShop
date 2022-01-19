@@ -8,15 +8,15 @@ create table Utente_Registrato(
                                   cognome varchar(50) not null,
                                   ddn date not null,
                                   indirizzo varchar(500) not null,
-                                  cellulare long not null,
+                                  cellulare varchar(15) not null,
                                   username varchar(50) unique not null,
                                   passwordhash varchar(50) not null,
                                   tipo boolean not null
 );
 
 LOCK TABLES Utente_Registrato WRITE;
-INSERT INTO Utente_Registrato VALUES ('sw@d.d', 'peppe', 'dicazzo', '1212-12-12', 'Napoli, contrada minghia n° 1', 3333333333, 'giuse', SHA1('password1'), false),
-                                     ('ven@d.d', 'peppfe', 'dicfazzo', '1212-12-12', 'Napoli, contrada minghia n° 1', 2222222222, 'gisuse', SHA1('password1'), true);
+INSERT INTO Utente_Registrato VALUES ('sw@d.d', 'peppe', 'dicazzo', '1212-12-12', 'Napoli, contrada minghia n° 1', '3333333333', 'giuse', SHA1('password1'), false),
+                                     ('ven@d.d', 'peppfe', 'dicfazzo', '1212-12-12', 'Napoli, contrada minghia n° 1', '2222222222', 'gisuse', SHA1('password1'), true);
 UNLOCK TABLES;
 
 create table Cliente(
@@ -61,6 +61,10 @@ create table Prodotto(
                          foreign key(email_Venditore) references Venditore(email) on delete cascade on update cascade
 );
 
+LOCK TABLES Prodotto WRITE;
+INSERT INTO Prodotto VALUES (1, 'ven@d.d', 'Penna', 'dddddddddd', 'tipografia', 1, 300);
+UNLOCK TABLES;
+
 create table Ordine(
                        id integer not null auto_increment primary key,
                        email_Cliente varchar(50) unique not null,
@@ -69,6 +73,10 @@ create table Ordine(
                        prezzo_Tot float not null,
                        foreign key(email_Cliente) references Cliente(email) on delete cascade on update cascade
 );
+
+LOCK TABLES Ordine WRITE;
+INSERT INTO Ordine VALUES (1, 'sw@d.d', '1212-12-12', 'dddddddddd', 300);
+UNLOCK TABLES;
 
 create table Segnalazione(
                              id integer not null auto_increment primary key,
