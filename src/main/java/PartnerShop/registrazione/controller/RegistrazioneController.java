@@ -2,6 +2,7 @@ package PartnerShop.registrazione.controller;
 
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.registrazione.service.RegistrazioneService;
+import PartnerShop.registrazione.service.RegistrazioneServiceImp;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,11 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.channels.Channels;
 
 @WebServlet("/Registrazione")
-public class RegistrazioneController extends HttpServlet {
+public final class RegistrazioneController extends HttpServlet {
 
-    private final RegistrazioneService registrazioneService = null;
+    private  RegistrazioneService registrazioneService = new RegistrazioneServiceImp();
 
 
 
@@ -50,6 +52,7 @@ public class RegistrazioneController extends HttpServlet {
         ut.setPassword(password);
 
         registrazioneService.RegistrazioneCliente(ut);
+
         RequestDispatcher disp = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
         disp.forward(request,response);
     }
