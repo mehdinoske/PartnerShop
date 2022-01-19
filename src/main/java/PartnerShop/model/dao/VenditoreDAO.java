@@ -10,7 +10,7 @@ public class VenditoreDAO extends UtenteRegistratoDAO{
     public void doSave(String email,String nomeNegozio,String pIva) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO venditore (email,nomeNegozio,partitaIva) VALUES(?,?,?)",
+                    "INSERT INTO venditore (email,nome_negozio,partita_Iva) VALUES(?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, email);
             ps.setString(2, nomeNegozio);

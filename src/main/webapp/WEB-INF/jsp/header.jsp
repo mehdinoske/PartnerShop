@@ -53,26 +53,29 @@
                         </div>
                     </div>
                 </c:if>
-<%--<c:if test="${utente != null}">--%>
-   <div class="dropdown">
-       <button>${Utente.nome}</button>
-       <div class="dropdown-content">
-           <a href="AdminOrdini">Registra Cliente</a>
-           <a href="AdminUtenti">Registra Venditore</a>
-           <a href="Logout">LOGIN</a>
-       </div>
-   </div>
-                    <%--</c:if>--%>
-                    <%--<c:if test="${utente != null && utente.admin == false}">--%>
+
+<c:if test="${utente.tipo== 0}">
    <div class="dropdown">
        <button>${utente.nome}</button>
        <div class="dropdown-content">
-           <a href="UtenteOrdini">Ordini</a>
-           <a href="Anagrafica">Anagrafica</a>
-           <a href="Logout" methods="post">LOGOUT</a>
+           <a href="ListaDesideri">Visualizza lista desideri</a>
+           <a href="VisualizzaDatiUtente">Visualizza Dati utente</a>
+           <a href="VisualizzaOrdini">Visualizza Ordini</a>
+           <a href="Autenticazione" method="get">Logout</a>
+           <a href="Segnalazione">Invia Segnalazione</a>
        </div>
    </div>
-                    <%--</c:if>--%>
+</c:if>
+                <c:if test="${utente != null && utente.tipo == 1}">--%>
+                <div class="dropdown">
+                     <button>${utente.nome}</button>
+                      <div class="dropdown-content">
+                        <a href="UtenteOrdini">Ordini</a>
+                        <a href="Anagrafica">Anagrafica</a>
+                      <a href="Autenticazione" methods="get">LOGOUT</a>
+                </div>
+                </div>
+                    </c:if>
 </li>
 
 
@@ -85,7 +88,7 @@
 
 <div class="form_container_login" id="form_login">
             <div class="inner_form_container_login">
-         <form action="Login" method="post">
+         <form action="Autenticazione" method="post">
              <input type="text" name="usernameLogin" placeholder="Enter username" required>
              <input class="inner_form_container_login_submit" type="password" name="passwordLogin" placeholder="Enter password" required>
              <input type="submit" value="Login">

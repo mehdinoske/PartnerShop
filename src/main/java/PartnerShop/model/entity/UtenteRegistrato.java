@@ -8,8 +8,11 @@ public class UtenteRegistrato {
     private String password;
     private String email;
     private String indirizzo;
+    private String cellulare;
+    private int tipo;
 
-    public UtenteRegistrato(String nome, String cognome, String dataDiNascita, String username, String password, String email, String indirizzo) {
+
+    public UtenteRegistrato(String nome, String cognome, String dataDiNascita, String username, String password, String email, String indirizzo,String cellulare,int tipo) {
         this.nome = nome;
         this.cognome = cognome;
         DataDiNascita = dataDiNascita;
@@ -17,6 +20,8 @@ public class UtenteRegistrato {
         this.password = password;
         this.email = email;
         this.indirizzo = indirizzo;
+        this.cellulare = cellulare;
+        this.tipo = tipo;
     }
 
     public UtenteRegistrato(){
@@ -76,5 +81,22 @@ public class UtenteRegistrato {
 
     public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
+    }
+
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getCellulare() {
+        return cellulare;
+    }
+
+    public void setCellulare(String cellulare) {
+        this.cellulare = cellulare;
     }
 }

@@ -8,37 +8,23 @@ create table Utente_Registrato(
                                   cognome varchar(50) not null,
                                   ddn date not null,
                                   indirizzo varchar(500) not null,
-                                  cellulare long not null,
                                   username varchar(50) unique not null,
                                   passwordhash varchar(50) not null,
                                   tipo boolean not null
 );
 
-LOCK TABLES Utente_Registrato WRITE;
-INSERT INTO Utente_Registrato VALUES ('sw@d.d', 'peppe', 'dicazzo', '1212-12-12', 'Napoli, contrada minghia n° 1', 3333333333, 'giuse', SHA1('password1'), false),
-                                     ('ven@d.d', 'peppfe', 'dicfazzo', '1212-12-12', 'Napoli, contrada minghia n° 1', 2222222222, 'gisuse', SHA1('password1'), true);
-UNLOCK TABLES;
-
 create table Cliente(
-                        email varchar(50) not null primary key,
+                        id varchar(50) not null primary key,
                         creditcard varchar(50),
-                        foreign key(email) references Utente_Registrato(email) on delete cascade on update cascade
+                        foreign key(id) references Utente_Registrato(email) on delete cascade on update cascade
 );
-
-LOCK TABLES Cliente WRITE;
-INSERT INTO Cliente VALUES ('sw@d.d', null);
-UNLOCK TABLES;
 
 create table Venditore(
-                          email varchar(50) not null primary key,
+                          id varchar(50) not null primary key,
                           nome_Negozio varchar(50) not null,
                           partita_IVA varchar(50) not null,
-                          foreign key(email) references Utente_Registrato(email) on delete cascade on update cascade
+                          foreign key(id) references Utente_Registrato(email) on delete cascade on update cascade
 );
-
-LOCK TABLES Venditore WRITE;
-INSERT INTO Venditore VALUES ('ven@d.d', 'Porco', 'Cane');
-UNLOCK TABLES;
 
 create table Amministratore(
                                id integer not null primary key AUTO_INCREMENT,
@@ -46,43 +32,39 @@ create table Amministratore(
                                passwordhash varchar(50) not null
 );
 
-LOCK TABLES Amministratore WRITE;
-INSERT INTO Amministratore VALUES (1, 'Porco', SHA1('Cane'));
-UNLOCK TABLES;
-
 create table Prodotto(
                          id integer not null auto_increment primary key,
-                         email_Venditore varchar(50) not null,
+                         id_Venditore varchar(50) not null,
                          nome varchar(50) not null,
                          descrizione varchar(500) not null,
                          categoria varchar(50) not null,
                          prezzo integer not null,
                          quantita_disponibile integer not null,
-                         foreign key(email_Venditore) references Venditore(email) on delete cascade on update cascade
+                         foreign key(id_Venditore) references Venditore(id) on delete cascade on update cascade
 );
 
 create table Ordine(
                        id integer not null auto_increment primary key,
-                       email_Cliente varchar(50) unique not null,
+                       id_Cliente varchar(50) unique not null,
                        data_Ordine date not null,
                        indirizzo varchar(500) not null,
                        prezzo_Tot float not null,
-                       foreign key(email_Cliente) references Cliente(email) on delete cascade on update cascade
+                       foreign key(id_Cliente) references Cliente(id) on delete cascade on update cascade
 );
 
 create table Segnalazione(
                              id integer not null auto_increment primary key,
-                             email_Cliente varchar(50) not null,
+                             id_Cliente varchar(50) not null,
                              stato boolean default false not null,
                              motivazione varchar(500) not null,
                              commento varchar(500) not null,
-                             foreign key(email_Cliente) references Cliente(email) on delete cascade on update cascade
+                             foreign key(id_Cliente) references Cliente(id) on delete cascade on update cascade
 );
 
 create table Lista_Desideri(
                                id integer not null auto_increment primary key,
-                               email_Cliente varchar(50) unique not null,
-                               foreign key(email_Cliente) references Cliente(email) on delete cascade on update cascade
+                               id_Cliente varchar(50) unique not null,
+                               foreign key(id_Cliente) references Cliente(id) on delete cascade on update cascade
 );
 
 create table Desideri_Prodotto(
@@ -96,8 +78,8 @@ create table Desideri_Prodotto(
 
 create table Carrello(
                          id integer not null auto_increment primary key,
-                         email_Cliente varchar(50) unique not null,
-                         foreign key(email_Cliente) references Cliente(email) on delete cascade on update cascade
+                         id_Cliente varchar(50) unique not null,
+                         foreign key(id_Cliente) references Cliente(id) on delete cascade on update cascade
 );
 
 create table Carrello_Prodotto(
@@ -124,9 +106,9 @@ create table Prodotto_Amministratore(
 );
 
 create table Utente_Amministratore(
-                                      email_Cliente varchar(50) not null primary key,
+                                      id_Cliente varchar(50) not null primary key,
                                       id_Amministratore integer not null,
-                                      foreign key(email_Cliente) references Cliente(email) on delete cascade on update cascade,
+                                      foreign key(id_Cliente) references Cliente(id) on delete cascade on update cascade,
                                       foreign key(id_Amministratore) references Amministratore(id) on delete cascade on update cascade
 );
 

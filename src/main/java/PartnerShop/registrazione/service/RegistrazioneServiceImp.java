@@ -13,7 +13,7 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
     public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut) {
 
        ClienteDAO ctDAO = new ClienteDAO();
-        ctDAO.doSave(ut);
+        ctDAO.doSave(ut,0);
         ctDAO.doSave(ut.getEmail());
         return ut;
     }
@@ -21,7 +21,7 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
     @Override
     public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut,String nomeNegozio,String Piva) {
         VenditoreDAO vtDAO = new VenditoreDAO();
-        vtDAO.doSave(ut);
+        vtDAO.doSave(ut,1);
         vtDAO.doSave(ut.getEmail(),nomeNegozio,Piva);
         return ut;
     }
