@@ -44,14 +44,21 @@ public final class RegistrazioneController extends HttpServlet {
         ut.setCognome(cognome);
         ut.setDataDiNascita(ddn);
         ut.setUsername(username);
+        ut.setIndirizzo(indirizzo);
         ut.setEmail(email);
         ut.setPassword(password);
+        ut.setCellulare(cellulare);
 
-        if(request.getParameter("id").equals("cliente"))
+
+        if(request.getParameter("id").equals("cliente")){
             registrazioneService.RegistrazioneCliente(ut);
-        else if(request.getParameter("id").equals("venditore"))
-            registrazioneService.RegistrazioneVenditore(ut,request.getParameter("nomedelnegozio"),request.getParameter("p.iva"));
+            request.getSession().setAttribute("utente", ut);
+        }
 
+        else if(request.getParameter("id").equals("venditore")) {
+            registrazioneService.RegistrazioneVenditore(ut, request.getParameter("nomedelnegozio"), request.getParameter("p.iva"));
+            request.getSession().setAttribute("utente", ut);
+        }
         RequestDispatcher disp = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
         disp.forward(request,response);
     }

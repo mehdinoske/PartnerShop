@@ -1,4 +1,4 @@
-package PartnerShop.autenticazione.service;
+package PartnerShop.utils;
 
 
 
@@ -16,8 +16,6 @@ public class HomePageServlet extends HttpServlet {
     public void init() {
 
     }
-
-
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");

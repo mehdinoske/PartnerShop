@@ -33,19 +33,20 @@ public class UtenteRegistratoDAO {
             return list;
         }
 
-    public void doSave(UtenteRegistrato ut) {
+    public void doSave(UtenteRegistrato ut,int tipo) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO utenteregistrato (nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo) VALUES(?,?,?,?,?,?,?,0)",
+                    "INSERT INTO utente_registrato (nome, cognome, ddn,email,indirizzo,username,passwordhash,cellulare,tipo) VALUES(?,?,?,?,?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, ut.getNome());
             ps.setString(2, ut.getCognome());
             ps.setString(3, ut.getDataDiNascita());
             ps.setString(4, ut.getEmail());
-            ps.setString(5, ut.getDataDiNascita());
+            ps.setString(5, ut.getIndirizzo());
             ps.setString(6, ut.getUsername());
             ps.setString(7, ut.getPassword());
-            ClienteDAO ct = new ClienteDAO();
+            ps.setString(8, ut.getCellulare());
+            ps.setInt(9,tipo);
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
@@ -55,23 +56,23 @@ public class UtenteRegistratoDAO {
             throw new RuntimeException(e);
         }
     }
-    /*
-        public Utente doRetrieveByUsernamePass(String user, String pass) {
-            Utente ut = new Utente();
+
+        public UtenteRegistrato doRetrieveByUsernamePass(String user, String pass) {
+            UtenteRegistrato ut = new UtenteRegistrato();
             try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement("SELECT id,nome, cognome, ddn, username,email, passworduser,admin  FROM Utente where username=? and passworduser=SHA1(?) ");
+                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where username=? and passwordhash=? ");
                 ps.setString(1, user);
                 ps.setString(2, pass);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    ut.setId(rs.getInt(1));
-                    ut.setNome(rs.getString(2));
-                    ut.setCognome(rs.getString(3));
-                    ut.setDdn(rs.getDate(4));
-                    ut.setUsername(rs.getString(5));
-                    ut.setEmail(rs.getString(6));
+                    ut.setNome(rs.getString(1));
+                    ut.setCognome(rs.getString(2));
+                    ut.setDataDiNascita(rs.getString(3));
+                    ut.setEmail(rs.getString(4));
+                    ut.setIndirizzo(rs.getString(5));
+                    ut.setUsername(rs.getString(6));
                     ut.setPassword(rs.getString(7));
-                    ut.setAdmin(rs.getBoolean(8));
+                    ut.setTipo(rs.getInt(8));
                     return ut;
                 }
                 return null;
@@ -79,7 +80,7 @@ public class UtenteRegistratoDAO {
                 throw new RuntimeException(e);
             }
         }
-
+   /*
         public Utente doRetrieveByUsername(String user) {
             Utente ut = new Utente();
             try (Connection con = ConPool.getConnection()) {
