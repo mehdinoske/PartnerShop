@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </c:if>
-<c:if test="${utente != null}">
+<%--<c:if test="${utente != null}">--%>
    <div class="dropdown">
        <button>${Utente.nome}</button>
        <div class="dropdown-content">
