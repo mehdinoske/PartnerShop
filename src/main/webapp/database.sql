@@ -87,11 +87,19 @@ create table Segnalazione(
                              foreign key(email_Cliente) references Cliente(email) on delete cascade on update cascade
 );
 
+LOCK TABLES Segnalazione WRITE;
+INSERT INTO Segnalazione VALUES (1, 'sw@d.d', false, 'ciao hola come va', 'dddddddggggddd');
+UNLOCK TABLES;
+
 create table Lista_Desideri(
                                id integer not null auto_increment primary key,
                                email_Cliente varchar(50) unique not null,
                                foreign key(email_Cliente) references Cliente(email) on delete cascade on update cascade
 );
+
+LOCK TABLES Lista_Desideri WRITE;
+INSERT INTO Lista_Desideri VALUES (1, 'sw@d.d');
+UNLOCK TABLES;
 
 create table Desideri_Prodotto(
                                   id_Desideri int not null,
@@ -102,11 +110,19 @@ create table Desideri_Prodotto(
                                   primary key(id_Desideri, id_Prodotto)
 );
 
+LOCK TABLES Desideri_Prodotto WRITE;
+INSERT INTO Desideri_Prodotto VALUES (1, 1, 20);
+UNLOCK TABLES;
+
 create table Carrello(
                          id integer not null auto_increment primary key,
                          email_Cliente varchar(50) unique not null,
                          foreign key(email_Cliente) references Cliente(email) on delete cascade on update cascade
 );
+
+LOCK TABLES Carrello WRITE;
+INSERT INTO Carrello VALUES (1, 'sw@d.d');
+UNLOCK TABLES;
 
 create table Carrello_Prodotto(
                                   id_Carrello int not null,
@@ -117,12 +133,20 @@ create table Carrello_Prodotto(
                                   primary key(id_Carrello, id_Prodotto)
 );
 
+LOCK TABLES Carrello_Prodotto WRITE;
+INSERT INTO Carrello_Prodotto VALUES (1, 1, 20);
+UNLOCK TABLES;
+
 create table Segnalazione_Amministratore(
                                             id_Desideri integer not null primary key,
                                             id_Amministratore integer not null,
                                             foreign key(id_Desideri) references Lista_Desideri(id) on delete cascade on update cascade,
                                             foreign key(id_Amministratore) references Amministratore(id) on delete cascade on update cascade
 );
+
+LOCK TABLES Segnalazione_Amministratore WRITE;
+INSERT INTO Segnalazione_Amministratore VALUES (1, 1);
+UNLOCK TABLES;
 
 create table Prodotto_Amministratore(
                                         id_Prodotto integer not null primary key,
@@ -131,12 +155,20 @@ create table Prodotto_Amministratore(
                                         foreign key(id_Amministratore) references Amministratore(id) on delete cascade on update cascade
 );
 
+LOCK TABLES Prodotto_Amministratore WRITE;
+INSERT INTO Prodotto_Amministratore VALUES (1, 1);
+UNLOCK TABLES;
+
 create table Utente_Amministratore(
                                       email_Cliente varchar(50) not null primary key,
                                       id_Amministratore integer not null,
                                       foreign key(email_Cliente) references Cliente(email) on delete cascade on update cascade,
                                       foreign key(id_Amministratore) references Amministratore(id) on delete cascade on update cascade
 );
+
+LOCK TABLES Utente_Amministratore WRITE;
+INSERT INTO Utente_Amministratore VALUES ('sw@d.d', 1);
+UNLOCK TABLES;
 
 create table Ordine_Prodotto(
                                 id_Ordine integer not null,
@@ -146,3 +178,7 @@ create table Ordine_Prodotto(
                                 foreign key(id_Prodotto) references Prodotto(id) on delete cascade on update cascade,
                                 primary key(id_Ordine, id_Prodotto)
 );
+
+LOCK TABLES Ordine_Prodotto WRITE;
+INSERT INTO Ordine_Prodotto VALUES (1, 1, 30);
+UNLOCK TABLES;
