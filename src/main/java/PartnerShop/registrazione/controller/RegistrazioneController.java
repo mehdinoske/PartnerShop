@@ -52,6 +52,7 @@ public final class RegistrazioneController extends HttpServlet {
         ut.setPassword(password);
 
         registrazioneService.RegistrazioneCliente(ut);
+
         RequestDispatcher disp = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
         disp.forward(request,response);
     }

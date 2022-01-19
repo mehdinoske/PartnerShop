@@ -5,7 +5,7 @@ import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.model.entity.Venditore;
 
-public class RegistrazioneServiceImp implements RegistrazioneService{
+public class  RegistrazioneServiceImp implements RegistrazioneService{
 
     @Override
     public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut) {
