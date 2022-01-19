@@ -11,7 +11,7 @@
 <main>
     <div class="form_container_registrazione">
         <div class="inner_form_container_registrazione">
-            <form action="Registrazione" method="post">
+            <form  action="Registrazione?id=venditore" method="post">
                 <label for="nome">Nome (Solo lettere e spazi)</label>
                 <input type="text" name="nome" id="nome" value="" oninput="validaNome()"/>
                 <label for="cognome">Cognome (Solo lettere e spazi)</label>

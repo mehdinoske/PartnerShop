@@ -16,9 +16,7 @@ import java.nio.channels.Channels;
 @WebServlet("/Registrazione")
 public final class RegistrazioneController extends HttpServlet {
 
-    private  RegistrazioneService registrazioneService = new RegistrazioneServiceImp();
-
-
+    private final RegistrazioneService registrazioneService = new RegistrazioneServiceImp();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher=null;
@@ -33,8 +31,6 @@ public final class RegistrazioneController extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
-
-
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
@@ -51,7 +47,10 @@ public final class RegistrazioneController extends HttpServlet {
         ut.setEmail(email);
         ut.setPassword(password);
 
-        registrazioneService.RegistrazioneCliente(ut);
+        if(request.getParameter("id").equals("cliente"))
+            registrazioneService.RegistrazioneCliente(ut);
+        else if(request.getParameter("id").equals("venditore"))
+            registrazioneService.RegistrazioneVenditore(ut,request.getParameter("nomedelnegozio"),request.getParameter("p.iva"));
 
         RequestDispatcher disp = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
         disp.forward(request,response);

@@ -8,6 +8,6 @@ import PartnerShop.model.entity.Venditore;
 
 public interface RegistrazioneService {
     public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut);
-    public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut);
+    public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut, String nomeNegozio,String Piva);
 
 }
