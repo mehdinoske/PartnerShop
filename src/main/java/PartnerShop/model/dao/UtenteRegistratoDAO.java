@@ -15,13 +15,13 @@ public class UtenteRegistratoDAO {
         public ArrayList<UtenteRegistrato> doRetrieveAll() {
             ArrayList<UtenteRegistrato> list = new ArrayList<>();
             try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn, username,email, passwordhash  FROM UtenteRegistrato");
+                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn, username,email, passwordhash  FROM utente_registrato");
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     UtenteRegistrato ut = new UtenteRegistrato();
                     ut.setNome(rs.getString(1));
                     ut.setCognome(rs.getString(2));
-                    ut.setDataDiNascita(rs.getString(3));
+                    ut.setDdn(rs.getString(3));
                     ut.setUsername(rs.getString(4));
                     ut.setEmail(rs.getString(5));
                     ut.setPassword(rs.getString(6));
@@ -40,7 +40,7 @@ public class UtenteRegistratoDAO {
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, ut.getNome());
             ps.setString(2, ut.getCognome());
-            ps.setString(3, ut.getDataDiNascita());
+            ps.setString(3, ut.getDdn());
             ps.setString(4, ut.getEmail());
             ps.setString(5, ut.getIndirizzo());
             ps.setString(6, ut.getUsername());
@@ -67,7 +67,7 @@ public class UtenteRegistratoDAO {
                 if (rs.next()) {
                     ut.setNome(rs.getString(1));
                     ut.setCognome(rs.getString(2));
-                    ut.setDataDiNascita(rs.getString(3));
+                    ut.setDdn(rs.getString(3));
                     ut.setEmail(rs.getString(4));
                     ut.setIndirizzo(rs.getString(5));
                     ut.setUsername(rs.getString(6));
@@ -80,6 +80,19 @@ public class UtenteRegistratoDAO {
                 throw new RuntimeException(e);
             }
         }
+
+    public void doDelete(String email) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("DELETE FROM utente_registrato WHERE  email=? ");
+            ps.setString(1, email);
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("DELETE error.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
    /*
         public Utente doRetrieveByUsername(String user) {
             Utente ut = new Utente();
@@ -141,19 +154,6 @@ public class UtenteRegistratoDAO {
                 ps.setInt(8, ut.getId());
                 if (ps.executeUpdate() != 1) {
                     throw new RuntimeException("UPDATE error.");
-                }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        public void doDelete(int idUtente) {
-            try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement("DELETE FROM Utente WHERE  id=? ");
-                ps.setInt(1, idUtente);
-                if (ps.executeUpdate() != 1) {
-                    throw new RuntimeException("DELETE error.");
                 }
 
             } catch (SQLException e) {
