@@ -57,7 +57,7 @@ create table prodotto(
                          nome varchar(50) not null,
                          descrizione varchar(500) not null,
                          categoria varchar(50) not null,
-                         prezzo integer not null,
+                         prezzo_cent integer not null,
                          quantita_disponibile integer not null,
                          foreign key(email_venditore) references venditore(email) on delete cascade on update cascade
 );
@@ -139,9 +139,9 @@ insert into carrello_prodotto values (1, 1, 20);
 unlock tables;
 
 create table segnalazione_amministratore(
-                                            id_desideri integer not null primary key,
+                                            id_segnalazione integer not null primary key,
                                             id_amministratore integer not null,
-                                            foreign key(id_desideri) references lista_desideri(id) on delete cascade on update cascade,
+                                            foreign key(id_segnalazione) references segnalazione(id) on delete cascade on update cascade,
                                             foreign key(id_amministratore) references amministratore(id) on delete cascade on update cascade
 );
 
