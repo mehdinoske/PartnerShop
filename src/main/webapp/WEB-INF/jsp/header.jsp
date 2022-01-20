@@ -36,7 +36,7 @@
 
 
             <li>
-                <c:if test="${utente == null}">
+                <c:if test="${utente == null && admin ==null}">
                     <div class="dropdown">
                         <button>ACCOUNT</button>
                         <div class="dropdown-content">
@@ -71,6 +71,17 @@
                 </div>
                 </div>
                     </c:if>
+                <c:if test="${utente == null && admin != null}">
+                    <div class="dropdown">
+                        <button>${admin.username}</button>
+                        <div class="dropdown-content">
+                            <a href="VisualizzaListaSegnalazioni">Visualizza lista segnalazioni</a>
+                            <a href="VisualizzaUteni">Visualizza utenti registrati</a>
+                            <a href="VisualizzaProdotti">Visualizza tutti i prodotti</a>
+                            <a href="Autenticazione" methods="get">LOGOUT</a>
+                        </div>
+                    </div>
+                </c:if>
 </li>
 
 
