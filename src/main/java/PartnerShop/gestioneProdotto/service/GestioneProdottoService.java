@@ -6,4 +6,8 @@ public interface GestioneProdottoService {
 
     public Prodotto getProdottoById(int id);
 
+    public void deleteProdottoById(int id);
+
+    public void doSaveProdotto(Prodotto p);
+
 }

@@ -35,10 +35,23 @@ public class GestioneProdottoController extends HttpServlet {
 
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/prodotto.jsp");
                     requestDispatcher.forward(request, response);
-                }
-            case "/Prodotto_modifica":   ;
-            case "/Prodotto_aggiungi":   ;
-            case "/Prodotto_Rimuovi":   ;
+                };
+            case "/Prodotto_modifica": ;
+            case "/Prodotto_aggiungi":
+                {
+
+                };
+            case "/Prodotto_rimuovi":
+                {
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    PrDAO.deleteProdottoById(id);
+                        /*if (prodotto == null) {
+                        throw new MyServletException("Prodotto non trovato.");
+                        }*/
+                    request.setAttribute("messaggio", "Prodotto eliminato con successo.");
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
+                    requestDispatcher.forward(request, response);
+                };
         }
     }
 
