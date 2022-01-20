@@ -1,13 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: peppe
-  Date: 18/01/2022
-  Time: 17:22
-  To change this template use File | Settings | File Templates.
---%>
 <jsp:include page="header.jsp">
     <jsp:param name="pageTitle" value="Home"/>
 </jsp:include>
+
 <main>
     <div class="form_container_registrazione">
         <div class="inner_form_container_registrazione">
@@ -39,4 +33,5 @@
         </div>
     </div>
 </main>
+
 <%@include file="footer.jsp"%>

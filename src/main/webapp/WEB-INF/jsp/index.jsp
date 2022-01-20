@@ -1,9 +1,7 @@
-<%--@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%--@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" --%>
 <jsp:include page="header.jsp">
     <jsp:param name="pageTitle" value="Home"/>
 </jsp:include>
+
 <main>
     <div class="flip-card">
         <div class="flip-card-inner">
@@ -17,4 +15,5 @@
         </div>
     </div>
 </main>
+
 <%@include file="footer.jsp"%>

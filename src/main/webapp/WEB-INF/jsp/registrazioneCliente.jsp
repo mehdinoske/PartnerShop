@@ -1,16 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: galax
-  Date: 18/01/2022
-  Time: 11:42
-  To change this template use File | Settings | File Templates.
---%>
-<%--@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%--@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" --%>
 <jsp:include page="header.jsp">
     <jsp:param name="pageTitle" value="Home"/>
 </jsp:include>
+
 <main>
     <div class="form_container_registrazione">
         <div class="inner_form_container_registrazione">
@@ -38,4 +29,5 @@
         </div>
     </div>
 </main>
+
 <%@include file="footer.jsp"%>
