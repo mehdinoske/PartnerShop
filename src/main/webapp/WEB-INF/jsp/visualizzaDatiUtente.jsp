@@ -17,13 +17,21 @@
         <p>Nome e cognome: ${utente.nome} ${utente.cognome}</p>
         <p>Username: ${utente.username}</p>
         <p>E-mail: ${utente.email}</p>
+        <p>Data di nascita: ${utente.ddn}</p>
         <p>Indirizzo: ${utente.indirizzo}</p>
         <p>Cellulare: ${utente.cellulare}</p>
     </div>
 
     <div>
-        <input type="submit" value="ModificaDati">
-        <input type="submit" value="CancellaDati">
+        <form action="ModificaDatiUtenti">
+            <input type="submit" value="Modifica Dati" id="modifica">
+        </form>
+
+        <form action="CancellaDatiUtenti">
+            <input type="submit" value="Cancella Dati" id="cancella">
+        </form>
+
+
     </div>
 </main>
 <%@include file="footer.jsp"%>

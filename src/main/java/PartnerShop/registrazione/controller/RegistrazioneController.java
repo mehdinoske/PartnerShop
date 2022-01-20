@@ -42,7 +42,7 @@ public final class RegistrazioneController extends HttpServlet {
         UtenteRegistrato ut = new UtenteRegistrato();
         ut.setNome(nome);
         ut.setCognome(cognome);
-        ut.setDataDiNascita(ddn);
+        ut.setDdn(ddn);
         ut.setUsername(username);
         ut.setIndirizzo(indirizzo);
         ut.setEmail(email);
