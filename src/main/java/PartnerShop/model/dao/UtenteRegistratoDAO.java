@@ -70,10 +70,9 @@ public class UtenteRegistratoDAO {
                     ut.setDdn(rs.getString(3));
                     ut.setEmail(rs.getString(4));
                     ut.setIndirizzo(rs.getString(5));
-                    ut.setCellulare(rs.getString(6));
-                    ut.setUsername(rs.getString(7));
-                    ut.setPassword(rs.getString(8));
-                    ut.setTipo(rs.getInt(9));
+                    ut.setUsername(rs.getString(6));
+                    ut.setPassword(rs.getString(7));
+                    ut.setTipo(rs.getInt(8));
                     return ut;
                 }
                 return null;
@@ -98,17 +97,16 @@ public class UtenteRegistratoDAO {
     public void doUpdate(UtenteRegistrato ut) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "UPDATE utente_registrato SET nome = ?, cognome = ?, ddn = ?, email=?, indirizzo=?, cellulare=?, username=? , passwordhash=SHA1(?), tipo=? WHERE email=?");
+                    "UPDATE utente_registrato SET nome = ?, cognome = ?, ddn = ?, email=?, indirizzo=?, username=? , passwordhash=?, tipo=? WHERE email=?");
             ps.setString(1, ut.getNome());
             ps.setString(2, ut.getCognome());
             ps.setString(3, ut.getDdn());
             ps.setString(4, ut.getEmail());
             ps.setString(5, ut.getIndirizzo());
-            ps.setString(6, ut.getCellulare());
-            ps.setString(7, ut.getUsername());
-            ps.setString(8, ut.getPassword());
-            ps.setInt(9, ut.getTipo());
-            ps.setString(10, ut.getEmail());
+            ps.setString(6, ut.getUsername());
+            ps.setString(7, ut.getPassword());
+            ps.setInt(8, ut.getTipo());
+            ps.setString(9, ut.getEmail());
 
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("UPDATE error.");
