@@ -1,6 +1,5 @@
 package PartnerShop.model.entity;
 
-import java.util.List;
 
 public class Prodotto {
 
