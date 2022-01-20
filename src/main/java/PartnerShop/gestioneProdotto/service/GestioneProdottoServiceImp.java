@@ -12,5 +12,13 @@ public class GestioneProdottoServiceImp implements GestioneProdottoService {
         return p;
     }
 
+    public void deleteProdottoById(int id) {
+        GestioneProdottoDAO pr = new GestioneProdottoDAO();
+        pr.doDeleteById(id);
+    }
 
+    public void doSaveProdotto(Prodotto p) {
+        GestioneProdottoDAO pr = new GestioneProdottoDAO();
+        pr.doSave(p);
+    }
 }
