@@ -77,7 +77,6 @@
                         <button>${admin.username}</button>
                         <div class="dropdown-content">
                             <a href="VisualizzaSegnalazioni">Visualizza lista segnalazioni</a>
-                            <a href="VisualizzaUteni">Visualizza utenti registrati</a>
                             <a href="VisualizzaListaSegnalazioni">Visualizza lista segnalazioni</a>
                             <a href="VisualizzaUtenti">Visualizza utenti registrati</a>
                             <a href="VisualizzaProdotti">Visualizza tutti i prodotti</a>
