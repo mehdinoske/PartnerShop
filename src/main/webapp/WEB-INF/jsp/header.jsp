@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PartnerShop</title>
+    <title>PartnerShop - ${param.pageTitle}</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
     <link rel="stylesheet" href="css/homepage_style.css" type="text/css"/>
     <link rel="stylesheet" href="css/login_register_users.css" type="text/css"/>
@@ -59,12 +59,14 @@
        </div>
    </div>
 </c:if>
-                <c:if test="${utente != null && utente.tipo == 1}">--%>
+                <c:if test="${utente != null && utente.tipo == 1}">
                 <div class="dropdown">
                      <button>${utente.nome}</button>
                       <div class="dropdown-content">
-                        <a href="UtenteOrdini">Ordini</a>
-                        <a href="Anagrafica">Anagrafica</a>
+                          <a href="VisualizzaUtente">Anagrafica</a>
+                        <a href="Ordini">Visualizza Ordini</a>
+                          <a href="AggiungiProdotti">Aggiungi Prodotti</a>
+                          <a href="VisualizzaProdotti">Visualizza Prodotti</a>
                       <a href="Autenticazione" methods="get">LOGOUT</a>
                 </div>
                 </div>

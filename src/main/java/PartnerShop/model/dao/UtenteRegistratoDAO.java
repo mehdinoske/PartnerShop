@@ -60,7 +60,7 @@ public class UtenteRegistratoDAO {
         public UtenteRegistrato doRetrieveByUsernamePass(String user, String pass) {
             UtenteRegistrato ut = new UtenteRegistrato();
             try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where username=? and passwordhash=? ");
+                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where username=? and passwordhash=SHA1(?) ");
                 ps.setString(1, user);
                 ps.setString(2, pass);
                 ResultSet rs = ps.executeQuery();
