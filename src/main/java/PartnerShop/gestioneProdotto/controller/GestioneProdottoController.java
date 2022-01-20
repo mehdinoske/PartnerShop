@@ -22,36 +22,43 @@ public class GestioneProdottoController extends HttpServlet {
             throws ServletException, IOException {
 
         String s = request.getServletPath();
+        RequestDispatcher requestDispatcher;
+        int id;
 
         switch (s) {
             case "/Prodotto_visualizza":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    Prodotto prodotto = PrDAO.getProdottoById(id);
-                    /*if (prodotto == null) {
-                    throw new MyServletException("Prodotto non trovato.");
-                    }*/
+                id = Integer.parseInt(request.getParameter("id"));
+                Prodotto prodotto = PrDAO.getProdottoById(id);
+                /*if (prodotto == null) {
+                throw new MyServletException("Prodotto non trovato.");
+                }*/
+                if(prodotto != null) {
                     request.setAttribute("prodotto", prodotto);
+                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/prodotto.jsp");
+                    //System.out.println("visualizzato");
+                } else {
+                    request.setAttribute("messaggio", "Nessun prodotto trovato.");
+                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
+                    //System.out.println("non trovato");
+                }
+                requestDispatcher.forward(request, response);
+                break;
 
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/prodotto.jsp");
-                    requestDispatcher.forward(request, response);
-                };
-            case "/Prodotto_modifica": ;
-            case "/Prodotto_aggiungi":
-                {
+            case "/Prodotto_modifica": break;
+            case "/Prodotto_aggiungi": break;
 
-                };
             case "/Prodotto_rimuovi":
-                {
-                    int id = Integer.parseInt(request.getParameter("id"));
-                    PrDAO.deleteProdottoById(id);
-                        /*if (prodotto == null) {
-                        throw new MyServletException("Prodotto non trovato.");
-                        }*/
-                    request.setAttribute("messaggio", "Prodotto eliminato con successo.");
-                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
-                    requestDispatcher.forward(request, response);
-                };
+                id = Integer.parseInt(request.getParameter("id"));
+                PrDAO.deleteProdottoById(id);
+                /*if (prodotto == null) {
+                throw new MyServletException("Prodotto non trovato.");
+                }*/
+                request.setAttribute("messaggio", "Prodotto eliminato con successo.");
+                requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
+                //System.out.println("rimosso");
+                requestDispatcher.forward(request, response);
+                break;
+
         }
     }
 

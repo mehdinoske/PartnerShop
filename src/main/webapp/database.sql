@@ -64,6 +64,9 @@ create table prodotto(
 
 lock tables prodotto write;
 insert into prodotto values (1, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300);
+insert into prodotto values (2, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300);
+insert into prodotto values (3, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300);
+insert into prodotto values (4, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300);
 unlock tables;
 
 create table ordine(
