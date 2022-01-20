@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/Prodotto")
+@WebServlet(name = "/Prodotto", urlPatterns = {"/visualizza", "/modifica"})
 public class GestioneProdottoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -20,6 +20,10 @@ public class GestioneProdottoController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String s = request.getServletPath();
+        System.out.println(s);
+
         int id = Integer.parseInt(request.getParameter("id"));
         Prodotto prodotto = PrDAO.getProdottoById(id);
         /*if (prodotto == null) {
