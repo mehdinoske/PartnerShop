@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "Prodotto", urlPatterns = {"Prodotto_visualizza", "Prodotto_modifica", "Prodotto_aggiungi", "Prodotto_rimuovi"})
+@WebServlet(urlPatterns = {"/Prodotto_visualizza", "/Prodotto_modifica", "/Prodotto_aggiungi", "/Prodotto_rimuovi"})
 public class GestioneProdottoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -23,9 +23,9 @@ public class GestioneProdottoController extends HttpServlet {
 
         String s = request.getServletPath();
 
-        //switch (s) {
-            //case "Prodotto/visualizza":
-                //{
+        switch (s) {
+            case "/Prodotto_visualizza":
+                {
                     int id = Integer.parseInt(request.getParameter("id"));
                     Prodotto prodotto = PrDAO.getProdottoById(id);
                     /*if (prodotto == null) {
@@ -35,11 +35,11 @@ public class GestioneProdottoController extends HttpServlet {
 
                     RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/prodotto.jsp");
                     requestDispatcher.forward(request, response);
-                //}
-            /*case "Prodotto/modifica":   ;
-            case "Prodotto/aggiungi":   ;
-            case "Prodotto/Rimuovi":   ;*/
-        //}
+                }
+            case "/Prodotto_modifica":   ;
+            case "/Prodotto_aggiungi":   ;
+            case "/Prodotto_Rimuovi":   ;
+        }
     }
 
 }
