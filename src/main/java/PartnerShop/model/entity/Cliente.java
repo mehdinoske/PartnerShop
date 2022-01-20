@@ -10,4 +10,12 @@ public class Cliente extends UtenteRegistrato{
     public Cliente(){
 
     }
+
+    public int getCartaDiCredito() {
+        return cartaDiCredito;
+    }
+
+    public void setCartaDiCredito(int cartaDiCredito) {
+        this.cartaDiCredito = cartaDiCredito;
+    }
 }
