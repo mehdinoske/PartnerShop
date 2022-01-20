@@ -2,6 +2,7 @@ package PartnerShop.autenticazione.service;
 
 import PartnerShop.model.dao.ClienteDAO;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
+import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 
@@ -9,10 +10,11 @@ import java.io.IOException;
 
 public class AutenticazioneServiceImp implements AutenticazioneService{
 
+    UtenteRegistratoDAO utDB =null;
     @Override
     public UtenteRegistrato login(String username, String password) {
         UtenteRegistrato ut = null;
-        UtenteRegistratoDAO utDB = new UtenteRegistratoDAO();
+         utDB = new UtenteRegistratoDAO();
         try {
             if (username != null && password != null) {
                 ut = utDB.doRetrieveByUsernamePass(username, password);
@@ -24,5 +26,23 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
             e.printStackTrace();
         }
         return ut;
+    }
+
+    @Override
+    public Amministratore verificaAdmin(String username, String password) {
+
+         utDB = new UtenteRegistratoDAO();
+         Amministratore amm = new Amministratore();
+        try {
+            if (username != null && password != null) {
+                amm = utDB.doRetrieveAdmin(username,password);
+            }
+            if (amm == null) {
+                throw new IOException("Errore admin null");
+            }
+        }catch(IOException e ){
+            e.printStackTrace();
+        }
+        return amm;
     }
 }

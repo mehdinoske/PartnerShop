@@ -1,9 +1,7 @@
 package PartnerShop.model.entity;
 
 public class Amministratore {
-    private String nome;
-    private String cognome;
-    private String email;
+    private int id;
     private String username;
     private String password;
 
@@ -11,25 +9,12 @@ public class Amministratore {
 
     }
 
-    public Amministratore(String nome,String cognome,String email,String username,String password){
-    this.nome = nome;
-    this.cognome = cognome;
-    this.email = email;
+    public Amministratore(String username,String password){
+
     this.username = username;
     this.password = password;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public String getCognome() {
-        return cognome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 
     public String getUsername() {
         return username;
@@ -39,16 +24,12 @@ public class Amministratore {
         return password;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public int getId() {
+        return id;
     }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setUsername(String username) {
