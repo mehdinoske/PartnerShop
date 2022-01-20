@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PartnerShop</title>
+    <title>PartnerShop - ${param.pageTitle}</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
     <link rel="stylesheet" href="css/homepage_style.css" type="text/css"/>
     <link rel="stylesheet" href="css/login_register_users.css" type="text/css"/>
@@ -51,11 +51,11 @@
    <div class="dropdown">
        <button>${utente.nome}</button>
        <div class="dropdown-content">
-           <a href="ListaDesideri">Visualizza lista desideri</a>
            <a href="VisualizzaDatiUtente">Visualizza Dati utente</a>
+           <a href="ListaDesideri">Visualizza lista desideri</a>
            <a href="VisualizzaOrdini">Visualizza Ordini</a>
-           <a href="Autenticazione" method="get">Logout</a>
            <a href="Segnalazione">Invia Segnalazione</a>
+           <a href="Autenticazione" method="get">Logout</a>
        </div>
    </div>
 </c:if>
