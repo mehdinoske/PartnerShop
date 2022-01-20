@@ -148,3 +148,5 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+src/main/java/PartnerShop/utils/ConPool.java
+.idea/sqldialects.xml
