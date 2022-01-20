@@ -21,7 +21,7 @@ public class GestioneProdottoDAO {
     public Prodotto doRetrieveById(int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con
-                    .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo, quantita_disponibile FROM prodotto WHERE id=?");
+                    .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE id=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
