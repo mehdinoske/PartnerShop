@@ -4,14 +4,14 @@ import PartnerShop.model.dao.CarrelloDAO;
 import PartnerShop.model.dao.GestioneAcquistiDAO;
 import PartnerShop.model.entity.Carrello;
 import PartnerShop.model.entity.Cliente;
-import PartnerShop.model.entity.UtenteRegistrato;
+import PartnerShop.model.entity.Prodotto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class GestioneAcquistiImp {
-   public void aggiungiAlCarrello(HttpServletRequest request, HttpServletResponse response){
+   public void aggiungiRimuoviCarrello(HttpServletRequest request, HttpServletResponse response){
        CarrelloDAO carDB = new CarrelloDAO();
        HttpSession session = request.getSession();
        Cliente ut = (Cliente) request.getSession().getAttribute("utente");
@@ -21,31 +21,31 @@ public class GestioneAcquistiImp {
            session.setAttribute("carrello", car);
        }
 
-       String gameIdStr = request.getParameter("idGioco");
+       String prodottoIdStr = request.getParameter("idProdotto");
        if (ut != null) {
-           carDB.UpdateSession(car, ut.getIdUtente());
-           car = carDB.doRetrieveById(ut.getIdUtente(), car);
+           carDB.UpdateSession(car,ut.getEmail(), ut.getId_Carrello());
+           car = carDB.doRetrieveByEmailCliente(ut.getEmail(), car);
        }
 
-       if (gameIdStr != null) {
-           int gameId = Integer.parseInt(gameIdStr);
-           VideogiocoDAO gamesDB = new VideogiocoDAO();
-           Videogioco game = gamesDB.doRetrieveById(gameId);
+       if (prodottoIdStr != null) {
+           int prodottoId = Integer.parseInt(prodottoIdStr);
+           GestioneAcquistiDAO prodotti = new GestioneAcquistiDAO();
+           Prodotto pr = prodotti.doRetrieveProdottoById(prodottoId);
            String quantStr = request.getParameter("quant");
            if (quantStr != null) {
                int quant = Integer.parseInt(quantStr);
-               Videogioco gameCar = car.getGame(gameId);
-               if (gameCar != null) {
+               Prodotto prodottoCar = car.getProdotto(prodottoId);
+               if (prodottoCar != null) {
                    if (ut != null) {
-                       carDB.doUpdate(ut.getIdUtente(), gameId, car.getQuant(gameId) + quant);
+                       carDB.doUpdate(ut.getId_Carrello(), prodottoId, car.getQuant(prodottoId) + quant);
                    }
 
-                   car.setQuantHash(gameId, car.getQuant(gameId) + quant);
+                   car.setQuantHash(prodottoId, car.getQuant(prodottoId) + quant);
                } else {
-                   car.setGameHash(game);
-                   car.setQuantHash(gameId, quant);
+                   car.setProdottoHash(pr);
+                   car.setQuantHash(prodottoId, quant);
                    if (ut != null) {
-                       carDB.doSave(gameId, ut.getIdUtente(), quant);
+                       carDB.doSave(prodottoId, ut.getId_Carrello(), quant);
                    }
                }
            } else {
@@ -53,19 +53,15 @@ public class GestioneAcquistiImp {
                if (setQuantStr != null) {
                    int setQuant = Integer.parseInt(setQuantStr);
                    if (setQuant <= 0) {
-                       car.remove(gameId);
+                       car.remove(prodottoId);
                        if (ut != null) {
-                           carDB.doDelete(ut.getIdUtente(), gameId);
+                           carDB.doDelete(ut.getId_Carrello(), prodottoId);
                        }
                    }
                }
            }
        }
     }
-
-   public void rimuoviDalCarrello(){
-
-   }
 
    public void acquistaProdotto(){
 

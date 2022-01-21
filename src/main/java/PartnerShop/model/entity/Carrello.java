@@ -29,7 +29,7 @@ public class Carrello {
     }
 
     public long getPrezzoEuro(int idProdotto) {
-        return (long)(Integer)this.getQuantHash().get(idProdotto) * (long)((Prodotto)this.getProdottoHash().get(idProdotto)).getPrezzo();
+        return (long)(Integer)this.getQuantHash().get(idProdotto) * (long)((Prodotto)this.getProdottoHash().get(idProdotto)).getPrezzo_Cent();
     }
 
     public float sommaTot() {
@@ -44,7 +44,7 @@ public class Carrello {
         return somma;
     }
 
-    public void setProdottoHashHash(Prodotto pr) {
+    public void setProdottoHash(Prodotto pr) {
         this.getProdottoHash().put(pr.getId(), pr);
     }
 

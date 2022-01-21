@@ -9,6 +9,16 @@ public class UtenteRegistrato {
     private String email;
     private String indirizzo;
     private String cellulare;
+    private int id_Carrello;
+
+    public int getId_Carrello() {
+        return id_Carrello;
+    }
+
+    public void setId_Carrello(int id_Carrello) {
+        this.id_Carrello = id_Carrello;
+    }
+
     private int tipo;
 
 
