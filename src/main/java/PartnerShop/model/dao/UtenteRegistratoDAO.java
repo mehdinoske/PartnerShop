@@ -1,5 +1,6 @@
 package PartnerShop.model.dao;
 
+import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.utils.ConPool;
@@ -60,7 +61,7 @@ public class UtenteRegistratoDAO {
         public UtenteRegistrato doRetrieveByUsernamePass(String user, String pass) {
             UtenteRegistrato ut = new UtenteRegistrato();
             try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where username=? and passwordhash=? ");
+                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where username=? and passwordhash=SHA1(?) ");
                 ps.setString(1, user);
                 ps.setString(2, pass);
                 ResultSet rs = ps.executeQuery();
@@ -80,6 +81,26 @@ public class UtenteRegistratoDAO {
                 throw new RuntimeException(e);
             }
         }
+
+    public Amministratore doRetrieveAdmin(String username,String password) {
+        Amministratore amm = new Amministratore();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT id, username, passwordhash FROM amministratore where username=? and passwordhash=SHA1(?)  ");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                amm.setId(rs.getInt(1));
+                amm.setUsername(rs.getString(2));
+                amm.setPassword(rs.getString(3));
+
+                return amm;
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
    /*
         public Utente doRetrieveByUsername(String user) {
             Utente ut = new Utente();

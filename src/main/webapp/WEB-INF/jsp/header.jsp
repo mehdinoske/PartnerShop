@@ -1,17 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: galax
-  Date: 13/01/2022
-  Time: 17:43
-  To change this template use File | Settings | File Templates.
---%>
-<%--@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PartnerShop</title>
+    <title>PartnerShop - ${param.pageTitle}</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
     <link rel="stylesheet" href="css/homepage_style.css" type="text/css"/>
     <link rel="stylesheet" href="css/login_register_users.css" type="text/css"/>
@@ -43,7 +36,7 @@
 
 
             <li>
-                <c:if test="${utente == null}">
+                <c:if test="${utente == null && admin ==null}">
                     <div class="dropdown">
                         <button>ACCOUNT</button>
                         <div class="dropdown-content">
@@ -70,12 +63,25 @@
                 <div class="dropdown">
                      <button>${utente.nome}</button>
                       <div class="dropdown-content">
-                        <a href="UtenteOrdini">Ordini</a>
-                        <a href="Anagrafica">Anagrafica</a>
+                          <a href="VisualizzaUtente">Anagrafica</a>
+                        <a href="Ordini">Visualizza Ordini</a>
+                          <a href="AggiungiProdotti">Aggiungi Prodotti</a>
+                          <a href="VisualizzaProdotti">Visualizza Prodotti</a>
                       <a href="Autenticazione" methods="get">LOGOUT</a>
                 </div>
                 </div>
                     </c:if>
+                <c:if test="${utente == null && admin != null}">
+                    <div class="dropdown">
+                        <button>${admin.username}</button>
+                        <div class="dropdown-content">
+                            <a href="VisualizzaListaSegnalazioni">Visualizza lista segnalazioni</a>
+                            <a href="VisualizzaUteni">Visualizza utenti registrati</a>
+                            <a href="VisualizzaProdotti">Visualizza tutti i prodotti</a>
+                            <a href="Autenticazione" methods="get">LOGOUT</a>
+                        </div>
+                    </div>
+                </c:if>
 </li>
 
 
