@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class GestioneAcquistiImp {
-   public void aggiungiRimuoviCarrello(HttpServletRequest request, HttpServletResponse response){
+   public HttpServletRequest aggiungiRimuoviCarrello(HttpServletRequest request){
        CarrelloDAO carDB = new CarrelloDAO();
        HttpSession session = request.getSession();
        Cliente ut = (Cliente) request.getSession().getAttribute("utente");
@@ -61,6 +61,7 @@ public class GestioneAcquistiImp {
                }
            }
        }
+       return request;
     }
 
    public void acquistaProdotto(){
