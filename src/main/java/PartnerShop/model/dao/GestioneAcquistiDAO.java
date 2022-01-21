@@ -12,7 +12,7 @@ public class GestioneAcquistiDAO {
     public ArrayList<Prodotto> doRetrieveAllProdotti() {
         ArrayList<Prodotto> list = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT id,nome,descrizione,categoria,prezzo,quantita_disponbile FROM Prodotto");
+            PreparedStatement ps = con.prepareStatement("SELECT id,nome,descrizione,categoria,prezzo_cent,quantita_disponbile FROM prodotto");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Prodotto pr = new Prodotto();
@@ -33,9 +33,11 @@ public class GestioneAcquistiDAO {
     public Prodotto doRetrieveProdottoById(int idProdotto) {
         Prodotto pr = new Prodotto();
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT email_Venditore,nome,descrizione,categoria,prezzo,quantita_disponbile FROM Prodotto where id = ?");
+            PreparedStatement ps = con.prepareStatement("SELECT email_venditore,nome,descrizione,categoria,prezzo_cent,quantita_disponibile FROM prodotto where id = ?");
+            ps.setInt(1,idProdotto);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                pr.setId(idProdotto);
                 pr.setEmail_Venditore(rs.getString(1));
                 pr.setNome(rs.getString(2));
                 pr.setDescrizione(rs.getString(3));
@@ -52,7 +54,7 @@ public class GestioneAcquistiDAO {
     public ArrayList<Prodotto> doRetrieveProdottiByIdOrdine(int idOrdine) {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT id,nome,descrizione,categoria,prezzo,quantita_disponbile FROM Prodotto WHERE id_Ordine = ? ");
+            PreparedStatement ps = con.prepareStatement("SELECT id,nome,descrizione,categoria,prezzo,quantita_disponbile FROM prodotto WHERE id_Ordine = ? ");
             ResultSet rs = ps.executeQuery();
             ps.setInt(1,idOrdine);
             while (rs.next()) {
@@ -74,7 +76,7 @@ public class GestioneAcquistiDAO {
     public void doSaveProdotto(Prodotto pr) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO Prodotto (nome,descrizione,categoria,prezzo,quantita_disponbile) VALUES(?,?,?,?,?)",
+                    "INSERT INTO prodotto (nome,descrizione,categoria,prezzo,quantita_disponbile) VALUES(?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, pr.getNome());
             ps.setString(2, pr.getDescrizione());
@@ -95,7 +97,7 @@ public class GestioneAcquistiDAO {
         ArrayList<Ordine> ordini = new ArrayList<>();
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT id,email_Cliente,data_Ordine,indirizzo,prezzo_Tot FROM Ordine");
+            PreparedStatement ps = con.prepareStatement("SELECT id,email_cliente,data_ordine,indirizzo,prezzo_tot FROM ordine");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Ordine pr = new Ordine();

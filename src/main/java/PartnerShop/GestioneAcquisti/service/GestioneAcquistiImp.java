@@ -5,6 +5,7 @@ import PartnerShop.model.dao.GestioneAcquistiDAO;
 import PartnerShop.model.entity.Carrello;
 import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.Prodotto;
+import PartnerShop.model.entity.UtenteRegistrato;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +15,7 @@ public class GestioneAcquistiImp {
    public HttpServletRequest aggiungiRimuoviCarrello(HttpServletRequest request){
        CarrelloDAO carDB = new CarrelloDAO();
        HttpSession session = request.getSession();
-       Cliente ut = (Cliente) request.getSession().getAttribute("utente");
+       UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
        Carrello car = (Carrello)session.getAttribute("carrello");
        if (car == null) {
            car = new Carrello();
@@ -55,7 +56,7 @@ public class GestioneAcquistiImp {
                    if (setQuant <= 0) {
                        car.remove(prodottoId);
                        if (ut != null) {
-                           carDB.doDelete(ut.getId_Carrello(), prodottoId);
+                           carDB.doDelete(1, prodottoId);
                        }
                    }
                }

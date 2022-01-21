@@ -54,8 +54,8 @@
            <a href="ListaDesideri">Visualizza lista desideri</a>
            <a href="VisualizzaDatiUtente">Visualizza Dati utente</a>
            <a href="VisualizzaOrdini">Visualizza Ordini</a>
-           <a href="Autenticazione" method="get">Logout</a>
            <a href="Segnalazione">Invia Segnalazione</a>
+           <a href="Autenticazione" method="get">Logout</a>
        </div>
    </div>
 </c:if>

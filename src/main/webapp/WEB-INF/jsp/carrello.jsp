@@ -15,13 +15,13 @@
 <main>
     <div class="carrello_container">
         <div class="carrello_layout">
-            <c:forEach items="${carrello.getProdotti()}" var="prodotto">
+            <c:forEach items="${Carrello.getProdotti()}" var="prodotto">
                 <div>
                     <a href="VisualizzaGioco?id=${prodotto.id}"><img src="images/prodotti/${prodotto.id}.jpg"></a>
                     <div id="inner_div">
                         <h2>${prodotto.nome}</h2>
-                        <h3>Prezzo: ${carrello.getPrezzoEuro(prodotto.id)} &euro;</h3>
-                        <h3>Quantita: ${carrello.getQuant(prodotto.id)}</h3>
+                        <h3>Prezzo: ${prodotto.prezzo_Cent} &euro;</h3>
+                        <h3>Quantita: ${Carrello.getQuant(prodotto.id)}</h3>
                         <form action="Carrello" method="post">
                             <input type="hidden" name="idProdotto" value="${prodotto.id}">
                             <input type="hidden" name="setQuant" value="0">
@@ -32,12 +32,12 @@
             </c:forEach>
         </div>
     </div>
-    <c:if test="${empty carrello.getProdotti()}">
+    <c:if test="${empty Carrello.getProdotti()}">
         <div class="error_display">
             <h1>CARRELLO VUOTO.</h1>
         </div>
     </c:if>
-    <c:if test="${not empty carrello.getProdotti()}">
+    <c:if test="${not empty Carrello.getProdotti()}">
         <div class="prezzoFinale"><h1>Totale: ${carrello.sommaTot()}&euro; </h1>
             <form action="Ordine" method="post">
 

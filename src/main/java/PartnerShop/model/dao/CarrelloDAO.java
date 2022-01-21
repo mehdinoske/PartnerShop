@@ -21,7 +21,7 @@ public class CarrelloDAO {
             Connection con = ConPool.getConnection();
 
             try {
-                PreparedStatement ps = con.prepareStatement("SELECT cp.id_Prodotto FROM carrello_prodotto cp, carrello c WHERE c.id = cp.id_Carrello and email_Cliente = ?");
+                PreparedStatement ps = con.prepareStatement("SELECT cp.id_Prodotto, cp.quantita FROM carrello_prodotto cp, carrello c WHERE c.id = cp.id_Carrello and email_Cliente = ?");
                 ps.setString(1, emailCliente);
                 ResultSet rs = ps.executeQuery();
 
@@ -169,7 +169,7 @@ public class CarrelloDAO {
             Connection con = ConPool.getConnection();
 
             try {
-                PreparedStatement ps = con.prepareStatement("UPDATE carrello_prodotto SET quantita=? WHERE  idProdotti=? AND id_Carrello=?");
+                PreparedStatement ps = con.prepareStatement("UPDATE carrello_prodotto SET quantita=? WHERE  id_Prodotto=? AND id_Carrello=?");
                 ps.setInt(1, quant);
                 ps.setInt(2, idProd);
                 ps.setInt(3, id_Carrello);
@@ -202,7 +202,7 @@ public class CarrelloDAO {
             Connection con = ConPool.getConnection();
 
             try {
-                PreparedStatement ps = con.prepareStatement("DELETE FROM carrello_prodotto WHERE  id_Carrello=? AND idProdotti=?");
+                PreparedStatement ps = con.prepareStatement("DELETE FROM carrello_prodotto WHERE  id_Carrello=? AND id_Prodotto=?");
                 ps.setInt(1, idCarrello);
                 ps.setInt(2, idProd);
                 if (ps.executeUpdate() != 1) {
