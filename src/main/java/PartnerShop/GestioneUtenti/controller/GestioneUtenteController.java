@@ -2,10 +2,9 @@ package PartnerShop.GestioneUtenti.controller;
 
 import PartnerShop.GestioneUtenti.model.GestioneUtenteService;
 import PartnerShop.GestioneUtenti.model.GestioneUtenteServiceImp;
-import PartnerShop.model.dao.UtenteRegistratoDAO;
+
 import PartnerShop.model.entity.UtenteRegistrato;
-import PartnerShop.registrazione.service.RegistrazioneService;
-import PartnerShop.registrazione.service.RegistrazioneServiceImp;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,46 +29,53 @@ public class GestioneUtenteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        RequestDispatcher dispatcher = null;
+        RequestDispatcher dispatcher;
         String s = request.getServletPath();
-        if(s.equals("/VisualizzaDatiUtente")){
-            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/visualizzaDatiUtente.jsp");
-            dispatcher.forward(request, response);
-        }else if(s.equals("/VisualizzaModifica")){
-            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/modificaDatiUtente.jsp");
-            dispatcher.forward(request, response);
-        }else if(s.equals("/ModificaForm")){
+        switch (s) {
+            case "/VisualizzaDatiUtente":
+                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/visualizzaDatiUtente.jsp");
+                dispatcher.forward(request, response);
+                break;
+            case "/VisualizzaModifica":
+                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/modificaDatiUtente.jsp");
+                dispatcher.forward(request, response);
+                break;
+            case "/ModificaForm": {
 
-            String nome = request.getParameter("nome");
-            String cognome = request.getParameter("cognome");
-            String email = request.getParameter("email");
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            String ddn = request.getParameter("ddn");
-            String indirizzo = request.getParameter("indirizzo");
-            String cellulare = request.getParameter("cellulare");
-            int tipo= parseInt(request.getParameter("tipo"));
-            UtenteRegistrato ut = new UtenteRegistrato();
-            ut.setNome(nome);
-            ut.setCognome(cognome);
-            ut.setDdn(ddn);
-            ut.setUsername(username);
-            ut.setIndirizzo(indirizzo);
-            ut.setEmail(email);
-            ut.setPassword(password);
-            ut.setCellulare(cellulare);
-            ut.setTipo(tipo);
+                String nome = request.getParameter("nome");
+                String cognome = request.getParameter("cognome");
+                String email = request.getParameter("email");
+                String username = request.getParameter("username");
+                String password = request.getParameter("password");
+                String ddn = request.getParameter("ddn");
+                String indirizzo = request.getParameter("indirizzo");
+                String cellulare = request.getParameter("cellulare");
+                int tipo = parseInt(request.getParameter("tipo"));
+                UtenteRegistrato ut = new UtenteRegistrato();
+                ut.setNome(nome);
+                ut.setCognome(cognome);
+                ut.setDdn(ddn);
+                ut.setUsername(username);
+                ut.setIndirizzo(indirizzo);
+                ut.setEmail(email);
+                ut.setPassword(password);
+                ut.setCellulare(cellulare);
+                ut.setTipo(tipo);
 
-            gestioneUtenteService.ModificaDati(ut, email);
-            request.getSession().setAttribute("utente", ut);
-            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
-            dispatcher.forward(request, response);
-        }else if(s.equals("/CancellaDatiUtenti")){
+                gestioneUtenteService.ModificaDati(ut, email);
+                request.getSession().setAttribute("utente", ut);
+                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
+                dispatcher.forward(request, response);
+                break;
+            }
+            case "/CancellaDatiUtenti": {
                 String email = request.getParameter("email");
                 gestioneUtenteService.CancellaUtente(email);
                 request.getSession().removeAttribute("utente");
                 dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/index.jsp"));
                 dispatcher.forward(request, response);
+                break;
+            }
         }
     }
 }
