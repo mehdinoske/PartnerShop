@@ -1,31 +1,48 @@
 package PartnerShop.autenticazione.service;
 
 import PartnerShop.model.dao.ClienteDAO;
+import PartnerShop.model.dao.UtenteRegistratoDAO;
+import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 
+import java.io.IOException;
+
 public class AutenticazioneServiceImp implements AutenticazioneService{
 
+    UtenteRegistratoDAO utDB =null;
     @Override
-    public UtenteRegistrato login(String email, String password) {
-        return null;
+    public UtenteRegistrato login(String username, String password) {
+        UtenteRegistrato ut = null;
+         utDB = new UtenteRegistratoDAO();
+        try {
+            if (username != null && password != null) {
+                ut = utDB.doRetrieveByUsernamePass(username, password);
+            }
+            if (ut == null) {
+                throw new IOException("Errore utente null");
+            }
+        }catch(IOException e ){
+            e.printStackTrace();
+        }
+        return ut;
     }
 
-    /*@Override
-        public UtenteRegistrato login(String email, String password) {
-            UtenteRegistrato u = new UtenteRegistrato() ;
-            if ((u = ClienteDAO.findByEmailPassword(email, password)) != null) {
-                return u;
-            } else  ((u =
-                    bibliotecaDAO.findByEmailAndPassword(email, password)) != null) {
-                return u;
-            }
-
-        }
-    */
     @Override
-    public Cliente findClienteByUsernamePass(String username, String password) {
-        //Cliente cliente = ClienteDAO.
-        return null;
+    public Amministratore verificaAdmin(String username, String password) {
+
+         utDB = new UtenteRegistratoDAO();
+         Amministratore amm = new Amministratore();
+        try {
+            if (username != null && password != null) {
+                amm = utDB.doRetrieveAdmin(username,password);
+            }
+            if (amm == null) {
+                throw new IOException("Errore admin null");
+            }
+        }catch(IOException e ){
+            e.printStackTrace();
+        }
+        return amm;
     }
 }
