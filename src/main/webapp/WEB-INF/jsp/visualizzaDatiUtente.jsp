@@ -23,15 +23,15 @@
     </div>
 
     <div>
-        <form action="ModificaDatiUtenti">
-            <input type="submit" value="Modifica Dati" id="modifica">
+        <form action="VisualizzaModifica">
+            <input type="submit" value="Modifica Dati">
         </form>
 
         <form action="CancellaDatiUtenti">
-            <input type="submit" value="Cancella Dati" id="cancella">
+            <input type="text" name="email" id="email" value="${utente.email}" hidden/>
+            <input type="submit" value="Cancella Dati">
         </form>
-
-
     </div>
+
 </main>
 <%@include file="footer.jsp"%>

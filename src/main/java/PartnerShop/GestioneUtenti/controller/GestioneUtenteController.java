@@ -1,7 +1,11 @@
 package PartnerShop.GestioneUtenti.controller;
 
+import PartnerShop.GestioneUtenti.model.GestioneUtenteService;
+import PartnerShop.GestioneUtenti.model.GestioneUtenteServiceImp;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
 import PartnerShop.model.entity.UtenteRegistrato;
+import PartnerShop.registrazione.service.RegistrazioneService;
+import PartnerShop.registrazione.service.RegistrazioneServiceImp;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/VisualizzaDatiUtente", "/ModificaDatiUtenti", "/CancellaDatiUtenti"})
+import static java.lang.Integer.parseInt;
+
+@WebServlet(urlPatterns = {"/VisualizzaDatiUtente", "/VisualizzaModifica", "/ModificaForm","/CancellaDatiUtenti"})
 public class GestioneUtenteController extends HttpServlet {
+
+    private final GestioneUtenteService gestioneUtenteService = new GestioneUtenteServiceImp();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -20,19 +28,48 @@ public class GestioneUtenteController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String s = req.getServletPath();
+        RequestDispatcher dispatcher = null;
+        String s = request.getServletPath();
         if(s.equals("/VisualizzaDatiUtente")){
-            RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/visualizzaDatiUtente.jsp");
-            dispatcher.forward(req, resp);
-        }else if(s.equals("/ModificaDatiUtenti")){
-            RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/modificaDatiUtente.jsp");
-            dispatcher.forward(req, resp);
-        }else if(s.equals("/CancellaDatiUtenti")){
+            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/visualizzaDatiUtente.jsp");
+            dispatcher.forward(request, response);
+        }else if(s.equals("/VisualizzaModifica")){
+            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/modificaDatiUtente.jsp");
+            dispatcher.forward(request, response);
+        }else if(s.equals("/ModificaForm")){
 
-            RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/modificaDatiUtente.jsp");
-            dispatcher.forward(req, resp);
+            String nome = request.getParameter("nome");
+            String cognome = request.getParameter("cognome");
+            String email = request.getParameter("email");
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String ddn = request.getParameter("ddn");
+            String indirizzo = request.getParameter("indirizzo");
+            String cellulare = request.getParameter("cellulare");
+            int tipo= parseInt(request.getParameter("tipo"));
+            UtenteRegistrato ut = new UtenteRegistrato();
+            ut.setNome(nome);
+            ut.setCognome(cognome);
+            ut.setDdn(ddn);
+            ut.setUsername(username);
+            ut.setIndirizzo(indirizzo);
+            ut.setEmail(email);
+            ut.setPassword(password);
+            ut.setCellulare(cellulare);
+            ut.setTipo(tipo);
+
+            gestioneUtenteService.ModificaDati(ut, email);
+            request.getSession().setAttribute("utente", ut);
+            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
+            dispatcher.forward(request, response);
+        }else if(s.equals("/CancellaDatiUtenti")){
+                String email = request.getParameter("email");
+                gestioneUtenteService.CancellaUtente(email);
+                request.getSession().removeAttribute("utente");
+                dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/index.jsp"));
+                dispatcher.forward(request, response);
         }
     }
 }

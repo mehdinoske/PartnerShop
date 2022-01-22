@@ -12,11 +12,17 @@
 <main>
     <div class="form_container_registrazione">
         <div class="inner_form_container_registrazione">
-            <form action="Registrazione?id=cliente" method="post">
+            <form action="ModificaForm">
                 <label for="nome">Nome (Solo lettere e spazi)</label>
                 <input type="text" name="nome" id="nome" value="${utente.nome}" oninput="validaNome()"/>
                 <label for="cognome">Cognome (Solo lettere e spazi)</label>
                 <input type="text" name="cognome" id="cognome" value="${utente.cognome}" oninput="validaCognome()"/>
+
+                <input type="date" name="ddn" value="1999-12-07" hidden/>
+                <input type="text" name="email" id="email" value="${utente.email}" hidden/>
+                <input type="text" name="username" value="${utente.username}" id="username" hidden/>
+                <input type="text" name="tipo" value="${utente.tipo}" id="tipo" hidden/>
+
                 <label for="cell">Cellulare</label>
                 <input type="text" name="cellulare" id="cell" value="${utente.cellulare}" oninput="validaCellulare()"/>
                 <label for="indir">Indirizzo</label>

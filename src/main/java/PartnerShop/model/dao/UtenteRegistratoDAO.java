@@ -93,6 +93,29 @@ public class UtenteRegistratoDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void doUpdate(UtenteRegistrato ut, String email) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE utente_registrato SET nome = ?, cognome = ?, ddn = ?, email=?, indirizzo=?, username=? , passwordhash=?, tipo=? WHERE email=?");
+            ps.setString(1, ut.getNome());
+            ps.setString(2, ut.getCognome());
+            ps.setString(3, ut.getDdn());
+            ps.setString(4, ut.getEmail());
+            ps.setString(5, ut.getIndirizzo());
+            ps.setString(6, ut.getUsername());
+            ps.setString(7, ut.getPassword());
+            ps.setInt(8, ut.getTipo());
+            ps.setString(9, ut.getEmail());
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("UPDATE error.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
    /*
         public Utente doRetrieveByUsername(String user) {
             Utente ut = new Utente();
@@ -140,24 +163,5 @@ public class UtenteRegistratoDAO {
         }
 
 
-        public void doUpdate(Utente ut, int id) {
-            try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement(
-                        "UPDATE Utente SET nome = ?, cognome = ?, ddn = ?, username=? , email=?, admin=?, id=? WHERE id=?");
-                ps.setString(1, ut.getNome());
-                ps.setString(2, ut.getCognome());
-                ps.setDate(3, ut.getDdn());
-                ps.setString(4, ut.getUsername());
-                ps.setString(5, ut.getEmail());
-                ps.setBoolean(6, ut.isAdmin());
-                ps.setInt(7, id);
-                ps.setInt(8, ut.getId());
-                if (ps.executeUpdate() != 1) {
-                    throw new RuntimeException("UPDATE error.");
-                }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }*/
+*/
 }
