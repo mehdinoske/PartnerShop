@@ -52,6 +52,7 @@ public class GestioneProdottoDAO {
             ps.setString(4, prodotto.getCategoria());
             ps.setLong(5, prodotto.getPrezzo_Cent());
             ps.setInt(6, prodotto.getDisponibilita());
+
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
