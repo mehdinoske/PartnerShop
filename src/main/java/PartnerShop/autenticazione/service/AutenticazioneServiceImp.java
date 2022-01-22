@@ -1,5 +1,6 @@
 package PartnerShop.autenticazione.service;
 
+import PartnerShop.model.dao.CarrelloDAO;
 import PartnerShop.model.dao.ClienteDAO;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
 import PartnerShop.model.entity.Amministratore;
@@ -25,6 +26,9 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
         }catch(IOException e ){
             e.printStackTrace();
         }
+        CarrelloDAO car = new CarrelloDAO();
+        int id_carrello = car.doRetrieveIdCarrelloByEmailCliente(ut.getEmail());
+        ut.setId_Carrello(id_carrello);
         return ut;
     }
 

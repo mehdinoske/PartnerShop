@@ -16,6 +16,7 @@ public class CarrelloDAO {
     public CarrelloDAO() {
     }
 
+
     public Carrello doRetrieveByEmailCliente(String emailCliente, Carrello car) {
         try {
             Connection con = ConPool.getConnection();
@@ -56,7 +57,39 @@ public class CarrelloDAO {
         }
     }
 
+    public int doRetrieveIdCarrelloByEmailCliente(String emailCliente) {
+        try {
+            Connection con = ConPool.getConnection();
+            int id_carrello=0;
+            try {
+                PreparedStatement ps = con.prepareStatement("SELECT id FROM carrello WHERE email_Cliente = ?");
+                ps.setString(1, emailCliente);
+                ResultSet rs = ps.executeQuery();
 
+                while(rs.next()) {
+                    id_carrello = rs.getInt(1);
+                }
+            } catch (Throwable var10) {
+                if (con != null) {
+                    try {
+                        con.close();
+                    } catch (Throwable var9) {
+                        var10.addSuppressed(var9);
+                    }
+                }
+
+                throw var10;
+            }
+
+            if (con != null) {
+                con.close();
+            }
+
+            return id_carrello;
+        } catch (SQLException var11) {
+            throw new RuntimeException(var11);
+        }
+    }
 
     public void UpdateSession(Carrello car, String emailCliente,int id_Carrello) {
         try {

@@ -9,7 +9,7 @@ package PartnerShop.model.entity;
         private String descrizione;
         private String categoria;
         private long prezzo_Cent;
-        private int disponibilità;
+        private int disponibilita;
 
         public int getId() {
             return id;
@@ -63,12 +63,12 @@ package PartnerShop.model.entity;
             return String.format("%.2f", prezzo_Cent / 100.);
         }
 
-        public int getDisponibilità() {
-            return disponibilità;
+        public int getDisponibilita() {
+            return disponibilita;
         }
 
-        public void setDisponibilità(int disponibilità) {
-            this.disponibilità = disponibilità;
+        public void setDisponibilita(int disponibilità) {
+            this.disponibilita = disponibilita;
         }
 
         @Override
@@ -80,7 +80,7 @@ package PartnerShop.model.entity;
                     ", descrizione='" + descrizione + '\'' +
                     ", categoria='" + categoria + '\'' +
                     ", prezzoCent=" + prezzo_Cent +
-                    ", disponibilità=" + disponibilità +
+                    ", disponibilità=" + disponibilita +
                     '}';
         }
 
@@ -117,7 +117,7 @@ package PartnerShop.model.entity;
                     return false;
             } else if (!email_Venditore.equals(other.email_Venditore))
                 return false;
-            if (disponibilità != other.disponibilità)
+            if (disponibilita != other.disponibilita)
                 return false;
             return true;
         }

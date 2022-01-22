@@ -64,7 +64,7 @@ public class GestioneAcquistiDAO {
                 pr.setDescrizione(rs.getString(3));
                 pr.setCategoria(rs.getString(4));
                 pr.setPrezzo_Cent(rs.getInt(5));
-                pr.setDisponibilità(rs.getInt(6));
+                pr.setDisponibilita(rs.getInt(6));
                 prodotti.add(pr);
             }
         } catch (SQLException e) {
@@ -82,7 +82,7 @@ public class GestioneAcquistiDAO {
             ps.setString(2, pr.getDescrizione());
             ps.setString(3, pr.getCategoria());
             ps.setLong(4, pr.getPrezzo_Cent());
-            ps.setInt(5, pr.getDisponibilità());
+            ps.setInt(5, pr.getDisponibilita());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }

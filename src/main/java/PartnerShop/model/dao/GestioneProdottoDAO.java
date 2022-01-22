@@ -32,7 +32,7 @@ public class GestioneProdottoDAO {
                 p.setDescrizione(rs.getString(4));
                 p.setCategoria(rs.getString(5));
                 p.setPrezzo_Cent(rs.getInt(6));
-                p.setDisponibilità(rs.getInt(7));
+                p.setDisponibilita(rs.getInt(7));
                 return p;
             }
             return null;
@@ -51,7 +51,7 @@ public class GestioneProdottoDAO {
             ps.setString(3, prodotto.getDescrizione());
             ps.setString(4, prodotto.getCategoria());
             ps.setLong(4, prodotto.getPrezzo_Cent());
-            ps.setInt(4, prodotto.getDisponibilità());
+            ps.setInt(4, prodotto.getDisponibilita());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }

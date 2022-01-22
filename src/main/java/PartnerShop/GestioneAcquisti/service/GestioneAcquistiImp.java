@@ -12,17 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class GestioneAcquistiImp {
-   public HttpServletRequest aggiungiRimuoviCarrello(HttpServletRequest request){
+    CarrelloDAO carDB = new CarrelloDAO();
+   public void aggiungiRimuoviCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr,String setQuantStr){
        CarrelloDAO carDB = new CarrelloDAO();
-       HttpSession session = request.getSession();
-       UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
-       Carrello car = (Carrello)session.getAttribute("carrello");
-       if (car == null) {
-           car = new Carrello();
-           session.setAttribute("carrello", car);
-       }
-
-       String prodottoIdStr = request.getParameter("idProdotto");
        if (ut != null) {
            carDB.UpdateSession(car,ut.getEmail(), ut.getId_Carrello());
            car = carDB.doRetrieveByEmailCliente(ut.getEmail(), car);
@@ -32,7 +24,6 @@ public class GestioneAcquistiImp {
            int prodottoId = Integer.parseInt(prodottoIdStr);
            GestioneAcquistiDAO prodotti = new GestioneAcquistiDAO();
            Prodotto pr = prodotti.doRetrieveProdottoById(prodottoId);
-           String quantStr = request.getParameter("quant");
            if (quantStr != null) {
                int quant = Integer.parseInt(quantStr);
                Prodotto prodottoCar = car.getProdotto(prodottoId);
@@ -50,19 +41,31 @@ public class GestioneAcquistiImp {
                    }
                }
            } else {
-               String setQuantStr = request.getParameter("setQuant");
-               if (setQuantStr != null) {
+
+               /*if (setQuantStr != null) {
                    int setQuant = Integer.parseInt(setQuantStr);
                    if (setQuant <= 0) {
                        car.remove(prodottoId);
                        if (ut != null) {
-                           carDB.doDelete(1, prodottoId);
+                           carDB.doDelete(ut.getId_Carrello(), prodottoId);
                        }
                    }
-               }
+               }*/
            }
        }
-       return request;
+    }
+
+
+    public void rimuovidalcarrello(UtenteRegistrato ut,Carrello car,int prodottoId,String setQuantStr){
+        if (setQuantStr != null) {
+            int setQuant = Integer.parseInt(setQuantStr);
+            if (setQuant <= 0) {
+                car.remove(prodottoId);
+                if (ut != null) {
+                    carDB.doDelete(ut.getId_Carrello(), prodottoId);
+                }
+            }
+        }
     }
 
    public void acquistaProdotto(){
