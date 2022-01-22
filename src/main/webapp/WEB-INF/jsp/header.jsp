@@ -52,8 +52,8 @@
    <div class="dropdown">
        <button>${utente.nome}</button>
        <div class="dropdown-content">
-           <a href="ListaDesideri">Visualizza lista desideri</a>
            <a href="VisualizzaDatiUtente">Visualizza Dati utente</a>
+           <a href="ListaDesideri">Visualizza lista desideri</a>
            <a href="VisualizzaOrdini">Visualizza Ordini</a>
            <a href="Segnalazione">Invia Segnalazione</a>
            <a href="Autenticazione" method="get">Logout</a>
