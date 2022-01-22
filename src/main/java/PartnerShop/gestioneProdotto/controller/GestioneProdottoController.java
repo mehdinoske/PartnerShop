@@ -25,7 +25,7 @@ public class GestioneProdottoController extends HttpServlet {
         RequestDispatcher requestDispatcher;
         Prodotto prodotto;
         int id;
-
+        System.out.println(s);
         switch (s) {
 
             case "/prodotto-visualizza":
