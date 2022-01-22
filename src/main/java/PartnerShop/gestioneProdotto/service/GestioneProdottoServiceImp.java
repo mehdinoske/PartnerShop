@@ -21,4 +21,9 @@ public class GestioneProdottoServiceImp implements GestioneProdottoService {
         GestioneProdottoDAO pr = new GestioneProdottoDAO();
         pr.doSave(p);
     }
+
+    public void doUpdateProdotto(Prodotto p) {
+        GestioneProdottoDAO pr = new GestioneProdottoDAO();
+        pr.doUpdate(p);
+    }
 }

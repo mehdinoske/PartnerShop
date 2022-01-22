@@ -10,4 +10,6 @@ public interface GestioneProdottoService {
 
     public void doSaveProdotto(Prodotto p);
 
+    public void doUpdateProdotto(Prodotto p);
+
 }
