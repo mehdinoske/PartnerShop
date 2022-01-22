@@ -163,10 +163,11 @@ public class GestioneProdottoController extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                 requestDispatcher.forward(request, response);
                 break;
-
-
         }
+    }
 
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
     }
 }
