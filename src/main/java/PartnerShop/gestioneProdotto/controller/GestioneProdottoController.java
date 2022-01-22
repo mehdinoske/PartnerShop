@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/Prodotto_visualizza", "/Prodotto_modifica", "/Prodotto_aggiungi", "/Prodotto_rimuovi"})
+@WebServlet(urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi", "/prodotto-modifica"})
 public class GestioneProdottoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -23,12 +23,14 @@ public class GestioneProdottoController extends HttpServlet {
 
         String s = request.getServletPath();
         RequestDispatcher requestDispatcher;
+        Prodotto prodotto;
         int id;
 
         switch (s) {
-            case "/Prodotto_visualizza":
+
+            case "/prodotto-visualizza":
                 id = Integer.parseInt(request.getParameter("id"));
-                Prodotto prodotto = PrDAO.getProdottoById(id);
+                prodotto = PrDAO.getProdottoById(id);
                 /*if (prodotto == null) {
                 throw new MyServletException("Prodotto non trovato.");
                 }*/
@@ -44,22 +46,52 @@ public class GestioneProdottoController extends HttpServlet {
                 requestDispatcher.forward(request, response);
                 break;
 
-            case "/Prodotto_modifica": break;
-            case "/Prodotto_aggiungi": break;
+            case "/prodotto-modifica-form":
+                id = Integer.parseInt(request.getParameter("id"));
+                prodotto = PrDAO.getProdottoById(id);
+                if(prodotto != null) {
+                    request.setAttribute("prodotto", prodotto);
+                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/modificaProdotto.jsp");
+                    requestDispatcher.forward(request, response);
+                }
+                break;
 
-            case "/Prodotto_rimuovi":
+            case "/prodotto-aggiungi":
+                break;
+
+            case "/prodotto-rimuovi":
                 id = Integer.parseInt(request.getParameter("id"));
                 PrDAO.deleteProdottoById(id);
-                /*if (prodotto == null) {
-                throw new MyServletException("Prodotto non trovato.");
-                }*/
+                            /*if (prodotto == null) {
+                            throw new MyServletException("Prodotto non trovato.");
+                            }*/
                 request.setAttribute("messaggio", "Prodotto eliminato con successo.");
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                 //System.out.println("rimosso");
                 requestDispatcher.forward(request, response);
                 break;
 
+            case "/prodotto-modifica":
+                id = Integer.parseInt(request.getParameter("id"));
+                String nome = request.getParameter("nome");
+                String descrizione = request.getParameter("descrizione");
+                String categoria = request.getParameter("categoria");
+                Long prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
+                int disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
+                Prodotto prodotto1 = new Prodotto();
+                prodotto1.setId(id);
+                prodotto1.setNome(nome);
+                prodotto1.setDisponibilita(disponibilita);
+                prodotto1.setCategoria(categoria);
+                prodotto1.setDescrizione(descrizione);
+                prodotto1.setPrezzo_Cent(prezzo_Cent);
+                PrDAO.doUpdateProdotto(prodotto1);
+                request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
+                requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
+                requestDispatcher.forward(request, response);
+                break;
         }
-    }
 
+
+    }
 }

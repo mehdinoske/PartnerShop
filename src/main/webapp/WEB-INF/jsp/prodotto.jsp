@@ -4,42 +4,54 @@
     <jsp:param name="pageTitle" value="Home"/>
 </jsp:include>
 
-<section>
-    <grid>
+<main>
 
-        <!-- <div col="1/3">
-            <img src="img/prodotti/${prodotto.id}.jpg">
-        </div> -->
+            <div>
+                <div class="img_pr">
+                <img src="images/prodotti/${prodotto.id}.jpg">
+                <h5>${prodotto.descrizione}</h5>
+                </div>
+            </div>
 
-        <div col="1/3">
-            <h3>${prodotto.nome}</h3>
-            ${prodotto.descrizione}
-        </div>
 
-        <div col="1/3">
-            <c:if test="${utente.admin}">
-                <form action="AdminProdotto" method="post">
-                    <input type="hidden" name="id" value="${prodotto.id}">
-                    <input type="submit" value="Modifica">
-                    <input type="submit" name="rimuovi" value="Rimuovi">
-                </form>
-            </c:if>
-            <p>Categoria: ${prodotto.categoria}
-            </p>
-            <h4>Prezzo: ${prodotto.prezzo_Euro} &euro;</h4>
-            <form action="Carrello" method="post">
-                <label>Quantità:</label>
-                <select name="addNum">
-                    <c:forEach begin="1" end="30" varStatus="loop">
-                        <option value="${loop.index}">${loop.index}</option>
-                    </c:forEach>
-                </select>
-                <input type="hidden" name="prodId" value="${prodotto.id}">
-                <input type="submit" value="Aggiungi al carrello">
-            </form>
-        </div>
 
-    </grid>
-</section>
+            <div>
+                <div>
+                    <div>
+                        <form action="prodotto-modifica-form" method="get">
+                            <input type="hidden" name="id" value="${prodotto.id}">
+                            <input type="submit" value="Modifica">
+                        </form>
+                    </div>
+
+                    <div>
+                        <form action="prodotto-rimuovi" method="get">
+                            <input type="hidden" name="id" value="${prodotto.id}">
+                            <input type="submit" value="Rimuovi">
+                        </form>
+                    </div>
+                </div>
+
+                <div>
+                    <h2>${prodotto.nome}</h2>
+                    <h4>${prodotto.categoria}</h4>
+                    <h4>Prezzo: ${prodotto.prezzo_Euro} &euro;</h4>
+
+                    <form action="Carrello" method="get">
+                        <label>Quantità:</label>
+                        <select name="addNum">
+                            <c:forEach begin="0" end="${prodotto.disponibilita}" varStatus="loop">
+                                <option value="${loop.index}">${loop.index}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="hidden" name="prodId" value="${prodotto.id}">
+                        <input type="submit" value="Aggiungi al carrello">
+                    </form>
+                </div>
+
+            </div>
+
+</main>
+
 
 <%@include file="footer.jsp"%>

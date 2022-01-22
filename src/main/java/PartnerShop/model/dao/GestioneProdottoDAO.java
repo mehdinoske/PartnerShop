@@ -50,8 +50,8 @@ public class GestioneProdottoDAO {
             ps.setString(2, prodotto.getNome());
             ps.setString(3, prodotto.getDescrizione());
             ps.setString(4, prodotto.getCategoria());
-            ps.setLong(4, prodotto.getPrezzo_Cent());
-            ps.setInt(4, prodotto.getDisponibilita());
+            ps.setLong(5, prodotto.getPrezzo_Cent());
+            ps.setInt(6, prodotto.getDisponibilita());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
@@ -59,6 +59,26 @@ public class GestioneProdottoDAO {
             rs.next();
             int id = rs.getInt(1);
             prodotto.setId(id);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doUpdate(Prodotto prodotto) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE prodotto SET nome=?, descrizione=?, categoria=?, prezzo_cent=?, quantita_disponibile=? WHERE id=?",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, prodotto.getNome());
+            ps.setString(2, prodotto.getDescrizione());
+            ps.setString(3, prodotto.getCategoria());
+            ps.setLong(4, prodotto.getPrezzo_Cent());
+            ps.setInt(5, prodotto.getDisponibilita());
+            ps.setInt(6, prodotto.getId());
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
