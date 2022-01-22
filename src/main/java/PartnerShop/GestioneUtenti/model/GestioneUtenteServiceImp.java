@@ -6,9 +6,9 @@ import PartnerShop.model.entity.UtenteRegistrato;
 public class GestioneUtenteServiceImp implements GestioneUtenteService {
 
     @Override
-    public void ModificaDati(UtenteRegistrato ut, String email) {
+    public void ModificaDati(UtenteRegistrato ut) {
         UtenteRegistratoDAO utenteDAO = new UtenteRegistratoDAO();
-        utenteDAO.doUpdate(ut, email);
+        utenteDAO.doUpdate(ut);
     }
 
     @Override

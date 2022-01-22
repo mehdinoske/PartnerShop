@@ -4,6 +4,6 @@ import PartnerShop.model.entity.UtenteRegistrato;
 
 public interface GestioneUtenteService {
 
-    public void ModificaDati(UtenteRegistrato ut, String email);
-    public void CancellaUtente(String email);
+    void ModificaDati(UtenteRegistrato ut);
+    void CancellaUtente(String email);
 }

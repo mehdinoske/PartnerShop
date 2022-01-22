@@ -1,6 +1,6 @@
 package PartnerShop.model.dao;
 
-import PartnerShop.model.entity.Cliente;
+
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.utils.ConPool;
 
@@ -94,7 +94,7 @@ public class UtenteRegistratoDAO {
         }
     }
 
-    public void doUpdate(UtenteRegistrato ut, String email) {
+    public void doUpdate(UtenteRegistrato ut) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE utente_registrato SET nome = ?, cognome = ?, ddn = ?, email=?, indirizzo=?, username=? , passwordhash=?, tipo=? WHERE email=?");
