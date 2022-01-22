@@ -3,6 +3,7 @@ package PartnerShop.gestioneProdotto.controller;
 import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
 import PartnerShop.gestioneProdotto.service.GestioneProdottoServiceImp;
 import PartnerShop.model.entity.Prodotto;
+import PartnerShop.model.entity.UtenteRegistrato;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi", "/prodotto-modifica"})
+@WebServlet(urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi", "/prodotto-modifica", "/prodotto-aggiungi-form"})
 public class GestioneProdottoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -24,6 +25,7 @@ public class GestioneProdottoController extends HttpServlet {
         String s = request.getServletPath();
         RequestDispatcher requestDispatcher;
         Prodotto prodotto;
+        UtenteRegistrato ut;
         int id;
         System.out.println(s);
         switch (s) {
@@ -57,6 +59,43 @@ public class GestioneProdottoController extends HttpServlet {
                 break;
 
             case "/prodotto-aggiungi":
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                if(ut.getTipo() == 1) {
+                    String nome = request.getParameter("nome");
+                    String descrizione = request.getParameter("descrizione");
+                    String categoria = request.getParameter("categoria");
+                    System.out.println(request.getParameter("descrizione"));
+                    long prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
+                    int disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
+                    prodotto = new Prodotto();
+                    prodotto.setNome(nome);
+                    prodotto.setDisponibilita(disponibilita);
+                    prodotto.setCategoria(categoria);
+                    prodotto.setDescrizione(descrizione);
+                    prodotto.setPrezzo_Cent(prezzo_Cent);
+                    PrDAO.doUpdateProdotto(prodotto);
+                    request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
+                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
+                    requestDispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("messaggio", "Non hai l'autorizzazione per aggiungere un prodotto.");
+                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
+                    requestDispatcher.forward(request, response);
+                }
+
+                break;
+
+            case "/prodotto-aggiungi-form":
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                System.out.println(ut.getNome());
+                if(ut.getTipo() == 1) {
+                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/aggiungiProdotto.jsp");
+                    requestDispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("messaggio", "Non hai l'autorizzazione per aggiungere un prodotto.");
+                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
+                    requestDispatcher.forward(request, response);
+                }
                 break;
 
             case "/prodotto-rimuovi":
@@ -76,16 +115,17 @@ public class GestioneProdottoController extends HttpServlet {
                 String nome = request.getParameter("nome");
                 String descrizione = request.getParameter("descrizione");
                 String categoria = request.getParameter("categoria");
-                Long prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
+                System.out.println(request.getParameter("descrizione"));
+                long prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
                 int disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
-                Prodotto prodotto1 = new Prodotto();
-                prodotto1.setId(id);
-                prodotto1.setNome(nome);
-                prodotto1.setDisponibilita(disponibilita);
-                prodotto1.setCategoria(categoria);
-                prodotto1.setDescrizione(descrizione);
-                prodotto1.setPrezzo_Cent(prezzo_Cent);
-                PrDAO.doUpdateProdotto(prodotto1);
+                prodotto = new Prodotto();
+                prodotto.setId(id);
+                prodotto.setNome(nome);
+                prodotto.setDisponibilita(disponibilita);
+                prodotto.setCategoria(categoria);
+                prodotto.setDescrizione(descrizione);
+                prodotto.setPrezzo_Cent(prezzo_Cent);
+                PrDAO.doUpdateProdotto(prodotto);
                 request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                 requestDispatcher.forward(request, response);
