@@ -64,7 +64,7 @@ public class GestioneUtenteController extends HttpServlet {
 
                 gestioneUtenteService.ModificaDati(ut);
                 request.getSession().setAttribute("utente", ut);
-                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
+                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/visualizzaDatiUtente.jsp");
                 dispatcher.forward(request, response);
                 break;
             }

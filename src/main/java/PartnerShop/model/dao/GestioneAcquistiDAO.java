@@ -170,7 +170,7 @@ public class GestioneAcquistiDAO {
         }
     }
 
-    public ArrayList<Ordine> doRetrieveAll() {
+    /*public ArrayList<Ordine> doRetrieveAll() {
         ArrayList list = new ArrayList();
 
         try {
@@ -230,7 +230,7 @@ public class GestioneAcquistiDAO {
         } catch (SQLException var8) {
             throw new RuntimeException(var8);
         }
-    }
+    }*/
 
 
 }

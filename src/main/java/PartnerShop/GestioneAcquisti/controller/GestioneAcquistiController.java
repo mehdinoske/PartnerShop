@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "Ordini"})
+@WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "/Ordini"})
 public class GestioneAcquistiController extends HttpServlet {
 
     @Override
