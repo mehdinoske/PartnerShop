@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class GestioneAcquistiImp {
+public class GestioneAcquistiImp implements GestioneAcquistiService{
     CarrelloDAO carDB = new CarrelloDAO();
-   public void aggiungiRimuoviCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr,String setQuantStr){
+   public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr,String setQuantStr){
        CarrelloDAO carDB = new CarrelloDAO();
        if (ut != null) {
            carDB.UpdateSession(car,ut.getEmail(), ut.getId_Carrello());

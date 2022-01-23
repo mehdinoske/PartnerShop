@@ -16,28 +16,43 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/Carrello")
+@WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "Ordini"})
 public class GestioneAcquistiController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CarrelloDAO carDB = new CarrelloDAO();
-        HttpSession session = request.getSession();
-        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
-        Carrello car = (Carrello)session.getAttribute("Carrello");
-        if (car == null) {
-            car = new Carrello();
-            session.setAttribute("Carrello", car);
+        String s = request.getServletPath();
+        RequestDispatcher dispatcher;
+        switch (s){
+            case "/Carrello":
+                HttpSession session = request.getSession();
+                UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                Carrello car = (Carrello)session.getAttribute("Carrello");
+                if (car == null) {
+                    car = new Carrello();
+                    session.setAttribute("Carrello", car);
+                }
+                String prodottoIdStr = request.getParameter("idProdotto");
+                String quantStr = request.getParameter("quant");
+                String setQuantStr = request.getParameter("setQuant");
+                GestioneAcquistiImp imp = new GestioneAcquistiImp();
+                imp.aggiungiAlCarrello(car,ut,prodottoIdStr,quantStr,setQuantStr);
+                if(setQuantStr!= null && Integer.parseInt(setQuantStr)<=0)
+                    imp.rimuovidalcarrello(ut,car,Integer.parseInt(prodottoIdStr),setQuantStr);
+                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/carrello.jsp");
+                dispatcher.forward(request, response);
+                break;
+            case "/Acquista":
+                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/completaAcquisto.jsp");
+                dispatcher.forward(request, response);
+                break;
+            case "/CompletaAcquisto":
+
+                break;
+            case "Ordini":
+                break;
         }
-        String prodottoIdStr = request.getParameter("idProdotto");
-        String quantStr = request.getParameter("quant");
-        String setQuantStr = request.getParameter("setQuant");
-        GestioneAcquistiImp imp = new GestioneAcquistiImp();
-        imp.aggiungiRimuoviCarrello(car,ut,prodottoIdStr,quantStr,setQuantStr);
-        if(setQuantStr!= null && Integer.parseInt(setQuantStr)<=0)
-            imp.rimuovidalcarrello(ut,car,Integer.parseInt(prodottoIdStr),setQuantStr);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/carrello.jsp");
-        dispatcher.forward(request, response);
+
 
     }
 

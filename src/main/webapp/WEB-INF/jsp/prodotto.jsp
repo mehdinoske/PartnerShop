@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="header.jsp">
-    <jsp:param name="pageTitle" value="Home"/>
+    <jsp:param name="pageTitle" value="${prodotto.nome}"/>
 </jsp:include>
 
 <main>
@@ -39,12 +39,12 @@
 
                     <form action="Carrello" method="get">
                         <label>Quantità:</label>
-                        <select name="addNum">
+                        <select name="quant">
                             <c:forEach begin="0" end="${prodotto.disponibilita}" varStatus="loop">
                                 <option value="${loop.index}">${loop.index}</option>
                             </c:forEach>
                         </select>
-                        <input type="hidden" name="prodId" value="${prodotto.id}">
+                        <input type="hidden" name="idProdotto" value="${prodotto.id}">
                         <input type="submit" value="Aggiungi al carrello">
                     </form>
                 </div>

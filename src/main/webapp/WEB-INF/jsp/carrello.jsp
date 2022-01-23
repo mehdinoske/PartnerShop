@@ -38,8 +38,8 @@
         </div>
     </c:if>
     <c:if test="${not empty Carrello.getProdotti()}">
-        <div class="prezzoFinale"><h1>Totale: ${carrello.sommaTot()}&euro; </h1>
-            <form action="Ordine" method="post">
+        <div class="prezzoFinale"><h1>Totale: ${Carrello.sommaTot()}&euro; </h1>
+            <form action="Acquista" method="post">
 
                 <input type="submit" value="completa acquisto">
             </form>
