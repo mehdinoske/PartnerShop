@@ -2,6 +2,11 @@
     <jsp:param name="pageTitle" value="Home"/>
 </jsp:include>
 
-<h1> ${messaggio}</h1>
+<main>
+
+    <h1> ${messaggio}</h1>
+
+</main>
+
 
 <%@include file="footer.jsp"%>

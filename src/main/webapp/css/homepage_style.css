@@ -105,7 +105,7 @@ li, a, button{
     background-position: 4px 5px;
     background-repeat: no-repeat;
     padding-left: 30px;
-    margin-right: 485px;
+    margin-right: 50px;
     transition: width 1s;
 }
 
@@ -148,10 +148,10 @@ li, a, button{
 
 .grid_layout div{
     width: 120px;
-    height: 170px;
+    height: 155px;
     display: block;
     background-color: white;
-    border-radius: 15px;
+    border-radius: 5px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     transition: width 0.5s, height 0.5s;
 }
@@ -162,19 +162,19 @@ li, a, button{
 }
 
 .grid_layout div img {
-    border-radius: 10px;
-    border: 2px solid green;
+    border-radius: 5px;
+    border: 2px solid coral;
     display: block;
     margin-top: 5%;
     margin-left: auto;
     margin-right: auto;
-    max-height: 110px;
+    max-height: 95px;
 }
 
 
 .grid_layout div input[type=submit]{
     font-family: 'Montserrat';
-    background-color: green;
+    background-color: coral;
     border: none;
     color: white;
     padding: 9px 11px;

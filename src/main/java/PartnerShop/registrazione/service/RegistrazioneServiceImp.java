@@ -1,5 +1,6 @@
 package PartnerShop.registrazione.service;
 
+import PartnerShop.model.dao.CarrelloDAO;
 import PartnerShop.model.dao.ClienteDAO;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
 import PartnerShop.model.dao.VenditoreDAO;
@@ -12,9 +13,11 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
     @Override
     public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut) {
 
-       ClienteDAO ctDAO = new ClienteDAO();
+        CarrelloDAO carDAO = new CarrelloDAO();
+        ClienteDAO ctDAO = new ClienteDAO();
         ctDAO.doSave(ut,0);
         ctDAO.doSave(ut.getEmail());
+        carDAO.doCreateCarrello(ut.getEmail());
         return ut;
     }
 

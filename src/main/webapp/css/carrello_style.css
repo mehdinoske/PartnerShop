@@ -23,7 +23,7 @@
 
 .carrello_layout > div img {
     border-radius: 10px;
-    border: 2px solid green;
+    border: 2px solid coral;
     display: inline-block;
     margin-top: 2%;
     margin-left: 10px;
@@ -40,7 +40,7 @@
 
 .carrello_layout > div #inner_div button{
     font-family: 'Montserrat';
-    background-color: green;
+    background-color: coral;
     border: none;
     color: white;
     padding: 9px 11px;
@@ -66,7 +66,7 @@
 
 input[type=submit]{
     font-family: 'Montserrat';
-    background-color: green;
+    background-color: coral;
     border: none;
     color: white;
     padding: 9px 11px;
