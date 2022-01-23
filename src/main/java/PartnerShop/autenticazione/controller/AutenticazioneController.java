@@ -27,12 +27,9 @@ public final class AutenticazioneController extends HttpServlet {
 
         }
         request.getSession().setAttribute("utente", ut);
-        String dest = request.getHeader("referer");
-        if (dest == null || dest.contains("/Login") || dest.trim().isEmpty()) {
-            dest = ".";
-        }
 
-        response.sendRedirect(dest);
+
+        response.sendRedirect(".");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws  IOException  {
@@ -43,10 +40,7 @@ public final class AutenticazioneController extends HttpServlet {
         {
              request.getSession().removeAttribute("admin");
         }
-        String dest = request.getHeader("referer");
-        if (dest == null || dest.contains("/Login") || dest.trim().isEmpty() || dest.contains("/visualizzaOrdini")) {
-            dest = ".";
-        }
-        response.sendRedirect(dest);
+       // request.getSession().removeAttribute("carrello");
+        response.sendRedirect(".");
     }
 }
