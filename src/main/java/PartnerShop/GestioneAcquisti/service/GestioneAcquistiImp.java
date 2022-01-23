@@ -1,17 +1,13 @@
 package PartnerShop.GestioneAcquisti.service;
 
 import PartnerShop.model.dao.CarrelloDAO;
+import PartnerShop.model.dao.ClienteDAO;
 import PartnerShop.model.dao.GestioneAcquistiDAO;
-import PartnerShop.model.entity.Carrello;
-import PartnerShop.model.entity.Cliente;
-import PartnerShop.model.entity.Prodotto;
-import PartnerShop.model.entity.UtenteRegistrato;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import PartnerShop.model.entity.*;
+import java.util.Iterator;
 
 public class GestioneAcquistiImp implements GestioneAcquistiService{
+
     CarrelloDAO carDB = new CarrelloDAO();
    public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr,String setQuantStr){
        CarrelloDAO carDB = new CarrelloDAO();
@@ -68,8 +64,37 @@ public class GestioneAcquistiImp implements GestioneAcquistiService{
         }
     }
 
-   public void acquistaProdotto(){
+   public void acquistaProdotto(UtenteRegistrato ut,Carrello car,String indirizzo,String cardc){
+       Ordine ord = new Ordine();
+       if (car != null) {
+           GestioneAcquistiDAO ordDB = new GestioneAcquistiDAO();
+           ord.setEmailCliente(ut.getEmail());
+           ord.setData();
+           ord.setIndirizzo(indirizzo);
+           ord.setPrezzo_tot(car.sommaTot());
+           Cliente cl = new Cliente();
+           cl.setEmail(ut.getEmail());
+           cl.setCartaDiCredito(cardc);
+           ClienteDAO clDB = new ClienteDAO();
+           clDB.doSave(cl);
+           Iterator var8 = car.getProdottoHash().keySet().iterator();
 
+           Integer key;
+           while(var8.hasNext()) {
+               key = (Integer)var8.next();
+               ord.setProdottoHash(car.getProdotto(key));
+               ord.setQuantHash(key, car.getQuant(key));
+           }
+
+           ordDB.doSaveOrdine(ord);
+           var8 = car.getProdottoHash().keySet().iterator();
+
+           while(var8.hasNext()) {
+               key = (Integer)var8.next();
+               carDB.doDelete(ut.getId_Carrello(), key);
+           }
+
+       }
    }
 
    public void visualizzaOridine(){

@@ -1,9 +1,9 @@
 package PartnerShop.model.entity;
 
 public class Cliente extends UtenteRegistrato{
-   private int cartaDiCredito;
+   private String cartaDiCredito;
 
-    public Cliente(String nome, String cognome, String dataDiNascita, String username, String password, String email, String indirizzo,String cellulare,int tipo, int cartaDiCredito) {
+    public Cliente(String nome, String cognome, String dataDiNascita, String username, String password, String email, String indirizzo,String cellulare,int tipo, String cartaDiCredito) {
         super(nome, cognome, dataDiNascita, username, password, email, indirizzo,cellulare,tipo);
         this.cartaDiCredito = cartaDiCredito;
     }
@@ -11,11 +11,11 @@ public class Cliente extends UtenteRegistrato{
 
     }
 
-    public int getCartaDiCredito() {
+    public String getCartaDiCredito() {
         return cartaDiCredito;
     }
 
-    public void setCartaDiCredito(int cartaDiCredito) {
+    public void setCartaDiCredito(String cartaDiCredito) {
         this.cartaDiCredito = cartaDiCredito;
     }
 }

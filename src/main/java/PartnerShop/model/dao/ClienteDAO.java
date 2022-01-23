@@ -25,6 +25,23 @@ public class ClienteDAO extends UtenteRegistratoDAO{
         }
     }
 
+    public void doSave(Cliente ct) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE cliente SET creditcard=? WHERE email=?",
+                    Statement.RETURN_GENERATED_KEYS);
+            ps.setString(2,ct.getEmail());
+            ps.setString(1,ct.getCartaDiCredito());
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("INSERT error.");
+            }
+            ResultSet rs = ps.getGeneratedKeys();
+            rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 /*
     public Cliente findByEmail(String email) {
             Cliente ct = new Cliente();

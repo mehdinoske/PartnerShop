@@ -19,7 +19,7 @@ public class Ordine {
     public Ordine() {
     }
 
-    public Collection<Prodotto> getVideogiochi() {
+    public Collection<Prodotto> getProdotti() {
         return this.getProdottoHash().values();
     }
 
@@ -27,24 +27,24 @@ public class Ordine {
         return this.id;
     }
 
-    public Prodotto getProdotto(int idGioco) {
-        return (Prodotto) this.getProdottoHash().get(idGioco);
+    public Prodotto getProdotto(int idProdotto) {
+        return (Prodotto) this.getProdottoHash().get(idProdotto);
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setGameHash(Prodotto pr) {
+    public void setProdottoHash(Prodotto pr) {
         this.getProdottoHash().put(pr.getId(), pr);
     }
 
-    public void setQuantHash(int idGioco, int quant) {
-        this.getQuantHash().put(idGioco, quant);
+    public void setQuantHash(int idProdotto, int quant) {
+        this.getQuantHash().put(idProdotto, quant);
     }
 
-    public int getQuant(int idGioco) {
-        return (Integer)this.getQuantHash().get(idGioco);
+    public int getQuant(int idProdotto) {
+        return (Integer)this.getQuantHash().get(idProdotto);
     }
 
     public long getPrezzoEuro(int idProdotto) {

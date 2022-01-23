@@ -41,7 +41,7 @@
         <div class="prezzoFinale"><h1>Totale: ${Carrello.sommaTot()}&euro; </h1>
             <form action="Acquista" method="post">
 
-                <input type="submit" value="completa acquisto">
+                <input type="submit" value="CompletaAcquisto">
             </form>
         </div>
     </c:if>

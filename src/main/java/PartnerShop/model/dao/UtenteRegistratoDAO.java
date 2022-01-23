@@ -16,7 +16,7 @@ public class UtenteRegistratoDAO {
         public ArrayList<UtenteRegistrato> doRetrieveAll() {
             ArrayList<UtenteRegistrato> list = new ArrayList<>();
             try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn, username,email, passwordhash  FROM UtenteRegistrato");
+                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn, username,email, passwordhash  FROM utente_registrato");
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     UtenteRegistrato ut = new UtenteRegistrato();

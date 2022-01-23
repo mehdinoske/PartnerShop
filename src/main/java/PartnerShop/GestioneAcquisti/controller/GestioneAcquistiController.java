@@ -15,19 +15,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Iterator;
 
-@WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "Ordini"})
+@WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "/Ordini"})
 public class GestioneAcquistiController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getServletPath();
         RequestDispatcher dispatcher;
+        UtenteRegistrato ut = new UtenteRegistrato();
+        Carrello car = new Carrello();
+        GestioneAcquistiImp imp = new GestioneAcquistiImp();
         switch (s){
             case "/Carrello":
                 HttpSession session = request.getSession();
-                UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
-                Carrello car = (Carrello)session.getAttribute("Carrello");
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                car = (Carrello)session.getAttribute("Carrello");
                 if (car == null) {
                     car = new Carrello();
                     session.setAttribute("Carrello", car);
@@ -35,7 +39,7 @@ public class GestioneAcquistiController extends HttpServlet {
                 String prodottoIdStr = request.getParameter("idProdotto");
                 String quantStr = request.getParameter("quant");
                 String setQuantStr = request.getParameter("setQuant");
-                GestioneAcquistiImp imp = new GestioneAcquistiImp();
+                //GestioneAcquistiImp imp = new GestioneAcquistiImp();
                 imp.aggiungiAlCarrello(car,ut,prodottoIdStr,quantStr,setQuantStr);
                 if(setQuantStr!= null && Integer.parseInt(setQuantStr)<=0)
                     imp.rimuovidalcarrello(ut,car,Integer.parseInt(prodottoIdStr),setQuantStr);
@@ -46,10 +50,20 @@ public class GestioneAcquistiController extends HttpServlet {
                 dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/completaAcquisto.jsp");
                 dispatcher.forward(request, response);
                 break;
-            case "/CompletaAcquisto":
-
+            case "/Ordini":
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                if (ut != null) {
+                    car = (Carrello)request.getSession().getAttribute("Carrello");
+                    String indirizzo = request.getParameter("indirizzo");
+                    String cardc = request.getParameter("cartadc");
+                    imp.acquistaProdotto(ut,car,indirizzo,cardc);
+                    request.getSession().removeAttribute("Carrello");
+                    request.getRequestDispatcher("/WEB-INF/jsp/ordineEffettuato.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/WEB-INF/jsp/registrazioneCliente.jsp").forward(request, response);
+                }
                 break;
-            case "Ordini":
+            case "/OrdiniVenditore":
                 break;
         }
 

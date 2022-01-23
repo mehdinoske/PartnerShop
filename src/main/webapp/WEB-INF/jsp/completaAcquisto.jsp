@@ -13,18 +13,18 @@
 <main>
     <div class="form_container_registrazione">
         <div class="inner_form_container_registrazione">
-            <form action="CompletaAcquisto" method="post">
+            <form action="Ordini" method="post">
 
                 <label for="nome">Nome (Solo lettere e spazi)</label>
-                <input type="text" name="nome" id="nome" value="" oninput="validaNome()"/>
+                <input type="text" name="nome" id="nome" value="${utente.nome}"/>
                 <label for="cognome">Cognome (Solo lettere e spazi)</label>
-                <input type="text" name="cognome" id="cognome" value="" oninput="validaCognome()"/>
+                <input type="text" name="cognome" id="cognome" value="${utente.cognome}"/>
                 <label for="indir">Indirizzo</label>
-                <input type="text" name="indirizzo" id="indir" value="" oninput="validaIndirizzo()"/>
+                <input type="text" name="indirizzo" id="indir" value=""/>
                 <label for="cartadc">Carta di credito</label>
-                <input type="text" name="cartadc" id="cartadc" value="" oninput="validaNome()"/>
+                <input type="text" name="cartadc" id="cartadc" value=""/>
 
-                <input type="submit" value="Registrami" id="registrami" disabled><span id="notificaMes"></span>
+                <input type="submit" value="Completa Acquisto">
 
             </form>
         </div>
