@@ -72,6 +72,7 @@ insert into prodotto values (1, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 
 insert into prodotto values (2, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
 insert into prodotto values (3, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
 insert into prodotto values (4, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
+insert into prodotto values (5, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
 unlock tables;
 
 create table ordine(
