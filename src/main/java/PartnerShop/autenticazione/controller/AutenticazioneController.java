@@ -37,11 +37,11 @@ public final class AutenticazioneController extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws  IOException  {
         request.getSession().removeAttribute("utente");
+        request.getSession().removeAttribute("Carrello");
         if(amm!=null)
         {
              request.getSession().removeAttribute("admin");
         }
-       // request.getSession().removeAttribute("carrello");
         String dest = request.getHeader("referer");
         if (dest == null || dest.contains("/Login") || dest.trim().isEmpty() || dest.contains("/visualizzaOrdini")) {
             dest = ".";

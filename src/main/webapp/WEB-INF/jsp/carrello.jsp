@@ -17,7 +17,7 @@
         <div class="carrello_layout">
             <c:forEach items="${Carrello.getProdotti()}" var="prodotto">
                 <div>
-                    <a href="VisualizzaGioco?id=${prodotto.id}"><img src="images/prodotti/${prodotto.id}.jpg"></a>
+                    <a href="prodotto?id=${prodotto.id}"><img src="images/prodotti/${prodotto.id}.jpg"></a>
                     <div id="inner_div">
                         <h2>${prodotto.nome}</h2>
                         <h3>Prezzo: ${prodotto.prezzo_Cent} &euro;</h3>

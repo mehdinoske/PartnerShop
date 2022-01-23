@@ -1,10 +1,8 @@
 package PartnerShop.GestioneAcquisti.controller;
 
-import PartnerShop.GestioneAcquisti.service.GestioneAcquistiImp;
-import PartnerShop.model.dao.CarrelloDAO;
-import PartnerShop.model.dao.GestioneAcquistiDAO;
+import PartnerShop.GestioneAcquisti.service.GestioneAcquistiService;
+import PartnerShop.GestioneAcquisti.service.GestioneAcquistiServiceImp;
 import PartnerShop.model.entity.Carrello;
-import PartnerShop.model.entity.Prodotto;
 import PartnerShop.model.entity.UtenteRegistrato;
 
 import javax.servlet.RequestDispatcher;
@@ -15,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Iterator;
 
 @WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "/Ordini"})
 public class GestioneAcquistiController extends HttpServlet {
@@ -26,7 +23,7 @@ public class GestioneAcquistiController extends HttpServlet {
         RequestDispatcher dispatcher;
         UtenteRegistrato ut = new UtenteRegistrato();
         Carrello car = new Carrello();
-        GestioneAcquistiImp imp = new GestioneAcquistiImp();
+        GestioneAcquistiService imp = new GestioneAcquistiServiceImp();
         switch (s){
             case "/Carrello":
                 HttpSession session = request.getSession();
@@ -47,8 +44,13 @@ public class GestioneAcquistiController extends HttpServlet {
                 dispatcher.forward(request, response);
                 break;
             case "/Acquista":
-                dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/completaAcquisto.jsp");
-                dispatcher.forward(request, response);
+                ut =(UtenteRegistrato) request.getSession().getAttribute("utente");
+                if(ut!=null){
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/completaAcquisto.jsp");
+                    dispatcher.forward(request, response);
+                }else {
+                    request.getRequestDispatcher("/WEB-INF/jsp/registrazioneCliente.jsp").forward(request, response);
+                }
                 break;
             case "/Ordini":
                 ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
@@ -59,8 +61,6 @@ public class GestioneAcquistiController extends HttpServlet {
                     imp.acquistaProdotto(ut,car,indirizzo,cardc);
                     request.getSession().removeAttribute("Carrello");
                     request.getRequestDispatcher("/WEB-INF/jsp/ordineEffettuato.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("/WEB-INF/jsp/registrazioneCliente.jsp").forward(request, response);
                 }
                 break;
             case "/OrdiniVenditore":

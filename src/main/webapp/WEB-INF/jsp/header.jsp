@@ -86,8 +86,9 @@
 </li>
 
 
-
+            <c:if test="${utente.tipo!=1 && admin == null}">
 <li><a href="Carrello"><img src="css/shopping-cart.svg"></a></li>
+            </c:if>
 </ul>
 </nav>
 </header>

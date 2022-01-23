@@ -6,7 +6,7 @@ import PartnerShop.model.dao.GestioneAcquistiDAO;
 import PartnerShop.model.entity.*;
 import java.util.Iterator;
 
-public class GestioneAcquistiImp implements GestioneAcquistiService{
+public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
 
     CarrelloDAO carDB = new CarrelloDAO();
    public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr,String setQuantStr){
