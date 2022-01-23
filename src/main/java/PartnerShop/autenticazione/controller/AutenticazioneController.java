@@ -24,15 +24,15 @@ public final class AutenticazioneController extends HttpServlet {
         if(ut ==null){
             amm= autenticazioneService.verificaAdmin(username,password);
             request.getSession().setAttribute("admin", amm);
-
         }
         request.getSession().setAttribute("utente", ut);
+        /*
         String dest = request.getHeader("referer");
         if (dest == null || dest.contains("/Login") || dest.trim().isEmpty()) {
             dest = ".";
         }
-
-        response.sendRedirect(dest);
+        */
+        response.sendRedirect(".");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws  IOException  {
@@ -42,10 +42,6 @@ public final class AutenticazioneController extends HttpServlet {
              request.getSession().removeAttribute("admin");
         }
        // request.getSession().removeAttribute("carrello");
-        String dest = request.getHeader("referer");
-        if (dest == null || dest.contains("/Login") || dest.trim().isEmpty() || dest.contains("/visualizzaOrdini")) {
-            dest = ".";
-        }
-        response.sendRedirect(dest);
+        response.sendRedirect(".");
     }
 }

@@ -52,11 +52,11 @@
    <div class="dropdown">
        <button>${utente.nome}</button>
        <div class="dropdown-content">
-           <a href="VisualizzaDatiUtente">Visualizza Dati utente</a>
            <a href="ListaDesideri">Visualizza lista desideri</a>
+           <a href="VisualizzaDatiUtente">Visualizza Dati utente</a>
            <a href="VisualizzaOrdini">Visualizza Ordini</a>
-           <a href="Segnalazione">Invia Segnalazione</a>
            <a href="Autenticazione" method="get">Logout</a>
+           <a href="AggiungiSegnalazione">Invia Segnalazione</a>
        </div>
    </div>
 </c:if>
@@ -76,7 +76,7 @@
                     <div class="dropdown">
                         <button>${admin.username}</button>
                         <div class="dropdown-content">
-                            <a href="VisualizzaListaSegnalazioni">Visualizza lista segnalazioni</a>
+                            <a href="VisualizzaSegnalazioni">Visualizza lista segnalazioni</a>
                             <a href="VisualizzaUteni">Visualizza utenti registrati</a>
                             <a href="VisualizzaProdotti">Visualizza tutti i prodotti</a>
                             <a href="Autenticazione" methods="get">LOGOUT</a>
