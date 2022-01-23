@@ -7,6 +7,10 @@ public class Segnalazione {
     private String motivazione;
     private String commento;
 
+    public Segnalazione (){
+
+    }
+
     public Segnalazione(String email, int stato, String motivazione, String commento) {
         this.email = email;
         this.stato = stato;
