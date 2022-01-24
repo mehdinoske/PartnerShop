@@ -54,7 +54,7 @@
        <div class="dropdown-content">
            <a href="ListaDesideri">Visualizza lista desideri</a>
            <a href="VisualizzaDatiUtente">Visualizza Dati utente</a>
-           <a href="VisualizzaOrdini">Visualizza Ordini</a>
+           <a href="OrdiniCliente">Visualizza Ordini</a>
            <a href="Segnalazione">Invia Segnalazione</a>
            <a href="Autenticazione" method="get">Logout</a>
        </div>
@@ -65,7 +65,7 @@
                      <button>${utente.nome}</button>
                       <div class="dropdown-content">
                           <a href="VisualizzaUtente">Anagrafica</a>
-                        <a href="Ordini">Visualizza Ordini</a>
+                        <a href="OrdiniVenditore">Visualizza Ordini</a>
                           <a href="AggiungiProdotti">Aggiungi Prodotti</a>
                           <a href="VisualizzaProdotti">Visualizza Prodotti</a>
                       <a href="Autenticazione" methods="get">LOGOUT</a>

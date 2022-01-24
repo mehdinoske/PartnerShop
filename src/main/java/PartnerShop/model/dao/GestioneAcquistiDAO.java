@@ -117,7 +117,7 @@ GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
             Connection con = ConPool.getConnection();
 
             try {
-                PreparedStatement ps = con.prepareStatement("SELECT id_ordine, email_cliente, data_ordine,indirizzo,prezzo_tot FROM ordine");
+                PreparedStatement ps = con.prepareStatement("SELECT id, email_cliente, data_ordine,indirizzo,prezzo_tot FROM ordine");
                 ResultSet rs = ps.executeQuery();
 
                 label50:
@@ -174,14 +174,15 @@ GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
         }
     }
 
-    public ArrayList<Ordine> doRetrieveOrdineByEmailCliente(String email_cliente) {
+
+    public ArrayList<Ordine> doRetrieveOrdiniByEmailCliente(String email_cliente) {
         ArrayList list = new ArrayList();
 
         try {
             Connection con = ConPool.getConnection();
 
             try {
-                PreparedStatement ps = con.prepareStatement("SELECT id_ordine, email_cliente ,data_ordine,indirizzo,prezzo_tot  FROM ordine where email_cliente = ?");
+                PreparedStatement ps = con.prepareStatement("SELECT id,email_cliente,data_ordine,indirizzo,prezzo_tot  FROM ordine where email_cliente = ?");
                 ps.setString(1, email_cliente);
                 ResultSet rs = ps.executeQuery();
 
@@ -195,14 +196,78 @@ GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
                                 break label50;
                             }
 
-                            ps = con.prepareStatement("SELECT id_ordine, id_prodotto,quantita FROM ordine_prodotto where id_ordine = ?");
+                            ps = con.prepareStatement("SELECT id_ordine,id_prodotto,quantita FROM ordine_prodotto where id_ordine = ?");
                             ps.setInt(1, ((Ordine)list.get(i)).getId());
                             rs = ps.executeQuery();
 
                             while(rs.next()) {
                                 ((Ordine)list.get(i)).setProdottoHash(this.prodDB.doRetrieveById(rs.getInt(2)));
                                 ((Ordine)list.get(i)).setQuantHash(rs.getInt(2), rs.getInt(3));
-                                ((Ordine)list.get(i)).getProdotto(rs.getInt(2)).setDisponibilita(rs.getInt(4));
+                                ((Ordine)list.get(i)).getProdotto(rs.getInt(2)).setDisponibilita(rs.getInt(3));
+                            }
+
+                            ++i;
+                        }
+                    }
+
+                    Ordine p = new Ordine();
+                    p.setId(rs.getInt(1));
+                    p.setEmailCliente(rs.getString(2));
+                    p.setDataSql(rs.getDate(3));
+                    p.setIndirizzo(rs.getString(4));
+                    p.setPrezzo_tot(rs.getFloat(5));
+                    list.add(p);
+                }
+            } catch (Throwable var8) {
+                if (con != null) {
+                    try {
+                        con.close();
+                    } catch (Throwable var7) {
+                        var8.addSuppressed(var7);
+                    }
+                }
+
+                throw var8;
+            }
+
+            if (con != null) {
+                con.close();
+            }
+
+            return list;
+        } catch (SQLException var9) {
+            throw new RuntimeException(var9);
+        }
+    }
+
+    ArrayList<Ordine> doRetrieveOrdiniByEmailVenditore(String email_venditore) {
+        ArrayList list = new ArrayList();
+
+        try {
+            Connection con = ConPool.getConnection();
+
+            try {
+                PreparedStatement ps = con.prepareStatement("SELECT id,email_cliente,data_ordine,indirizzo,prezzo_tot  FROM ordine");
+                ResultSet rs = ps.executeQuery();
+
+                label50:
+                while(true) {
+                    if (!rs.next()) {
+                        int i = 0;
+
+                        while(true) {
+                            if (i >= list.size()) {
+                                break label50;
+                            }
+
+                            ps = con.prepareStatement("SELECT id_ordine,id_prodotto,quantita FROM ordine_prodotto,prodotto where email_venditore = ?");
+                            ps.setString(1, email_venditore);
+                            rs = ps.executeQuery();
+
+                            while(rs.next()) {
+                                ((Ordine)list.get(i)).setProdottoHash(this.prodDB.doRetrieveById(rs.getInt(2)));
+                                ((Ordine)list.get(i)).setQuantHash(rs.getInt(2), rs.getInt(3));
+                                ((Ordine)list.get(i)).getProdotto(rs.getInt(2)).setDisponibilita(rs.getInt(3));
                             }
 
                             ++i;

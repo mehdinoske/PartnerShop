@@ -3,6 +3,7 @@ package PartnerShop.GestioneAcquisti.controller;
 import PartnerShop.GestioneAcquisti.service.GestioneAcquistiService;
 import PartnerShop.GestioneAcquisti.service.GestioneAcquistiServiceImp;
 import PartnerShop.model.entity.Carrello;
+import PartnerShop.model.entity.Ordine;
 import PartnerShop.model.entity.UtenteRegistrato;
 
 import javax.servlet.RequestDispatcher;
@@ -13,8 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "/Ordini"})
+@WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "/CompletaAcquisto","/OrdiniVenditore","/OrdiniCliente"})
 public class GestioneAcquistiController extends HttpServlet {
 
     @Override
@@ -52,7 +54,7 @@ public class GestioneAcquistiController extends HttpServlet {
                     request.getRequestDispatcher("/WEB-INF/jsp/registrazioneCliente.jsp").forward(request, response);
                 }
                 break;
-            case "/Ordini":
+            case "/CompletaAcquisto":
                 ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
                 if (ut != null) {
                     car = (Carrello)request.getSession().getAttribute("Carrello");
@@ -61,6 +63,24 @@ public class GestioneAcquistiController extends HttpServlet {
                     imp.acquistaProdotto(ut,car,indirizzo,cardc);
                     request.getSession().removeAttribute("Carrello");
                     request.getRequestDispatcher("/WEB-INF/jsp/ordineEffettuato.jsp").forward(request, response);
+                }
+                break;
+            case "/OrdiniCliente":
+                 ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                 if(ut != null && request.getParameter("idOrdine")!=null){
+                     int id = Integer.parseInt(request.getParameter("idOrdine"));
+                     Ordine or = new Ordine();
+                            or = ((ArrayList<Ordine>)request.getSession().getAttribute("ordini")).get(id-1);
+                     request.getSession().setAttribute("ordine",or);
+                     request.getRequestDispatcher("WEB-INF/jsp/dettagliOrdine.jsp").forward(request,response);
+                     break;
+                 }
+                if (ut != null && ut.getTipo() == 0) {
+                    ArrayList<Ordine> ordini = imp.visualizzaOrdine(ut);
+                    request.getSession().setAttribute("ordini", ordini);
+                    request.getRequestDispatcher("WEB-INF/jsp/visualizzaOrdini.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("WEB-INF/jsp/registrazioneCliente.jsp").forward(request, response);
                 }
                 break;
             case "/OrdiniVenditore":

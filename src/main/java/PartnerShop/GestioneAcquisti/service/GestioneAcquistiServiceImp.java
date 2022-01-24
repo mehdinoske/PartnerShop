@@ -4,11 +4,14 @@ import PartnerShop.model.dao.CarrelloDAO;
 import PartnerShop.model.dao.ClienteDAO;
 import PartnerShop.model.dao.GestioneAcquistiDAO;
 import PartnerShop.model.entity.*;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
 
     CarrelloDAO carDB = new CarrelloDAO();
+    GestioneAcquistiDAO gesDB = new GestioneAcquistiDAO();
    public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr,String setQuantStr){
        CarrelloDAO carDB = new CarrelloDAO();
        if (ut != null) {
@@ -18,8 +21,8 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
 
        if (prodottoIdStr != null) {
            int prodottoId = Integer.parseInt(prodottoIdStr);
-           GestioneAcquistiDAO prodotti = new GestioneAcquistiDAO();
-           Prodotto pr = prodotti.doRetrieveProdottoById(prodottoId);
+           gesDB = new GestioneAcquistiDAO();
+           Prodotto pr = gesDB.doRetrieveProdottoById(prodottoId);
            if (quantStr != null) {
                int quant = Integer.parseInt(quantStr);
                Prodotto prodottoCar = car.getProdotto(prodottoId);
@@ -67,7 +70,7 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
    public void acquistaProdotto(UtenteRegistrato ut,Carrello car,String indirizzo,String cardc){
        Ordine ord = new Ordine();
        if (car != null) {
-           GestioneAcquistiDAO ordDB = new GestioneAcquistiDAO();
+           gesDB = new GestioneAcquistiDAO();
            ord.setEmailCliente(ut.getEmail());
            ord.setData();
            ord.setIndirizzo(indirizzo);
@@ -86,7 +89,7 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
                ord.setQuantHash(key, car.getQuant(key));
            }
 
-           ordDB.doSaveOrdine(ord);
+           gesDB.doSaveOrdine(ord);
            var8 = car.getProdottoHash().keySet().iterator();
 
            while(var8.hasNext()) {
@@ -97,7 +100,7 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
        }
    }
 
-   public void visualizzaOridine(){
-
+   public ArrayList<Ordine> visualizzaOrdine(UtenteRegistrato ut){
+        return gesDB.doRetrieveOrdiniByEmailCliente(ut.getEmail());
    }
 }

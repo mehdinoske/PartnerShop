@@ -307,6 +307,90 @@ select{
     border: none;
 }
 
+.lista_container{
+    display: flex;
+    justify-content: center;
+}
+
+.lista_layout{
+    align-content: center;
+    display: grid;
+    grid-template-columns: 700px;
+    grid-column-gap: 15px;
+    grid-row-gap: 30px;
+    padding: 10px;
+}
+
+.lista_layout > div{
+    width: 600px;
+    height: 140px;
+    display: inline;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.lista_layout > div img {
+    border-radius: 10px;
+    border: 2px solid coral;
+    display: inline-block;
+    margin-top: 2%;
+    margin-left: 10px;
+    max-height: 110px;
+}
+
+.lista_layout > div #inner_div{
+    margin-top: 1%;
+    margin-left: 3%;
+    float: left;
+    text-align: left;
+    min-width: 360px;
+}
+
+.lista _layout > div #inner_div button{
+    font-family: 'Montserrat';
+    background-color: coral;
+    border: none;
+    color: white;
+    padding: 9px 11px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 3%;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+.dettagli_ordine {
+    display: flex;
+    justify-content: center;
+}
+
+.dettagli_layout{
+    align-content: center;
+    display: grid;
+    grid-template-columns: 700px;
+    grid-column-gap: 15px;
+    grid-row-gap: 30px;
+    padding: 10px;
+}
+
+.dettagli_layout > div{
+    width: 600px;
+    height: 170px;
+    display: inline;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.dettagli_layout > div > div{
+    margin-top: 1%;
+    margin-left: 3%;
+    float: left;
+    text-align: left;
+    min-width: 360px;
+}
 
 @media only screen and (max-width: 900px) and (min-device-width: 900px){
     nav .ul_nav {

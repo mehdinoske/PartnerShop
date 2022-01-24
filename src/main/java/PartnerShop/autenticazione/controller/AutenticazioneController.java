@@ -38,6 +38,7 @@ public final class AutenticazioneController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws  IOException  {
         request.getSession().removeAttribute("utente");
         request.getSession().removeAttribute("Carrello");
+        request.getSession().removeAttribute("ordini");
         if(amm!=null)
         {
              request.getSession().removeAttribute("admin");
