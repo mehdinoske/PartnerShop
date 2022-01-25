@@ -138,7 +138,7 @@ public class CarrelloDAO {
             Connection con = ConPool.getConnection();
 
             try {
-                PreparedStatement ps = con.prepareStatement("INSERT INTO carrello_prodotto (id_Carrello,id_Prodotto,quantita) VALUES(?,?,?)");
+                PreparedStatement ps = con.prepareStatement("INSERT INTO carrello_prodotto (id_carrello,id_prodotto,quantita) VALUES(?,?,?)");
                 ps.setInt(1, id_Carrello);
                 ps.setInt(2, id_Prodotto);
                 ps.setInt(3, quant);
