@@ -1,3 +1,4 @@
+unlock tables ;
 drop database if exists partnershop;
 create database partnershop;
 use partnershop;
@@ -7,10 +8,6 @@ create table amministratore(
                                username varchar(50) unique not null,
                                passwordhash varchar(50) not null
 );
-
-lock tables amministratore write;
-insert into amministratore values (1, 'porco', sha1('cane'));
-unlock tables;
 
 create table utente_registrato(
                                   email varchar(50) not null primary key,
@@ -26,20 +23,11 @@ create table utente_registrato(
                                   foreign key(id_amministratore) references amministratore(id)
 );
 
-lock tables utente_registrato write;
-insert into utente_registrato values ('sw@d.d', 'peppe', 'dicazzo', '1212-12-12', 'napoli, contrada minghia n° 1', '3333333333', 'giuse', sha1('password1'), false, null),
-                                     ('ven@d.d', 'peppfe', 'dicfazzo', '1212-12-12', 'napoli, contrada minghia n° 1', '2222222222', 'gisuse', sha1('password1'), true, null);
-unlock tables;
-
 create table cliente(
                         email varchar(50) not null primary key,
                         creditcard varchar(50),
                         foreign key(email) references utente_registrato(email) on delete cascade on update cascade
 );
-
-lock tables cliente write;
-insert into cliente values ('sw@d.d', null);
-unlock tables;
 
 create table venditore(
                           email varchar(50) not null primary key,
@@ -47,12 +35,6 @@ create table venditore(
                           partita_iva varchar(50) not null,
                           foreign key(email) references utente_registrato(email) on delete cascade on update cascade
 );
-
-lock tables venditore write;
-insert into venditore values ('ven@d.d', 'porco', 'cane');
-unlock tables;
-
-
 
 create table prodotto(
                          id integer not null auto_increment primary key,
@@ -67,14 +49,6 @@ create table prodotto(
                          foreign key(email_venditore) references venditore(email) on delete cascade on update cascade
 );
 
-lock tables prodotto write;
-insert into prodotto values (1, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
-insert into prodotto values (2, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
-insert into prodotto values (3, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
-insert into prodotto values (4, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
-insert into prodotto values (5, 'ven@d.d', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
-unlock tables;
-
 create table ordine(
                        id integer not null auto_increment primary key,
                        email_cliente varchar(50) not null,
@@ -83,10 +57,6 @@ create table ordine(
                        prezzo_tot float not null,
                        foreign key(email_cliente) references cliente(email)
 );
-
-lock tables ordine write;
-insert into ordine values (1, 'sw@d.d', '1212-12-12', 'dddddddddd', 300);
-unlock tables;
 
 create table segnalazione(
                              id integer not null auto_increment primary key,
@@ -99,19 +69,11 @@ create table segnalazione(
                              foreign key(email_cliente) references cliente(email)
 );
 
-lock tables segnalazione write;
-insert into segnalazione values (1, 'sw@d.d', false, 'ciao hola come va', 'dddddddggggddd', null);
-unlock tables;
-
 create table lista_desideri(
                                id integer not null auto_increment primary key,
                                email_cliente varchar(50) unique not null,
                                foreign key(email_cliente) references cliente(email) on delete cascade on update cascade
 );
-
-lock tables lista_desideri write;
-insert into lista_desideri values (1, 'sw@d.d');
-unlock tables;
 
 create table desideri_prodotto(
                                   id_desideri int not null,
@@ -122,19 +84,11 @@ create table desideri_prodotto(
                                   primary key(id_desideri, id_prodotto)
 );
 
-lock tables desideri_prodotto write;
-insert into desideri_prodotto values (1, 1, 20);
-unlock tables;
-
 create table carrello(
                          id integer not null auto_increment primary key,
                          email_cliente varchar(50) unique not null,
                          foreign key(email_cliente) references cliente(email) on delete cascade on update cascade
 );
-
-lock tables carrello write;
-insert into carrello values (1, 'sw@d.d');
-unlock tables;
 
 create table carrello_prodotto(
                                   id_carrello int not null,
@@ -145,13 +99,6 @@ create table carrello_prodotto(
                                   primary key(id_carrello, id_prodotto)
 );
 
-lock tables carrello_prodotto write;
-insert into carrello_prodotto values (1, 1, 20);
-unlock tables;
-
-
-
-
 create table ordine_prodotto(
                                 id_ordine integer not null,
                                 id_prodotto integer not null,
@@ -161,6 +108,29 @@ create table ordine_prodotto(
                                 primary key(id_ordine, id_prodotto)
 );
 
-lock tables ordine_prodotto write;
+
+
+insert into utente_registrato values ('anconamarco@gmail.com', 'marco', 'ancona', '1212-12-12', 'napoli, contrada  n° 1', '3333333333', 'ancona1', sha1('asd'), 0, null),
+                                     ('depalmamarco@gmail.com', 'marco', 'depalma', '1212-12-12', 'napoli, contrada  n° 1', '2222222222', 'depalma1', sha1('asd'), 1, null),
+                                     ('boudad@gmail.com','mehdi','boudad','1212-12-12', 'Salerno, vicolo cioffi', '2222222222', 'noske', sha1('root'), 1, null);
+
+insert into amministratore values (1, 'admin', sha1('admin'));
+insert into cliente values ('anconamarco@gmail.com', null);
+insert into venditore values ('depalmamarco@gmail.com', 'negozio1', 'piva1');
+insert into venditore values ('boudad@gmail.com', 'negozio2', 'piva2');
+
+
+insert into carrello values (1, 'anconamarco@gmail.com');
+insert into lista_desideri values (1, 'anconamarco@gmail.com');
+insert into prodotto values (1, 'depalmamarco@gmail.com', 'penna', 'penna blu molto costosa', 'tipografia', 1, 300, null);
+insert into prodotto values (2, 'depalmamarco@gmail.com', 'laptop', 'macbook m1 ', 'elettronica', 1, 300, null);
+insert into prodotto values (3, 'boudad@gmail.com', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
+insert into prodotto values (4, 'boudad@gmail.com', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
+insert into prodotto values (5, 'boudad@gmail.com', 'penna', 'dddddddddd', 'tipografia', 1, 300, null);
+
+insert into segnalazione values (1, 'anconamarco@gmail.com', false, 'corriere scortese', 'commenti aggiuntivi', null);
+insert into ordine values (1, 'anconamarco@gmail.com', '1212-12-12', 'indirizzo1', 300);
+insert into carrello_prodotto values (1, 1, 20);
 insert into ordine_prodotto values (1, 1, 30);
-unlock tables;
+insert into desideri_prodotto values (1, 1, 20);
+

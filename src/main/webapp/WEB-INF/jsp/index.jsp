@@ -19,7 +19,7 @@
 
         <div class="grid_layout">
             <c:forEach items="${prodotti}" var="prodotto">
-                <div><a href="prodotto?id=${prodotto.id}"><img src="images/prodotti/${prodotto.id}.jpg"></a>
+                <div><a href="prodotto-visualizza?id=${prodotto.id}"><img src="images/prodotti/${prodotto.id}.jpg"></a>
                     <form action="Carrello" method="post">
                         <input type="hidden" name="idProdotto" value="${prodotto.id}">
                         <input type="hidden" name="quant" value="1">
