@@ -18,6 +18,7 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
         ctDAO.doSave(ut,0);
         ctDAO.doSave(ut.getEmail());
         carDAO.doCreateCarrello(ut.getEmail());
+        ut.setId_Carrello(carDAO.doRetrieveIdCarrelloByEmailCliente(ut.getEmail()));
         return ut;
     }
 
