@@ -2,7 +2,10 @@ package PartnerShop.gestioneProdotto.controller;
 
 import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
 import PartnerShop.gestioneProdotto.service.GestioneProdottoServiceImp;
+import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.Prodotto;
+import PartnerShop.model.entity.UtenteRegistrato;
+import PartnerShop.utils.MyServletException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi", "/prodotto-modifica"})
+@WebServlet(urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi", "/prodotto-modifica", "/prodotto-aggiungi-form"})
 public class GestioneProdottoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -24,74 +27,147 @@ public class GestioneProdottoController extends HttpServlet {
         String s = request.getServletPath();
         RequestDispatcher requestDispatcher;
         Prodotto prodotto;
-        int id;
+        UtenteRegistrato ut;
+        Amministratore adm;
+        String nome, descrizione, categoria;
+        long prezzo_Cent;
+        int disponibilita, id;
 
         switch (s) {
 
             case "/prodotto-visualizza":
-                id = Integer.parseInt(request.getParameter("id"));
+                try {
+                    id = Integer.parseInt(request.getParameter("id"));
+                } catch (NumberFormatException e) {
+                    throw new MyServletException("Id prodotto non corretto.");
+                }
                 prodotto = PrDAO.getProdottoById(id);
-                /*if (prodotto == null) {
+                if(prodotto == null) {
                 throw new MyServletException("Prodotto non trovato.");
-                }*/
-                if(prodotto != null) {
+                } else {
                     request.setAttribute("prodotto", prodotto);
                     requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/prodotto.jsp");
-                    //System.out.println("visualizzato");
-                } else {
-                    request.setAttribute("messaggio", "Nessun prodotto trovato.");
-                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
-                    //System.out.println("non trovato");
+                    requestDispatcher.forward(request, response);
                 }
-                requestDispatcher.forward(request, response);
                 break;
 
             case "/prodotto-modifica-form":
-                id = Integer.parseInt(request.getParameter("id"));
-                prodotto = PrDAO.getProdottoById(id);
-                if(prodotto != null) {
-                    request.setAttribute("prodotto", prodotto);
-                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/modificaProdotto.jsp");
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                if(ut == null || ut.getTipo() == 0) {
+                    throw new MyServletException("Non hai i permessi necessari.");
+                }   else {
+                    try {
+                        id = Integer.parseInt(request.getParameter("id"));
+                    } catch (NumberFormatException e) {
+                        throw new MyServletException("Id prodotto non corretto.");
+                    }
+                    prodotto = PrDAO.getProdottoById(id);
+                    if(prodotto == null) {
+                        throw new MyServletException("Prodotto non trovato.");
+                    } else {
+                        request.setAttribute("prodotto", prodotto);
+                        requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/modificaProdotto.jsp");
+                        requestDispatcher.forward(request, response);
+                    }
+                }
+                break;
+
+            case "/prodotto-modifica":
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                if(ut == null || ut.getTipo() == 0) {
+                    throw new MyServletException("Non hai i permessi necessari.");
+                }   else {
+                    try {
+                        id = Integer.parseInt(request.getParameter("id"));
+                        nome = request.getParameter("nome");
+                        descrizione = request.getParameter("descrizione");
+                        categoria = request.getParameter("categoria");
+                        prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
+                        disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
+                    } catch (Exception e) {
+                        throw new MyServletException("Dati non corretti.");
+                    }
+                    prodotto = new Prodotto();
+                    prodotto.setId(id);
+                    prodotto.setNome(nome);
+                    prodotto.setDisponibilita(disponibilita);
+                    prodotto.setCategoria(categoria);
+                    prodotto.setDescrizione(descrizione);
+                    prodotto.setPrezzo_Cent(prezzo_Cent);
+                    try {
+                        PrDAO.doUpdateProdotto(prodotto);
+                    } catch(Exception e) {
+                        throw new MyServletException("Prodotto non trovato.");
+                    }
+                    request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
+                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                     requestDispatcher.forward(request, response);
                 }
                 break;
 
             case "/prodotto-aggiungi":
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                if(ut != null && ut.getTipo() == 1) {
+                    try {
+                        nome = request.getParameter("nome");
+                        descrizione = request.getParameter("descrizione");
+                        categoria = request.getParameter("categoria");
+                        prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
+                        disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
+                    }   catch (Exception e) {
+                        throw new MyServletException("Dati non corretti.");
+                    }
+                    prodotto = new Prodotto();
+                    prodotto.setNome(nome);
+                    prodotto.setDisponibilita(disponibilita);
+                    prodotto.setCategoria(categoria);
+                    prodotto.setDescrizione(descrizione);
+                    prodotto.setPrezzo_Cent(prezzo_Cent);
+                    PrDAO.doSaveProdotto(prodotto);
+                    request.setAttribute("messaggio", "Prodotto aggiunto con successo.");
+                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
+                    requestDispatcher.forward(request, response);
+                } else {
+                    throw new MyServletException("Non hai i permessi necessari.");
+                }
+                break;
+
+            case "/prodotto-aggiungi-form":
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                if(ut != null && ut.getTipo() == 1) {
+                    requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/aggiungiProdotto.jsp");
+                    requestDispatcher.forward(request, response);
+                } else {
+                    throw new MyServletException("Non hai i permessi necessari.");
+                }
                 break;
 
             case "/prodotto-rimuovi":
-                id = Integer.parseInt(request.getParameter("id"));
-                PrDAO.deleteProdottoById(id);
-                            /*if (prodotto == null) {
-                            throw new MyServletException("Prodotto non trovato.");
-                            }*/
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                adm = (Amministratore) request.getSession().getAttribute("admin");
+                if((ut != null && ut.getTipo() == 1) || adm != null) {
+                    try {
+                        id = Integer.parseInt(request.getParameter("id"));
+                    } catch (NumberFormatException e) {
+                        throw new MyServletException("Id prodotto non corretto.");
+                    }
+                    try {
+                        PrDAO.deleteProdottoById(id);
+                    } catch(Exception e) {
+                        throw new MyServletException("Prodotto non trovato.");
+                    }
+                } else {
+                    throw new MyServletException("Non hai i permessi necessari.");
+                }
                 request.setAttribute("messaggio", "Prodotto eliminato con successo.");
-                requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
-                //System.out.println("rimosso");
-                requestDispatcher.forward(request, response);
-                break;
-
-            case "/prodotto-modifica":
-                id = Integer.parseInt(request.getParameter("id"));
-                String nome = request.getParameter("nome");
-                String descrizione = request.getParameter("descrizione");
-                String categoria = request.getParameter("categoria");
-                Long prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
-                int disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
-                Prodotto prodotto1 = new Prodotto();
-                prodotto1.setId(id);
-                prodotto1.setNome(nome);
-                prodotto1.setDisponibilita(disponibilita);
-                prodotto1.setCategoria(categoria);
-                prodotto1.setDescrizione(descrizione);
-                prodotto1.setPrezzo_Cent(prezzo_Cent);
-                PrDAO.doUpdateProdotto(prodotto1);
-                request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                 requestDispatcher.forward(request, response);
                 break;
         }
+    }
 
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
     }
 }

@@ -7,16 +7,16 @@
 <main>
     <div class="form_container_registrazione">
         <div class="inner_form_container_registrazione">
-            <form action="/prodotto-modifica" method="get">
+            <form action="prodotto-modifica" method="post">
                 <label for="nome">Nome</label>
                 <input type="text" name="nome" id="nome" value="${prodotto.nome}"/>
                 <label for="descrizione">Descrizione</label>
-                <input type="text" name="descrzione" id="descrizione" value="${prodotto.descrizione}"/>
+                <input type="text" name="descrizione" id="descrizione" value="${prodotto.descrizione}"/>
                 <label for="categoria">Categoria</label>
                 <input type="text" name="categoria" id="categoria" value="${prodotto.categoria}"/>
-                <label for="prezzo_cent">Prezzo in centesimi</label>
-                <input type="text" name="prezzo_cent" id="prezzo_cent" value="${prodotto.prezzo_Cent}"/>
-                <label for="disponibilita">Disponibilita</label>
+                <label for="prezzo_Cent">Prezzo in centesimi(senza virgole e punti)</label>
+                <input type="text" name="prezzo_Cent" id="prezzo_Cent" value="${prodotto.prezzo_Cent}"/>
+                <label for="disponibilita">Disponibilita(senza virgole e punti)</label>
                 <input type="text" name="disponibilita" id="disponibilita" value="${prodotto.disponibilita}"/>
 
                 <input type="hidden" name="id" value="${prodotto.id}">

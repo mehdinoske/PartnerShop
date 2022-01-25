@@ -5,7 +5,6 @@
 </jsp:include>
 
 <main>
-
             <div>
                 <div class="img_pr">
                 <img src="images/prodotti/${prodotto.id}.jpg">
@@ -13,22 +12,24 @@
                 </div>
             </div>
 
-
-
             <div>
                 <div>
                     <div>
-                        <form action="prodotto-modifica-form" method="get">
-                            <input type="hidden" name="id" value="${prodotto.id}">
-                            <input type="submit" value="Modifica">
-                        </form>
+                        <c:if test="${utente.tipo == 1}">
+                            <form action="prodotto-modifica-form" method="post">
+                                <input type="hidden" name="id" value="${prodotto.id}">
+                                <input type="submit" value="Modifica">
+                            </form>
+                        </c:if>
                     </div>
 
                     <div>
-                        <form action="prodotto-rimuovi" method="get">
-                            <input type="hidden" name="id" value="${prodotto.id}">
-                            <input type="submit" value="Rimuovi">
-                        </form>
+                        <c:if test="${utente.tipo == 1 || admin != null}">
+                            <form action="prodotto-rimuovi" method="post">
+                                <input type="hidden" name="id" value="${prodotto.id}">
+                                <input type="submit" value="Rimuovi">
+                            </form>
+                        </c:if>
                     </div>
                 </div>
 
@@ -48,9 +49,7 @@
                         <input type="submit" value="Aggiungi al carrello">
                     </form>
                 </div>
-
             </div>
-
 </main>
 
 

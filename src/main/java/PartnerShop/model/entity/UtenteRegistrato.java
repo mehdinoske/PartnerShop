@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 public class UtenteRegistrato {
     private String nome;
     private String cognome;
-    private String DataDiNascita;
+    private String ddn;
     private String username;
     private String password;
     private String email;
@@ -27,10 +27,10 @@ public class UtenteRegistrato {
     private int tipo;
 
 
-    public UtenteRegistrato(String nome, String cognome, String dataDiNascita, String username, String password, String email, String indirizzo,String cellulare,int tipo) {
+    public UtenteRegistrato(String nome, String cognome, String ddn, String username, String password, String email, String indirizzo,String cellulare,int tipo) {
         this.nome = nome;
         this.cognome = cognome;
-        DataDiNascita = dataDiNascita;
+        this.ddn = ddn;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -58,13 +58,9 @@ public class UtenteRegistrato {
         this.cognome = cognome;
     }
 
-    public String getDataDiNascita() {
-        return DataDiNascita;
-    }
+    public String getDdn() { return ddn;}
 
-    public void setDataDiNascita(String dataDiNascita) {
-        DataDiNascita = dataDiNascita;
-    }
+    public void setDdn(String ddn) {this.ddn = ddn;}
 
     public String getUsername() {
         return username;

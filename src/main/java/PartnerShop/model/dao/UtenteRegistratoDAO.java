@@ -1,5 +1,4 @@
 package PartnerShop.model.dao;
-
 import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
@@ -22,7 +21,7 @@ public class UtenteRegistratoDAO {
                     UtenteRegistrato ut = new UtenteRegistrato();
                     ut.setNome(rs.getString(1));
                     ut.setCognome(rs.getString(2));
-                    ut.setDataDiNascita(rs.getString(3));
+                    ut.setDdn(rs.getString(3));
                     ut.setUsername(rs.getString(4));
                     ut.setEmail(rs.getString(5));
                     ut.setPassword(rs.getString(6));
@@ -41,7 +40,7 @@ public class UtenteRegistratoDAO {
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, ut.getNome());
             ps.setString(2, ut.getCognome());
-            ps.setString(3, ut.getDataDiNascita());
+            ps.setString(3, ut.getDdn());
             ps.setString(4, ut.getEmail());
             ps.setString(5, ut.getIndirizzo());
             ps.setString(6, ut.getUsername());
@@ -61,19 +60,20 @@ public class UtenteRegistratoDAO {
         public UtenteRegistrato doRetrieveByUsernamePass(String user, String pass) {
             UtenteRegistrato ut = new UtenteRegistrato();
             try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where username=? and passwordhash=SHA1(?) ");
+                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,cellulare, username,passwordhash,tipo FROM utente_registrato where username=? and passwordhash=SHA1(?) ");
                 ps.setString(1, user);
                 ps.setString(2, pass);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     ut.setNome(rs.getString(1));
                     ut.setCognome(rs.getString(2));
-                    ut.setDataDiNascita(rs.getString(3));
+                    ut.setDdn(rs.getString(3));
                     ut.setEmail(rs.getString(4));
                     ut.setIndirizzo(rs.getString(5));
-                    ut.setUsername(rs.getString(6));
-                    ut.setPassword(rs.getString(7));
-                    ut.setTipo(rs.getInt(8));
+                    ut.setCellulare(rs.getString(6));
+                    ut.setUsername(rs.getString(7));
+                    ut.setPassword(rs.getString(8));
+                    ut.setTipo(rs.getInt(9));
                     return ut;
                 }
                 return null;
@@ -81,6 +81,43 @@ public class UtenteRegistratoDAO {
                 throw new RuntimeException(e);
             }
         }
+
+    public void doDelete(String email) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("DELETE FROM utente_registrato WHERE  email=? ");
+            ps.setString(1, email);
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("DELETE error.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doUpdate(UtenteRegistrato ut) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE utente_registrato SET nome = ?, cognome = ?, ddn = ?, email=?, indirizzo=?, cellulare=?, username=? , passwordhash=SHA1(?), tipo=? WHERE email=?");
+            ps.setString(1, ut.getNome());
+            ps.setString(2, ut.getCognome());
+            ps.setString(3, ut.getDdn());
+            ps.setString(4, ut.getEmail());
+            ps.setString(5, ut.getIndirizzo());
+            ps.setString(6, ut.getCellulare());
+            ps.setString(7, ut.getUsername());
+            ps.setString(8, ut.getPassword());
+            ps.setInt(9, ut.getTipo());
+            ps.setString(10, ut.getEmail());
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("UPDATE error.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public Amministratore doRetrieveAdmin(String username,String password) {
         Amministratore amm = new Amministratore();
@@ -148,37 +185,5 @@ public class UtenteRegistratoDAO {
         }
 
 
-        public void doUpdate(Utente ut, int id) {
-            try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement(
-                        "UPDATE Utente SET nome = ?, cognome = ?, ddn = ?, username=? , email=?, admin=?, id=? WHERE id=?");
-                ps.setString(1, ut.getNome());
-                ps.setString(2, ut.getCognome());
-                ps.setDate(3, ut.getDdn());
-                ps.setString(4, ut.getUsername());
-                ps.setString(5, ut.getEmail());
-                ps.setBoolean(6, ut.isAdmin());
-                ps.setInt(7, id);
-                ps.setInt(8, ut.getId());
-                if (ps.executeUpdate() != 1) {
-                    throw new RuntimeException("UPDATE error.");
-                }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        public void doDelete(int idUtente) {
-            try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps = con.prepareStatement("DELETE FROM Utente WHERE  id=? ");
-                ps.setInt(1, idUtente);
-                if (ps.executeUpdate() != 1) {
-                    throw new RuntimeException("DELETE error.");
-                }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }*/
+*/
 }
