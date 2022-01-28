@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- *   implementa il controller che si occupa della gestione degli acquisti
+ *  implementa il controller per il sottosistema Gestione Acquisti.
  */
 @WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "/CompletaAcquisto","/OrdiniVenditore","/OrdiniCliente"})
 public class GestioneAcquistiController extends HttpServlet {
@@ -87,6 +87,22 @@ public class GestioneAcquistiController extends HttpServlet {
                 }
                 break;
             case "/OrdiniVenditore":
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                if(ut != null && request.getParameter("idOrdine")!=null){
+                    int id = Integer.parseInt(request.getParameter("idOrdine"));
+                    Ordine or = new Ordine();
+                    or = ((ArrayList<Ordine>)request.getSession().getAttribute("ordini")).get(id-1);
+                    request.getSession().setAttribute("ordine",or);
+                    request.getRequestDispatcher("WEB-INF/jsp/dettagliOrdine.jsp").forward(request,response);
+                    break;
+                }
+                if (ut != null && ut.getTipo() == 1) {
+                    ArrayList<Ordine> ordini = imp.visualizzaOrdine(ut);
+                    request.getSession().setAttribute("ordini", ordini);
+                    request.getRequestDispatcher("WEB-INF/jsp/visualizzaOrdini.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("WEB-INF/jsp/registrazioneVenditore.jsp").forward(request, response);
+                }
                 break;
         }
 
