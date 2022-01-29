@@ -137,3 +137,4 @@ insert into carrello_prodotto values (1, 1, 20);
 insert into ordine_prodotto values (1, 1, 30);
 insert into desideri_prodotto values (1, 1, 20);
 
+ALTER TABLE prodotto ADD FULLTEXT(nome);

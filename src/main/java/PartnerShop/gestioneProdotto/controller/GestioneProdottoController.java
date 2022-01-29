@@ -6,6 +6,7 @@ import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.Prodotto;
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.utils.MyServletException;
+import org.json.JSONArray;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,9 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 @WebServlet(urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi",
-        "/prodotto-modifica", "/prodotto-aggiungi-form", "/visualizza-prodotti","/visualizza-categoria"})
+        "/prodotto-modifica", "/prodotto-aggiungi-form", "/visualizza-prodotti","/visualizza-categoria","/ricercaAjax"})
 public class GestioneProdottoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -177,6 +179,7 @@ public class GestioneProdottoController extends HttpServlet {
                 requestDispatcher.forward(request, response);
                 break;
             case "/visualizza-prodotti":
+                request.getSession().setAttribute("listProdotti",prodotti);
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
                 requestDispatcher.forward(request, response);
                 break;
@@ -186,6 +189,17 @@ public class GestioneProdottoController extends HttpServlet {
                 request.getSession().setAttribute("listProdotti",listaProd);
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
                 requestDispatcher.forward(request, response);
+                break;
+            case "/ricercaAjax":
+
+                String app = (request.getParameter("p") +"*");
+                ArrayList<Prodotto> listProd = PrDAO.getProdottiByNome(app);
+                JSONArray listaJson = new JSONArray();
+                for(Prodotto p : listProd){
+                    listaJson.put(p.getNome());
+                }
+                response.setContentType("application/json");
+                response.getWriter().append(listaJson.toString());
                 break;
         }
     }

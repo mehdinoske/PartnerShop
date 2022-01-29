@@ -19,10 +19,12 @@
     <nav>
         <ul class="ul_nav">
             <li>
-                <form action="Ricerca" method="get">
-                    <input type="text" id="searchTop" name="p" placeholder="Ricerca..." onkeyup="" value="" list="datalist">
+                <form action="ricerca" method="get">
+                    <input type="text" id="searchTop" name="p" placeholder="Ricerca..." onkeyup="ricerca(this.value)"
+                           value="${param.p}" list="datalist"/>
                     <datalist id="datalist">
                     </datalist>
+
                 </form>
             </li>
             <li><form action="visualizza-categoria" id="form_categorie" method="get">

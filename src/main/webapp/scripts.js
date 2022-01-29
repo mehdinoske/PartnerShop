@@ -31,7 +31,7 @@ function ricerca(str) {
             }
         }
     }
-    xmlHttpRequest.open("GET","RicercaAjax?p="+encodeURIComponent(str),true);
+    xmlHttpRequest.open("GET","ricercaAjax?p="+encodeURIComponent(str),true);
     xmlHttpRequest.send();
 }
 

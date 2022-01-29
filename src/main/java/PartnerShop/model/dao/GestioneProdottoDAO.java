@@ -166,4 +166,29 @@ public class GestioneProdottoDAO {
         }
         return list;
     }
+
+
+    public ArrayList<Prodotto> doRetrieveByNome(String nome){
+        ArrayList<Prodotto> list = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con
+                    .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE MATCH(nome) AGAINST(? IN BOOLEAN MODE)");
+            ps.setString(1, nome);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setId(rs.getInt(1));
+                p.setEmail_Venditore(rs.getString(2));
+                p.setNome(rs.getString(3));
+                p.setDescrizione(rs.getString(4));
+                p.setCategoria(rs.getString(5));
+                p.setPrezzo_Cent(rs.getInt(6));
+                p.setDisponibilita(rs.getInt(7));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
 }
