@@ -37,6 +37,10 @@ public class HomePageServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
         dispatcher.forward(request, response);
     }
-    public void destroy() {
+
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
     }
 }

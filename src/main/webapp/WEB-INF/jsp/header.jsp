@@ -67,7 +67,7 @@
                           <a href="VisualizzaUtente">Anagrafica</a>
                         <a href="OrdiniVenditore">Visualizza Ordini</a>
                           <a href="prodotto-aggiungi-form">Aggiungi Prodotti</a>
-                          <a href=".">Visualizza Prodotti</a>
+                          <a href="visualizza-prodotti">Visualizza Prodotti</a>
                       <a href="Autenticazione" methods="get">LOGOUT</a>
                 </div>
                 </div>
@@ -78,7 +78,7 @@
                         <div class="dropdown-content">
                             <a href="VisualizzaSegnalazioni">Visualizza lista segnalazioni</a>
                             <a href="VisualizzaUtenti">Visualizza utenti registrati</a>
-                            <a href=".">Visualizza tutti i prodotti</a>
+                            <a href="visualizza-prodotti">Visualizza tutti i prodotti</a>
                             <a href="Autenticazione" methods="get">LOGOUT</a>
                         </div>
                     </div>
