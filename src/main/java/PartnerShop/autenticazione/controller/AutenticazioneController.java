@@ -13,17 +13,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * implementa il controller che si occupa di tutta l'autenticazione
- *
+ * implementa il controller che si occupa  del sottosistema autenticazione
+ * @author Giuseppe Abbatiello
  */
 @WebServlet("/Autenticazione")
 public final class AutenticazioneController extends HttpServlet {
-    Amministratore amm;
+    private Amministratore amm;
+    private final AutenticazioneService autenticazioneService = new AutenticazioneServiceImp();
+    /**
+     * metodo doPost che si occupa di recuperare nella rischiesta l'username e la password dell'utente
+     * e di richiamare le funzionalità del login
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException {
-
         String username = request.getParameter("usernameLogin");
         String password = request.getParameter("passwordLogin");
-        AutenticazioneService autenticazioneService = new AutenticazioneServiceImp();
+
         UtenteRegistrato ut =autenticazioneService.login(username,password);
         if(ut ==null){
             amm= autenticazioneService.verificaAdmin(username,password);
@@ -34,11 +41,15 @@ public final class AutenticazioneController extends HttpServlet {
             request.getSession().removeAttribute("mes");
         }
         request.getSession().setAttribute("utente", ut);
-
-
         response.sendRedirect(".");
     }
 
+    /**@
+     * metodo do get che implementa le funzionalità di logout
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws  IOException  {
         request.getSession().removeAttribute("utente");
         request.getSession().removeAttribute("Carrello");

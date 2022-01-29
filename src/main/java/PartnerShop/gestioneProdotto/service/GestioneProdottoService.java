@@ -18,4 +18,5 @@ public interface GestioneProdottoService {
 
     public ArrayList<Prodotto> getProdottoByVenditore(String email);
 
+    public ArrayList<Prodotto> getProdottiByCategoria(String cat);
 }

@@ -25,12 +25,14 @@
                     </datalist>
                 </form>
             </li>
-            <li><form action="VisualizzaCategoria" id="form_categorie" method="get">
-                <select name="idCategoria" id="categorie_choice">
+            <li><form action="visualizza-categoria" id="form_categorie" method="get">
+                <select name="categoria" id="categorie_choice">
                     <option  value=""disabled selected>Scegli categoria</option>
-                    <%-- <c:forEach items="${categorie}" var="categoria">
-                        <option value="${categoria.idCategoria}">${categoria.nome}</option>
-                    </c:forEach> --%>
+                    <option value="elettronica">elettronica</option>
+                    <option value="abbigliamento">abbigliamento</option>
+                    <option value="cancelleria">cancelleria</option>
+                    <option value="utensili">utensili</option>
+                    <option value="cucina">cucina</option>
                 </select>
             </form></li>
 

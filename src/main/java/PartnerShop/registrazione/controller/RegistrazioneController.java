@@ -13,11 +13,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.channels.Channels;
 
+/**
+ * implementa il controller che si occupa  del sottosistema registrazione
+ * @author Giuseppe Abbatiello
+ */
 @WebServlet("/Registrazione")
 public final class RegistrazioneController extends HttpServlet {
 
     private final RegistrazioneService registrazioneService = new RegistrazioneServiceImp();
 
+    /**
+     * metodo che reindirizza un cliente o un venditore alla propria pagine per la registrazione
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher=null;
         if(request.getParameter("id").equals("cliente")) {
@@ -30,6 +41,13 @@ public final class RegistrazioneController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException{
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");

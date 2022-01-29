@@ -69,7 +69,7 @@ public class GestioneProdottoDAO {
                     .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE email_venditore=?");
             ps.setString(1, email_venditore);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 Prodotto p = new Prodotto();
                 p.setId(rs.getInt(1));
                 p.setEmail_Venditore(rs.getString(2));
@@ -79,12 +79,11 @@ public class GestioneProdottoDAO {
                 p.setPrezzo_Cent(rs.getInt(6));
                 p.setDisponibilita(rs.getInt(7));
                 list.add(p);
-                return list;
             }
-            return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return list;
     }
 
     public void doSave(Prodotto prodotto) {
@@ -142,5 +141,29 @@ public class GestioneProdottoDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ArrayList<Prodotto> doRetrieveByCategoria(String cat){
+        ArrayList<Prodotto> list = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con
+                    .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE categoria=?");
+            ps.setString(1, cat);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setId(rs.getInt(1));
+                p.setEmail_Venditore(rs.getString(2));
+                p.setNome(rs.getString(3));
+                p.setDescrizione(rs.getString(4));
+                p.setCategoria(rs.getString(5));
+                p.setPrezzo_Cent(rs.getInt(6));
+                p.setDisponibilita(rs.getInt(7));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
 }
