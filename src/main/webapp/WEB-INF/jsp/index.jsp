@@ -8,7 +8,7 @@
     <div class="flip-card">
         <div class="flip-card-inner" >
             <div class="flip-card-front">
-                <img src="images/categorie/elettronica.jpg" alt="Avatar" style="width:300px;height:200px;">
+                <img src="images/categorie/elettronica.jpg" alt="Avatar" style="width:298.4px;height:198.4px;">
             </div>
             <div class="flip-card-back">
                 <a href="visualizza-categoria?categoria=elettronica">
@@ -21,7 +21,7 @@
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front">
-                <img src="images/categorie/abbigliamento.jpg" alt="Avatar" style="width:300px;height:200px;">
+                <img src="images/categorie/abbigliamento.jpg" alt="Avatar" style="width:298.4px;height:198.4px;">
             </div>
             <div class="flip-card-back" style="background-color: lightpink">
                 <a href="visualizza-categoria?categoria=abbigliamento">
@@ -34,7 +34,7 @@
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front" >
-                    <img src="images/categorie/cancelleria.jpg" alt="Avatar" style="width:300px;height:200px;">
+                    <img src="images/categorie/cancelleria.jpg" alt="Avatar" style="width:298.4px;height:198.4px;">
                 </div>
                 <div class="flip-card-back" style="background-color: limegreen">
                     <a href="visualizza-categoria?categoria=cancelleria">
@@ -47,7 +47,7 @@
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img src="images/categorie/utensili.jpg" alt="Avatar" style="width:300px;height:200px;">
+                    <img src="images/categorie/utensili.jpg" alt="Avatar" style="width:298.4px;height:198.4px;">
                 </div>
                 <div class="flip-card-back" style="background-color: darkred">
                     <a href="visualizza-categoria?categoria=utensili">
