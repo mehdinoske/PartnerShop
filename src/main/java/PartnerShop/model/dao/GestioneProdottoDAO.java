@@ -69,7 +69,7 @@ public class GestioneProdottoDAO {
                     .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE email_venditore=?");
             ps.setString(1, email_venditore);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 Prodotto p = new Prodotto();
                 p.setId(rs.getInt(1));
                 p.setEmail_Venditore(rs.getString(2));
@@ -79,12 +79,11 @@ public class GestioneProdottoDAO {
                 p.setPrezzo_Cent(rs.getInt(6));
                 p.setDisponibilita(rs.getInt(7));
                 list.add(p);
-                return list;
             }
-            return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return list;
     }
 
     public void doSave(Prodotto prodotto) {
