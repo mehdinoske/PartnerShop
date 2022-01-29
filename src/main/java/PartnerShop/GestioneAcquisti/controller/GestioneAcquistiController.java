@@ -16,6 +16,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ *   implementa il controller che si occupa della gestione degli acquisti
+ */
 @WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "/CompletaAcquisto","/OrdiniVenditore","/OrdiniCliente"})
 public class GestioneAcquistiController extends HttpServlet {
 
