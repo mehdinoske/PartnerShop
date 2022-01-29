@@ -3,20 +3,6 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Login.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/completaAcquisto.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/header.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/prodotto.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/listaSegnalazioni.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/Login.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/completaAcquisto.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/header.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/prodotto.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/prova.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
-        <entry key="file://$PROJECT_DIR$/src/main/webapp/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/listaSegnalazioni.jsp" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp" />
       </map>
     </option>

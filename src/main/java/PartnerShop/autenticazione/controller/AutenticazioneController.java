@@ -28,7 +28,6 @@ public final class AutenticazioneController extends HttpServlet {
         if(ut ==null){
             amm= autenticazioneService.verificaAdmin(username,password);
             request.getSession().setAttribute("admin", amm);
-
         }
         request.getSession().setAttribute("utente", ut);
 
