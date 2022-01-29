@@ -4,6 +4,7 @@
 </jsp:include>
 
 <main>
+    <div class="flip-card-container">
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front">
@@ -14,6 +15,43 @@
                 <p>Scopri il meglio della tecnologia!</p>
             </div>
         </div>
+    </div>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+                <img src="images/categorie/elettronica.jpg" alt="Avatar" style="width:300px;height:200px;">
+            </div>
+            <div class="flip-card-back">
+                <h1>ABBIGLIAMENTO</h1>
+                <p>Scopri i migliori capi del sito!</p>
+            </div>
+        </div>
+    </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front" >
+                    <img src="images/categorie/cancelleria.jpg" alt="Avatar" style="width:300px;height:200px;">
+                </div>
+                <div class="flip-card-back">
+                    <h1>CANCELLERIA</h1>
+                    <p>Scopri i migliori capi del sito!</p>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="images/categorie/elettronica.jpg" alt="Avatar" style="width:300px;height:200px;">
+                </div>
+                <div class="flip-card-back">
+                    <h1>UTENSILI</h1>
+                    <p>Scopri i migliori capi del sito!</p>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
     <div class="grid_container">
 

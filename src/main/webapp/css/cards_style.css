@@ -1,3 +1,6 @@
+.flip-card-container {
+    display:  flex;
+}
 
 .flip-card {
     background-color: transparent;
@@ -5,7 +8,10 @@
     height: 200px;
     border: 1px solid #f1f1f1;
     perspective: 1000px;
+    margin-left: 25px;
+    margin-bottom: 50px;
 }
+
 
 
 .flip-card-inner {
