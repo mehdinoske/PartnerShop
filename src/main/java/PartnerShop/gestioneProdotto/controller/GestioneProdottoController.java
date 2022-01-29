@@ -34,6 +34,7 @@ public class GestioneProdottoController extends HttpServlet {
         String nome, descrizione, categoria;
         long prezzo_Cent;
         int disponibilita, id;
+        ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) getServletContext().getAttribute("prodotti");
 
         switch (s) {
 
@@ -97,7 +98,11 @@ public class GestioneProdottoController extends HttpServlet {
                     prodotto.setDescrizione(descrizione);
                     prodotto.setPrezzo_Cent(prezzo_Cent);
                     try {
+                        Prodotto p = PrDAO.getProdottoById(id);
                         PrDAO.doUpdateProdotto(prodotto);
+                        prodotti.remove(p);
+                        prodotti.add(prodotto);
+                        getServletContext().setAttribute("prodotti",prodotti);
                     } catch(Exception e) {
                         throw new MyServletException("Prodotto non trovato.");
                     }
@@ -127,7 +132,6 @@ public class GestioneProdottoController extends HttpServlet {
                     prodotto.setDescrizione(descrizione);
                     prodotto.setPrezzo_Cent(prezzo_Cent);
                     PrDAO.doSaveProdotto(prodotto);
-                    ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) getServletContext().getAttribute("prodotti");
                     prodotti.add(prodotto);
                     getServletContext().setAttribute("prodotti",prodotti);
                     request.setAttribute("messaggio", "Prodotto aggiunto con successo.");
@@ -158,7 +162,10 @@ public class GestioneProdottoController extends HttpServlet {
                         throw new MyServletException("Id prodotto non corretto.");
                     }
                     try {
+                        Prodotto p2 = PrDAO.getProdottoById(id);
                         PrDAO.deleteProdottoById(id);
+                        prodotti.remove(p2);
+                        getServletContext().setAttribute("prodotti",prodotti);
                     } catch(Exception e) {
                         throw new MyServletException("Prodotto non trovato.");
                     }
