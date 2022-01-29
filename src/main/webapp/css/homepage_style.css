@@ -197,8 +197,10 @@ li, a, button{
     padding: 10px;
 }
 
-.image_game img{
+.image_prodotto img{
     border-radius: 8px;
+    height: 300px;
+    width: 250px;
 }
 
 .div_descrizione{
@@ -219,7 +221,7 @@ li, a, button{
 .div_descrizione div#prezzo{
     padding: 10px 10px 10px 10px;
     color: white;
-    background-color: darkviolet;
+    background-color: coral;
     border-radius: 5px;
     font-size: 15px;
 }
@@ -247,14 +249,14 @@ li, a, button{
 
 }
 
-.form_container_gioco form{
+.form_container_prodotto form{
     display: inline-block;
     vertical-align: middle;
 }
 
-.form_container_gioco form input[type=submit]{
+.form_container_prodotto form input[type=submit]{
     font-family: 'Montserrat';
-    background-color: green;
+    background-color: coral;
     border: none;
     color: white;
     padding: 18px 18px;
@@ -298,7 +300,7 @@ li, a, button{
     font-weight: bold;
 }
 select{
-    background-color: green;
+    background-color: coral;
     color: white;
     width: 150px;
     height: 40px;
