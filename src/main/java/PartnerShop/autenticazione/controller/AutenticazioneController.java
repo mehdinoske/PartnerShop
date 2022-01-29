@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * implementa il controller che si occupa di tutta l'autenticazione
+ *
+ */
 @WebServlet("/Autenticazione")
 public final class AutenticazioneController extends HttpServlet {
     Amministratore amm;
@@ -24,7 +28,6 @@ public final class AutenticazioneController extends HttpServlet {
         if(ut ==null){
             amm= autenticazioneService.verificaAdmin(username,password);
             request.getSession().setAttribute("admin", amm);
-
         }
         request.getSession().setAttribute("utente", ut);
 

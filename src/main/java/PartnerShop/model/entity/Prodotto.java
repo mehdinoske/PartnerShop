@@ -67,8 +67,8 @@ public class Prodotto {
 			return disponibilita;
 		}
 
-		public void setDisponibilita(int disponibilità) {
-			this.disponibilita = disponibilità;
+		public void setDisponibilita(int disponibilita) {
+			this.disponibilita = disponibilita;
 		}
 
 		@Override

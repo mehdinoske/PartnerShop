@@ -9,6 +9,10 @@ import PartnerShop.model.entity.UtenteRegistrato;
 
 import java.io.IOException;
 
+/**
+ * implementazione interfaccia autenticazione
+ * 
+ */
 public class AutenticazioneServiceImp implements AutenticazioneService{
 
     UtenteRegistratoDAO utDB =null;
