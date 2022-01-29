@@ -73,7 +73,14 @@ public class GestioneAcquistiController extends HttpServlet {
                  if(ut != null && request.getParameter("idOrdine")!=null){
                      int id = Integer.parseInt(request.getParameter("idOrdine"));
                      Ordine or = new Ordine();
-                            or = ((ArrayList<Ordine>)request.getSession().getAttribute("ordini")).get(id-1);
+                     ArrayList<Ordine> ordini =(ArrayList<Ordine>) request.getSession().getAttribute("ordini");
+                     for(int i=0;i<ordini.size();i++){
+                         if(ordini.get(i).getId()==id) {
+                            or = ordini.get(i);
+                            break;
+                         }
+                     }
+
                      request.getSession().setAttribute("ordine",or);
                      request.getRequestDispatcher("WEB-INF/jsp/dettagliOrdine.jsp").forward(request,response);
                      break;
@@ -91,7 +98,13 @@ public class GestioneAcquistiController extends HttpServlet {
                 if(ut != null && request.getParameter("idOrdine")!=null){
                     int id = Integer.parseInt(request.getParameter("idOrdine"));
                     Ordine or = new Ordine();
-                    or = ((ArrayList<Ordine>)request.getSession().getAttribute("ordini")).get(id-1);
+                    ArrayList<Ordine> ordini =(ArrayList<Ordine>) request.getSession().getAttribute("ordini");
+                    for(int i=0;i<ordini.size();i++){
+                        if(ordini.get(i).getId()==id) {
+                            or = ordini.get(i);
+                            break;
+                        }
+                    }
                     request.getSession().setAttribute("ordine",or);
                     request.getRequestDispatcher("WEB-INF/jsp/dettagliOrdine.jsp").forward(request,response);
                     break;
