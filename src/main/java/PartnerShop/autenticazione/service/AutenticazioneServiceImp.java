@@ -39,6 +39,9 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
         if(ut!=null && ut.getTipo()==0) {
             CarrelloDAO car = new CarrelloDAO();
             int id_carrello = car.doRetrieveIdCarrelloByEmailCliente(ut.getEmail());
+            if(id_carrello==0)
+                car.doCreateCarrello(ut.getEmail());
+            id_carrello = car.doRetrieveIdCarrelloByEmailCliente(ut.getEmail());
             ut.setId_Carrello(id_carrello);
         }
         return ut;

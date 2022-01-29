@@ -19,7 +19,7 @@
                 <label for="disponibilita">Disponibilita(senza virgole e punti)</label>
                 <input type="text" name="disponibilita" id="disponibilita" value="${prodotto.disponibilita}"/>
 
-                <input type="submit" value="Conferma modifica">
+                <input type="submit" value="Aggiungi prodotto">
             </form>
         </div>
     </div>
