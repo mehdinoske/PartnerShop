@@ -188,7 +188,7 @@ li, a, button{
 }
 
 
-.visualizza_gioco {
+.visualizza_prodotto {
     align-content: center;
     display: grid;
     grid-template-columns: 300px 450px;

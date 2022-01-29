@@ -6,24 +6,28 @@
 <main>
     <div class="flip-card-container">
     <div class="flip-card">
-        <div class="flip-card-inner">
+        <div class="flip-card-inner" >
             <div class="flip-card-front">
                 <img src="images/categorie/elettronica.jpg" alt="Avatar" style="width:300px;height:200px;">
             </div>
             <div class="flip-card-back">
+                <a href="visualizza-categoria?categoria=elettronica">
                 <h1>ELETTRONICA</h1>
                 <p>Scopri il meglio della tecnologia!</p>
+                </a>
             </div>
         </div>
     </div>
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front">
-                <img src="images/categorie/elettronica.jpg" alt="Avatar" style="width:300px;height:200px;">
+                <img src="images/categorie/abbigliamento.jpg" alt="Avatar" style="width:300px;height:200px;">
             </div>
-            <div class="flip-card-back">
+            <div class="flip-card-back" style="background-color: lightpink">
+                <a href="visualizza-categoria?categoria=abbigliamento">
                 <h1>ABBIGLIAMENTO</h1>
                 <p>Scopri i migliori capi del sito!</p>
+                    </a>
             </div>
         </div>
     </div>
@@ -32,20 +36,24 @@
                 <div class="flip-card-front" >
                     <img src="images/categorie/cancelleria.jpg" alt="Avatar" style="width:300px;height:200px;">
                 </div>
-                <div class="flip-card-back">
+                <div class="flip-card-back" style="background-color: limegreen">
+                    <a href="visualizza-categoria?categoria=cancelleria">
                     <h1>CANCELLERIA</h1>
-                    <p>Scopri i migliori capi del sito!</p>
+                    <p>Scopri i migliori prodotti per l'ufficio!</p>
+                        </a>
                 </div>
             </div>
         </div>
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img src="images/categorie/elettronica.jpg" alt="Avatar" style="width:300px;height:200px;">
+                    <img src="images/categorie/utensili.jpg" alt="Avatar" style="width:300px;height:200px;">
                 </div>
-                <div class="flip-card-back">
+                <div class="flip-card-back" style="background-color: darkred">
+                    <a href="visualizza-categoria?categoria=utensili">
                     <h1>UTENSILI</h1>
-                    <p>Scopri i migliori capi del sito!</p>
+                    <p>Scopri i migliori utensili!</p>
+                    </a>
                 </div>
             </div>
         </div>

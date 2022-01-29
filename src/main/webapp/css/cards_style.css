@@ -1,5 +1,6 @@
 .flip-card-container {
     display:  flex;
+    margin-left: 100px;
 }
 
 .flip-card {

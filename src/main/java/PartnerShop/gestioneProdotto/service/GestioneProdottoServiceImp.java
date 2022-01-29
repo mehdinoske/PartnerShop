@@ -40,4 +40,9 @@ public class GestioneProdottoServiceImp implements GestioneProdottoService {
         ArrayList<Prodotto> p = pr.doRetrieveAllProdotti();
         return p;
     }
-}
+
+    public ArrayList<Prodotto> getProdottiByCategoria(String cat) {
+        GestioneProdottoDAO pr = new GestioneProdottoDAO();
+        ArrayList<Prodotto> p = pr.doRetrieveByCategoria(cat);
+        return p;
+    }}
