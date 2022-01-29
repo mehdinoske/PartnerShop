@@ -1,4 +1,4 @@
-package PartnerShop.utils;
+package PartnerShop;
 
 
 
@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * classe principale che si occupa di recuperare tutti i prodottio dal DB
  * @author Giuseppe Abbatiello, El Mehdi Boudad
  */
-@WebServlet(urlPatterns = "")
+
 @WebServlet(urlPatterns = "")
 public class HomePageServlet extends HttpServlet {
 
