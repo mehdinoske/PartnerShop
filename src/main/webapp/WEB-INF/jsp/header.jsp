@@ -25,16 +25,7 @@
                     </datalist>
                 </form>
             </li>
-            <li><form action="visualizza-categoria" id="form_categorie" method="get">
-                <select name="categoria" id="categorie_choice">
-                    <option  value=""disabled selected>Scegli categoria</option>
-                    <option value="elettronica">elettronica</option>
-                    <option value="abbigliamento">abbigliamento</option>
-                    <option value="cancelleria">cancelleria</option>
-                    <option value="utensili">utensili</option>
-                    <option value="cucina">cucina</option>
-                </select>
-            </form></li>
+
 
 
 
@@ -91,6 +82,17 @@
             <c:if test="${utente.tipo!=1 && admin == null}">
 <li><a href="Carrello"><img src="css/shopping-cart.svg"></a></li>
             </c:if>
+            <li><form action="visualizza-categoria" id="form_categorie" method="get">
+                <select name="categoria" id="categorie_choice">
+                    <option  value=""disabled selected>Scegli categoria</option>
+                    <option value="elettronica">elettronica</option>
+                    <option value="abbigliamento">abbigliamento</option>
+                    <option value="cancelleria">cancelleria</option>
+                    <option value="utensili">utensili</option>
+                    <option value="cucina">cucina</option>
+                </select>
+            </form></li>
+
 </ul>
 </nav>
 </header>
