@@ -123,6 +123,8 @@ insert into venditore values ('boudad@gmail.com', 'negozio2', 'piva2');
 
 
 insert into carrello values (1, 'anconamarco@gmail.com');
+insert into carrello values (2, 'peppe.abbatiello@gmail.com');
+
 insert into lista_desideri values (1, 'anconamarco@gmail.com');
 insert into prodotto values (1, 'depalmamarco@gmail.com', 'penna', 'penna blu molto costosa', 'tipografia', 1, 300, null);
 insert into prodotto values (2, 'depalmamarco@gmail.com', 'laptop', 'macbook m1 ', 'elettronica', 1, 300, null);

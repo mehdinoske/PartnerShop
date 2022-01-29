@@ -1,4 +1,4 @@
-package PartnerShop.utils;
+package PartnerShop;
 
 
 
@@ -14,10 +14,18 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * classe principale che si occupa di recuperare tutti i prodottio dal DB
+ * @author Giuseppe Abbatiello, El Mehdi Boudad
+ */
 @WebServlet(name = "HomePageServlet", urlPatterns = "", loadOnStartup = 1)
 public class HomePageServlet extends HttpServlet {
 
 
+    /**
+     * inizializza
+     * @throws ServletException
+     */
     public void init() throws ServletException{
         GestioneAcquistiDAO gp = new GestioneAcquistiDAO();
         ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>();

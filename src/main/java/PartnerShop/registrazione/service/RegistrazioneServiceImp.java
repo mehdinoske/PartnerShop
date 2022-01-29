@@ -8,8 +8,17 @@ import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.model.entity.Venditore;
 
+/**
+ * implementa la classe che esplicita i metodi definiti nell'interfaccia di registrazione
+ * @author Giuseppe Abbatiello
+ */
 public class  RegistrazioneServiceImp implements RegistrazioneService{
 
+    /**
+     * implementa la funzionalità di registrazione del cliente
+     * @param ut - utente inviato da RegistrazioneController
+     * @return cliente per essere loggato
+     */
     @Override
     public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut) {
 
@@ -22,6 +31,13 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
         return ut;
     }
 
+    /**
+     * implementa la funzionalita di registrazione del venditore
+     * @param ut           utente inviato da RegistrazioneController
+     * @param nomeNegozio  nome del negozio inserito dal venditore
+     * @param Piva        partita iva del negozio inserita dal venditore
+     * @return venditore per essere loggato
+     */
     @Override
     public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut,String nomeNegozio,String Piva) {
         VenditoreDAO vtDAO = new VenditoreDAO();

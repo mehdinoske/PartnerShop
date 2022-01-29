@@ -10,12 +10,18 @@ import PartnerShop.model.entity.UtenteRegistrato;
 import java.io.IOException;
 
 /**
- * implementazione interfaccia autenticazione
+ *  implementa la classe che esplicita i metodi definiti nell'interfaccia di autenticazione
  * 
  */
 public class AutenticazioneServiceImp implements AutenticazioneService{
 
     UtenteRegistratoDAO utDB =null;
+
+    /**
+     * @param username - dell'utente
+     * @param password - stringa convertita attraverso sha1
+     * @return un utente registrato
+     */
     @Override
     public UtenteRegistrato login(String username, String password) {
         UtenteRegistrato ut = null;
@@ -38,6 +44,11 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
         return ut;
     }
 
+    /**
+     * @param username inserita dall'utente
+     * @param password inserita dall'utente
+     * @return l'admin se username e password sono nel database
+     */
     @Override
     public Amministratore verificaAdmin(String username, String password) {
 
