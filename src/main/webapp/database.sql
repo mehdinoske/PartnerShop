@@ -128,7 +128,7 @@ insert into prodotto values (3, 'boudad@gmail.com', 'LG V40', 'LG V40 uno dei mi
 insert into prodotto values (4, 'boudad@gmail.com', 'HP Notebook Victus', 'Hp Notebook Ryzen 5 SSD 512 Gb Ram 16 Gb nVidia GeForce RTX 3050 (4gb) Windows 10 - 531T6EA Victus', 'elettronica', 100000, 200);
 insert into prodotto values (5, 'boudad@gmail.com', 'Cacciavite', 'Utensile molto utile', 'utensili', 1000, 700);
 insert into prodotto values (6, 'boudad@gmail.com', 'Bicchiere', 'Indispensabile per bere', 'cucina', 300, 1000);
-insert into prodotto values (7, 'boudad@gmail.com', 'Felpa', 'Felpa Adidas super calda', 'abbligliamento', 7000, 200);
+insert into prodotto values (7, 'boudad@gmail.com', 'Felpa', 'Felpa Adidas super calda', 'abbigliamento', 7000, 200);
 insert into prodotto values (8, 'boudad@gmail.com', 'Tronchese', 'Ottima tronchese per farsi strada nelle recinzioni altrui e fare cose losche', 'utensili', 4000, 500);
 
 insert into segnalazione values (1, 'anconamarco@gmail.com', false, 'corriere scortese', 'commenti aggiuntivi', null);
@@ -137,3 +137,4 @@ insert into carrello_prodotto values (1, 1, 20);
 insert into ordine_prodotto values (1, 1, 30);
 insert into desideri_prodotto values (1, 1, 20);
 
+ALTER TABLE prodotto ADD FULLTEXT(nome);

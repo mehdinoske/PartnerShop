@@ -3,15 +3,19 @@ package PartnerShop.GestioneAcquisti.service;
 import PartnerShop.model.dao.CarrelloDAO;
 import PartnerShop.model.dao.ClienteDAO;
 import PartnerShop.model.dao.GestioneAcquistiDAO;
+import PartnerShop.model.dao.GestioneProdottoDAO;
 import PartnerShop.model.entity.*;
+
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
 
     CarrelloDAO carDB = new CarrelloDAO();
     GestioneAcquistiDAO gesDB = new GestioneAcquistiDAO();
+    GestioneProdottoDAO prodDAO = new GestioneProdottoDAO();
    public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr,String setQuantStr){
        CarrelloDAO carDB = new CarrelloDAO();
        if (ut != null) {
@@ -21,12 +25,11 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
 
        if (prodottoIdStr != null) {
            int prodottoId = Integer.parseInt(prodottoIdStr);
-           gesDB = new GestioneAcquistiDAO();
-           Prodotto pr = gesDB.doRetrieveProdottoById(prodottoId);
+           Prodotto pr = prodDAO.doRetrieveById(prodottoId);
            if (quantStr != null) {
                int quant = Integer.parseInt(quantStr);
                Prodotto prodottoCar = car.getProdotto(prodottoId);
-               if (prodottoCar != null) {
+               if (prodottoCar != null ) {
                    if (ut != null) {
                        carDB.doUpdate(ut.getId_Carrello(), prodottoId, car.getQuant(prodottoId) + quant);
                    }
@@ -41,15 +44,6 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
                }
            } else {
 
-               /*if (setQuantStr != null) {
-                   int setQuant = Integer.parseInt(setQuantStr);
-                   if (setQuant <= 0) {
-                       car.remove(prodottoId);
-                       if (ut != null) {
-                           carDB.doDelete(ut.getId_Carrello(), prodottoId);
-                       }
-                   }
-               }*/
            }
        }
     }
@@ -70,11 +64,9 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
    public void acquistaProdotto(UtenteRegistrato ut,Carrello car,String indirizzo,String cardc){
        Ordine ord = new Ordine();
        if (car != null) {
-           gesDB = new GestioneAcquistiDAO();
            ord.setEmailCliente(ut.getEmail());
            ord.setData();
            ord.setIndirizzo(indirizzo);
-           ord.setPrezzo_tot(car.sommaTot());
            Cliente cl = new Cliente();
            cl.setEmail(ut.getEmail());
            cl.setCartaDiCredito(cardc);
@@ -83,19 +75,34 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
            Iterator var8 = car.getProdottoHash().keySet().iterator();
 
            Integer key;
+           ArrayList<Integer> badProduct = new ArrayList<Integer>();
            while(var8.hasNext()) {
                key = (Integer)var8.next();
-               ord.setProdottoHash(car.getProdotto(key));
-               ord.setQuantHash(key, car.getQuant(key));
+               if(car.getProdotto(key).getDisponibilita()>=car.getQuant(key)){
+                   ord.setProdottoHash(car.getProdotto(key));
+                   ord.setQuantHash(key, car.getQuant(key));
+               }else{badProduct.add(key);}
            }
-
+           for(int i : badProduct){
+               car.remove(i);
+           }
+           ord.setPrezzo_tot(car.sommaTot());
            gesDB.doSaveOrdine(ord);
            var8 = car.getProdottoHash().keySet().iterator();
 
            while(var8.hasNext()) {
                key = (Integer)var8.next();
+               Prodotto pr = ord.getProdotto(key);
+               pr.setDisponibilita(pr.getDisponibilita()-ord.getQuant(key));
+               prodDAO.doUpdate(pr);
+           }
+
+           var8 = car.getProdottoHash().keySet().iterator();
+           while(var8.hasNext()) {
+               key = (Integer)var8.next();
                carDB.doDelete(ut.getId_Carrello(), key);
            }
+
 
        }
    }

@@ -7,6 +7,7 @@ $(document).ready(function () {
 function toggleForm() {
     if(document.getElementById("form_login").style.display == "none") {
         document.getElementById("form_login").style.display = "flex";
+        document.getElementById("usNA").style.display = "none";
     }else{
         document.getElementById("form_login").style.display = "none";
     }
@@ -30,7 +31,7 @@ function ricerca(str) {
             }
         }
     }
-    xmlHttpRequest.open("GET","RicercaAjax?p="+encodeURIComponent(str),true);
+    xmlHttpRequest.open("GET","ricercaAjax?p="+encodeURIComponent(str),true);
     xmlHttpRequest.send();
 }
 
