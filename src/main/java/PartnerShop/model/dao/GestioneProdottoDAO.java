@@ -41,6 +41,52 @@ public class GestioneProdottoDAO {
         }
     }
 
+    public ArrayList<Prodotto> doRetrieveAllProdotti() {
+        ArrayList<Prodotto> list = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT id,nome,descrizione,categoria,prezzo_cent,quantita_disponibile FROM prodotto");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Prodotto pr = new Prodotto();
+                pr.setId(rs.getInt(1));
+                pr.setNome(rs.getString(2));
+                pr.setDescrizione(rs.getString(3));
+                pr.setCategoria(rs.getString(4));
+                pr.setPrezzo_Cent(rs.getLong(5));
+                pr.setDisponibilita(rs.getInt(6));
+                list.add(pr);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    public ArrayList<Prodotto> doRetrieveByVenditore(String email_venditore) {
+        ArrayList<Prodotto> list = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con
+                    .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE email_venditore=?");
+            ps.setString(1, email_venditore);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setId(rs.getInt(1));
+                p.setEmail_Venditore(rs.getString(2));
+                p.setNome(rs.getString(3));
+                p.setDescrizione(rs.getString(4));
+                p.setCategoria(rs.getString(5));
+                p.setPrezzo_Cent(rs.getInt(6));
+                p.setDisponibilita(rs.getInt(7));
+                list.add(p);
+                return list;
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void doSave(Prodotto prodotto) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(

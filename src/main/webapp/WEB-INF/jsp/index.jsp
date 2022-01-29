@@ -23,7 +23,7 @@
                     <form action="Carrello" method="post">
                         <input type="hidden" name="idProdotto" value="${prodotto.id}">
                         <input type="hidden" name="quant" value="1">
-                        <input type="submit" value="${prodotto.prezzo_Cent} &euro;">
+                        <input type="submit" value="${prodotto.prezzo_Euro} &euro;">
                     </form></div>
             </c:forEach>
         </div>

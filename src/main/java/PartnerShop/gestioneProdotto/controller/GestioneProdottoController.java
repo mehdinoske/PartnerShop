@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi", "/prodotto-modifica", "/prodotto-aggiungi-form"})
 public class GestioneProdottoController extends HttpServlet {
@@ -125,6 +126,9 @@ public class GestioneProdottoController extends HttpServlet {
                     prodotto.setDescrizione(descrizione);
                     prodotto.setPrezzo_Cent(prezzo_Cent);
                     PrDAO.doSaveProdotto(prodotto);
+                    ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) getServletContext().getAttribute("prodotti");
+                    prodotti.add(prodotto);
+                    getServletContext().setAttribute("prodotti",prodotti);
                     request.setAttribute("messaggio", "Prodotto aggiunto con successo.");
                     requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                     requestDispatcher.forward(request, response);
