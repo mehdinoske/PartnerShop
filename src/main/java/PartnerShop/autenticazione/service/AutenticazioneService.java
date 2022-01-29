@@ -6,6 +6,9 @@ import PartnerShop.model.entity.UtenteRegistrato;
 
 import java.util.List;
 
+/**
+ *  interfaccia
+ */
 public interface AutenticazioneService {
     UtenteRegistrato login(String username, String password);
     Amministratore verificaAdmin(String username,String password);

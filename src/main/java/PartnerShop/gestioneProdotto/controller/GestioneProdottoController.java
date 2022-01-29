@@ -119,6 +119,7 @@ public class GestioneProdottoController extends HttpServlet {
                     }
                     prodotto = new Prodotto();
                     prodotto.setNome(nome);
+                    prodotto.setEmail_Venditore(ut.getEmail());
                     prodotto.setDisponibilita(disponibilita);
                     prodotto.setCategoria(categoria);
                     prodotto.setDescrizione(descrizione);

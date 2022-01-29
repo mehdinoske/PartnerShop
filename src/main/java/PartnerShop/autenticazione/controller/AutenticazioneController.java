@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * implementa il controller che si occupa di tutta l'autenticazione
+ *
+ */
 @WebServlet("/Autenticazione")
 public final class AutenticazioneController extends HttpServlet {
     Amministratore amm;
@@ -24,15 +28,11 @@ public final class AutenticazioneController extends HttpServlet {
         if(ut ==null){
             amm= autenticazioneService.verificaAdmin(username,password);
             request.getSession().setAttribute("admin", amm);
-
         }
         request.getSession().setAttribute("utente", ut);
-        String dest = request.getHeader("referer");
-        if (dest == null || dest.contains("/Login") || dest.trim().isEmpty()) {
-            dest = ".";
-        }
 
-        response.sendRedirect(dest);
+
+        response.sendRedirect(".");
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws  IOException  {
@@ -43,10 +43,7 @@ public final class AutenticazioneController extends HttpServlet {
         {
              request.getSession().removeAttribute("admin");
         }
-        String dest = request.getHeader("referer");
-        if (dest == null || dest.contains("/Login") || dest.trim().isEmpty() || dest.contains("/visualizzaOrdini")) {
-            dest = ".";
-        }
-        response.sendRedirect(dest);
+       // request.getSession().removeAttribute("carrello");
+        response.sendRedirect(".");
     }
 }

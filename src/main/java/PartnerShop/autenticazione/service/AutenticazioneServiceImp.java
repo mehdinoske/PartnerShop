@@ -9,6 +9,10 @@ import PartnerShop.model.entity.UtenteRegistrato;
 
 import java.io.IOException;
 
+/**
+ * implementazione interfaccia autenticazione
+ * 
+ */
 public class AutenticazioneServiceImp implements AutenticazioneService{
 
     UtenteRegistratoDAO utDB =null;
@@ -26,7 +30,7 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
         }catch(IOException e ){
             e.printStackTrace();
         }
-        if(ut != null && ut.getTipo() == 0){
+        if(ut!=null && ut.getTipo()==0) {
             CarrelloDAO car = new CarrelloDAO();
             int id_carrello = car.doRetrieveIdCarrelloByEmailCliente(ut.getEmail());
             ut.setId_Carrello(id_carrello);

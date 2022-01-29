@@ -1,0 +1,15 @@
+PartnerShop.autenticazione.controller
+PartnerShop.autenticazione.service
+PartnerShop.GestioneAcquisti.controller
+PartnerShop.GestioneAcquisti.service
+PartnerShop.gestioneProdotto.controller
+PartnerShop.gestioneProdotto.service
+PartnerShop.GestioneUtenti.controller
+PartnerShop.GestioneUtenti.model
+PartnerShop.model.dao
+PartnerShop.model.entity
+PartnerShop.registrazione.controller
+PartnerShop.registrazione.service
+PartnerShop.segnalazione.controller
+PartnerShop.segnalazione.service
+PartnerShop.utils
