@@ -4,6 +4,12 @@
 </jsp:include>
 
 <main>
+
+    <c:if test="${mes==1}">
+        <div class="error_display" id="usNA">
+            <h1>Username e password non validi.</h1>
+        </div>
+    </c:if>
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front">

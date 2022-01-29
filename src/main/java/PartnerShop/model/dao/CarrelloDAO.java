@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Iterator;
 
 public class CarrelloDAO {
-    private GestioneAcquistiDAO prodottoDB = new GestioneAcquistiDAO();
+    private GestioneProdottoDAO prodottoDB = new GestioneProdottoDAO();
 
     public CarrelloDAO() {
     }
@@ -31,7 +31,7 @@ public class CarrelloDAO {
                     int quant = rs.getInt(2);
                     Prodotto prodCar = car.getProdotto(cod);
                     if (prodCar == null) {
-                        car.setProdottoHash(this.prodottoDB.doRetrieveProdottoById(cod));
+                        car.setProdottoHash(this.prodottoDB.doRetrieveById(cod));
                         car.setQuantHash(cod, quant);
                     }
                 }

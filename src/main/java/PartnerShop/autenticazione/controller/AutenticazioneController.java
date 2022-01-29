@@ -28,6 +28,10 @@ public final class AutenticazioneController extends HttpServlet {
         if(ut ==null){
             amm= autenticazioneService.verificaAdmin(username,password);
             request.getSession().setAttribute("admin", amm);
+            int mes = 1;
+            request.getSession().setAttribute("mes",mes);
+        }else{
+            request.getSession().removeAttribute("mes");
         }
         request.getSession().setAttribute("utente", ut);
 
@@ -39,11 +43,11 @@ public final class AutenticazioneController extends HttpServlet {
         request.getSession().removeAttribute("utente");
         request.getSession().removeAttribute("Carrello");
         request.getSession().removeAttribute("ordini");
+        request.getSession().removeAttribute("mes");
         if(amm!=null)
         {
              request.getSession().removeAttribute("admin");
         }
-       // request.getSession().removeAttribute("carrello");
         response.sendRedirect(".");
     }
 }

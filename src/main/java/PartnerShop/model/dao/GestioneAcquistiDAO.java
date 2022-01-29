@@ -12,52 +12,6 @@ import java.util.Iterator;
 
 public class GestioneAcquistiDAO {
 GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
-    public ArrayList<Prodotto> doRetrieveAllProdotti() {
-        ArrayList<Prodotto> list = new ArrayList<>();
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT id,nome,descrizione,categoria,prezzo_cent,quantita_disponibile FROM prodotto");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Prodotto pr = new Prodotto();
-                pr.setId(rs.getInt(1));
-                pr.setNome(rs.getString(2));
-                pr.setDescrizione(rs.getString(3));
-                pr.setCategoria(rs.getString(4));
-                pr.setPrezzo_Cent(rs.getLong(5));
-                pr.setDisponibilita(rs.getInt(6));
-                list.add(pr);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return list;
-    }
-
-    public Prodotto doRetrieveProdottoById(int idProdotto) {
-        Prodotto pr = new Prodotto();
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT email_venditore,nome,descrizione,categoria,prezzo_cent,quantita_disponibile FROM prodotto where id = ?");
-            ps.setInt(1,idProdotto);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                pr.setId(idProdotto);
-                pr.setEmail_Venditore(rs.getString(1));
-                pr.setNome(rs.getString(2));
-                pr.setDescrizione(rs.getString(3));
-                pr.setCategoria(rs.getString(4));
-                pr.setPrezzo_Cent(rs.getLong(5));
-                pr.setDescrizione(rs.getString(6));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return pr;
-    }
-
-
-
-
-
 
     public void doSaveOrdine(Ordine ord) {
         try {

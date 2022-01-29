@@ -7,6 +7,7 @@ $(document).ready(function () {
 function toggleForm() {
     if(document.getElementById("form_login").style.display == "none") {
         document.getElementById("form_login").style.display = "flex";
+        document.getElementById("usNA").style.display = "none";
     }else{
         document.getElementById("form_login").style.display = "none";
     }
