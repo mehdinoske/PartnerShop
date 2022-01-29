@@ -110,12 +110,14 @@ create table ordine_prodotto(
 
 
 
-insert into utente_registrato values ('anconamarco@gmail.com', 'marco', 'ancona', '1212-12-12', 'napoli, contrada  n° 1', '3333333333', 'ancona1', sha1('asd'), 0, null),
-                                     ('depalmamarco@gmail.com', 'marco', 'depalma', '1212-12-12', 'napoli, contrada  n° 1', '2222222222', 'depalma1', sha1('asd'), 1, null),
-                                     ('boudad@gmail.com','mehdi','boudad','1212-12-12', 'Salerno, vicolo cioffi', '2222222222', 'noske', sha1('root'), 1, null);
+insert into utente_registrato values ('anconamarco@gmail.com', 'Marco', 'Ancona', '1212-12-12', 'napoli, contrada  n° 1', '3333333333', 'ancona1', sha1('asd'), 0, null),
+                                     ('peppe.abbatiello@gmail.com', 'Giuseppe', 'Abbatiello', '1212-12-12', 'napoli, contrada  n° 1', '3333333333', 'peppe1', sha1('Giuseppe99'), 0, null),
+                                     ('depalmamarco@gmail.com', 'Marco', 'Depalma', '1212-12-12', 'Benevento, contrada  n° 1', '2222222222', 'depalma1', sha1('asd'), 1, null),
+                                     ('boudad@gmail.com','Mehdi','Boudad','1212-12-12', 'Salerno, vicolo cioffi', '2222222222', 'noske', sha1('root'), 1, null);
 
 insert into amministratore values (1, 'admin', sha1('admin'));
 insert into cliente values ('anconamarco@gmail.com', null);
+insert into cliente values ('peppe.abbatiello@gmail.com', null);
 insert into venditore values ('depalmamarco@gmail.com', 'negozio1', 'piva1');
 insert into venditore values ('boudad@gmail.com', 'negozio2', 'piva2');
 
