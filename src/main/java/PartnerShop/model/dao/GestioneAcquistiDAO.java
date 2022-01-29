@@ -247,7 +247,7 @@ GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
             Connection con = ConPool.getConnection();
 
             try {
-                PreparedStatement ps = con.prepareStatement("SELECT ord.id,ord.email_cliente,ord.data_ordine,ord.indirizzo,ord.prezzo_tot  FROM ordine ord,prodotto pr,ordine_prodotto orpr where ord.id=orpr.id_ordine and orpr.id_prodotto=pr.id and pr.email_venditore=?");
+                PreparedStatement ps = con.prepareStatement("SELECT DISTINCT ord.id,ord.email_cliente,ord.data_ordine,ord.indirizzo,ord.prezzo_tot  FROM ordine ord,prodotto pr,ordine_prodotto orpr where ord.id=orpr.id_ordine and orpr.id_prodotto=pr.id and pr.email_venditore=?");
                 ps.setString(1, email_venditore);
                 ResultSet rs = ps.executeQuery();
 
@@ -261,7 +261,7 @@ GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
                                 break label50;
                             }
 
-                            ps = con.prepareStatement("SELECT orpr.id_ordine,orpr.id_prodotto,orpr.quantita FROM ordine_prodotto orpr,prodotto pr where orpr.id_ordine = ? and pr.email_venditore = ?");
+                            ps = con.prepareStatement("SELECT DISTINCT orpr.id_ordine,orpr.id_prodotto,orpr.quantita FROM ordine_prodotto orpr,prodotto pr where orpr.id_ordine = ? and pr.email_venditore = ?");
                             ps.setInt(1, ((Ordine)list.get(i)).getId());
                             ps.setString(2,email_venditore);
                             rs = ps.executeQuery();
