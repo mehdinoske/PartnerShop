@@ -19,9 +19,9 @@ public class Prova extends HttpServlet {
         Part filePart = request.getPart("file");
         String fileName = filePart.getSubmittedFileName();
         for (Part part : request.getParts()) {
-            part.write("C:\\Projects\\GitHub\\PartnerShop\\src\\main\\webapp\\images\\prodotti\\" + "pippo.jpg");
+            part.write("C:\\Projects\\GitHub\\PartnerShop\\src\\main\\webapp\\images\\prodotti\\" + "19.jpg");
         }
-        response.getWriter().print("The file uploaded sucessfully.");
+        //response.getWriter().print("The file uploaded sucessfully.");
     }
 
 }

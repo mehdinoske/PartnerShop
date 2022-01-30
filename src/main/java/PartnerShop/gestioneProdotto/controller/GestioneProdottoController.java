@@ -10,10 +10,12 @@ import org.json.JSONArray;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -178,11 +180,13 @@ public class GestioneProdottoController extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                 requestDispatcher.forward(request, response);
                 break;
+
             case "/visualizza-prodotti":
                 request.getSession().setAttribute("listProdotti",prodotti);
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
                 requestDispatcher.forward(request, response);
                 break;
+
             case "/visualizza-categoria":
                String cat =  request.getParameter("categoria");
                 ArrayList listaProd = PrDAO.getProdottiByCategoria(cat);
@@ -190,8 +194,8 @@ public class GestioneProdottoController extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
                 requestDispatcher.forward(request, response);
                 break;
-            case "/ricercaAjax":
 
+            case "/ricercaAjax":
                 String app = (request.getParameter("p") +"*");
                 ArrayList<Prodotto> listProd = PrDAO.getProdottiByNome(app);
                 JSONArray listaJson = new JSONArray();
@@ -201,6 +205,7 @@ public class GestioneProdottoController extends HttpServlet {
                 response.setContentType("application/json");
                 response.getWriter().append(listaJson.toString());
                 break;
+
         }
     }
 

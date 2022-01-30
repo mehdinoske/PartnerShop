@@ -6,26 +6,9 @@
 
 <main>
 
-    <!-- HTML5 Input Form Elements -->
-    <input id="ajaxfile" type="file"/> <br/>
-    <button onclick="uploadFile()"> Upload </button>
-
-    <!-- Ajax to Java File Upload Logic -->
-    <script>
-        async function uploadFile() {
-            let formData = new FormData();
-            formData.append("file", ajaxfile.files[0]);
-            await fetch('fileuploadservlet', {
-                method: "POST",
-                body: formData
-            });
-            alert('The file upload with Ajax and Java was a success!');
-        }
-    </script>
-
     <div class="form_container_registrazione">
         <div class="inner_form_container_registrazione">
-            <form action="prodotto-aggiungi" method="post">
+            <form action="prodotto-aggiungi" method="post" id="form">
                 <label for="nome">Nome</label>
                 <input type="text" name="nome" id="nome" value="${prodotto.nome}"/>
                 <label for="descrizione">Descrizione</label>
@@ -36,11 +19,26 @@
                 <input type="text" name="prezzo_Cent" id="prezzo_Cent" value="${prodotto.prezzo_Cent}"/>
                 <label for="disponibilita">Disponibilita(senza virgole e punti)</label>
                 <input type="text" name="disponibilita" id="disponibilita" value="${prodotto.disponibilita}"/>
-
-                <input type="submit" value="Aggiungi prodotto">
+                <button> Porco Dio</button>
             </form>
+
+            <input id="ajaxfile" type="file"/> <br/>
+            <button  onclick="uploadFile()"> Aggiungi prodotto </button>
         </div>
     </div>
+
 </main>
+
+<script>
+    async function uploadFile() {
+        let formData = new FormData();
+        formData.append("file", ajaxfile.files[0]);
+        await fetch('fileuploadservlet', {
+            method: "POST",
+            body: formData
+        });
+        //document.getElementById('form').submit();
+    }
+</script>
 
 <%@include file="footer.jsp"%>

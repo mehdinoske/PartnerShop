@@ -29,6 +29,21 @@
         </div>
 
     </div>
+
+    <c:if test="${utente.tipo == 1}">
+        <form action="prodotto-modifica-form" method="post">
+            <input type="hidden" name="id" value="${prodotto.id}">
+            <input type="submit" value="Modifica">
+        </form>
+    </c:if>
+
+    <c:if test="${utente.tipo == 1 || admin != null}">
+        <form action="prodotto-rimuovi" method="post">
+            <input type="hidden" name="id" value="${prodotto.id}">
+            <input type="submit" value="Rimuovi">
+        </form>
+    </c:if>
+
 </main>
 
 
