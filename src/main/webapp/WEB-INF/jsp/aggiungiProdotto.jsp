@@ -19,7 +19,7 @@
                 <input type="text" name="prezzo_Cent" id="prezzo_Cent" value="${prodotto.prezzo_Cent}"/>
                 <label for="disponibilita">Disponibilita(senza virgole e punti)</label>
                 <input type="text" name="disponibilita" id="disponibilita" value="${prodotto.disponibilita}"/>
-                <button> Porco Dio</button>
+                <!-- <button> Porco Dio</button> -->
             </form>
 
             <input id="ajaxfile" type="file"/> <br/>
@@ -37,7 +37,7 @@
             method: "POST",
             body: formData
         });
-        //document.getElementById('form').submit();
+        document.getElementById('form').submit();
     }
 </script>
 

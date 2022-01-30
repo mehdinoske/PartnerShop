@@ -13,7 +13,7 @@
                 <form action="Carrello" method="get">
                     <label style="color: white">Quantità:</label>
                     <select name="quant">
-                        <c:forEach begin="0" end="${prodotto.disponibilita}" varStatus="loop">
+                        <c:forEach begin="1" end="${prodotto.disponibilita}" varStatus="loop">
                             <option value="${loop.index}">${loop.index}</option>
                         </c:forEach>
                     </select>
