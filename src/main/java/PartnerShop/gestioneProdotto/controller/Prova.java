@@ -1,5 +1,12 @@
 package PartnerShop.gestioneProdotto.controller;
+import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
+import PartnerShop.gestioneProdotto.service.GestioneProdottoServiceImp;
+import PartnerShop.model.entity.Prodotto;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -13,13 +20,20 @@ import javax.servlet.annotation.*;
 )
 public class Prova extends HttpServlet {
 
+    private final GestioneProdottoService PrDAO = new GestioneProdottoServiceImp();
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         /* Receive file uploaded to the Servlet from the HTML5 form */
         Part filePart = request.getPart("file");
         String fileName = filePart.getSubmittedFileName();
+        ArrayList<Prodotto> prodotti = PrDAO.getAllProdotti();
+        getServletContext().setAttribute("prodotti",prodotti);
+        Prodotto p = prodotti.get(prodotti.size() - 1);
+        int i = p.getId() + 1;
         for (Part part : request.getParts()) {
-            part.write("C:\\Projects\\GitHub\\PartnerShop\\src\\main\\webapp\\images\\prodotti\\" + fileName);
+            part.write("C:\\Projects\\GitHub\\PartnerShop\\src\\main\\webapp\\images\\prodotti\\" + i +".jpg");
+            Logger.getLogger("PORCO").log(Level.SEVERE, Integer.toString(i));
         }
         //response.getWriter().print("The file uploaded sucessfully.");
     }
