@@ -5,6 +5,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <main>
+
+    <!-- HTML5 Input Form Elements -->
+    <input id="ajaxfile" type="file"/> <br/>
+    <button onclick="uploadFile()"> Upload </button>
+
+    <!-- Ajax to Java File Upload Logic -->
+    <script>
+        async function uploadFile() {
+            let formData = new FormData();
+            formData.append("file", ajaxfile.files[0]);
+            await fetch('fileuploadservlet', {
+                method: "POST",
+                body: formData
+            });
+            alert('The file upload with Ajax and Java was a success!');
+        }
+    </script>
+
     <div class="form_container_registrazione">
         <div class="inner_form_container_registrazione">
             <form action="prodotto-aggiungi" method="post">
