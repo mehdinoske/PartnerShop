@@ -33,11 +33,12 @@
     async function uploadFile() {
         let formData = new FormData();
         formData.append("file", ajaxfile.files[0]);
+        document.getElementById('form').submit();
         await fetch('fileuploadservlet', {
             method: "POST",
             body: formData
         });
-        document.getElementById('form').submit();
+
     }
 </script>
 

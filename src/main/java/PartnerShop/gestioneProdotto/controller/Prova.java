@@ -30,9 +30,9 @@ public class Prova extends HttpServlet {
         ArrayList<Prodotto> prodotti = PrDAO.getAllProdotti();
         getServletContext().setAttribute("prodotti",prodotti);
         Prodotto p = prodotti.get(prodotti.size() - 1);
-        int i = p.getId() + 1;
+        int i = p.getId();
         for (Part part : request.getParts()) {
-            part.write("C:\\Projects\\GitHub\\PartnerShop\\src\\main\\webapp\\images\\prodotti\\" + i +".jpg");
+            part.write("C:\\Users\\depal\\Desktop\\img\\" + i +".jpg");
             Logger.getLogger("PORCO").log(Level.SEVERE, Integer.toString(i));
         }
         //response.getWriter().print("The file uploaded sucessfully.");
