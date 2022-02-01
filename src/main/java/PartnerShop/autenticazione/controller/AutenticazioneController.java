@@ -1,7 +1,8 @@
 package PartnerShop.autenticazione.controller;
 
-import PartnerShop.autenticazione.service.AutenticazioneService;
-import PartnerShop.autenticazione.service.AutenticazioneServiceImp;
+import PartnerShop.autenticazione.service.*;
+
+
 import PartnerShop.model.dao.UtenteRegistratoDAO;
 import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.UtenteRegistrato;

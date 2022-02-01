@@ -41,8 +41,13 @@ public class GestioneAcquistiController extends HttpServlet {
                 String prodottoIdStr = request.getParameter("idProdotto");
                 String quantStr = request.getParameter("quant");
                 String setQuantStr = request.getParameter("setQuant");
-                //GestioneAcquistiImp imp = new GestioneAcquistiImp();
-                imp.aggiungiAlCarrello(car,ut,prodottoIdStr,quantStr,setQuantStr);
+                if(quantStr!=null){
+                    if(Integer.parseInt(quantStr)<=0){
+                        request.getRequestDispatcher("/WEB-INF/jsp/carrello.jsp").forward(request,response);
+                        break;
+                    }
+                }
+                imp.aggiungiAlCarrello(car,ut,prodottoIdStr,quantStr);
                 if(setQuantStr!= null && Integer.parseInt(setQuantStr)<=0)
                     imp.rimuovidalcarrello(ut,car,Integer.parseInt(prodottoIdStr),setQuantStr);
                 dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/carrello.jsp");

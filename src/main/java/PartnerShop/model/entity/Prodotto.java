@@ -59,8 +59,8 @@ public class Prodotto {
             this.prezzo_Cent = prezzoCent;
         }
 
-        public String getPrezzo_Euro() {
-            return String.format("%.2f", prezzo_Cent / 100.);
+        public long getPrezzo_Euro() {
+            return  (prezzo_Cent / 100);
         }
 
 		public int getDisponibilita() {

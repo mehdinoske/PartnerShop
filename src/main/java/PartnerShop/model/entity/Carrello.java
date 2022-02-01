@@ -29,7 +29,7 @@ public class Carrello {
     }
 
     public long getPrezzoEuro(int idProdotto) {
-        return (long)(Integer)this.getQuantHash().get(idProdotto) * (long)((Prodotto)this.getProdottoHash().get(idProdotto)).getPrezzo_Cent();
+        return (long)(Integer)this.getQuantHash().get(idProdotto) * (long)((Prodotto)this.getProdottoHash().get(idProdotto)).getPrezzo_Euro();
     }
 
     public float sommaTot() {

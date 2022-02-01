@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * classe principale che si occupa di recuperare tutti i prodottio dal DB
+ * classe principale che si occupa di recuperare tutti i prodotti dal DB
  * @author Giuseppe Abbatiello, El Mehdi Boudad
  */
 

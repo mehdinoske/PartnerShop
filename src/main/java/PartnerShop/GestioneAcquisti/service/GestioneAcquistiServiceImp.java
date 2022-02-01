@@ -16,7 +16,7 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
     CarrelloDAO carDB = new CarrelloDAO();
     GestioneAcquistiDAO gesDB = new GestioneAcquistiDAO();
     GestioneProdottoDAO prodDAO = new GestioneProdottoDAO();
-   public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr,String setQuantStr){
+   public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr){
        CarrelloDAO carDB = new CarrelloDAO();
        if (ut != null) {
            carDB.UpdateSession(car,ut.getEmail(), ut.getId_Carrello());
@@ -28,7 +28,8 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
            Prodotto pr = prodDAO.doRetrieveById(prodottoId);
            if (quantStr != null) {
                int quant = Integer.parseInt(quantStr);
-               Prodotto prodottoCar = car.getProdotto(prodottoId);
+               Prodotto prodottoCar = new Prodotto();
+               prodottoCar = car.getProdotto(prodottoId);
                if (prodottoCar != null ) {
                    if (ut != null) {
                        carDB.doUpdate(ut.getId_Carrello(), prodottoId, car.getQuant(prodottoId) + quant);
@@ -42,8 +43,6 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
                        carDB.doSave(prodottoId, ut.getId_Carrello(), quant);
                    }
                }
-           } else {
-
            }
        }
     }
