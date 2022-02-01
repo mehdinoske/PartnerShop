@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.URLDecoder;
 
 @WebServlet(urlPatterns = "/file/*")
-public class Prova1 extends HttpServlet {
+public class LoadImages extends HttpServlet {
 
     private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
 

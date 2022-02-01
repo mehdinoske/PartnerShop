@@ -1,24 +1,20 @@
 package PartnerShop.gestioneProdotto.controller;
 import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
 import PartnerShop.gestioneProdotto.service.GestioneProdottoServiceImp;
-import PartnerShop.model.entity.Prodotto;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 /* The Java file upload Servlet example */
 
-@WebServlet(name = "FileUploadServlet", urlPatterns = { "/fileuploadservlet" })
+@WebServlet(urlPatterns = { "/fileuploadservlet" })
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10,      // 10 MB
         maxRequestSize = 1024 * 1024 * 100   // 100 MB
 )
-public class Prova extends HttpServlet {
+public class UploadImageAjax extends HttpServlet {
 
     private final GestioneProdottoService PrDAO = new GestioneProdottoServiceImp();
 
