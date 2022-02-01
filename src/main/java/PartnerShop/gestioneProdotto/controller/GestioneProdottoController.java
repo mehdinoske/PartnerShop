@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet(urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi",
@@ -138,6 +139,11 @@ public class GestioneProdottoController extends HttpServlet {
                     PrDAO.doSaveProdotto(prodotto);
                     prodotti.add(prodotto);
                     getServletContext().setAttribute("prodotti",prodotti);
+                    prodotti = (ArrayList<Prodotto>) getServletContext().getAttribute("prodotti");
+                    Part filePart = (Part) request.getSession().getAttribute("img");
+                    Prodotto p = prodotti.get(prodotti.size() - 1);
+                    int i = p.getId();
+                    filePart.write("C:\\Users\\depal\\Desktop\\img\\" + i +".jpg");
                     request.setAttribute("messaggio", "Prodotto aggiunto con successo.");
                     requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                     requestDispatcher.forward(request, response);

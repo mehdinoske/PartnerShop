@@ -26,16 +26,18 @@ public class Prova extends HttpServlet {
 
         /* Receive file uploaded to the Servlet from the HTML5 form */
         Part filePart = request.getPart("file");
-        String fileName = filePart.getSubmittedFileName();
-        ArrayList<Prodotto> prodotti = PrDAO.getAllProdotti();
+        request.getSession().setAttribute("img", filePart);
+
+
+        //String fileName = filePart.getSubmittedFileName();
+        /*ArrayList<Prodotto> prodotti = PrDAO.getAllProdotti();
         getServletContext().setAttribute("prodotti",prodotti);
         Prodotto p = prodotti.get(prodotti.size() - 1);
         int i = p.getId();
         for (Part part : request.getParts()) {
             part.write("C:\\Users\\depal\\Desktop\\img\\" + i +".jpg");
-            Logger.getLogger("PORCO").log(Level.SEVERE, Integer.toString(i));
         }
-        //response.getWriter().print("The file uploaded sucessfully.");
+        //response.getWriter().print("The file uploaded sucessfully.");*/
     }
 
 }

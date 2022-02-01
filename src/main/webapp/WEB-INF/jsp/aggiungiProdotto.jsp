@@ -19,9 +19,7 @@
                 <input type="text" name="prezzo_Cent" id="prezzo_Cent" value="${prodotto.prezzo_Cent}"/>
                 <label for="disponibilita">Disponibilita(senza virgole e punti)</label>
                 <input type="text" name="disponibilita" id="disponibilita" value="${prodotto.disponibilita}"/>
-                <!-- <button> Porco Dio</button> -->
             </form>
-
             <input id="ajaxfile" type="file"/> <br/>
             <button  onclick="uploadFile()"> Aggiungi prodotto </button>
         </div>
@@ -33,12 +31,11 @@
     async function uploadFile() {
         let formData = new FormData();
         formData.append("file", ajaxfile.files[0]);
-        document.getElementById('form').submit();
         await fetch('fileuploadservlet', {
             method: "POST",
             body: formData
         });
-
+        document.getElementById('form').submit();
     }
 </script>
 
