@@ -18,8 +18,13 @@ import java.util.stream.Collectors;
 
 public class GestioneProdottoDAO {
 
+    private Connection con;
+
+    public GestioneProdottoDAO(){
+        this.con = ConPool.getConnection();
+    }
     public Prodotto doRetrieveById(int id) {
-        try (Connection con = ConPool.getConnection()) {
+        try{
             PreparedStatement ps = con
                     .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE id=?");
             ps.setInt(1, id);
@@ -43,7 +48,7 @@ public class GestioneProdottoDAO {
 
     public ArrayList<Prodotto> doRetrieveAllProdotti() {
         ArrayList<Prodotto> list = new ArrayList<>();
-        try (Connection con = ConPool.getConnection()) {
+        try {
             PreparedStatement ps = con.prepareStatement("SELECT id,nome,descrizione,categoria,prezzo_cent,quantita_disponibile FROM prodotto");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -64,7 +69,7 @@ public class GestioneProdottoDAO {
 
     public ArrayList<Prodotto> doRetrieveByVenditore(String email_venditore) {
         ArrayList<Prodotto> list = new ArrayList<>();
-        try (Connection con = ConPool.getConnection()) {
+        try {
             PreparedStatement ps = con
                     .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE email_venditore=?");
             ps.setString(1, email_venditore);
@@ -87,7 +92,7 @@ public class GestioneProdottoDAO {
     }
 
     public void doSave(Prodotto prodotto) {
-        try (Connection con = ConPool.getConnection()) {
+        try  {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO prodotto (email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile) VALUES(?,?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
@@ -111,7 +116,7 @@ public class GestioneProdottoDAO {
     }
 
     public void doUpdate(Prodotto prodotto) {
-        try (Connection con = ConPool.getConnection()) {
+        try{
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE prodotto SET nome=?, descrizione=?, categoria=?, prezzo_cent=?, quantita_disponibile=? WHERE id=?",
                     Statement.RETURN_GENERATED_KEYS);
@@ -131,7 +136,7 @@ public class GestioneProdottoDAO {
     }
 
     public void doDeleteById(int id) {
-        try (Connection con = ConPool.getConnection()) {
+        try  {
             PreparedStatement ps = con
                     .prepareStatement("DELETE FROM prodotto WHERE id=?");
             ps.setInt(1, id);
@@ -145,7 +150,7 @@ public class GestioneProdottoDAO {
 
     public ArrayList<Prodotto> doRetrieveByCategoria(String cat){
         ArrayList<Prodotto> list = new ArrayList<>();
-        try (Connection con = ConPool.getConnection()) {
+        try  {
             PreparedStatement ps = con
                     .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE categoria=?");
             ps.setString(1, cat);
@@ -170,7 +175,7 @@ public class GestioneProdottoDAO {
 
     public ArrayList<Prodotto> doRetrieveByNome(String nome){
         ArrayList<Prodotto> list = new ArrayList<>();
-        try (Connection con = ConPool.getConnection()) {
+        try  {
             PreparedStatement ps = con
                     .prepareStatement("SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE MATCH(nome) AGAINST(? IN BOOLEAN MODE)");
             ps.setString(1, nome);

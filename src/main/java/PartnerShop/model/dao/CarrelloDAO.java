@@ -11,16 +11,17 @@ import java.sql.SQLException;
 import java.util.Iterator;
 
 public class CarrelloDAO {
+    private Connection con;
+
+    public CarrelloDAO(){
+        this.con = ConPool.getConnection();
+    }
     private GestioneProdottoDAO prodottoDB = new GestioneProdottoDAO();
 
-    public CarrelloDAO() {
-    }
 
 
     public Carrello doRetrieveByEmailCliente(String emailCliente, Carrello car) {
         try {
-            Connection con = ConPool.getConnection();
-
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT cp.id_Prodotto, cp.quantita FROM carrello_prodotto cp, carrello c WHERE c.id = cp.id_Carrello and email_Cliente = ?");
                 ps.setString(1, emailCliente);
@@ -59,7 +60,6 @@ public class CarrelloDAO {
 
     public int doRetrieveIdCarrelloByEmailCliente(String emailCliente) {
         try {
-            Connection con = ConPool.getConnection();
             int id_carrello=0;
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT id FROM carrello WHERE email_Cliente = ?");
@@ -81,10 +81,6 @@ public class CarrelloDAO {
                 throw var10;
             }
 
-            if (con != null) {
-                con.close();
-            }
-
             return id_carrello;
         } catch (SQLException var11) {
             throw new RuntimeException(var11);
@@ -93,8 +89,6 @@ public class CarrelloDAO {
 
     public void UpdateSession(Carrello car, String emailCliente,int id_Carrello) {
         try {
-            Connection con = ConPool.getConnection();
-
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT cp.id_Prodotto,cp.quantita FROM carrello_prodotto cp, carrello c WHERE c.id = cp.id_Carrello and email_Cliente = ? and id_Prodotto = ?");
                 Iterator var5 = car.getProdottoHash().keySet().iterator();
@@ -124,9 +118,6 @@ public class CarrelloDAO {
                 throw var9;
             }
 
-            if (con != null) {
-                con.close();
-            }
 
         } catch (SQLException var10) {
             throw new RuntimeException(var10);
@@ -134,9 +125,6 @@ public class CarrelloDAO {
     }
 
     public void doSave(int id_Prodotto,int id_Carrello, int quant) {
-        try {
-            Connection con = ConPool.getConnection();
-
             try {
                 PreparedStatement ps = con.prepareStatement("INSERT INTO carrello_prodotto (id_carrello,id_prodotto,quantita) VALUES(?,?,?)");
                 ps.setInt(1, id_Carrello);
@@ -145,31 +133,15 @@ public class CarrelloDAO {
                 if (ps.executeUpdate() != 1) {
                     throw new RuntimeException("Insert error.");
                 }
-            } catch (Throwable var8) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var7) {
-                        var8.addSuppressed(var7);
-                    }
-                }
 
-                throw var8;
+            } catch (SQLException var9) {
+                throw new RuntimeException(var9);
             }
 
-            if (con != null) {
-                con.close();
-            }
-
-        } catch (SQLException var9) {
-            throw new RuntimeException(var9);
         }
-    }
 
     public void doCreateCarrello(String emailCliente) {
         try {
-            Connection con = ConPool.getConnection();
-
             try {
                 PreparedStatement ps = con.prepareStatement("INSERT INTO carrello (email_Cliente) VALUES(?)");
                 ps.setString(1, emailCliente);
@@ -199,8 +171,6 @@ public class CarrelloDAO {
 
     public void doUpdate(int id_Carrello, int idProd, int quant) {
         try {
-            Connection con = ConPool.getConnection();
-
             try {
                 PreparedStatement ps = con.prepareStatement("UPDATE carrello_prodotto SET quantita=? WHERE  id_Prodotto=? AND id_Carrello=?");
                 ps.setInt(1, quant);
@@ -232,8 +202,6 @@ public class CarrelloDAO {
 
     public void doDelete(int idCarrello, int idProd) {
         try {
-            Connection con = ConPool.getConnection();
-
             try {
                 PreparedStatement ps = con.prepareStatement("DELETE FROM carrello_prodotto WHERE  id_Carrello=? AND id_Prodotto=?");
                 ps.setInt(1, idCarrello);

@@ -20,13 +20,8 @@ import java.io.IOException;
 public final class AutenticazioneController extends HttpServlet {
     private Amministratore amm;
     private final AutenticazioneService autenticazioneService = new AutenticazioneServiceImp();
-    /**
-     * metodo doPost che si occupa di recuperare nella rischiesta l'username e la password dell'utente
-     * e di richiamare le funzionalità del login
-     * @param request
-     * @param response
-     * @throws IOException
-     */
+
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException {
         String username = request.getParameter("usernameLogin");
         String password = request.getParameter("passwordLogin");
@@ -45,21 +40,10 @@ public final class AutenticazioneController extends HttpServlet {
         response.sendRedirect(".");
     }
 
-    /**@
-     * metodo do get che implementa le funzionalità di logout
-     * @param request
-     * @param response
-     * @throws IOException
-     */
+
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws  IOException  {
-        request.getSession().removeAttribute("utente");
-        request.getSession().removeAttribute("Carrello");
-        request.getSession().removeAttribute("ordini");
-        request.getSession().removeAttribute("mes");
-        if(amm!=null)
-        {
-             request.getSession().removeAttribute("admin");
-        }
+
+        autenticazioneService.logout(request.getSession());
         response.sendRedirect(".");
     }
 }

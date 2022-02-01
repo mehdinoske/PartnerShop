@@ -7,10 +7,14 @@ import PartnerShop.utils.ConPool;
 import java.sql.*;
 
 public class ClienteDAO extends UtenteRegistratoDAO{
+    private Connection con;
 
+    public ClienteDAO(){
+        this.con = ConPool.getConnection();
+    }
 
     public void doSave(String email) {
-        try (Connection con = ConPool.getConnection()) {
+        try {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO cliente (email) VALUES(?)",
                     Statement.RETURN_GENERATED_KEYS);
@@ -26,7 +30,7 @@ public class ClienteDAO extends UtenteRegistratoDAO{
     }
 
     public void doSave(Cliente ct) {
-        try (Connection con = ConPool.getConnection()) {
+        try {
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE cliente SET creditcard=? WHERE email=?",
                     Statement.RETURN_GENERATED_KEYS);

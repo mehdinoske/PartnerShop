@@ -7,9 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class SegnalazioneDAO {
+    private Connection con;
 
+    public SegnalazioneDAO(){
+        this.con = ConPool.getConnection();
+    }
     public void doSave(Segnalazione segn) {
-        try (Connection con = ConPool.getConnection()) {
+        try  {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO segnalazione (email_Cliente,stato,motivazione,commento) VALUES(?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
@@ -31,7 +35,7 @@ public class SegnalazioneDAO {
     public ArrayList<Segnalazione> doRetrieveAll(int stato) {
         ArrayList<Segnalazione> list = new ArrayList<>();
         Segnalazione segn =null;
-        try (Connection con = ConPool.getConnection()) {
+        try  {
             PreparedStatement ps = con.prepareStatement("SELECT id,email_cliente,stato, motivazione,commento  FROM segnalazione where stato=?");
             ps.setInt(1,stato);
             ResultSet rs = ps.executeQuery();
@@ -53,7 +57,7 @@ public class SegnalazioneDAO {
 
     public Segnalazione doRetrieveById(int id) {
         Segnalazione segn = new Segnalazione();
-        try (Connection con = ConPool.getConnection()) {
+        try {
             PreparedStatement ps = con.prepareStatement("SELECT id,email_cliente,stato, motivazione,commento  FROM segnalazione where id=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -72,7 +76,7 @@ public class SegnalazioneDAO {
     }
 
     public void aggiornaStato( int id) {
-        try (Connection con = ConPool.getConnection()) {
+        try {
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE segnalazione SET stato=1 WHERE id=?");
             ps.setInt(1, id);

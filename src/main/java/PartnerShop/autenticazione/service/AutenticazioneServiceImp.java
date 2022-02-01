@@ -7,6 +7,7 @@ import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -51,6 +52,7 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
      * @param username inserita dall'utente
      * @param password inserita dall'utente
      * @return l'admin se username e password sono nel database
+     *
      */
     @Override
     public Amministratore verificaAdmin(String username, String password) {
@@ -69,4 +71,19 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
         }
         return amm;
     }
+
+    @Override
+    public boolean logout(HttpSession sessione) {
+        if(sessione.getAttribute("utente")!=null){
+            sessione.removeAttribute("utente");
+            sessione.removeAttribute("Carrello");
+            sessione.removeAttribute("ordini");
+            sessione.removeAttribute("mes");
+            sessione.removeAttribute("admin");
+            return true;
+        }
+       return false;
+    }
+
+
 }
