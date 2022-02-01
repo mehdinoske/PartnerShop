@@ -16,7 +16,7 @@ public interface GestioneProdottoService {
 
     public ArrayList<Prodotto> getAllProdotti();
 
-    public ArrayList<Prodotto> getProdottoByVenditore(String email);
+    public ArrayList<Prodotto> getProdottiByVenditore(String email);
 
     public ArrayList<Prodotto> getProdottiByCategoria(String cat);
 
