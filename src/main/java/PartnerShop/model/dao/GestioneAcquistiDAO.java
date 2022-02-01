@@ -11,12 +11,14 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 public class GestioneAcquistiDAO {
-GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
+    private GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
+    private Connection con;
 
+    public GestioneAcquistiDAO(){
+        this.con = ConPool.getConnection();
+    }
     public void doSaveOrdine(Ordine ord) {
         try {
-            Connection con = ConPool.getConnection();
-
             try {
                 PreparedStatement ps = con.prepareStatement("INSERT INTO ordine (email_cliente,data_ordine,indirizzo,prezzo_tot) VALUES(?,?,?,?)", 1);
                 ps.setString(1, ord.getEmailCliente());
@@ -68,8 +70,6 @@ GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
         ArrayList list = new ArrayList();
 
         try {
-            Connection con = ConPool.getConnection();
-
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT id, email_cliente, data_ordine,indirizzo,prezzo_tot FROM ordine");
                 ResultSet rs = ps.executeQuery();
@@ -133,8 +133,6 @@ GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
         ArrayList list = new ArrayList();
 
         try {
-            Connection con = ConPool.getConnection();
-
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT id,email_cliente,data_ordine,indirizzo,prezzo_tot  FROM ordine where email_cliente = ?");
                 ps.setString(1, email_cliente);
@@ -198,8 +196,6 @@ GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
         ArrayList list = new ArrayList();
 
         try {
-            Connection con = ConPool.getConnection();
-
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT DISTINCT ord.id,ord.email_cliente,ord.data_ordine,ord.indirizzo,ord.prezzo_tot  FROM ordine ord,prodotto pr,ordine_prodotto orpr where ord.id=orpr.id_ordine and orpr.id_prodotto=pr.id and pr.email_venditore=?");
                 ps.setString(1, email_venditore);

@@ -28,7 +28,7 @@ public class GestioneProdottoServiceImp implements GestioneProdottoService {
         pr.doUpdate(p);
     }
 
-    public ArrayList<Prodotto> getProdottoByVenditore(String email) {
+    public ArrayList<Prodotto> getProdottiByVenditore(String email) {
         p = pr.doRetrieveByVenditore(email);
         return p;
     }

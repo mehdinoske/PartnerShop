@@ -10,12 +10,15 @@ import org.json.JSONArray;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet(urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi",
@@ -136,6 +139,11 @@ public class GestioneProdottoController extends HttpServlet {
                     PrDAO.doSaveProdotto(prodotto);
                     prodotti.add(prodotto);
                     getServletContext().setAttribute("prodotti",prodotti);
+                    prodotti = (ArrayList<Prodotto>) getServletContext().getAttribute("prodotti");
+                    Part filePart = (Part) request.getSession().getAttribute("img");
+                    Prodotto p = prodotti.get(prodotti.size() - 1);
+                    int i = p.getId();
+                    filePart.write("C:\\img\\" + i +".jpg");
                     request.setAttribute("messaggio", "Prodotto aggiunto con successo.");
                     requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                     requestDispatcher.forward(request, response);
@@ -178,11 +186,13 @@ public class GestioneProdottoController extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                 requestDispatcher.forward(request, response);
                 break;
+
             case "/visualizza-prodotti":
                 request.getSession().setAttribute("listProdotti",prodotti);
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
                 requestDispatcher.forward(request, response);
                 break;
+
             case "/visualizza-categoria":
                String cat =  request.getParameter("categoria");
                 ArrayList listaProd = PrDAO.getProdottiByCategoria(cat);
@@ -190,8 +200,8 @@ public class GestioneProdottoController extends HttpServlet {
                 requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
                 requestDispatcher.forward(request, response);
                 break;
-            case "/ricercaAjax":
 
+            case "/ricercaAjax":
                 String app = (request.getParameter("p") +"*");
                 ArrayList<Prodotto> listProd = PrDAO.getProdottiByNome(app);
                 JSONArray listaJson = new JSONArray();
@@ -201,6 +211,7 @@ public class GestioneProdottoController extends HttpServlet {
                 response.setContentType("application/json");
                 response.getWriter().append(listaJson.toString());
                 break;
+
         }
     }
 

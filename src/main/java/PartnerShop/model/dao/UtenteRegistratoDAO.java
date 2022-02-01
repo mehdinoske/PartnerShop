@@ -8,13 +8,14 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class UtenteRegistratoDAO {
-        public UtenteRegistratoDAO() {
+    private Connection con;
 
-        }
-
+    public UtenteRegistratoDAO(){
+        this.con = ConPool.getConnection();
+    }
         public ArrayList<UtenteRegistrato> doRetrieveAll() {
             ArrayList<UtenteRegistrato> list = new ArrayList<>();
-            try (Connection con = ConPool.getConnection()) {
+            try  {
                 PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn, username,email, passwordhash  FROM utente_registrato");
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
@@ -34,7 +35,7 @@ public class UtenteRegistratoDAO {
         }
 
     public void doSave(UtenteRegistrato ut,int tipo) {
-        try (Connection con = ConPool.getConnection()) {
+        try  {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO utente_registrato (nome, cognome, ddn,email,indirizzo,username,passwordhash,cellulare,tipo) VALUES(?,?,?,?,?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
@@ -59,7 +60,7 @@ public class UtenteRegistratoDAO {
 
         public UtenteRegistrato doRetrieveByUsernamePass(String user, String pass) {
             UtenteRegistrato ut = new UtenteRegistrato();
-            try (Connection con = ConPool.getConnection()) {
+            try  {
                 PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where username=? and passwordhash=SHA1(?) ");
                 ps.setString(1, user);
                 ps.setString(2, pass);
@@ -82,7 +83,7 @@ public class UtenteRegistratoDAO {
         }
 
     public void doDelete(String email) {
-        try (Connection con = ConPool.getConnection()) {
+        try  {
             PreparedStatement ps = con.prepareStatement("DELETE FROM utente_registrato WHERE  email=? ");
             ps.setString(1, email);
             if (ps.executeUpdate() != 1) {
@@ -95,7 +96,7 @@ public class UtenteRegistratoDAO {
     }
 
     public void doUpdate(UtenteRegistrato ut) {
-        try (Connection con = ConPool.getConnection()) {
+        try  {
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE utente_registrato SET nome = ?, cognome = ?, ddn = ?, email=?, indirizzo=?, username=? , passwordhash=?, tipo=? WHERE email=?");
             ps.setString(1, ut.getNome());
@@ -119,7 +120,7 @@ public class UtenteRegistratoDAO {
 
     public Amministratore doRetrieveAdmin(String username,String password) {
         Amministratore amm = new Amministratore();
-        try (Connection con = ConPool.getConnection()) {
+        try{
             PreparedStatement ps = con.prepareStatement("SELECT id, username, passwordhash FROM amministratore where username=? and passwordhash=SHA1(?)  ");
             ps.setString(1, username);
             ps.setString(2, password);

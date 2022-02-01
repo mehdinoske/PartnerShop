@@ -33,7 +33,7 @@ public class HomePageServlet extends HttpServlet {
         ArrayList<Prodotto> prodotti;
 
         if(ut != null && ut.getTipo() == 1) {
-            prodotti = PrDAO.getProdottoByVenditore(ut.getEmail());
+            prodotti = PrDAO.getProdottiByVenditore(ut.getEmail());
         } else {
             prodotti = PrDAO.getAllProdotti();
         }

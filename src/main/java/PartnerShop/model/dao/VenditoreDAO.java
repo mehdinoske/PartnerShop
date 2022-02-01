@@ -5,10 +5,14 @@ import PartnerShop.utils.ConPool;
 import java.sql.*;
 
 public class VenditoreDAO extends UtenteRegistratoDAO{
+    private Connection con;
 
+    public VenditoreDAO(){
+        this.con = ConPool.getConnection();
+    }
 
     public void doSave(String email,String nomeNegozio,String pIva) {
-        try (Connection con = ConPool.getConnection()) {
+        try {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO venditore (email,nome_negozio,partita_Iva) VALUES(?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);

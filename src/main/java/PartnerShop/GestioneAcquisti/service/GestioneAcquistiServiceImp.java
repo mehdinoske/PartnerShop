@@ -61,6 +61,7 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
     }
 
    public void acquistaProdotto(UtenteRegistrato ut,Carrello car,String indirizzo,String cardc){
+
        Ordine ord = new Ordine();
        if (car != null) {
            ord.setEmailCliente(ut.getEmail());
