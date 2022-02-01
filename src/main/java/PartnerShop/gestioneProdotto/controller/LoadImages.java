@@ -22,7 +22,7 @@ public class LoadImages extends HttpServlet {
     public void init() throws ServletException {
 
         // Define base path somehow. You can define it as init-param of the servlet.
-        this.filePath = "C:\\Users\\depal\\Desktop\\img";
+        this.filePath = "C:\\img\\";
 
         // In a Windows environment with the Applicationserver running on the
         // c: volume, the above path is exactly the same as "c:\files".

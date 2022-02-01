@@ -143,7 +143,7 @@ public class GestioneProdottoController extends HttpServlet {
                     Part filePart = (Part) request.getSession().getAttribute("img");
                     Prodotto p = prodotti.get(prodotti.size() - 1);
                     int i = p.getId();
-                    filePart.write("C:\\Users\\depal\\Desktop\\img\\" + i +".jpg");
+                    filePart.write("C:\\img\\" + i +".jpg");
                     request.setAttribute("messaggio", "Prodotto aggiunto con successo.");
                     requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                     requestDispatcher.forward(request, response);
