@@ -23,6 +23,7 @@ public class GestioneProdottoDAO {
     public GestioneProdottoDAO(){
         this.con = ConPool.getConnection();
     }
+
     public Prodotto doRetrieveById(int id) {
         try{
             PreparedStatement ps = con

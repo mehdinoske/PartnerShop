@@ -82,6 +82,52 @@ public class UtenteRegistratoDAO {
             }
         }
 
+    public UtenteRegistrato doRetrieveByUsername(String user) {
+        UtenteRegistrato ut = new UtenteRegistrato();
+        try  {
+            PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where username=?");
+            ps.setString(1, user);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ut.setNome(rs.getString(1));
+                ut.setCognome(rs.getString(2));
+                ut.setDdn(rs.getString(3));
+                ut.setEmail(rs.getString(4));
+                ut.setIndirizzo(rs.getString(5));
+                ut.setUsername(rs.getString(6));
+                ut.setPassword(rs.getString(7));
+                ut.setTipo(rs.getInt(8));
+                return ut;
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public UtenteRegistrato doRetrieveByEmail(String email) {
+        UtenteRegistrato ut = new UtenteRegistrato();
+        try  {
+            PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where email=?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ut.setNome(rs.getString(1));
+                ut.setCognome(rs.getString(2));
+                ut.setDdn(rs.getString(3));
+                ut.setEmail(rs.getString(4));
+                ut.setIndirizzo(rs.getString(5));
+                ut.setUsername(rs.getString(6));
+                ut.setPassword(rs.getString(7));
+                ut.setTipo(rs.getInt(8));
+                return ut;
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void doDelete(String email) {
         try  {
             PreparedStatement ps = con.prepareStatement("DELETE FROM utente_registrato WHERE  email=? ");

@@ -8,6 +8,10 @@
     outline: none;
 }
 
+. input[type=submit]:hover{
+background-color: orangered;
+}
+
 body {
     background-color: #353535;
 }
@@ -187,6 +191,9 @@ li, a, button{
     display: block;
 }
 
+.grid_layout div input[type=submit]:hover{
+    background-color: orangered;
+}
 
 .visualizza_prodotto {
     align-content: center;
@@ -264,6 +271,10 @@ li, a, button{
     text-decoration: none;
     font-size: 14px;
     border-radius: 4px;
+}
+
+.form_container_prodotto form input[type=submit]:hover{
+    background-color: orangered;
 }
 
 .info_container{

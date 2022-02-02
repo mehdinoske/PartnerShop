@@ -26,8 +26,8 @@ public class GestioneAcquistiController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getServletPath();
         RequestDispatcher dispatcher;
-        UtenteRegistrato ut = new UtenteRegistrato();
-        Carrello car = new Carrello();
+        UtenteRegistrato ut;
+        Carrello car;
         GestioneAcquistiService imp = new GestioneAcquistiServiceImp();
         switch (s){
             case "/Carrello":
@@ -37,6 +37,10 @@ public class GestioneAcquistiController extends HttpServlet {
                 if (car == null) {
                     car = new Carrello();
                     session.setAttribute("Carrello", car);
+                }
+                if(ut!=null && ut.getTipo()==1){
+                    request.getRequestDispatcher("WEB-INF/jsp/registrazioneCliente.jsp").forward(request, response);
+                    break;
                 }
                 String prodottoIdStr = request.getParameter("idProdotto");
                 String quantStr = request.getParameter("quant");

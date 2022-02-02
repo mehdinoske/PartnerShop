@@ -17,7 +17,7 @@ import java.nio.channels.Channels;
  * implementa il controller che si occupa  del sottosistema registrazione
  * @author Giuseppe Abbatiello
  */
-@WebServlet("/Registrazione")
+@WebServlet(urlPatterns = {"/Registrazione","/usernameAjax","/emailAjax"})
 public final class RegistrazioneController extends HttpServlet {
 
     private final RegistrazioneService registrazioneService = new RegistrazioneServiceImp();
@@ -30,15 +30,40 @@ public final class RegistrazioneController extends HttpServlet {
      * @throws IOException
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher=null;
-        if(request.getParameter("id").equals("cliente")) {
-           dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registrazioneCliente.jsp");
+        String s = request.getServletPath();
+        switch (s){
+            case "/Registrazione":
+                RequestDispatcher dispatcher=null;
+                if(request.getParameter("id").equals("cliente")) {
+                    dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registrazioneCliente.jsp");
 
-        }else if(request.getParameter("id").equals("venditore"))
-        {
-            dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registrazioneVenditore.jsp");
+                }else if(request.getParameter("id").equals("venditore"))
+                {
+                    dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registrazioneVenditore.jsp");
+                }
+                dispatcher.forward(request, response);
+                break;
+            case "/usernameAjax":
+                String user = request.getParameter("username");
+                response.setContentType("text/xml");
+                if (user != null && user.length() >= 6 && user.matches("^[0-9a-zA-z]+$") && registrazioneService.verificaUsernameEmail(user,0) == null) {
+                    response.getWriter().append("<ok/>");
+                } else {
+                    response.getWriter().append("<no/>");
+                }
+
+                break;
+            case "/emailAjax":
+                String email = request.getParameter("email");
+                response.setContentType("text/xml");
+                if (email != null && email.matches("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w+)+$") && registrazioneService.verificaUsernameEmail(email,1) == null) {
+                    response.getWriter().append("<ok/>");
+                } else {
+                    response.getWriter().append("<no/>");
+                }
+                break;
         }
-        dispatcher.forward(request, response);
+
     }
 
     /**

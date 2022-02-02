@@ -46,19 +46,8 @@ public class GestioneAcquistiDAO {
                     }
                 }
             } catch (Throwable var9) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var8) {
-                        var9.addSuppressed(var8);
-                    }
-                }
 
                 throw var9;
-            }
-
-            if (con != null) {
-                con.close();
             }
 
         } catch (SQLException var10) {
@@ -107,19 +96,7 @@ public class GestioneAcquistiDAO {
                     list.add(p);
                 }
             } catch (Throwable var7) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var6) {
-                        var7.addSuppressed(var6);
-                    }
-                }
-
                 throw var7;
-            }
-
-            if (con != null) {
-                con.close();
             }
 
             return list;
@@ -171,20 +148,10 @@ public class GestioneAcquistiDAO {
                     list.add(p);
                 }
             } catch (Throwable var8) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var7) {
-                        var8.addSuppressed(var7);
-                    }
-                }
 
                 throw var8;
             }
 
-            if (con != null) {
-                con.close();
-            }
 
             return list;
         } catch (SQLException var9) {
@@ -235,20 +202,10 @@ public class GestioneAcquistiDAO {
                     list.add(p);
                 }
             } catch (Throwable var8) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var7) {
-                        var8.addSuppressed(var7);
-                    }
-                }
 
                 throw var8;
             }
 
-            if (con != null) {
-                con.close();
-            }
 
             return list;
         } catch (SQLException var9) {

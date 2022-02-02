@@ -14,7 +14,7 @@
                 <label for="email">Email</label>
                 <input type="text" name="email" id="email" value="" oninput="validaEmail()"/>
                 <label for="username">Username (almeno 6 caratteri,solo lettere e numeri)</label>
-                <input type="text" name="username" value="" id="username"/>
+                <input type="text" name="username" value="" id="username" oninput="validaUsername()"/>
                 <label for="cell">Cellulare</label>
                 <input type="text" name="cellulare" id="cell" value="" oninput="validaCellulare()"/>
                 <label for="indir">Indirizzo</label>

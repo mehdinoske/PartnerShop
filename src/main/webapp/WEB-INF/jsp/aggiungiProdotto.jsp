@@ -20,8 +20,14 @@
                 <label for="disponibilita">Disponibilita(senza virgole e punti)</label>
                 <input type="text" name="disponibilita" id="disponibilita" value="${prodotto.disponibilita}"/>
             </form>
-            <input id="ajaxfile" type="file"/> <br/>
-            <button  onclick="uploadFile()"> Aggiungi prodotto </button>
+            <input id="ajaxfile" type="file" accept="image/*"/> <br/>
+            <label for="ajaxfile" class="class_label">
+                <span class="material-icons">
+                    add_photo_alternate
+                </span>
+                Inserisci immagine
+            </label>
+            <input type="submit" onclick="uploadFile()" value="Aggiungi Prodotto"></input>
         </div>
     </div>
 

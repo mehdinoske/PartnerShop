@@ -36,7 +36,6 @@ function ricerca(str) {
 }
 
 
-
 var borderOk = '4px solid green';
 var borderNo = '4px solid red';
 var usernameOk = true;
@@ -59,14 +58,14 @@ function validaUsername() {
                 usernameOk = true;
                 input.style.borderBottom = borderOk;
             } else {
-                alert('entrato in ajax falso '+this.status+this.responseText)
+                //alert('entrato in ajax falso '+this.status+this.responseText)
                 usernameOk = false;
                 input.style.borderBottom = borderNo;
             }
             cambiaStatoSubmit();
             cambiaStatoSubmit2();
         }
-        xmlHttpReq.open("GET", "usernameServlet?username=" + encodeURIComponent(input.value), true);
+        xmlHttpReq.open("GET", "usernameAjax?username=" + encodeURIComponent(input.value), true);
         xmlHttpReq.send();
     } else {
         usernameOk = false;
@@ -123,12 +122,25 @@ function validaCognome() {
 
 function validaEmail() {
     var input = document.getElementById("email");
-    if (input.value.trim().length > 0 && input.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/)) {
-        input.style.borderBottom = borderOk;
-        emailOk = true;
+    if (input.value.length >= 6) {
+
+        var xmlHttpReq = new XMLHttpRequest();
+        xmlHttpReq.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200 && this.responseText == '<ok/>') {
+                emailOk = true;
+                input.style.borderBottom = borderOk;
+            } else {
+                //alert('entrato in ajax falso '+this.status+this.responseText)
+                emailOk = false;
+                input.style.borderBottom = borderNo;
+            }
+            cambiaStatoSubmit();
+        }
+        xmlHttpReq.open("GET", "emailAjax?email=" + encodeURIComponent(input.value), true);
+        xmlHttpReq.send();
     } else {
-        input.style.borderBottom = borderNo;
         emailOk = false;
+        input.style.borderBottom = borderNo;
     }
     cambiaStatoSubmit();
 }

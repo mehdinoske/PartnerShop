@@ -61,3 +61,25 @@
     color: white;
     transform: rotateY(180deg);
 }
+
+input[type="file"]{
+    display: none;
+}
+
+.class_label{
+    color: white;
+    height: 30px;
+    width: 180px;
+    background-color: coral;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: none;
+    border-radius: 5px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.class_label:hover{
+    background-color: orangered;
+}

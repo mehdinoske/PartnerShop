@@ -46,6 +46,10 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
+.inner_form_container_login input[type=submit]:hover{
+    background-color: orangered;
+}
+
 .dropbtn {
     background-color: #4CAF50;
     color: white;
@@ -137,6 +141,10 @@
     margin-left: auto;
     display: block;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.inner_form_container_registrazione input[type=submit]:hover{
+    background-color: orangered;
 }
 
 input[type=date]{

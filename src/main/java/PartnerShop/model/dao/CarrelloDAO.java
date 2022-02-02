@@ -21,7 +21,7 @@ public class CarrelloDAO {
 
 
     public Carrello doRetrieveByEmailCliente(String emailCliente, Carrello car) {
-        try {
+
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT cp.id_Prodotto, cp.quantita FROM carrello_prodotto cp, carrello c WHERE c.id = cp.id_Carrello and email_Cliente = ?");
                 ps.setString(1, emailCliente);
@@ -36,21 +36,7 @@ public class CarrelloDAO {
                         car.setQuantHash(cod, quant);
                     }
                 }
-            } catch (Throwable var10) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var9) {
-                        var10.addSuppressed(var9);
-                    }
-                }
 
-                throw var10;
-            }
-
-            if (con != null) {
-                con.close();
-            }
 
             return car;
         } catch (SQLException var11) {
@@ -59,7 +45,6 @@ public class CarrelloDAO {
     }
 
     public int doRetrieveIdCarrelloByEmailCliente(String emailCliente) {
-        try {
             int id_carrello=0;
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT id FROM carrello WHERE email_Cliente = ?");
@@ -69,17 +54,6 @@ public class CarrelloDAO {
                 while(rs.next()) {
                     id_carrello = rs.getInt(1);
                 }
-            } catch (Throwable var10) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var9) {
-                        var10.addSuppressed(var9);
-                    }
-                }
-
-                throw var10;
-            }
 
             return id_carrello;
         } catch (SQLException var11) {
@@ -88,7 +62,6 @@ public class CarrelloDAO {
     }
 
     public void UpdateSession(Carrello car, String emailCliente,int id_Carrello) {
-        try {
             try {
                 PreparedStatement ps = con.prepareStatement("SELECT cp.id_Prodotto,cp.quantita FROM carrello_prodotto cp, carrello c WHERE c.id = cp.id_Carrello and email_Cliente = ? and id_Prodotto = ?");
                 Iterator var5 = car.getProdottoHash().keySet().iterator();
@@ -106,18 +79,6 @@ public class CarrelloDAO {
                         this.doUpdate(id_Carrello, key, car.getQuant(key));
                     }
                 }
-            } catch (Throwable var9) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var8) {
-                        var9.addSuppressed(var8);
-                    }
-                }
-
-                throw var9;
-            }
-
 
         } catch (SQLException var10) {
             throw new RuntimeException(var10);
@@ -134,35 +95,18 @@ public class CarrelloDAO {
                     throw new RuntimeException("Insert error.");
                 }
 
-            } catch (SQLException var9) {
-                throw new RuntimeException(var9);
-            }
-
+        } catch (SQLException var9) {
+            throw new RuntimeException(var9);
         }
+    }
 
     public void doCreateCarrello(String emailCliente) {
-        try {
             try {
                 PreparedStatement ps = con.prepareStatement("INSERT INTO carrello (email_Cliente) VALUES(?)");
                 ps.setString(1, emailCliente);
                 if (ps.executeUpdate() != 1) {
                     throw new RuntimeException("Insert error.");
                 }
-            } catch (Throwable var8) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var7) {
-                        var8.addSuppressed(var7);
-                    }
-                }
-
-                throw var8;
-            }
-
-            if (con != null) {
-                con.close();
-            }
 
         } catch (SQLException var9) {
             throw new RuntimeException(var9);
@@ -170,7 +114,6 @@ public class CarrelloDAO {
     }
 
     public void doUpdate(int id_Carrello, int idProd, int quant) {
-        try {
             try {
                 PreparedStatement ps = con.prepareStatement("UPDATE carrello_prodotto SET quantita=? WHERE  id_Prodotto=? AND id_Carrello=?");
                 ps.setInt(1, quant);
@@ -179,21 +122,6 @@ public class CarrelloDAO {
                 if (ps.executeUpdate() != 1) {
                     throw new RuntimeException("Update error.");
                 }
-            } catch (Throwable var8) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var7) {
-                        var8.addSuppressed(var7);
-                    }
-                }
-
-                throw var8;
-            }
-
-            if (con != null) {
-                con.close();
-            }
 
         } catch (SQLException var9) {
             throw new RuntimeException(var9);
@@ -201,7 +129,6 @@ public class CarrelloDAO {
     }
 
     public void doDelete(int idCarrello, int idProd) {
-        try {
             try {
                 PreparedStatement ps = con.prepareStatement("DELETE FROM carrello_prodotto WHERE  id_Carrello=? AND id_Prodotto=?");
                 ps.setInt(1, idCarrello);
@@ -209,21 +136,7 @@ public class CarrelloDAO {
                 if (ps.executeUpdate() != 1) {
                     throw new RuntimeException("DELETE error.");
                 }
-            } catch (Throwable var7) {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (Throwable var6) {
-                        var7.addSuppressed(var6);
-                    }
-                }
 
-                throw var7;
-            }
-
-            if (con != null) {
-                con.close();
-            }
 
         } catch (SQLException var8) {
             throw new RuntimeException(var8);

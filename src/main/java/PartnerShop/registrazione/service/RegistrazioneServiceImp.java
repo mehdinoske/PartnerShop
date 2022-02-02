@@ -45,4 +45,15 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
         vtDAO.doSave(ut.getEmail(),nomeNegozio,Piva);
         return ut;
     }
+
+    public UtenteRegistrato verificaUsernameEmail(String str,int tipo){
+        UtenteRegistrato ut = new UtenteRegistrato();
+        UtenteRegistratoDAO utDB = new UtenteRegistratoDAO();
+       if(tipo == 0){
+            ut = utDB.doRetrieveByUsername(str);
+        }else if(tipo == 1){
+            ut = utDB.doRetrieveByEmail(str);
+        }
+        return ut;
+    }
 }

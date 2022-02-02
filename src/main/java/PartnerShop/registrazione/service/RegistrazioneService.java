@@ -27,4 +27,5 @@ public interface RegistrazioneService {
      */
     public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut, String nomeNegozio,String Piva);
 
+    public UtenteRegistrato verificaUsernameEmail(String str,int tipo);
 }
