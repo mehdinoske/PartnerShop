@@ -51,8 +51,8 @@
            <a href="ListaDesideri">Visualizza lista desideri</a>
            <a href="VisualizzaDatiUtente">Visualizza Dati utente</a>
            <a href="OrdiniCliente">Visualizza Ordini</a>
-           <a href="Autenticazione" method="get">Logout</a>
            <a href="AggiungiSegnalazione">Invia Segnalazione</a>
+           <a href="Autenticazione" method="get">Logout</a>
        </div>
    </div>
 </c:if>
@@ -101,7 +101,7 @@
 </header>
 
 
-<div class="form_container_login" id="form_login">
+<div class="form_container_login" id="form_login" style="display: none">
             <div class="inner_form_container_login">
          <form action="Autenticazione" method="post">
              <input type="text" name="usernameLogin" placeholder="Enter username" required>
