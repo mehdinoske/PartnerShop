@@ -28,9 +28,9 @@
                 <label for="indir">Indirizzo</label>
                 <input type="text" name="indirizzo" id="indir" value="${utente.indirizzo}" oninput="validaIndirizzo()"/>
                 <label for="pass">Password (almeno 8 caratteri tra cui: una lettera minuscola, una lettera maiuscola, un numero)</label>
-                <input type="password" name="password" id="pass" value="${utente.password}" oninput="validaPassword()"/>
+                <input type="password" name="password" id="pass" value="" oninput="validaPassword()"/>
                 <label for="passConf">Conferma Password</label>
-                <input type="password" name="passwordConferma" id="passConf" value="${utente.password}" oninput="validaPassword()"/>
+                <input type="password" name="passwordConferma" id="passConf" value="" oninput="validaPassword()"/>
                 <input type="submit" value="Modifica">
             </form>
         </div>

@@ -3,6 +3,8 @@ package PartnerShop.GestioneUtenti.model;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
 import PartnerShop.model.entity.UtenteRegistrato;
 
+import java.util.ArrayList;
+
 public class GestioneUtenteServiceImp implements GestioneUtenteService {
 
     @Override
@@ -17,5 +19,10 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
         utenteDAO.doDelete(email);
     }
 
-
+    @Override
+    public ArrayList<UtenteRegistrato> VisualizzaUtenti() {
+        UtenteRegistratoDAO utenteDAO = new UtenteRegistratoDAO();
+        ArrayList<UtenteRegistrato> list = utenteDAO.doRetrieveAll();
+        return list;
+    }
 }
