@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -81,7 +83,7 @@ public class GestioneProdottoController extends HttpServlet {
                 break;
 
             case "/prodotto-modifica":
-                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                /*ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
                 if(ut == null || ut.getTipo() == 0) {
                     throw new MyServletException("Non hai i permessi necessari.");
                 }   else {
@@ -114,6 +116,14 @@ public class GestioneProdottoController extends HttpServlet {
                     request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
                     requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                     requestDispatcher.forward(request, response);
+                }*/
+                GestioneProdottoService gps = new GestioneProdottoServiceImp();
+                try {
+                    prodottoModifica(request, response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
                 }
                 break;
 
@@ -218,5 +228,47 @@ public class GestioneProdottoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
+    }
+
+    public void prodottoModifica(HttpServletRequest request, HttpServletResponse response,GestioneProdottoService prodottoService) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+        Prodotto prodotto;
+        String nome, descrizione, categoria;
+        long prezzo_Cent;
+        int disponibilita, id;
+        ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) getServletContext().getAttribute("prodotti");
+
+        if(ut == null || ut.getTipo() == 0) {
+            throw new MyServletException("Non hai i permessi necessari.");
+        }   else {
+            try {
+                id = Integer.parseInt(request.getParameter("id"));
+                nome = request.getParameter("nome");
+                descrizione = request.getParameter("descrizione");
+                categoria = request.getParameter("categoria");
+                prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
+                disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
+            } catch (Exception e) {
+                throw new MyServletException("Dati non corretti.");
+            }
+            prodotto = new Prodotto();
+            prodotto.setId(id);
+            prodotto.setNome(nome);
+            prodotto.setDisponibilita(disponibilita);
+            prodotto.setCategoria(categoria);
+            prodotto.setDescrizione(descrizione);
+            prodotto.setPrezzo_Cent(prezzo_Cent);
+            try {
+                Prodotto p = PrDAO.getProdottoById(id);
+                PrDAO.doUpdateProdotto(prodotto);
+                prodotti.remove(p);
+                prodotti.add(prodotto);
+                getServletContext().setAttribute("prodotti",prodotti);
+            } catch(Exception e) {
+                throw new MyServletException("Prodotto non trovato.");
+            }
+            request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
+            request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp").forward(request, response);
+        }
     }
 }
