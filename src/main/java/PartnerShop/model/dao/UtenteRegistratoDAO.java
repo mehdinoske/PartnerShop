@@ -26,16 +26,14 @@ public class UtenteRegistratoDAO {
         public ArrayList<UtenteRegistrato> doRetrieveAll() {
             ArrayList<UtenteRegistrato> list = new ArrayList<>();
             try  {
-                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn, username,email, passwordhash  FROM utente_registrato");
+                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, email, username  FROM utente_registrato");
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     UtenteRegistrato ut = new UtenteRegistrato();
                     ut.setNome(rs.getString(1));
                     ut.setCognome(rs.getString(2));
-                    ut.setDdn(rs.getString(3));
+                    ut.setEmail(rs.getString(3));
                     ut.setUsername(rs.getString(4));
-                    ut.setEmail(rs.getString(5));
-                    ut.setPassword(rs.getString(6));
                     list.add(ut);
                 }
             } catch (SQLException e) {
@@ -71,7 +69,7 @@ public class UtenteRegistratoDAO {
         public UtenteRegistrato doRetrieveByUsernamePass(String user, String pass) {
             UtenteRegistrato ut = new UtenteRegistrato();
             try  {
-                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where username=? and passwordhash=SHA1(?) ");
+                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn, email, indirizzo, username, passwordhash, tipo, cellulare FROM utente_registrato where username=? and passwordhash=SHA1(?) ");
                 ps.setString(1, user);
                 ps.setString(2, pass);
                 ResultSet rs = ps.executeQuery();
@@ -84,6 +82,7 @@ public class UtenteRegistratoDAO {
                     ut.setUsername(rs.getString(6));
                     ut.setPassword(rs.getString(7));
                     ut.setTipo(rs.getInt(8));
+                    ut.setCellulare(rs.getString(9));
                     return ut;
                 }
                 return null;
@@ -95,7 +94,7 @@ public class UtenteRegistratoDAO {
     public UtenteRegistrato doRetrieveByUsername(String user) {
         UtenteRegistrato ut = new UtenteRegistrato();
         try  {
-            PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo FROM utente_registrato where username=?");
+            PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,tipo,cellulare FROM utente_registrato where username=?");
             ps.setString(1, user);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -107,6 +106,7 @@ public class UtenteRegistratoDAO {
                 ut.setUsername(rs.getString(6));
                 ut.setPassword(rs.getString(7));
                 ut.setTipo(rs.getInt(8));
+                ut.setCellulare(rs.getString(9));
                 return ut;
             }
             return null;
@@ -154,16 +154,13 @@ public class UtenteRegistratoDAO {
     public void doUpdate(UtenteRegistrato ut) {
         try  {
             PreparedStatement ps = con.prepareStatement(
-                    "UPDATE utente_registrato SET nome = ?, cognome = ?, ddn = ?, email=?, indirizzo=?, username=? , passwordhash=?, tipo=? WHERE email=?");
+                    "UPDATE utente_registrato SET nome = ?, cognome = ?,  indirizzo=?, cellulare=?, passwordhash=? WHERE email=?");
             ps.setString(1, ut.getNome());
             ps.setString(2, ut.getCognome());
-            ps.setString(3, ut.getDdn());
-            ps.setString(4, ut.getEmail());
-            ps.setString(5, ut.getIndirizzo());
-            ps.setString(6, ut.getUsername());
-            ps.setString(7, ut.getPassword());
-            ps.setInt(8, ut.getTipo());
-            ps.setString(9, ut.getEmail());
+            ps.setString(3, ut.getIndirizzo());
+            ps.setString(4, ut.getCellulare());
+            ps.setString(5, ut.getPassword());
+            ps.setString(6,ut.getEmail());
 
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("UPDATE error.");
