@@ -14,6 +14,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-public class ModificaProdottoTest {
+public class AggiungiProdottoTest {
     MockHttpServletRequest request;
     MockHttpServletResponse response;
     MockHttpSession session;
@@ -45,6 +46,7 @@ public class ModificaProdottoTest {
         request.setSession(session);
     }
 
+
     @Test
     public void utenteNonAutorizzato() {
         UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 0);
@@ -52,28 +54,8 @@ public class ModificaProdottoTest {
         request.getSession().setAttribute("utente", ut);
         request.getSession().setAttribute("prodotti", prodotti);
 
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoAggiungi(request,response,gps));
         assertEquals("Non hai i permessi necessari.", mse.getMessage());
-    }
-
-    @Test
-    public void idProdottoNonPresenteTest() {
-        int id = 1;
-        String nome = "Cane";
-        String descrizione = "Cgjjjjjjjao";
-        String categoria = "Poroco";
-        int prezzo_Cent = 11;
-        int disponibilita = 22;
-
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        request.getSession().setAttribute("utente", ut);
-        request.getSession().setAttribute("prodotti", prodotti);
-
-        setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
-        Mockito.when(gps.getProdottoById(id)).thenReturn(null);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
-        assertEquals("Prodotto non trovato.", mse.getMessage());
     }
 
     @Test
@@ -91,7 +73,7 @@ public class ModificaProdottoTest {
         request.getSession().setAttribute("prodotti", prodotti);
 
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoAggiungi(request,response,gps));
         assertEquals("Nome prodotto errato.", mse.getMessage());
     }
 
@@ -110,7 +92,7 @@ public class ModificaProdottoTest {
         request.getSession().setAttribute("prodotti", prodotti);
 
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoAggiungi(request,response,gps));
         assertEquals("Descrizione prodotto errata.", mse.getMessage());
     }
 
@@ -129,7 +111,7 @@ public class ModificaProdottoTest {
         request.getSession().setAttribute("prodotti", prodotti);
 
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoAggiungi(request,response,gps));
         assertEquals("Categoria prodotto errata.", mse.getMessage());
     }
 
@@ -150,7 +132,7 @@ public class ModificaProdottoTest {
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         double prezzoErrato = 11.7;
         request.setParameter("prezzo_Cent", String.valueOf(prezzoErrato));
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoAggiungi(request,response,gps));
         assertEquals("Prezzo prodotto errato.", mse.getMessage());
     }
 
@@ -171,12 +153,12 @@ public class ModificaProdottoTest {
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         double dispErrata = 11.7;
         request.setParameter("disponibilita", String.valueOf(dispErrata));
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoAggiungi(request,response,gps));
         assertEquals("Disponibilita prodotto errata.", mse.getMessage());
     }
 
     @Test
-    public void idProdottoNonIntero() {
+    public void tuttoOkSenzaImmagine() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
         int id = 1;
         String nome = "Forbice";
         String descrizione = "Fooo oooooo";
@@ -188,12 +170,11 @@ public class ModificaProdottoTest {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         request.getSession().setAttribute("utente", ut);
         request.getSession().setAttribute("prodotti", prodotti);
-
+        Part pr = null;
+        request.getSession().setAttribute("img", pr);
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
-        double idErrato = 11.7;
-        request.setParameter("id", String.valueOf(idErrato));
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
-        assertEquals("Id prodotto errato.", mse.getMessage());
+        Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
+        gpc.prodottoAggiungi(request,response,gps);
     }
 
     @Test
@@ -209,10 +190,11 @@ public class ModificaProdottoTest {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         request.getSession().setAttribute("utente", ut);
         request.getSession().setAttribute("prodotti", prodotti);
-
+        Part pr = Mockito.mock(Part.class);
+        request.getSession().setAttribute("img", pr);
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        gpc.prodottoModifica(request,response,gps);
+        gpc.prodottoAggiungi(request,response,gps);
     }
 
     private void setParametersRequest(int id, String nome, String descrizione, String categoria, int prezzo_Cent, int disponibilita) {

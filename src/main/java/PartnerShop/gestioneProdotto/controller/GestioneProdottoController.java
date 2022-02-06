@@ -184,15 +184,31 @@ public class GestioneProdottoController extends HttpServlet {
         long prezzo_Cent;
         ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
         if(ut != null && ut.getTipo() == 1) {
-            try {
+            if(request.getParameter("nome").matches(nomeReg))
                 nome = request.getParameter("nome");
+            else
+                throw new MyServletException("Nome prodotto errato.");
+
+            if(request.getParameter("descrizione").matches(descrizioneReg))
                 descrizione = request.getParameter("descrizione");
+            else
+                throw new MyServletException("Descrizione prodotto errata.");
+
+            if(request.getParameter("categoria").matches(categoriaReg))
                 categoria = request.getParameter("categoria");
+            else
+                throw new MyServletException("Categoria prodotto errata.");
+
+            if(request.getParameter("prezzo_Cent").matches(prezzo_CentReg))
                 prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
+            else
+                throw new MyServletException("Prezzo prodotto errato.");
+
+            if(request.getParameter("disponibilita").matches(disponibilitaReg))
                 disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
-            }   catch (Exception e) {
-                throw new MyServletException("Dati non corretti.");
-            }
+            else
+                throw new MyServletException("Disponibilita prodotto errata.");
+
             Prodotto prodotto = new Prodotto();
             prodotto.setNome(nome);
             prodotto.setEmail_Venditore(ut.getEmail());
@@ -202,12 +218,16 @@ public class GestioneProdottoController extends HttpServlet {
             prodotto.setPrezzo_Cent(prezzo_Cent);
             gps.doSaveProdotto(prodotto);
             prodotti.add(prodotto);
-            getServletContext().setAttribute("prodotti",prodotti);
+            request.getSession().setAttribute("prodotti",prodotti);
             prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
             Part filePart = (Part) request.getSession().getAttribute("img");
-            Prodotto p = prodotti.get(prodotti.size() - 1);
-            int i = p.getId();
-            filePart.write("C:\\img\\" + i +".jpg");
+            if(filePart == null) {
+
+            } else {
+                Prodotto p = prodotti.get(prodotti.size() - 1);
+                int i = p.getId();
+                filePart.write("C:\\img\\" + i +".jpg");
+            }
             request.setAttribute("messaggio", "Prodotto aggiunto con successo.");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
             requestDispatcher.forward(request, response);
@@ -227,13 +247,13 @@ public class GestioneProdottoController extends HttpServlet {
             } catch (NumberFormatException e) {
                 throw new MyServletException("Id prodotto non corretto.");
             }
-            try {
-                Prodotto p2 = gps.getProdottoById(id);
+            Prodotto p2 = gps.getProdottoById(id);
+            if(p2 == null)
+                throw new MyServletException("Prodotto non trovato.");
+            else {
                 gps.deleteProdottoById(id);
                 prodotti.remove(p2);
                 request.getSession().setAttribute("prodotti",prodotti);
-            } catch(Exception e) {
-                throw new MyServletException("Prodotto non trovato.");
             }
         } else {
             throw new MyServletException("Non hai i permessi necessari.");
