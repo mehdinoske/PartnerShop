@@ -19,7 +19,10 @@ public class UtenteRegistrato {
     private String cellulare;
     private int id_Carrello;
     private int tipo;
+<<<<<<< HEAD
 
+=======
+>>>>>>> e45c02ad5b3020bd36211b6882edf8aa8f29ef7f
     public int getId_Carrello() {
         return id_Carrello;
     }
@@ -123,11 +126,12 @@ public class UtenteRegistrato {
         this.cellulare = cellulare;
     }
 
-
+<<<<<<< HEAD
+=======
     public boolean isValidUsername(String username){
         return USERNAME.matcher(username).matches();
     }
-
+>>>>>>> e45c02ad5b3020bd36211b6882edf8aa8f29ef7f
     @Override
     public String toString() {
         return "UtenteRegistrato{" +

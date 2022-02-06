@@ -3,9 +3,57 @@ h1{
     color: orangered;
 }
 
-div{
-    color: white;
-    size: 500px;
-    text-align: center;
+.visualizza_dati_container{
+    margin-top: 1%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
 }
 
+.inner_div_dati{
+    display: grid;
+    background-color: white;
+    color: #0f1123;
+    width: 520px;
+    height: 300px;
+    border-radius: 5px;
+    grid-template-columns: auto auto;
+    grid-row-gap: 5px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.inner_div_dati h3{
+    margin-top: 15px;
+    margin-left: 35px;
+}
+
+.inner_div_dati h4{
+    color: coral;
+    margin-top: 17px;
+}
+
+.inner_div_dati_submits{
+    display: flex;
+    justify-content: center;
+}
+
+.inner_div_dati_submits input[type=submit]{
+    font-family: 'Montserrat';
+    background-color: coral;
+    border: none;
+    color: white;
+    padding: 9px 11px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10%;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    display: block;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.inner_div_dati_submits input[type=submit]:hover{
+    background-color: orangered;
+}

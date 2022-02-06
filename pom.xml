@@ -34,6 +34,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>9.0.56</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
@@ -46,6 +51,7 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+
     <dependency>
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
@@ -67,6 +73,7 @@
         <artifactId>spring-core</artifactId>
         <version>3.2.0.RELEASE</version>
     </dependency>
+
     </dependencies>
 
 

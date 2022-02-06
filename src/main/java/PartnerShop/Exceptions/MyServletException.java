@@ -1,4 +1,4 @@
-package PartnerShop.utils;
+package PartnerShop.Exceptions;
 
 import PartnerShop.model.entity.UtenteRegistrato;
 

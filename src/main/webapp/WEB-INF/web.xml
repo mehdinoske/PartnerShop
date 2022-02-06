@@ -5,7 +5,7 @@
          version="4.0">
 
     <error-page>
-        <exception-type>PartnerShop.utils.MyServletException</exception-type>
+        <exception-type>PartnerShop.Exceptions.MyServletException</exception-type>
         <location>/WEB-INF/jsp/myexception.jsp</location>
     </error-page>
 
