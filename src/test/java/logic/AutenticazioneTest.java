@@ -58,8 +58,8 @@ public class AutenticazioneTest {
 
     @Test
     public void loginUtenteOkTest(){
-        String username = "peppe2699";
-        String password = "asd";
+        String username = "peppe2699"; //corretta
+        String password = "asd"; //corretta
         when(utDBMock.doRetrieveByUsernamePass(username,password)).thenReturn(utenteMock);
         when(utenteMock.getTipo()).thenReturn(2);
         assertNotNull(login.login(username,password));
