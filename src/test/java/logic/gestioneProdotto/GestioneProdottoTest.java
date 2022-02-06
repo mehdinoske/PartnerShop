@@ -1,102 +1,89 @@
 package logic.gestioneProdotto;
 
-import data.DAOUtente.Utente;
-import data.DAOUtente.UtenteAPI;
-import data.DAOUtente.UtenteDAO;
+import PartnerShop.gestioneProdotto.controller.GestioneProdottoController;
+import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
+import PartnerShop.model.entity.Prodotto;
+import PartnerShop.model.entity.UtenteRegistrato;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.mock.web.MockServletContext;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
-public class LoginTest {
+public class GestioneProdottoTest {
     MockHttpServletRequest request;
     MockHttpServletResponse response;
-    Login log;
-    UtenteAPI utenteAPI;
-    Utente utente;
     MockHttpSession session;
+    MockServletContext servletContext;
+    GestioneProdottoController gpc;
+    GestioneProdottoService gps;
+    Prodotto prodotto;
+    UtenteRegistrato utente;
 
     @Before
     public void setUp(){
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        log = new Login();
-        utenteAPI = Mockito.mock(UtenteDAO.class);
-        utente = Mockito.mock(Utente.class);
-
         session = new MockHttpSession();
-    }
+        servletContext = new MockServletContext();
+        gpc = new GestioneProdottoController();
+        gps = Mockito.mock(GestioneProdottoService.class);
+        prodotto = Mockito.mock(Prodotto.class);
+        session = new MockHttpSession();
+        utente = Mockito.mock(UtenteRegistrato.class);
 
-    @Test
-    public void loginUtenteEmailNonRispettaFormatoTest() throws SQLException, NoSuchAlgorithmException, ServletException, IOException{
-        String email = "antonio73@gmaiom"; // non corretta
-        String passwd = "Pluto1234"; // corretta
-        setParametersRequest(email,passwd);
-        Mockito.when(utenteAPI.doGet(email,passwd)).thenReturn(utente);
-        log.login(request,response,utenteAPI);
-        assertEquals("Credenziali errate",request.getAttribute("errCredenziali"));
-    }
-
-    @Test
-    public void loginUtenteEmailNonAssociataNessunUtenteTest() throws SQLException, NoSuchAlgorithmException, ServletException, IOException{
-        String email = "antonio73@gmail.com"; //corretta
-        String passwd = "Pluto1234"; //corretta
-        setParametersRequest(email,passwd);
-        Mockito.when(utenteAPI.doGet(email,passwd)).thenReturn(utente);//email non presente nel DB
-        Mockito.when(utente.getEmail()).thenReturn(email);
-        log.login(request,response,utenteAPI);
-        assertEquals("Credenziali errate",request.getAttribute("errCredenziali"));
-    }
-
-    @Test
-    public void loginUtentePasswdNonAssociataNessunUtenteTest() throws SQLException, NoSuchAlgorithmException, ServletException, IOException{
-        String email = "antonio73@gmail.com"; //corretta
-        String passwd = "Pluto1234"; //corretta
-        setParametersRequest(email,passwd);
-
-        Utente utente = Mockito.mock(Utente.class);
-        Mockito.when(utenteAPI.doGet(email,passwd)).thenReturn(utente);
-        Mockito.when(utente.getPassword()).thenReturn(passwd); //passwd non presente nel DB
-
-        log.login(request,response,utenteAPI);
-        assertEquals("Credenziali errate",request.getAttribute("errCredenziali"));
-    }
-
-    @Test
-    public void loginUtenteOkTest()throws SQLException, NoSuchAlgorithmException, ServletException, IOException {
-        String email = "antonio73@gmail.com"; //corretta
-        String passwd = "Pluto1234"; //corretta
-        String username = "ciao";
-
-        setParametersRequest(email,passwd);
-        Utente utente2 = new Utente();
-        utente2.setPassword(passwd);
-
-        Mockito.when(utenteAPI.doGet(email,utente2.getPassword())).thenReturn(utente); //username presente nel DB
-
-        Mockito.when(utente.getUsername()).thenReturn(username);
-        Mockito.when(utenteAPI.isAdminEmail(email)).thenReturn(false);
         request.setSession(session);
-
-        log.login(request,response,utenteAPI);
-
-        assertEquals(true,session.getAttribute("isLogged"));
-        assertEquals(username, session.getAttribute("username"));
-        assertEquals(response.getRedirectedUrl(),"./index.html");
     }
 
-    private void setParametersRequest(String email, String passwd){
-        request.setParameter("email",email);
-        request.setParameter("passwd", passwd);
+    @Test
+    public void idProdottoNonAssociatoNessunProdottoTest() throws SQLException, NoSuchAlgorithmException, ServletException, IOException{
+        int id = 1;
+        String nome = "Cane";
+        String descrizione = "Ciao";
+        String categoria = "Poroco";
+        int prezzo_Cent = 11;
+        int disponibilita = 22;
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+
+        Prodotto p = new Prodotto();
+        p.setId(2);
+        p.setEmail_Venditore("sd");
+        p.setNome("ss");
+        p.setDescrizione("ddd");
+        p.setCategoria("sdss");
+        p.setDisponibilita(2);
+        p.setPrezzo_Cent(33);
+
+        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
+        request.getSession().setAttribute("utente", ut);
+
+        setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
+        Mockito.when(gps.getProdottoById(id)).thenReturn(p);
+
+        gpc.prodottoModifica(request,response,gps);
+        assertEquals("Dati errati",request.getAttribute("errModifica"));
+    }
+
+
+    private void setParametersRequest(int id, String nome, String descrizione, String categoria, int prezzo_Cent, int disponibilita) {
+        request.setParameter("id", String.valueOf(id));
+        request.setParameter("nome", nome);
+        request.setParameter("descrizione", descrizione);
+        request.setParameter("categoria", categoria);
+        request.setParameter("prezzo_Cent", String.valueOf(prezzo_Cent));
+        request.setParameter("disponibilita", String.valueOf(disponibilita));
+
     }
 
     //verifica se nella request sono stati inseriti email, username e passwd corrette

@@ -5,12 +5,11 @@ import PartnerShop.gestioneProdotto.service.GestioneProdottoServiceImp;
 import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.Prodotto;
 import PartnerShop.model.entity.UtenteRegistrato;
-import PartnerShop.utils.MyServletException;
+import PartnerShop.Exceptions.MyServletException;
 import org.json.JSONArray;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,13 +19,11 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-@WebServlet(urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi",
+@WebServlet(name = "GP", urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi",
         "/prodotto-modifica", "/prodotto-aggiungi-form", "/visualizza-prodotti","/visualizza-categoria","/ricercaAjax"})
 public class GestioneProdottoController extends HttpServlet {
-
+/*
     private static final long serialVersionUID = 1L;
     private final GestioneProdottoService PrDAO = new GestioneProdottoServiceImp();
 
@@ -116,7 +113,7 @@ public class GestioneProdottoController extends HttpServlet {
                     request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
                     requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
                     requestDispatcher.forward(request, response);
-                }*/
+                }
                 GestioneProdottoService gps = new GestioneProdottoServiceImp();
                 try {
                     prodottoModifica(request, response, gps);
@@ -228,15 +225,15 @@ public class GestioneProdottoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
-    }
+    }*/
 
-    public void prodottoModifica(HttpServletRequest request, HttpServletResponse response,GestioneProdottoService prodottoService) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+    public void prodottoModifica(HttpServletRequest request, HttpServletResponse response,GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         Prodotto prodotto;
         String nome, descrizione, categoria;
         long prezzo_Cent;
         int disponibilita, id;
-        ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) getServletContext().getAttribute("prodotti");
+        //ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) getServletContext().getAttribute("prodotti");
 
         if(ut == null || ut.getTipo() == 0) {
             throw new MyServletException("Non hai i permessi necessari.");
@@ -259,11 +256,14 @@ public class GestioneProdottoController extends HttpServlet {
             prodotto.setDescrizione(descrizione);
             prodotto.setPrezzo_Cent(prezzo_Cent);
             try {
-                Prodotto p = PrDAO.getProdottoById(id);
-                PrDAO.doUpdateProdotto(prodotto);
-                prodotti.remove(p);
-                prodotti.add(prodotto);
-                getServletContext().setAttribute("prodotti",prodotti);
+                Prodotto p = gps.getProdottoById(id);
+                if(p == null) {
+                    request.setAttribute("errModifica", "Dati errati");
+                }
+                //gps.doUpdateProdotto(prodotto);
+                //prodotti.remove(p);
+                //prodotti.add(prodotto);
+                //getServletContext().setAttribute("prodotti",prodotti);
             } catch(Exception e) {
                 throw new MyServletException("Prodotto non trovato.");
             }

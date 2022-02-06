@@ -15,6 +15,7 @@ public class UtenteRegistrato {
     private String indirizzo;
     private String cellulare;
     private int id_Carrello;
+    private int tipo;
 
     public int getId_Carrello() {
         return id_Carrello;
@@ -24,7 +25,7 @@ public class UtenteRegistrato {
         this.id_Carrello = id_Carrello;
     }
 
-    private int tipo;
+
 
 
     public UtenteRegistrato(String nome, String cognome, String ddn, String username, String password, String email, String indirizzo,String cellulare,int tipo) {
