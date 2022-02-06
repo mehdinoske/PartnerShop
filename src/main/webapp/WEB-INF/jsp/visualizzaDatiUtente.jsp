@@ -10,28 +10,31 @@
 <jsp:include page="header.jsp">
     <jsp:param name="pageTitle" value="Il mio profilo"/>
 </jsp:include>
-<link rel="stylesheet" href="css/utente.css" type="text/css">
+
 <main>
     <h1> Benvenuto ${utente.nome}</h1>
-    <div>
-        <p>Nome e cognome: ${utente.nome} ${utente.cognome}</p>
-        <p>Username: ${utente.username}</p>
-        <p>E-mail: ${utente.email}</p>
-        <p>Data di nascita: ${utente.ddn}</p>
-        <p>Indirizzo: ${utente.indirizzo}</p>
-        <p>Cellulare: ${utente.cellulare}</p>
+    <div class="visualizza_dati_container">
+        <div class="inner_div_dati">
+            <h3>Nome e cognome: </h3> <h4>${utente.nome} ${utente.cognome}</h4>
+            <h3>Username: </h3> <h4>${utente.username}</h4>
+            <h3>E-mail: </h3> <h4>${utente.email}</h4>
+            <h3>Data di nascita: </h3> <h4> ${utente.ddn}</h4>
+            <h3>Indirizzo: </h3> <h4> ${utente.indirizzo}</h4>
+            <h3>Cellulare: </h3> <h4> ${utente.cellulare}</h4>
+        </div>
+        <div class="inner_div_dati_submits">
+            <form action="VisualizzaModifica">
+                <input type="submit" value="Modifica Dati">
+            </form>
+
+            <form action="CancellaDatiUtenti">
+                <input type="text" name="email" id="email" value="${utente.email}" hidden/>
+                <input type="submit" value="Cancella Dati">
+            </form>
+        </div>
     </div>
 
-    <div>
-        <form action="VisualizzaModifica">
-            <input type="submit" value="Modifica Dati">
-        </form>
 
-        <form action="CancellaDatiUtenti">
-            <input type="text" name="email" id="email" value="${utente.email}" hidden/>
-            <input type="submit" value="Cancella Dati">
-        </form>
-    </div>
 
 </main>
 <%@include file="footer.jsp"%>

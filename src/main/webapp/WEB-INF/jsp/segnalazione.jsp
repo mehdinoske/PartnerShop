@@ -11,16 +11,21 @@
 </jsp:include>
 
 <main>
-   <h1>Dettagli segnalazione</h1><br>
-    <h3>Segnalazione n.${segnalazione.id}</h3><br><br>
-    <h4>Effettuata da: ${segnalazione.email}</h4><br>
-    <h4>Motivazione: ${segnalazione.motivazione}</h4><br>
-    <h4>Commenti aggiuntivi: ${segnalazione.commento}</h4><br>
-    <form method="get" action="chiudiSegnalazione">
-        <input type="hidden" value=${segnalazione.id} name="id">
-        <input type="submit" value="chiudi segnalazione" >
-    </form>
-
+    <h1>Dettagli segnalazione</h1>
+    <div class="visualizza_dati_container">
+        <div class="inner_div_dati">
+            <h3>Segnalazione n.${segnalazione.id}</h3><h4> </h4>
+            <h3>Effettuata da: </h3> <h4>${segnalazione.email}</h4>
+            <h3>Motivazione: </h3> <h4>${segnalazione.motivazione}</h4>
+            <h3>Commenti aggiuntivi: </h3> <h4>${segnalazione.commento}</h4>
+        </div>
+</div>
+    <div class="inner_div_dati_submits">
+        <form method="get" action="chiudiSegnalazione">
+            <input type="hidden" value=${segnalazione.id} name="id">
+            <input type="submit" value="chiudi segnalazione" >
+        </form>
+    </div>
 </main>
 
 <%@include file="footer.jsp"%>

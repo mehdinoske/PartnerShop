@@ -12,8 +12,8 @@
             <div class="form_container_prodotto">
             <c:if test="${utente.tipo != 1 && admin == null}">
                 <form action="Carrello" method="get">
-                    <label style="color: white">Quantità:</label>
-                    <select name="quant">
+                    <select name="quant" style="width:200px">
+                        <option disabled selected>Seleziona Quantità</option>
                         <c:forEach begin="1" end="${prodotto.disponibilita}" varStatus="loop">
                             <option value="${loop.index}">${loop.index}</option>
                         </c:forEach>

@@ -47,4 +47,7 @@ public final class AutenticazioneController extends HttpServlet {
         autenticazioneService.logout(request.getSession());
         response.sendRedirect(".");
     }
+
+
+
 }

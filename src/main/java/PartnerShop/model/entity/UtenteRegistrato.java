@@ -4,8 +4,11 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Pattern;
 
 public class UtenteRegistrato {
+    private static final Pattern USERNAME = Pattern.compile("^[a-zA-Z0-9\\-_]{1,40}$");
+
     private String nome;
     private String cognome;
     private String ddn;
@@ -118,6 +121,11 @@ public class UtenteRegistrato {
 
     public void setCellulare(String cellulare) {
         this.cellulare = cellulare;
+    }
+
+
+    public boolean isValidUsername(String username){
+        return USERNAME.matcher(username).matches();
     }
 
     @Override
