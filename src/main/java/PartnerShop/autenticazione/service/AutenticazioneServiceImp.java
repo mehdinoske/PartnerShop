@@ -9,6 +9,7 @@ import PartnerShop.model.entity.UtenteRegistrato;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 /**
  *  implementa la classe che esplicita i metodi definiti nell'interfaccia di autenticazione
@@ -17,6 +18,13 @@ import java.io.IOException;
 public class AutenticazioneServiceImp implements AutenticazioneService{
 
     UtenteRegistratoDAO utDB =null;
+    public AutenticazioneServiceImp(){
+        utDB = new UtenteRegistratoDAO();
+    }
+
+    public AutenticazioneServiceImp(UtenteRegistratoDAO utDB){
+        this.utDB = utDB;
+    }
 
     /**
      * @param username - dell'utente
@@ -25,16 +33,25 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
      */
     @Override
     public UtenteRegistrato login(String username, String password) {
+        String usernameReg = "^[a-zA-Z0-9\\-_]{1,20}$";
         UtenteRegistrato ut = null;
-         utDB = new UtenteRegistratoDAO();
+
         try {
             if (username != null && password != null) {
-                ut = utDB.doRetrieveByUsernamePass(username, password);
+                if(username.matches(usernameReg)) {
+                    ut = utDB.doRetrieveByUsernamePass(username, password);
+                }else
+                {
+                    throw new IllegalArgumentException();
+                }
             }
             if (ut == null) {
                 throw new IOException("Errore utente null");
             }
         }catch(IOException e ){
+            e.printStackTrace();
+        }
+        catch (IllegalArgumentException e){
             e.printStackTrace();
         }
         if(ut!=null && ut.getTipo()==0) {

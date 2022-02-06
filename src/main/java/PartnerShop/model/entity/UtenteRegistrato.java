@@ -4,8 +4,11 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.regex.Pattern;
 
 public class UtenteRegistrato {
+    private static final Pattern USERNAME = Pattern.compile("^[a-zA-Z0-9\\-_]{1,40}$");
+
     private String nome;
     private String cognome;
     private String ddn;
@@ -15,7 +18,7 @@ public class UtenteRegistrato {
     private String indirizzo;
     private String cellulare;
     private int id_Carrello;
-
+    private int tipo;
     public int getId_Carrello() {
         return id_Carrello;
     }
@@ -24,7 +27,7 @@ public class UtenteRegistrato {
         this.id_Carrello = id_Carrello;
     }
 
-    private int tipo;
+
 
 
     public UtenteRegistrato(String nome, String cognome, String ddn, String username, String password, String email, String indirizzo,String cellulare,int tipo) {
@@ -117,5 +120,24 @@ public class UtenteRegistrato {
 
     public void setCellulare(String cellulare) {
         this.cellulare = cellulare;
+    }
+
+    public boolean isValidUsername(String username){
+        return USERNAME.matcher(username).matches();
+    }
+    @Override
+    public String toString() {
+        return "UtenteRegistrato{" +
+                "nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", ddn='" + ddn + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", indirizzo='" + indirizzo + '\'' +
+                ", cellulare='" + cellulare + '\'' +
+                ", id_Carrello=" + id_Carrello +
+                ", tipo=" + tipo +
+                '}';
     }
 }

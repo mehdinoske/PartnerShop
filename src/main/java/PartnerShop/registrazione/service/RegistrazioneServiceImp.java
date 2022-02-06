@@ -13,21 +13,31 @@ import PartnerShop.model.entity.Venditore;
  * @author Giuseppe Abbatiello
  */
 public class  RegistrazioneServiceImp implements RegistrazioneService{
-
+    private String usernameReg = "^[a-zA-Z0-9\\-_]{1,20}$";
+    private String emailReg ="^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,10}$";
     /**
      * implementa la funzionalità di registrazione del cliente
      * @param ut - utente inviato da RegistrazioneController
      * @return cliente per essere loggato
      */
     @Override
-    public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut) {
+    public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut)  {
 
         CarrelloDAO carDAO = new CarrelloDAO();
         ClienteDAO ctDAO = new ClienteDAO();
+        try{
+        if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg)){
         ctDAO.doSave(ut,0);
         ctDAO.doSave(ut.getEmail());
         carDAO.doCreateCarrello(ut.getEmail());
         ut.setId_Carrello(carDAO.doRetrieveIdCarrelloByEmailCliente(ut.getEmail()));
+        }else{
+            ut = null;
+            throw new IllegalArgumentException();
+        }}
+        catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
         return ut;
     }
 
@@ -41,6 +51,7 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
     @Override
     public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut,String nomeNegozio,String Piva) {
         VenditoreDAO vtDAO = new VenditoreDAO();
+
         vtDAO.doSave(ut,1);
         vtDAO.doSave(ut.getEmail(),nomeNegozio,Piva);
         return ut;

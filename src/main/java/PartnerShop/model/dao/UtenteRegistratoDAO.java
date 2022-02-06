@@ -4,10 +4,20 @@ import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.utils.ConPool;
 
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 
 public class UtenteRegistratoDAO {
+
+
     private Connection con;
 
     public UtenteRegistratoDAO(){
