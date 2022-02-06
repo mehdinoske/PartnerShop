@@ -27,13 +27,17 @@ import java.util.ArrayList;
 public class GestioneProdottoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private final GestioneProdottoService PrDAO = new GestioneProdottoServiceImp();
+    private final String nomeReg ="^[A-Z][a-zA-Z\\s]{2,49}$";
+    private final String descrizioneReg ="^[A-Z][a-zA-Z\\s.,:]{10,499}$";
+    private final String categoriaReg ="^[A-Z][a-zA-Z\\s]{3,49}$";
+    private final String prezzo_CentReg ="^[1-9][0-9]*$";
+    private final String disponibilitaReg ="^[1-9][0-9]*$";
+    private final GestioneProdottoService gps = new GestioneProdottoServiceImp();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String s = request.getServletPath();
-        GestioneProdottoService gps = new GestioneProdottoServiceImp();
 
         switch (s) {
 
@@ -251,17 +255,29 @@ public class GestioneProdottoController extends HttpServlet {
 
     public void visualizzaProdotti(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
-        request.getSession().setAttribute("listProdotti", prodotti);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
-        requestDispatcher.forward(request, response);
+        if(prodotti == null)
+            throw new MyServletException("Nessun prodotto disponibile.");
+        else {
+            request.getSession().setAttribute("listProdotti", prodotti);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 
     public void visualizzaCategoria(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
-        String cat =  request.getParameter("categoria");
-        ArrayList listaProd = gps.getProdottiByCategoria(cat);
-        request.getSession().setAttribute("listProdotti",listaProd);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
-        requestDispatcher.forward(request, response);
+        String categoria;
+        if(request.getParameter("categoria").matches(categoriaReg))
+            categoria = request.getParameter("categoria");
+        else
+            throw new MyServletException("Categoria prodotto errata.");
+        ArrayList<Prodotto> listaProd = gps.getProdottiByCategoria(categoria);
+        if(listaProd == null)
+            throw new MyServletException("Nessun prodotto per questa categoria.");
+        else {
+            request.getSession().setAttribute("listProdotti",listaProd);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 
     public void ricercaAjax(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
@@ -282,11 +298,6 @@ public class GestioneProdottoController extends HttpServlet {
         long prezzo_Cent;
         int disponibilita, id;
         ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
-        String nomeReg ="^[A-Z][a-zA-Z\\s]{2,49}$";
-        String descrizioneReg ="^[A-Z][a-zA-Z\\s.,:]{10,499}$";
-        String categoriaReg ="^[A-Z][a-zA-Z\\s]{3,49}$";
-        String prezzo_CentReg ="^[1-9][0-9]*$";
-        String disponibilitaReg ="^[1-9][0-9]*$";
 
         if(ut == null || ut.getTipo() == 0) {
             throw new MyServletException("Non hai i permessi necessari.");
