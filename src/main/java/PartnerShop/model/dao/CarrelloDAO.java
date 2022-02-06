@@ -85,7 +85,7 @@ public class CarrelloDAO {
         }
     }
 
-    public void doSave(int id_Prodotto,int id_Carrello, int quant) {
+    public boolean doSave(int id_Prodotto,int id_Carrello, int quant) {
             try {
                 PreparedStatement ps = con.prepareStatement("INSERT INTO carrello_prodotto (id_carrello,id_prodotto,quantita) VALUES(?,?,?)");
                 ps.setInt(1, id_Carrello);
@@ -98,6 +98,7 @@ public class CarrelloDAO {
         } catch (SQLException var9) {
             throw new RuntimeException(var9);
         }
+           return true;
     }
 
     public void doCreateCarrello(String emailCliente) {

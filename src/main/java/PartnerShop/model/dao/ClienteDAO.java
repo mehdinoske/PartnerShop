@@ -44,5 +44,7 @@ public class ClienteDAO extends UtenteRegistratoDAO{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
+
 }
