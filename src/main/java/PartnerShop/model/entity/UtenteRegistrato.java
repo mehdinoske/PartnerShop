@@ -119,4 +119,20 @@ public class UtenteRegistrato {
     public void setCellulare(String cellulare) {
         this.cellulare = cellulare;
     }
+
+    @Override
+    public String toString() {
+        return "UtenteRegistrato{" +
+                "nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", ddn='" + ddn + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", indirizzo='" + indirizzo + '\'' +
+                ", cellulare='" + cellulare + '\'' +
+                ", id_Carrello=" + id_Carrello +
+                ", tipo=" + tipo +
+                '}';
+    }
 }

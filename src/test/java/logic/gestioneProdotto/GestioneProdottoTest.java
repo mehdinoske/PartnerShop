@@ -54,22 +54,12 @@ public class GestioneProdottoTest {
         String categoria = "Poroco";
         int prezzo_Cent = 11;
         int disponibilita = 22;
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-
-        Prodotto p = new Prodotto();
-        p.setId(2);
-        p.setEmail_Venditore("sd");
-        p.setNome("ss");
-        p.setDescrizione("ddd");
-        p.setCategoria("sdss");
-        p.setDisponibilita(2);
-        p.setPrezzo_Cent(33);
 
         UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
         request.getSession().setAttribute("utente", ut);
 
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
-        Mockito.when(gps.getProdottoById(id)).thenReturn(p);
+        Mockito.when(gps.getProdottoById(id)).thenReturn(null);
 
         gpc.prodottoModifica(request,response,gps);
         assertEquals("Dati errati",request.getAttribute("errModifica"));

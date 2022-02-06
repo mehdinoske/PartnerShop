@@ -257,6 +257,8 @@ public class GestioneProdottoController extends HttpServlet {
             prodotto.setPrezzo_Cent(prezzo_Cent);
             try {
                 Prodotto p = gps.getProdottoById(id);
+                System.out.println(ut);
+                System.out.println(p);
                 if(p == null) {
                     request.setAttribute("errModifica", "Dati errati");
                 }
