@@ -18,9 +18,9 @@ import java.io.IOException;
  * @author Giuseppe Abbatiello
  */
 @WebServlet("/Autenticazione")
-public final class AutenticazioneController extends HttpServlet {
+public  class AutenticazioneController extends HttpServlet {
     private Amministratore amm;
-    private final AutenticazioneService autenticazioneService = new AutenticazioneServiceImp();
+    private  AutenticazioneService autenticazioneService = new AutenticazioneServiceImp();
 
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException {
