@@ -18,7 +18,7 @@
                 <img src="images/categorie/elettronica.jpg" alt="Avatar">
             </div>
             <div class="flip-card-back">
-                <a href="visualizza-categoria?categoria=elettronica">
+                <a href="visualizza-categoria?categoria=Elettronica">
                 <h3>ELETTRONICA</h3>
                 <p>Scopri il meglio della tecnologia!</p>
                 </a>
@@ -31,7 +31,7 @@
                 <img src="images/categorie/abbigliamento.jpg" alt="Avatar" >
             </div>
             <div class="flip-card-back" style="background-color: lightpink">
-                <a href="visualizza-categoria?categoria=abbigliamento">
+                <a href="visualizza-categoria?categoria=Abbigliamento">
                 <h3>ABBIGLIAMENTO</h3>
                 <p>Scopri i migliori capi del sito!</p>
                     </a>
@@ -44,7 +44,7 @@
                     <img src="images/categorie/cancelleria.jpg" alt="Avatar">
                 </div>
                 <div class="flip-card-back" style="background-color: limegreen">
-                    <a href="visualizza-categoria?categoria=cancelleria">
+                    <a href="visualizza-categoria?categoria=Cancelleria">
                     <h3>CANCELLERIA</h3>
                     <p>Scopri i migliori prodotti per l'ufficio!</p>
                         </a>
@@ -57,7 +57,7 @@
                     <img src="images/categorie/utensili.jpg" alt="Avatar">
                 </div>
                 <div class="flip-card-back" style="background-color: darkred">
-                    <a href="visualizza-categoria?categoria=utensili">
+                    <a href="visualizza-categoria?categoria=Utensili">
                     <h3>UTENSILI</h3>
                     <p>Scopri i migliori utensili!</p>
                     </a>
