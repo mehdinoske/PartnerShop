@@ -1,4 +1,4 @@
-package logic;
+package UnitTesting.Registrazione;
 
 import PartnerShop.model.dao.CarrelloDAO;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
@@ -47,7 +47,7 @@ public class RegistrazioneVenditoreTest {
         String PIva = "AA1231328";
         String nomeNegozio="negozio";
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -70,7 +70,7 @@ public class RegistrazioneVenditoreTest {
         String PIva = "AA1231328";
         String nomeNegozio="negozio";
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -92,7 +92,7 @@ public class RegistrazioneVenditoreTest {
         String PIva = "AA1231328";
         String nomeNegozio="negozio";
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -114,7 +114,7 @@ public class RegistrazioneVenditoreTest {
         String PIva = "AA1231328";
         String nomeNegozio="negozio";
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -135,7 +135,7 @@ public class RegistrazioneVenditoreTest {
         String PIva = "AA1231328";
         String nomeNegozio="negozio";
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -157,7 +157,7 @@ public class RegistrazioneVenditoreTest {
         String PIva = "AA1231328";
         String nomeNegozio="negozio";
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -179,7 +179,7 @@ public class RegistrazioneVenditoreTest {
         String PIva = "AA1231328";
         String nomeNegozio="negozio";
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -201,7 +201,7 @@ public class RegistrazioneVenditoreTest {
         String PIva = "AA1231328";
         String nomeNegozio="negozio";
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -221,7 +221,7 @@ public class RegistrazioneVenditoreTest {
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);

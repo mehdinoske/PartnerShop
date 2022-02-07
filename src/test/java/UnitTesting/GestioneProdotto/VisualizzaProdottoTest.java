@@ -1,4 +1,4 @@
-package gestioneProdotto.logic;
+package UnitTesting.GestioneProdotto;
 
 import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.gestioneProdotto.controller.GestioneProdottoController;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-public class VisualizzaCategoriaTest {
+public class VisualizzaProdottoTest {
     MockHttpServletRequest request;
     MockHttpServletResponse response;
     MockHttpSession session;
@@ -46,29 +46,27 @@ public class VisualizzaCategoriaTest {
     }
 
     @Test
-    public void categoriaProdottoNonRispettaFormato() {
-        String categoria = "g";
-        request.setParameter("categoria", categoria);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.visualizzaCategoria(request,response,gps));
-        assertEquals("Categoria prodotto errata.", mse.getMessage());
+    public void idProdottoErrato() {
+        double id = 45.5;
+        request.setParameter("id", String.valueOf(id));
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoVisualizza(request,response,gps));
+        assertEquals("Id prodotto non corretto.", mse.getMessage());
     }
 
     @Test
-    public void nesssunProdottoPerQuellaCategoria() {
-        String categoria = "Utensili";
-        request.setParameter("categoria", categoria);
-        Mockito.when(gps.getProdottiByCategoria(categoria)).thenReturn(null);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.visualizzaCategoria(request,response,gps));
-        assertEquals("Nessun prodotto per questa categoria.", mse.getMessage());
+    public void idProdottoNonPresente() {
+        int id = 1;
+        request.setParameter("id", String.valueOf(id));
+        Mockito.when(gps.getProdottoById(id)).thenReturn(null);
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoVisualizza(request,response,gps));
+        assertEquals("Prodotto non trovato.", mse.getMessage());
     }
 
     @Test
     public void tuttoOk() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
-        String categoria = "Utensili";
-        request.setParameter("categoria", categoria);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        prodotti.add(prodotto);
-        Mockito.when(gps.getProdottiByCategoria(categoria)).thenReturn(prodotti);
-        gpc.visualizzaCategoria(request,response,gps);
+        int id = 1;
+        request.setParameter("id", String.valueOf(id));
+        Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
+        gpc.prodottoVisualizza(request,response,gps);
     }
 }

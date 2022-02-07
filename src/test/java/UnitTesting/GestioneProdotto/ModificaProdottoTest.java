@@ -1,4 +1,4 @@
-package gestioneProdotto.logic;
+package UnitTesting.GestioneProdotto;
 
 import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.gestioneProdotto.controller.GestioneProdottoController;
