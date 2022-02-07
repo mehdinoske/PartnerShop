@@ -17,7 +17,10 @@ import java.util.regex.Pattern;
  */
 public class AutenticazioneServiceImp implements AutenticazioneService{
 
-    UtenteRegistratoDAO utDB =null;
+    private UtenteRegistratoDAO utDB =null;
+    private String usernameReg = "^[a-zA-Z0-9\\-_]{1,20}$";
+
+
     public AutenticazioneServiceImp(){
         utDB = new UtenteRegistratoDAO();
     }
@@ -33,7 +36,7 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
      */
     @Override
     public UtenteRegistrato login(String username, String password) {
-        String usernameReg = "^[a-zA-Z0-9\\-_]{1,20}$";
+
         UtenteRegistrato ut = null;
 
         try {

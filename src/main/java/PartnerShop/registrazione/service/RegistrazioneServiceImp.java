@@ -15,6 +15,31 @@ import PartnerShop.model.entity.Venditore;
 public class  RegistrazioneServiceImp implements RegistrazioneService{
     private String usernameReg = "^[a-zA-Z0-9\\-_]{1,20}$";
     private String emailReg ="^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,10}$";
+    private String passReg = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_.,\\-+*!#@?])([a-zA-Z0-9_.,\\-+*!#@?]{6,25})$";
+    private String nomeReg="^[A-zÀ-ù ‘-]{2,30}$";
+    private String cellReg = "^[0-9]\\d{9}$";
+    private String dataReg = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
+
+    private ClienteDAO ctDAO;
+    private VenditoreDAO vtDAO;
+    private CarrelloDAO carDAO;
+
+
+    public RegistrazioneServiceImp(){
+        carDAO = new CarrelloDAO();
+        ctDAO = new ClienteDAO();
+    }
+
+    public RegistrazioneServiceImp(ClienteDAO ctDAO,CarrelloDAO carDAO){
+        this.carDAO = carDAO;
+        this.ctDAO = ctDAO;
+    }
+
+    public RegistrazioneServiceImp(VenditoreDAO vtDAO,CarrelloDAO carDAO){
+        this.carDAO = carDAO;
+        this.vtDAO = vtDAO;
+    }
+
     /**
      * implementa la funzionalità di registrazione del cliente
      * @param ut - utente inviato da RegistrazioneController
@@ -23,10 +48,11 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
     @Override
     public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut)  {
 
-        CarrelloDAO carDAO = new CarrelloDAO();
-        ClienteDAO ctDAO = new ClienteDAO();
+
         try{
-        if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg)){
+        if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPassword().matches(passReg)
+                && ut.getNome().matches(nomeReg)&& ut.getCognome().matches(nomeReg)&& ut.getCellulare().matches(cellReg)
+                && ut.getDdn().matches(dataReg) && (ut.getIndirizzo().length())>=5) {
         ctDAO.doSave(ut,0);
         ctDAO.doSave(ut.getEmail());
         carDAO.doCreateCarrello(ut.getEmail());
@@ -51,9 +77,19 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
     @Override
     public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut,String nomeNegozio,String Piva) {
         VenditoreDAO vtDAO = new VenditoreDAO();
-
-        vtDAO.doSave(ut,1);
-        vtDAO.doSave(ut.getEmail(),nomeNegozio,Piva);
+        try{
+        if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPassword().matches(passReg)
+                && ut.getNome().matches(nomeReg)&& ut.getCognome().matches(nomeReg)&& ut.getCellulare().matches(cellReg)
+                && ut.getDdn().matches(dataReg) && (ut.getIndirizzo().length())>=5) {
+            vtDAO.doSave(ut, 1);
+            vtDAO.doSave(ut.getEmail(), nomeNegozio, Piva);
+        }else{
+            ut=null;
+          //  throw new IllegalArgumentException();
+        }}
+        catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
         return ut;
     }
 

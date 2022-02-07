@@ -37,7 +37,7 @@ public class HomePageServlet extends HttpServlet {
         } else {
             prodotti = PrDAO.getAllProdotti();
         }
-        getServletContext().setAttribute("prodotti",prodotti);
+        request.getSession().setAttribute("prodotti",prodotti);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
         dispatcher.forward(request, response);
