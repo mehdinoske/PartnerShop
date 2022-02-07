@@ -19,6 +19,7 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
     private String nomeReg="^[A-zÀ-ù ‘-]{2,30}$";
     private String cellReg = "^[0-9]\\d{9}$";
     private String dataReg = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$";
+    private String pIvaReg= "^[A-Z]{2}[A-Z0-9]{9}$";
 
     private ClienteDAO ctDAO;
     private VenditoreDAO vtDAO;
@@ -80,7 +81,8 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
         try{
         if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPassword().matches(passReg)
                 && ut.getNome().matches(nomeReg)&& ut.getCognome().matches(nomeReg)&& ut.getCellulare().matches(cellReg)
-                && ut.getDdn().matches(dataReg) && (ut.getIndirizzo().length())>=5) {
+                && ut.getDdn().matches(dataReg) && (ut.getIndirizzo().length())>=5
+                && nomeNegozio.matches(nomeReg) && Piva.matches(pIvaReg)) {
             vtDAO.doSave(ut, 1);
             vtDAO.doSave(ut.getEmail(), nomeNegozio, Piva);
         }else{

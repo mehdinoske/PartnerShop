@@ -1,5 +1,6 @@
 package PartnerShop.autenticazione.service;
 
+import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.model.dao.CarrelloDAO;
 import PartnerShop.model.dao.ClienteDAO;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
@@ -45,7 +46,7 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
                     ut = utDB.doRetrieveByUsernamePass(username, password);
                 }else
                 {
-                    throw new IllegalArgumentException();
+                    throw new MyServletException("errore parametri registrazione");
                 }
             }
             if (ut == null) {
@@ -54,7 +55,7 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
         }catch(IOException e ){
             e.printStackTrace();
         }
-        catch (IllegalArgumentException e){
+        catch (MyServletException e){
             e.printStackTrace();
         }
         if(ut!=null && ut.getTipo()==0) {

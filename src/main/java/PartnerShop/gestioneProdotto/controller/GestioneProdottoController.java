@@ -306,6 +306,9 @@ public class GestioneProdottoController extends HttpServlet {
     public void ricercaAjax(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         String app = (request.getParameter("p") +"*");
         ArrayList<Prodotto> listProd = gps.getProdottiByNome(app);
+        if(listProd == null) {
+            throw new MyServletException("Nessun prodotto per questa ricerca.");
+        }
         JSONArray listaJson = new JSONArray();
         for(Prodotto p : listProd){
             listaJson.put(p.getNome());
