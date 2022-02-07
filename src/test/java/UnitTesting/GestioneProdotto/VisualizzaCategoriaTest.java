@@ -69,6 +69,6 @@ public class VisualizzaCategoriaTest {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         prodotti.add(prodotto);
         Mockito.when(gps.getProdottiByCategoria(categoria)).thenReturn(prodotti);
-        gpc.visualizzaCategoria(request,response,gps);
+        assertEquals(true, gpc.visualizzaCategoria(request,response,gps));
     }
 }

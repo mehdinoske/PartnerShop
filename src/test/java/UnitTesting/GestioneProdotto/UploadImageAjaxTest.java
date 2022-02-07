@@ -21,8 +21,8 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
-
-public class RicercaAjaxTest {
+@Ignore
+public class UploadImageAjaxTest {
     MockHttpServletRequest request;
     MockHttpServletResponse response;
     MockHttpSession session;
@@ -45,24 +45,4 @@ public class RicercaAjaxTest {
         request.setSession(session);
     }
 
-    @Test
-    public void nessunRisultatoPerLaRicerca() {
-        String p = "Piatto";
-        String app = p + "*";
-        request.setParameter("p", p);
-        Mockito.when(gps.getProdottiByNome(app)).thenReturn(null);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.ricercaAjax(request,response,gps));
-        assertEquals("Nessun prodotto per questa ricerca.", mse.getMessage());
-    }
-
-    @Test
-    public void tuttoOk() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
-        String p = "Piatto";
-        String app = p + "*";
-        request.setParameter("p", p);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        prodotti.add(prodotto);
-        Mockito.when(gps.getProdottiByNome(app)).thenReturn(prodotti);
-        assertEquals(true, gpc.ricercaAjax(request,response,gps));
-    }
 }

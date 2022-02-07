@@ -212,7 +212,7 @@ public class ModificaProdottoTest {
 
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        gpc.prodottoModifica(request,response,gps);
+        assertEquals(true, gpc.prodottoModifica(request,response,gps));
     }
 
     private void setParametersRequest(int id, String nome, String descrizione, String categoria, int prezzo_Cent, int disponibilita) {

@@ -56,6 +56,6 @@ public class AggiungiProdottoFormTest {
     public void tuttoOk() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
         UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
         request.getSession().setAttribute("utente", ut);
-        gpc.prodottoAggiungiForm(request,response,gps);
+        assertEquals(true, gpc.prodottoAggiungiForm(request,response,gps));
     }
 }

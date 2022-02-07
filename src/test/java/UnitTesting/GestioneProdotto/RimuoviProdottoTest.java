@@ -84,6 +84,6 @@ public class RimuoviProdottoTest {
         request.getSession().setAttribute("prodotti", prodotti);
         request.setParameter("id", String.valueOf(id));
         Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        gpc.prodottoRimuovi(request,response,gps);
+        assertEquals(true, gpc.prodottoRimuovi(request,response,gps));
     }
 }
