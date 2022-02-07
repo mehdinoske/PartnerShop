@@ -1,5 +1,6 @@
 package PartnerShop.registrazione.service;
 
+import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.model.dao.CarrelloDAO;
 import PartnerShop.model.dao.ClienteDAO;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
@@ -47,23 +48,20 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
      * @return cliente per essere loggato
      */
     @Override
-    public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut)  {
+    public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut) throws MyServletException{
 
-        try{
-        if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPassword().matches(passReg)
-                && ut.getNome().matches(nomeReg)&& ut.getCognome().matches(nomeReg)&& ut.getCellulare().matches(cellReg)
-                && ut.getDdn().matches(dataReg) && (ut.getIndirizzo().length())>=5) {
-        ctDAO.doSave(ut,0);
-        ctDAO.doSave(ut.getEmail());
-        carDAO.doCreateCarrello(ut.getEmail());
-        ut.setId_Carrello(carDAO.doRetrieveIdCarrelloByEmailCliente(ut.getEmail()));
-        }else{
-            ut = null;
-            throw new IllegalArgumentException();
-        }}
-        catch (IllegalArgumentException e){
-            e.printStackTrace();
-        }
+            if (ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPassword().matches(passReg)
+                    && ut.getNome().matches(nomeReg) && ut.getCognome().matches(nomeReg) && ut.getCellulare().matches(cellReg)
+                    && ut.getDdn().matches(dataReg) && (ut.getIndirizzo().length()) >= 5) {
+                ctDAO.doSave(ut, 0);
+                ctDAO.doSave(ut.getEmail());
+                carDAO.doCreateCarrello(ut.getEmail());
+                ut.setId_Carrello(carDAO.doRetrieveIdCarrelloByEmailCliente(ut.getEmail()));
+            } else {
+                ut = null;
+                throw new MyServletException("Errore parametri!");
+            }
+
         return ut;
     }
 
