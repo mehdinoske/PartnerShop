@@ -134,7 +134,7 @@ insert into prodotto values (7, 'boudad@gmail.com', 'Felpa', 'Felpa Adidas super
 insert into prodotto values (8, 'boudad@gmail.com', 'Tronchese', 'Ottima tronchese per farsi strada nelle recinzioni altrui e fare cose losche', 'utensili', 4000, 500);
 
 insert into segnalazione values (1, 'anconamarco@gmail.com', false, 'corriere scortese', 'commenti aggiuntivi', null);
-insert into ordine values (1, 'anconamarco@gmail.com', '1212-12-12', 'indirizzo1', 300);
+insert into ordine values (1, 'nome','cognome','anconamarco@gmail.com', '1212-12-12', 'indirizzo1', 300);
 insert into carrello_prodotto values (1, 1, 20);
 insert into ordine_prodotto values (1, 1, 30);
 insert into desideri_prodotto values (1, 1, 20);

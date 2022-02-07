@@ -20,12 +20,14 @@ public class GestioneAcquistiDAO {
     public void doSaveOrdine(Ordine ord) {
         try {
             try {
-                PreparedStatement ps = con.prepareStatement("INSERT INTO ordine (email_cliente,data_ordine,indirizzo,prezzo_tot) VALUES(?,?,?,?)", 1);
-                ps.setString(1, ord.getEmailCliente());
+                PreparedStatement ps = con.prepareStatement("INSERT INTO ordine (nome,cognome,email_cliente,data_ordine,indirizzo,prezzo_tot) VALUES(?,?,?,?,?,?)", 1);
+                ps.setString(1, ord.getNome());
+                ps.setString(2,ord.getCognome());
+                ps.setString(3, ord.getEmailCliente());
                 Date sqlDate = new Date(ord.getData().getTime());
-                ps.setDate(2, sqlDate);
-                ps.setString(3,ord.getIndirizzo());
-                ps.setFloat(4,ord.getPrezzo_tot());
+                ps.setDate(4, sqlDate);
+                ps.setString(5,ord.getIndirizzo());
+                ps.setFloat(6,ord.getPrezzo_tot());
                 if (ps.executeUpdate() != 1) {
                     throw new RuntimeException("Insert error.");
                 }
@@ -60,7 +62,7 @@ public class GestioneAcquistiDAO {
 
         try {
             try {
-                PreparedStatement ps = con.prepareStatement("SELECT id, email_cliente, data_ordine,indirizzo,prezzo_tot FROM ordine");
+                PreparedStatement ps = con.prepareStatement("SELECT id,nome,cognome, email_cliente, data_ordine,indirizzo,prezzo_tot FROM ordine");
                 ResultSet rs = ps.executeQuery();
 
                 label50:
@@ -73,7 +75,7 @@ public class GestioneAcquistiDAO {
                                 break label50;
                             }
 
-                            ps = con.prepareStatement("SELECT idOrdine,idGioco,quantita FROM ordine_prodotto where idOrdine = ?");
+                            ps = con.prepareStatement("SELECT id_ordine,id_prodotto,quantita FROM ordine_prodotto where id_ordine = ?");
                             ps.setInt(1, ((Ordine)list.get(i)).getId());
                             rs = ps.executeQuery();
 
@@ -89,10 +91,12 @@ public class GestioneAcquistiDAO {
 
                     Ordine p = new Ordine();
                     p.setId(rs.getInt(1));
-                    p.setEmailCliente(rs.getString(2));
-                    p.setDataSql(rs.getDate(3));
-                    p.setIndirizzo(rs.getString(4));
-                    p.setPrezzo_tot(rs.getFloat(5));
+                    p.setNome(rs.getString(2));
+                    p.setCognome(rs.getString(3));
+                    p.setEmailCliente(rs.getString(4));
+                    p.setDataSql(rs.getDate(5));
+                    p.setIndirizzo(rs.getString(6));
+                    p.setPrezzo_tot(rs.getFloat(7));
                     list.add(p);
                 }
             } catch (Throwable var7) {
@@ -111,7 +115,7 @@ public class GestioneAcquistiDAO {
 
         try {
             try {
-                PreparedStatement ps = con.prepareStatement("SELECT id,email_cliente,data_ordine,indirizzo,prezzo_tot  FROM ordine where email_cliente = ?");
+                PreparedStatement ps = con.prepareStatement("SELECT id,nome,cognome,email_cliente,data_ordine,indirizzo,prezzo_tot  FROM ordine where email_cliente = ?");
                 ps.setString(1, email_cliente);
                 ResultSet rs = ps.executeQuery();
 
@@ -141,10 +145,12 @@ public class GestioneAcquistiDAO {
 
                     Ordine p = new Ordine();
                     p.setId(rs.getInt(1));
-                    p.setEmailCliente(rs.getString(2));
-                    p.setDataSql(rs.getDate(3));
-                    p.setIndirizzo(rs.getString(4));
-                    p.setPrezzo_tot(rs.getFloat(5));
+                    p.setNome(rs.getString(2));
+                    p.setCognome(rs.getString(3));
+                    p.setEmailCliente(rs.getString(4));
+                    p.setDataSql(rs.getDate(5));
+                    p.setIndirizzo(rs.getString(6));
+                    p.setPrezzo_tot(rs.getFloat(7));
                     list.add(p);
                 }
             } catch (Throwable var8) {
@@ -164,7 +170,7 @@ public class GestioneAcquistiDAO {
 
         try {
             try {
-                PreparedStatement ps = con.prepareStatement("SELECT DISTINCT ord.id,ord.email_cliente,ord.data_ordine,ord.indirizzo,ord.prezzo_tot  FROM ordine ord,prodotto pr,ordine_prodotto orpr where ord.id=orpr.id_ordine and orpr.id_prodotto=pr.id and pr.email_venditore=?");
+                PreparedStatement ps = con.prepareStatement("SELECT DISTINCT ord.id,ord.nome,ord.cognome,ord.email_cliente,ord.data_ordine,ord.indirizzo,ord.prezzo_tot  FROM ordine ord,prodotto pr,ordine_prodotto orpr where ord.id=orpr.id_ordine and orpr.id_prodotto=pr.id and pr.email_venditore=?");
                 ps.setString(1, email_venditore);
                 ResultSet rs = ps.executeQuery();
 
@@ -195,10 +201,12 @@ public class GestioneAcquistiDAO {
 
                     Ordine p = new Ordine();
                     p.setId(rs.getInt(1));
-                    p.setEmailCliente(rs.getString(2));
-                    p.setDataSql(rs.getDate(3));
-                    p.setIndirizzo(rs.getString(4));
-                    p.setPrezzo_tot(rs.getFloat(5));
+                    p.setNome(rs.getString(2));
+                    p.setCognome(rs.getString(3));
+                    p.setEmailCliente(rs.getString(4));
+                    p.setDataSql(rs.getDate(5));
+                    p.setIndirizzo(rs.getString(6));
+                    p.setPrezzo_tot(rs.getFloat(7));
                     list.add(p);
                 }
             } catch (Throwable var8) {

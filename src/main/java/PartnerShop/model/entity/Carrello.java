@@ -28,8 +28,8 @@ public class Carrello {
         this.getQuantHash().remove(idProdotto);
     }
 
-    public long getPrezzoEuro(int idProdotto) {
-        return (long)(Integer)this.getQuantHash().get(idProdotto) * (long)((Prodotto)this.getProdottoHash().get(idProdotto)).getPrezzo_Euro();
+    public float getPrezzoEuro(int idProdotto) {
+        return (float)(Integer)this.getQuantHash().get(idProdotto) * (float)((Prodotto)this.getProdottoHash().get(idProdotto)).getPrezzo_Euro();
     }
 
     public float sommaTot() {

@@ -59,8 +59,8 @@ public class Prodotto {
             this.prezzo_Cent = prezzoCent;
         }
 
-        public long getPrezzo_Euro() {
-            return  (prezzo_Cent / 100);
+        public float getPrezzo_Euro() {
+            return  ((float) prezzo_Cent / 100);
         }
 
 		public int getDisponibilita() {
