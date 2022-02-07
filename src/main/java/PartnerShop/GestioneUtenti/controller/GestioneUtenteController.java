@@ -57,7 +57,6 @@ public class GestioneUtenteController extends HttpServlet {
                 ut.setUsername(username);
                 ut.setIndirizzo(indirizzo);
                 ut.setEmail(email);
-                ut.setPassword(password);
                 ut.setPasswordHash(password);
                 ut.setCellulare(cellulare);
                 ut.setTipo(tipo);
