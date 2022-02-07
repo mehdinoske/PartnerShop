@@ -122,7 +122,7 @@ insert into carrello values (1, 'anconamarco@gmail.com');
 insert into carrello values (2, 'peppe.abbatiello@gmail.com');
 
 insert into lista_desideri values (1, 'anconamarco@gmail.com');
-insert into prodotto values (1, 'depalmamarco@gmail.com', 'Penna', 'penna blu molto costosa', 'Cancelleria', 100, 2000);
+insert into prodotto values (1, 'depalmamarco@gmail.com', 'Penna', 'Penna blu molto costosa', 'Cancelleria', 100, 2000);
 insert into prodotto values (2, 'depalmamarco@gmail.com', 'Macbook', 'MacBook che fa schifo', 'Elettronica', 150000, 400);
 insert into prodotto values (3, 'boudad@gmail.com', 'LG V40', 'LG V40 uno dei miglori smartphone mai creati', 'Elettronica', 50000, 500);
 insert into prodotto values (4, 'boudad@gmail.com', 'HP Notebook Victus', 'Hp Notebook Ryzen 5 SSD 512 Gb Ram 16 Gb nVidia GeForce RTX 3050 (4gb) Windows 10 - 531T6EA Victus', 'Elettronica', 100000, 200);
