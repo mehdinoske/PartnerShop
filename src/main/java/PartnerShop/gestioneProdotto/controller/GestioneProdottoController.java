@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(name = "GP", urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi",
-        "/prodotto-modifica", "/prodotto-aggiungi-form", "/visualizza-prodotti","/visualizza-categoria","/ricercaAjax"})
+        "/prodotto-modifica", "/prodotto-aggiungi-form", "/visualizza-prodotti","/visualizza-categoria","/ricercaAjax", "/ricerca"})
 public class GestioneProdottoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -129,6 +129,9 @@ public class GestioneProdottoController extends HttpServlet {
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
+                break;
+            case "/ricerca":
+                ricerca(request,response,gps);
                 break;
         }
     }
@@ -309,6 +312,14 @@ public class GestioneProdottoController extends HttpServlet {
         }
         response.setContentType("application/json");
         response.getWriter().append(listaJson.toString());
+    }
+
+    public void ricerca(HttpServletRequest request,HttpServletResponse response,GestioneProdottoService gps)throws ServletException, IOException{
+        if(!request.getParameter("p").isBlank()){
+        String nome = request.getParameter("p")+"*";
+        ArrayList<Prodotto> listProd = gps.getProdottiByNome(nome);
+        request.setAttribute("prodottiRicerca",listProd);}
+        request.getRequestDispatcher("WEB-INF/jsp/risultatoRicerca.jsp").forward(request,response);
     }
 
     public void prodottoModifica(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
