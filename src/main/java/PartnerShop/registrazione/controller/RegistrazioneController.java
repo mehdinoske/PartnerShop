@@ -82,6 +82,7 @@ public final class RegistrazioneController extends HttpServlet {
         String ddn = request.getParameter("ddn");
         String indirizzo = request.getParameter("indirizzo");
         String cellulare = request.getParameter("cellulare");
+
         UtenteRegistrato ut = new UtenteRegistrato();
         ut.setNome(nome);
         ut.setCognome(cognome);
@@ -89,6 +90,7 @@ public final class RegistrazioneController extends HttpServlet {
         ut.setUsername(username);
         ut.setIndirizzo(indirizzo);
         ut.setEmail(email);
+        ut.setPassword(password);
         ut.setPasswordHash(password);
         ut.setCellulare(cellulare);
 
