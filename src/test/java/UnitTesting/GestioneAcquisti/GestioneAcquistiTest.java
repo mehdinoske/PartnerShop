@@ -1,4 +1,4 @@
-package GestioneAcquistiTest.logic;
+package UnitTesting.GestioneAcquisti;
 
 import PartnerShop.GestioneAcquisti.service.GestioneAcquistiServiceImp;
 import PartnerShop.model.dao.ClienteDAO;

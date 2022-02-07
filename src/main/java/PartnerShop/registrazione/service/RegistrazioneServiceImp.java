@@ -49,7 +49,6 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
     @Override
     public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut)  {
 
-
         try{
         if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPassword().matches(passReg)
                 && ut.getNome().matches(nomeReg)&& ut.getCognome().matches(nomeReg)&& ut.getCellulare().matches(cellReg)
@@ -79,7 +78,7 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
     public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut,String nomeNegozio,String Piva) {
         VenditoreDAO vtDAO = new VenditoreDAO();
         try{
-        if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPassword().matches(passReg)
+        if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPasswordHash().matches(passReg)
                 && ut.getNome().matches(nomeReg)&& ut.getCognome().matches(nomeReg)&& ut.getCellulare().matches(cellReg)
                 && ut.getDdn().matches(dataReg) && (ut.getIndirizzo().length())>=5
                 && nomeNegozio.matches(nomeReg) && Piva.matches(pIvaReg)) {

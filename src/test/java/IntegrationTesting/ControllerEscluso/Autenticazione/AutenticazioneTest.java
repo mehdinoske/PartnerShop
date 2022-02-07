@@ -1,4 +1,4 @@
-package IntegrationTesting.ControllerEscluso;
+package IntegrationTesting.ControllerEscluso.Autenticazione;
 
 import PartnerShop.autenticazione.controller.AutenticazioneController;
 import PartnerShop.autenticazione.service.AutenticazioneService;
@@ -15,7 +15,10 @@ import org.springframework.mock.web.MockHttpSession;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class AutenticazioneTest {
@@ -43,16 +46,22 @@ public class AutenticazioneTest {
         String username = "ancona1.";
         String password = "asd";
         UtenteRegistrato ut =autService.login(username,password);
-        System.out.println(ut);
         Assert.assertEquals(null,ut);
     }
+    @Test
+    public void loginUtentePasswordNonAssociataNessunUtente(){
+        String username = "ancona1."; //Corretta
+        String password = "asd";        //Corretta
+        UtenteRegistrato ut =autService.login(username,password);
+        Assert.assertEquals(null,ut);
+    }
+
 
     @Test
     public void loginOkTest() throws IOException, ServletException {
         String username = "ancona1";
         String password = "asd";
         UtenteRegistrato ut =autService.login(username,password);
-        System.out.println(ut);
         Assert.assertNotEquals(null,ut);
     }
 

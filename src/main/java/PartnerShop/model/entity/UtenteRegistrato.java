@@ -14,6 +14,7 @@ public class UtenteRegistrato {
     private String ddn;
     private String username;
     private String password;
+    private String passwordHash;
     private String email;
     private String indirizzo;
     private String cellulare;
@@ -31,12 +32,12 @@ public class UtenteRegistrato {
 
 
 
-    public UtenteRegistrato(String nome, String cognome, String ddn, String username, String password, String email, String indirizzo,String cellulare,int tipo) {
+    public UtenteRegistrato(String nome, String cognome, String ddn, String username, String passwordHash, String email, String indirizzo,String cellulare,int tipo) {
         this.nome = nome;
         this.cognome = cognome;
         this.ddn = ddn;
         this.username = username;
-        this.password = password;
+        this.passwordHash = passwordHash;
         this.email = email;
         this.indirizzo = indirizzo;
         this.cellulare = cellulare;
@@ -74,17 +75,25 @@ public class UtenteRegistrato {
         this.username = username;
     }
 
-    public String getPassword() {
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public String getPassword(){
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String pass){
+        this.password = pass;
+    }
+
+    public void setPasswordHash(String password) {
 
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
             digest.reset();
             digest.update(password.getBytes(StandardCharsets.UTF_8));
-            this.password = String.format("%040x", new BigInteger(1, digest.digest()));
+            this.passwordHash = String.format("%040x", new BigInteger(1, digest.digest()));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

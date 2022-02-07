@@ -1,4 +1,4 @@
-package IntegrationTesting.ControllerIncluso;
+package IntegrationTesting.ControllerIncluso.Autenticazione;
 
 import PartnerShop.autenticazione.controller.AutenticazioneController;
 import PartnerShop.autenticazione.service.AutenticazioneServiceImp;
@@ -45,9 +45,19 @@ public class AutenticazioneTest {
     }
 
     @Test
-    public void loginUtenteUsernameFormatoErratoTest() throws IOException, ServletException {
-        request.setParameter("usernameLogin","ancona1.");
-        request.setParameter("passwordLogin","asd");
+    public void loginUtenteUsernameFormatoErratoTest() throws IOException {
+        request.setParameter("usernameLogin","ancona1."); //errato
+        request.setParameter("passwordLogin","asd");    //corretto
+        autenticazioneController.doPost(request,response);
+        UtenteRegistrato ut = (UtenteRegistrato)request.getSession().getAttribute("utente");
+        Assert.assertEquals(null,ut);
+    }
+
+
+    @Test
+    public void loginUtentePasswordNonAssociataNessunUtente() throws IOException {
+        request.setParameter("usernameLogin","ancona1"); //corretto
+        request.setParameter("passwordLogin","asd.");   //errato
         autenticazioneController.doPost(request,response);
         UtenteRegistrato ut = (UtenteRegistrato)request.getSession().getAttribute("utente");
         Assert.assertEquals(null,ut);

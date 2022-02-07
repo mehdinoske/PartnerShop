@@ -53,7 +53,7 @@ public class UtenteRegistratoDAO {
             ps.setString(4, ut.getEmail());
             ps.setString(5, ut.getIndirizzo());
             ps.setString(6, ut.getUsername());
-            ps.setString(7, ut.getPassword());
+            ps.setString(7, ut.getPasswordHash());
             ps.setString(8, ut.getCellulare());
             ps.setInt(9,tipo);
             if (ps.executeUpdate() != 1) {
@@ -80,7 +80,7 @@ public class UtenteRegistratoDAO {
                     ut.setEmail(rs.getString(4));
                     ut.setIndirizzo(rs.getString(5));
                     ut.setUsername(rs.getString(6));
-                    ut.setPassword(rs.getString(7));
+                    ut.setPasswordHash(rs.getString(7));
                     ut.setTipo(rs.getInt(8));
                     ut.setCellulare(rs.getString(9));
                     return ut;
@@ -104,7 +104,7 @@ public class UtenteRegistratoDAO {
                 ut.setEmail(rs.getString(4));
                 ut.setIndirizzo(rs.getString(5));
                 ut.setUsername(rs.getString(6));
-                ut.setPassword(rs.getString(7));
+                ut.setPasswordHash(rs.getString(7));
                 ut.setTipo(rs.getInt(8));
                 ut.setCellulare(rs.getString(9));
                 return ut;
@@ -128,7 +128,7 @@ public class UtenteRegistratoDAO {
                 ut.setEmail(rs.getString(4));
                 ut.setIndirizzo(rs.getString(5));
                 ut.setUsername(rs.getString(6));
-                ut.setPassword(rs.getString(7));
+                ut.setPasswordHash(rs.getString(7));
                 ut.setTipo(rs.getInt(8));
                 return ut;
             }
@@ -159,7 +159,7 @@ public class UtenteRegistratoDAO {
             ps.setString(2, ut.getCognome());
             ps.setString(3, ut.getIndirizzo());
             ps.setString(4, ut.getCellulare());
-            ps.setString(5, ut.getPassword());
+            ps.setString(5, ut.getPasswordHash());
             ps.setString(6,ut.getEmail());
 
             if (ps.executeUpdate() != 1) {

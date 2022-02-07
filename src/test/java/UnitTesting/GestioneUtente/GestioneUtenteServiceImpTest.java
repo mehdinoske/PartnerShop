@@ -1,4 +1,4 @@
-package GestioneUtente.logic;
+package UnitTesting.GestioneUtente;
 
 import PartnerShop.GestioneUtenti.model.GestioneUtenteServiceImp;
 import PartnerShop.model.dao.UtenteRegistratoDAO;

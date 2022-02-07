@@ -1,4 +1,4 @@
-package gestioneProdotto.logic;
+package UnitTesting.GestioneProdotto;
 
 import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.gestioneProdotto.controller.GestioneProdottoController;
@@ -6,6 +6,7 @@ import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
 import PartnerShop.model.entity.Prodotto;
 import PartnerShop.model.entity.UtenteRegistrato;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -16,11 +17,12 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-public class AggiungiProdottoFormTest {
+public class RicercaAjaxTest {
     MockHttpServletRequest request;
     MockHttpServletResponse response;
     MockHttpSession session;
@@ -44,18 +46,23 @@ public class AggiungiProdottoFormTest {
     }
 
     @Test
-    public void utenteNonAutorizzato() {
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 0);
-        request.getSession().setAttribute("utente", ut);
-
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoAggiungiForm(request,response,gps));
-        assertEquals("Non hai i permessi necessari.", mse.getMessage());
+    public void nessunRisultatoPerLaRicerca() {
+        String p = "Piatto";
+        String app = p + "*";
+        request.setParameter("p", p);
+        Mockito.when(gps.getProdottiByNome(app)).thenReturn(null);
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.ricercaAjax(request,response,gps));
+        assertEquals("Nessun prodotto per questa ricerca.", mse.getMessage());
     }
 
     @Test
     public void tuttoOk() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
-        request.getSession().setAttribute("utente", ut);
-        gpc.prodottoAggiungiForm(request,response,gps);
+        String p = "Piatto";
+        String app = p + "*";
+        request.setParameter("p", p);
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        prodotti.add(prodotto);
+        Mockito.when(gps.getProdottiByNome(app)).thenReturn(prodotti);
+        gpc.ricercaAjax(request,response,gps);
     }
 }

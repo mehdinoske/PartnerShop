@@ -1,4 +1,4 @@
-package gestioneProdotto.logic;
+package UnitTesting.GestioneProdotto;
 
 import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.gestioneProdotto.controller.GestioneProdottoController;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-public class RicercaAjaxTest {
+public class VisualizzaCategoriaTest {
     MockHttpServletRequest request;
     MockHttpServletResponse response;
     MockHttpSession session;
@@ -46,23 +46,29 @@ public class RicercaAjaxTest {
     }
 
     @Test
-    public void nessunRisultatoPerLaRicerca() {
-        String p = "Piatto";
-        String app = p + "*";
-        request.setParameter("p", p);
-        Mockito.when(gps.getProdottiByNome(app)).thenReturn(null);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.ricercaAjax(request,response,gps));
-        assertEquals("Nessun prodotto per questa ricerca.", mse.getMessage());
+    public void categoriaProdottoNonRispettaFormato() {
+        String categoria = "g";
+        request.setParameter("categoria", categoria);
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.visualizzaCategoria(request,response,gps));
+        assertEquals("Categoria prodotto errata.", mse.getMessage());
+    }
+
+    @Test
+    public void nesssunProdottoPerQuellaCategoria() {
+        String categoria = "Utensili";
+        request.setParameter("categoria", categoria);
+        Mockito.when(gps.getProdottiByCategoria(categoria)).thenReturn(null);
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.visualizzaCategoria(request,response,gps));
+        assertEquals("Nessun prodotto per questa categoria.", mse.getMessage());
     }
 
     @Test
     public void tuttoOk() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
-        String p = "Piatto";
-        String app = p + "*";
-        request.setParameter("p", p);
+        String categoria = "Utensili";
+        request.setParameter("categoria", categoria);
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         prodotti.add(prodotto);
-        Mockito.when(gps.getProdottiByNome(app)).thenReturn(prodotti);
-        gpc.ricercaAjax(request,response,gps);
+        Mockito.when(gps.getProdottiByCategoria(categoria)).thenReturn(prodotti);
+        gpc.visualizzaCategoria(request,response,gps);
     }
 }
