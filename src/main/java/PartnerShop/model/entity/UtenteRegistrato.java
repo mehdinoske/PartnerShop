@@ -28,9 +28,6 @@ public class UtenteRegistrato {
         this.id_Carrello = id_Carrello;
     }
 
-
-
-
     public UtenteRegistrato(String nome, String cognome, String ddn, String username, String password, String email, String indirizzo,String cellulare,int tipo) {
         this.nome = nome;
         this.cognome = cognome;
@@ -46,6 +43,11 @@ public class UtenteRegistrato {
     public UtenteRegistrato(){
 
     }
+
+    public UtenteRegistrato(String password){
+        this.password = password;
+    }
+
     public String getNome() {
         return nome;
     }

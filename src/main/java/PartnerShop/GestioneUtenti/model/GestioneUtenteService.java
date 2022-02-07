@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface GestioneUtenteService {
 
-    void ModificaDati(UtenteRegistrato ut);
+    boolean ModificaDati(UtenteRegistrato ut);
     void CancellaUtente(String email);
     ArrayList<UtenteRegistrato> VisualizzaUtenti();
 }

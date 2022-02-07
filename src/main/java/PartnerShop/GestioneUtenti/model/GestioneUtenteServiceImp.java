@@ -10,13 +10,26 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
     private String nomeMod="^[A-zÀ-ù ‘-]{2,30}$";
     private String cognomeMod="^[A-zÀ-ù ‘-]{2,30}$";
     private String cellMod = "^[0-9]\\d{9}$";
-    private String indirizzoMod = "^[A-zÀ-ù ‘-]{4,100}$";
-    private String passReg = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_.,\\-+*!#@?])([a-zA-Z0-9_.,\\-+*!#@?]{6,25})$";
+    private String passMod = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_.,\\-+*!#@?])([a-zA-Z0-9_.,\\-+*!#@?]{6,25})$";
 
     @Override
-    public void ModificaDati(UtenteRegistrato ut) {
-        UtenteRegistratoDAO utenteDAO = new UtenteRegistratoDAO();
-        utenteDAO.doUpdate(ut);
+    public boolean ModificaDati(UtenteRegistrato ut) {
+        System.out.println(ut.getPassword());
+        boolean mod = false;
+        try{
+            if(ut.getNome().matches(nomeMod) && ut.getCognome().matches(cognomeMod)
+                    && ut.getCellulare().matches(cellMod) && (ut.getIndirizzo().length())>5
+                    && ut.getPassword().matches(passMod)){
+                UtenteRegistratoDAO utenteDAO = new UtenteRegistratoDAO();
+                utenteDAO.doUpdate(ut);
+                mod = true;
+            }else{
+                throw new IllegalArgumentException();
+            }
+        }catch(IllegalArgumentException e){
+            e.printStackTrace();
+        }
+        return mod;
     }
 
     @Override

@@ -51,19 +51,22 @@ public class GestioneUtenteController extends HttpServlet {
                 String indirizzo = request.getParameter("indirizzo");
                 String cellulare = request.getParameter("cellulare");
                 int tipo = parseInt(request.getParameter("tipo"));
-                UtenteRegistrato ut = new UtenteRegistrato();
+
+                UtenteRegistrato ut = new UtenteRegistrato(password);
+
                 ut.setNome(nome);
                 ut.setCognome(cognome);
                 ut.setDdn(ddn);
                 ut.setUsername(username);
                 ut.setIndirizzo(indirizzo);
                 ut.setEmail(email);
-                ut.setPassword(password);
                 ut.setCellulare(cellulare);
                 ut.setTipo(tipo);
 
-                gestioneUtenteService.ModificaDati(ut);
-                request.getSession().setAttribute("utente", ut);
+                boolean mod = gestioneUtenteService.ModificaDati(ut);
+                if(mod) {
+                    request.getSession().setAttribute("utente", ut);
+                }
                 dispatcher = request.getRequestDispatcher("WEB-INF/jsp/visualizzaDatiUtente.jsp");
                 break;
             }
