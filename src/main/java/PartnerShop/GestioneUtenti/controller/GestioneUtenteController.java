@@ -13,13 +13,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static java.lang.Integer.parseInt;
 
-@WebServlet(urlPatterns = {"/VisualizzaDatiUtente", "/VisualizzaModifica", "/ModificaForm","/CancellaDatiUtenti"})
+@WebServlet(urlPatterns = {"/VisualizzaDatiUtente", "/VisualizzaModifica", "/ModificaForm","/CancellaDatiUtenti", "/VisualizzaUtenti"})
 public class GestioneUtenteController extends HttpServlet {
 
     private final GestioneUtenteService gestioneUtenteService = new GestioneUtenteServiceImp();
+    private ArrayList<UtenteRegistrato> listUtenti;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,16 +31,14 @@ public class GestioneUtenteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        RequestDispatcher dispatcher;
+        RequestDispatcher dispatcher = null;
         String s = request.getServletPath();
         switch (s) {
             case "/VisualizzaDatiUtente":
                 dispatcher = request.getRequestDispatcher("WEB-INF/jsp/visualizzaDatiUtente.jsp");
-                dispatcher.forward(request, response);
                 break;
             case "/VisualizzaModifica":
                 dispatcher = request.getRequestDispatcher("WEB-INF/jsp/modificaDatiUtente.jsp");
-                dispatcher.forward(request, response);
                 break;
             case "/ModificaForm": {
 
@@ -65,7 +65,6 @@ public class GestioneUtenteController extends HttpServlet {
                 gestioneUtenteService.ModificaDati(ut);
                 request.getSession().setAttribute("utente", ut);
                 dispatcher = request.getRequestDispatcher("WEB-INF/jsp/visualizzaDatiUtente.jsp");
-                dispatcher.forward(request, response);
                 break;
             }
             case "/CancellaDatiUtenti": {
@@ -73,9 +72,15 @@ public class GestioneUtenteController extends HttpServlet {
                 gestioneUtenteService.CancellaUtente(email);
                 request.getSession().removeAttribute("utente");
                 dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/index.jsp"));
-                dispatcher.forward(request, response);
+                break;
+            }
+            case "/VisualizzaUtenti":{
+                listUtenti = gestioneUtenteService.VisualizzaUtenti();
+                request.getSession().setAttribute("utenti", listUtenti);
+                dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/visualizzaUtentiRegistrati.jsp"));
                 break;
             }
         }
+        dispatcher.forward(request, response);
     }
 }
