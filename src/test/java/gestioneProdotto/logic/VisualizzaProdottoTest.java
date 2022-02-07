@@ -1,4 +1,4 @@
-package logic.gestioneProdotto;
+package gestioneProdotto.logic;
 
 import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.gestioneProdotto.controller.GestioneProdottoController;
@@ -6,12 +6,12 @@ import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
 import PartnerShop.model.entity.Prodotto;
 import PartnerShop.model.entity.UtenteRegistrato;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.mock.web.MockServletContext;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-public class GestioneProdottoTest {
+public class VisualizzaProdottoTest {
     MockHttpServletRequest request;
     MockHttpServletResponse response;
     MockHttpSession session;
@@ -32,7 +32,7 @@ public class GestioneProdottoTest {
     UtenteRegistrato utente;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         session = new MockHttpSession();
@@ -46,33 +46,27 @@ public class GestioneProdottoTest {
     }
 
     @Test
-    public void idProdottoNonAssociatoNessunProdottoTest() throws SQLException, NoSuchAlgorithmException, ServletException, IOException {
+    public void idProdottoErrato() {
+        double id = 45.5;
+        request.setParameter("id", String.valueOf(id));
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoVisualizza(request,response,gps));
+        assertEquals("Id prodotto non corretto.", mse.getMessage());
+    }
+
+    @Test
+    public void idProdottoNonPresente() {
         int id = 1;
-        String nome = "Cane";
-        String descrizione = "Ciao";
-        String categoria = "Poroco";
-        int prezzo_Cent = 11;
-        int disponibilita = 22;
-
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        request.getSession().setAttribute("utente", ut);
-        request.getSession().setAttribute("prodotti", prodotti);
-
-        setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
+        request.setParameter("id", String.valueOf(id));
         Mockito.when(gps.getProdottoById(id)).thenReturn(null);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoVisualizza(request,response,gps));
         assertEquals("Prodotto non trovato.", mse.getMessage());
     }
 
-
-    private void setParametersRequest(int id, String nome, String descrizione, String categoria, int prezzo_Cent, int disponibilita) {
+    @Test
+    public void tuttoOk() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
+        int id = 1;
         request.setParameter("id", String.valueOf(id));
-        request.setParameter("nome", nome);
-        request.setParameter("descrizione", descrizione);
-        request.setParameter("categoria", categoria);
-        request.setParameter("prezzo_Cent", String.valueOf(prezzo_Cent));
-        request.setParameter("disponibilita", String.valueOf(disponibilita));
+        Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
+        gpc.prodottoVisualizza(request,response,gps);
     }
 }
-

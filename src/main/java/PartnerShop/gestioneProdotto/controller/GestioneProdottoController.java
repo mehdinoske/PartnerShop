@@ -27,13 +27,17 @@ import java.util.ArrayList;
 public class GestioneProdottoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private final GestioneProdottoService PrDAO = new GestioneProdottoServiceImp();
+    private final String nomeReg ="^[A-Z][a-zA-Z\\s]{2,49}$";
+    private final String descrizioneReg ="^[A-Z][a-zA-Z\\s.,:]{10,499}$";
+    private final String categoriaReg ="^[A-Z][a-zA-Z\\s]{3,49}$";
+    private final String prezzo_CentReg ="^[1-9][0-9]*$";
+    private final String disponibilitaReg ="^[1-9][0-9]*$";
+    private final GestioneProdottoService gps = new GestioneProdottoServiceImp();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String s = request.getServletPath();
-        GestioneProdottoService gps = new GestioneProdottoServiceImp();
 
         switch (s) {
 
@@ -141,7 +145,7 @@ public class GestioneProdottoController extends HttpServlet {
         } catch (NumberFormatException e) {
             throw new MyServletException("Id prodotto non corretto.");
         }
-        Prodotto prodotto = PrDAO.getProdottoById(id);
+        Prodotto prodotto = gps.getProdottoById(id);
         if(prodotto == null) {
             throw new MyServletException("Prodotto non trovato.");
         } else {
@@ -162,7 +166,7 @@ public class GestioneProdottoController extends HttpServlet {
             } catch (NumberFormatException e) {
                 throw new MyServletException("Id prodotto non corretto.");
             }
-            Prodotto prodotto = PrDAO.getProdottoById(id);
+            Prodotto prodotto = gps.getProdottoById(id);
             if(prodotto == null) {
                 throw new MyServletException("Prodotto non trovato.");
             } else {
@@ -180,15 +184,31 @@ public class GestioneProdottoController extends HttpServlet {
         long prezzo_Cent;
         ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
         if(ut != null && ut.getTipo() == 1) {
-            try {
+            if(request.getParameter("nome").matches(nomeReg))
                 nome = request.getParameter("nome");
+            else
+                throw new MyServletException("Nome prodotto errato.");
+
+            if(request.getParameter("descrizione").matches(descrizioneReg))
                 descrizione = request.getParameter("descrizione");
+            else
+                throw new MyServletException("Descrizione prodotto errata.");
+
+            if(request.getParameter("categoria").matches(categoriaReg))
                 categoria = request.getParameter("categoria");
+            else
+                throw new MyServletException("Categoria prodotto errata.");
+
+            if(request.getParameter("prezzo_Cent").matches(prezzo_CentReg))
                 prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
+            else
+                throw new MyServletException("Prezzo prodotto errato.");
+
+            if(request.getParameter("disponibilita").matches(disponibilitaReg))
                 disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
-            }   catch (Exception e) {
-                throw new MyServletException("Dati non corretti.");
-            }
+            else
+                throw new MyServletException("Disponibilita prodotto errata.");
+
             Prodotto prodotto = new Prodotto();
             prodotto.setNome(nome);
             prodotto.setEmail_Venditore(ut.getEmail());
@@ -196,14 +216,18 @@ public class GestioneProdottoController extends HttpServlet {
             prodotto.setCategoria(categoria);
             prodotto.setDescrizione(descrizione);
             prodotto.setPrezzo_Cent(prezzo_Cent);
-            PrDAO.doSaveProdotto(prodotto);
+            gps.doSaveProdotto(prodotto);
             prodotti.add(prodotto);
-            getServletContext().setAttribute("prodotti",prodotti);
+            request.getSession().setAttribute("prodotti",prodotti);
             prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
             Part filePart = (Part) request.getSession().getAttribute("img");
-            Prodotto p = prodotti.get(prodotti.size() - 1);
-            int i = p.getId();
-            filePart.write("C:\\img\\" + i +".jpg");
+            if(filePart == null) {
+
+            } else {
+                Prodotto p = prodotti.get(prodotti.size() - 1);
+                int i = p.getId();
+                filePart.write("C:\\img\\" + i +".jpg");
+            }
             request.setAttribute("messaggio", "Prodotto aggiunto con successo.");
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
             requestDispatcher.forward(request, response);
@@ -223,13 +247,13 @@ public class GestioneProdottoController extends HttpServlet {
             } catch (NumberFormatException e) {
                 throw new MyServletException("Id prodotto non corretto.");
             }
-            try {
-                Prodotto p2 = PrDAO.getProdottoById(id);
-                PrDAO.deleteProdottoById(id);
+            Prodotto p2 = gps.getProdottoById(id);
+            if(p2 == null)
+                throw new MyServletException("Prodotto non trovato.");
+            else {
+                gps.deleteProdottoById(id);
                 prodotti.remove(p2);
                 request.getSession().setAttribute("prodotti",prodotti);
-            } catch(Exception e) {
-                throw new MyServletException("Prodotto non trovato.");
             }
         } else {
             throw new MyServletException("Non hai i permessi necessari.");
@@ -251,22 +275,34 @@ public class GestioneProdottoController extends HttpServlet {
 
     public void visualizzaProdotti(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
-        request.getSession().setAttribute("listProdotti", prodotti);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
-        requestDispatcher.forward(request, response);
+        if(prodotti == null)
+            throw new MyServletException("Nessun prodotto disponibile.");
+        else {
+            request.getSession().setAttribute("listProdotti", prodotti);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 
     public void visualizzaCategoria(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
-        String cat =  request.getParameter("categoria");
-        ArrayList listaProd = PrDAO.getProdottiByCategoria(cat);
-        request.getSession().setAttribute("listProdotti",listaProd);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
-        requestDispatcher.forward(request, response);
+        String categoria;
+        if(request.getParameter("categoria").matches(categoriaReg))
+            categoria = request.getParameter("categoria");
+        else
+            throw new MyServletException("Categoria prodotto errata.");
+        ArrayList<Prodotto> listaProd = gps.getProdottiByCategoria(categoria);
+        if(listaProd == null)
+            throw new MyServletException("Nessun prodotto per questa categoria.");
+        else {
+            request.getSession().setAttribute("listProdotti",listaProd);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 
     public void ricercaAjax(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         String app = (request.getParameter("p") +"*");
-        ArrayList<Prodotto> listProd = PrDAO.getProdottiByNome(app);
+        ArrayList<Prodotto> listProd = gps.getProdottiByNome(app);
         JSONArray listaJson = new JSONArray();
         for(Prodotto p : listProd){
             listaJson.put(p.getNome());
@@ -288,14 +324,35 @@ public class GestioneProdottoController extends HttpServlet {
         }   else {
             try {
                 id = Integer.parseInt(request.getParameter("id"));
-                nome = request.getParameter("nome");
-                descrizione = request.getParameter("descrizione");
-                categoria = request.getParameter("categoria");
-                prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
-                disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
             } catch (Exception e) {
-                throw new MyServletException("Dati errati.");
+                throw new MyServletException("Id prodotto errato.");
             }
+
+            if(request.getParameter("nome").matches(nomeReg))
+                nome = request.getParameter("nome");
+            else
+                throw new MyServletException("Nome prodotto errato.");
+
+            if(request.getParameter("descrizione").matches(descrizioneReg))
+                descrizione = request.getParameter("descrizione");
+            else
+                throw new MyServletException("Descrizione prodotto errata.");
+
+            if(request.getParameter("categoria").matches(categoriaReg))
+                categoria = request.getParameter("categoria");
+           else
+                throw new MyServletException("Categoria prodotto errata.");
+
+            if(request.getParameter("prezzo_Cent").matches(prezzo_CentReg))
+                prezzo_Cent = Long.parseLong(request.getParameter("prezzo_Cent"));
+            else
+                throw new MyServletException("Prezzo prodotto errato.");
+
+            if(request.getParameter("disponibilita").matches(disponibilitaReg))
+                disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
+            else
+                throw new MyServletException("Disponibilita prodotto errata.");
+
             prodotto = new Prodotto();
             prodotto.setId(id);
             prodotto.setNome(nome);
@@ -303,14 +360,14 @@ public class GestioneProdottoController extends HttpServlet {
             prodotto.setCategoria(categoria);
             prodotto.setDescrizione(descrizione);
             prodotto.setPrezzo_Cent(prezzo_Cent);
-            try {
-                Prodotto p = gps.getProdottoById(id);
+            Prodotto p = gps.getProdottoById(id);
+            if(p == null) {
+                throw new MyServletException("Prodotto non trovato.");
+            } else {
                 gps.doUpdateProdotto(prodotto);
                 prodotti.remove(p);
                 prodotti.add(prodotto);
-                getServletContext().setAttribute("prodotti",prodotti);
-            } catch(Exception e) {
-                throw new MyServletException("Prodotto non trovato.");
+                request.getSession().setAttribute("prodotti",prodotti);
             }
             request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
             request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp").forward(request, response);

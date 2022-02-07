@@ -12,10 +12,25 @@ import java.util.Iterator;
 import java.util.logging.Logger;
 
 public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
+    private String nomeReg = "^[A-zÀ-ù ‘-]{2,30}$";
+    private String cognomeReg = "^[A-zÀ-ù ‘-]{2,30}$";
+    private String cardcReg = "^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$";
+    private CarrelloDAO carDB = new CarrelloDAO();
+    private GestioneAcquistiDAO gesDB;
+    private GestioneProdottoDAO prodDAO = new GestioneProdottoDAO();
+    private Ordine ord = null;
+    private ClienteDAO clDB;
 
-    CarrelloDAO carDB = new CarrelloDAO();
-    GestioneAcquistiDAO gesDB = new GestioneAcquistiDAO();
-    GestioneProdottoDAO prodDAO = new GestioneProdottoDAO();
+    public GestioneAcquistiServiceImp(){
+        gesDB = new GestioneAcquistiDAO();
+        clDB = new ClienteDAO();
+    }
+
+    public GestioneAcquistiServiceImp(GestioneAcquistiDAO gesDB,ClienteDAO clDB){
+        this.gesDB = gesDB;
+        this.clDB = clDB;
+    }
+
    public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr){
        CarrelloDAO carDB = new CarrelloDAO();
        if (ut != null) {
@@ -60,18 +75,20 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
         }
     }
 
-   public void acquistaProdotto(UtenteRegistrato ut,Carrello car,String indirizzo,String cardc){
+   public Ordine acquistaProdotto(UtenteRegistrato ut,Carrello car,String nome,String cognome,String indirizzo,String cardc){
 
-       Ordine ord = new Ordine();
-       if (car != null) {
-           ord.setEmailCliente(ut.getEmail());
-           ord.setData();
-           ord.setIndirizzo(indirizzo);
-           Cliente cl = new Cliente();
-           cl.setEmail(ut.getEmail());
-           cl.setCartaDiCredito(cardc);
-           ClienteDAO clDB = new ClienteDAO();
-           clDB.doSave(cl);
+       if (car != null && nome.matches(nomeReg) && cognome.matches(cognomeReg) && indirizzo.length()>=7 && cardc.matches(cardcReg)){
+               ord = new Ordine();
+               ord.setNome(nome);
+               ord.setCognome(cognome);
+               ord.setEmailCliente(ut.getEmail());
+               ord.setData();
+               ord.setIndirizzo(indirizzo);
+               Cliente cl = new Cliente();
+               cl.setEmail(ut.getEmail());
+               cl.setCartaDiCredito(cardc);
+               clDB.doSave(cl);
+
            Iterator var8 = car.getProdottoHash().keySet().iterator();
 
            Integer key;
@@ -102,9 +119,8 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
                key = (Integer)var8.next();
                carDB.doDelete(ut.getId_Carrello(), key);
            }
-
-
        }
+       return ord;
    }
 
    public ArrayList<Ordine> visualizzaOrdine(UtenteRegistrato ut){
