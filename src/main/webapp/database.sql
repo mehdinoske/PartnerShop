@@ -47,6 +47,8 @@ create table prodotto(
 
 create table ordine(
                        id integer not null auto_increment primary key,
+                       nome varchar(50) not null,
+                       cognome varchar(50) not null,
                        email_cliente varchar(50) not null,
                        data_ordine date not null,
                        indirizzo varchar(500) not null,

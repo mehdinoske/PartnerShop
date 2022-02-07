@@ -7,6 +7,25 @@ import java.util.LinkedHashMap;
 
 public class Ordine {
     private int id;
+    private String nome;
+    private String cognome;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
     private LinkedHashMap<Integer, Prodotto> prodottoHash = new LinkedHashMap();
     private LinkedHashMap<Integer, Integer> quantHash = new LinkedHashMap();
     private String email_cliente;
