@@ -21,8 +21,8 @@ public class UploadImageAjax extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         /* Receive file uploaded to the Servlet from the HTML5 form */
-        //Part filePart = request.getPart("file");
-     //   request.getSession().setAttribute("img", filePart);
+        Part filePart = request.getPart("file");
+        request.getSession().setAttribute("img", filePart);
 
 
         //String fileName = filePart.getSubmittedFileName();

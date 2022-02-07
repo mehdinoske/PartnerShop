@@ -1,5 +1,6 @@
 package IntegrationTesting.ControllerEscluso.Registrazione;
 
+import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.registrazione.service.RegistrazioneService;
@@ -7,11 +8,9 @@ import PartnerShop.registrazione.service.RegistrazioneServiceImp;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
 
-public class RegistrazioneClienteTest {
+public class RegistrazioneClienteEsclusoTest {
 
     RegistrazioneService regService;
     UtenteRegistratoDAO utDB;
@@ -24,7 +23,7 @@ public class RegistrazioneClienteTest {
     }
 
     @Test
-    public void registraEmailNonRispettaIlFormatoTest(){
+    public void registraEmailNonRispettaIlFormatoTest() throws MyServletException {
         String email = "@hotmail.it"; //Formato Errato
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -35,19 +34,20 @@ public class RegistrazioneClienteTest {
         String indirizzo = "viaaa"; //Corretto
         ut.setEmail(email);
         ut.setUsername(username);
+        ut.setPassword(password);
         ut.setPasswordHash(password);
         ut.setNome(nome);
         ut.setCognome(cognome);
         ut.setCellulare(cellulare);
         ut.setDdn(DataDiNascita);
         ut.setIndirizzo(indirizzo);
-        assertNull(regService.RegistrazioneCliente(ut));
+        assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(ut));
     }
 
     @Test
-    public void registraUsernameClienteErrato(){
+    public void registraUsernameClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretto
-        String username = "depalma1"; //Errato
+        String username = "depalma1."; //Errato
         String password = "Giuseppe99.";        //Corretta;
         String nome = "peppe";   //Corretto
         String cognome="abbatiello";    //Corretto
@@ -57,16 +57,17 @@ public class RegistrazioneClienteTest {
         ut.setEmail(email);
         ut.setUsername(username);
         ut.setPassword(password);
+        ut.setPasswordHash(password);
         ut.setNome(nome);
         ut.setCognome(cognome);
         ut.setCellulare(cellulare);
         ut.setDdn(DataDiNascita);
         ut.setIndirizzo(indirizzo);
-        assertNull(regService.RegistrazioneCliente(ut));
+        assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(ut));
     }
 
     @Test
-    public void registraPasswordClienteErrato(){
+    public void registraPasswordClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma"; // Corretto
         String password = "asd";        //Formato errato;
@@ -83,11 +84,11 @@ public class RegistrazioneClienteTest {
         ut.setCellulare(cellulare);
         ut.setDdn(DataDiNascita);
         ut.setIndirizzo(indirizzo);
-        assertNull(regService.RegistrazioneCliente(ut));
+        assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(ut));
     }
 
     @Test
-    public void registraNomeClienteErrato(){
+    public void registraNomeClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -104,10 +105,10 @@ public class RegistrazioneClienteTest {
         ut.setCellulare(cellulare);
         ut.setDdn(DataDiNascita);
         ut.setIndirizzo(indirizzo);
-        assertNull(regService.RegistrazioneCliente(ut));
+        assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(ut));
     }
     @Test
-    public void registraCognomeClienteErrato(){
+    public void registraCognomeClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -124,11 +125,11 @@ public class RegistrazioneClienteTest {
         ut.setCellulare(cellulare);
         ut.setDdn(DataDiNascita);
         ut.setIndirizzo(indirizzo);
-        assertNull(regService.RegistrazioneCliente(ut));
+        assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(ut));
     }
 
     @Test
-    public void registraCellulareClienteErrato(){
+    public void registraCellulareClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -145,11 +146,11 @@ public class RegistrazioneClienteTest {
         ut.setCellulare(cellulare);
         ut.setDdn(DataDiNascita);
         ut.setIndirizzo(indirizzo);
-        assertNull(regService.RegistrazioneCliente(ut));
+        assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(ut));
     }
 
     @Test
-    public void registraDataDiNascitaClienteErrato(){
+    public void registraDataDiNascitaClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretto
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -166,11 +167,11 @@ public class RegistrazioneClienteTest {
         ut.setCellulare(cellulare);
         ut.setDdn(DataDiNascita);
         ut.setIndirizzo(indirizzo);
-        assertNull(regService.RegistrazioneCliente(ut));
+        assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(ut));
     }
 
     @Test
-    public void registraIndirizzoClienteErrato(){
+    public void registraIndirizzoClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretto
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -187,11 +188,11 @@ public class RegistrazioneClienteTest {
         ut.setCellulare(cellulare);
         ut.setDdn(DataDiNascita);
         ut.setIndirizzo(indirizzo);
-        assertNull(regService.RegistrazioneCliente(ut));
+        assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(ut));
     }
 
     @Test
-    public void registrazioneOkTest(){
+    public void registrazioneOkTest() throws MyServletException{
         String email = "peppeee@hotmail.it"; //Corretta
         String username = "peppe123"; // Corretto
         String password = "Peppe2699.";        //Corretto;

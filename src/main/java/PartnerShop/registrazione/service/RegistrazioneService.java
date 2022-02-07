@@ -1,5 +1,6 @@
 package PartnerShop.registrazione.service;
 
+import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
 import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
@@ -16,7 +17,7 @@ public interface RegistrazioneService {
      * @param ut - utente inviato da RegistrazioneController
      * @return cliente da loggato
      */
-    public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut);
+    public UtenteRegistrato RegistrazioneCliente(UtenteRegistrato ut) throws MyServletException;
 
     /**
      * firma del metodo che implementa la funzione di registrazione venditore
