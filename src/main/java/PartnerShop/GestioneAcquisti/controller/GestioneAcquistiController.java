@@ -69,10 +69,12 @@ public class GestioneAcquistiController extends HttpServlet {
             case "/CompletaAcquisto":
                 ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
                 if (ut != null) {
+                    String nome = request.getParameter("nome");
+                    String cognome = request.getParameter("cognome");
                     car = (Carrello)request.getSession().getAttribute("Carrello");
                     String indirizzo = request.getParameter("indirizzo");
                     String cardc = request.getParameter("cartadc");
-                    imp.acquistaProdotto(ut,car,indirizzo,cardc);
+                    imp.acquistaProdotto(ut,car,nome,cognome,indirizzo,cardc);
                     request.getSession().removeAttribute("Carrello");
                     request.getRequestDispatcher("/WEB-INF/jsp/ordineEffettuato.jsp").forward(request, response);
                 }
