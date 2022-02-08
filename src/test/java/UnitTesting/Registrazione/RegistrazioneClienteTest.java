@@ -153,7 +153,7 @@ public class RegistrazioneClienteTest  {
         assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
     }
 
-    @Test
+    @Test@Ignore
     public void registrazioneOkTest() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma1"; // Corretto
