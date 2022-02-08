@@ -26,14 +26,20 @@ public class UtenteRegistratoDAO {
         public ArrayList<UtenteRegistrato> doRetrieveAll() {
             ArrayList<UtenteRegistrato> list = new ArrayList<>();
             try  {
-                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, email, username  FROM utente_registrato");
+                PreparedStatement ps = con.prepareStatement("SELECT nome, cognome, ddn,email,indirizzo,username,passwordhash,cellulare,tipo  FROM utente_registrato");
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     UtenteRegistrato ut = new UtenteRegistrato();
                     ut.setNome(rs.getString(1));
                     ut.setCognome(rs.getString(2));
-                    ut.setEmail(rs.getString(3));
-                    ut.setUsername(rs.getString(4));
+                    ut.setDdn(rs.getString(3));
+                    ut.setEmail(rs.getString(4));
+                    ut.setIndirizzo(rs.getString(5));
+                    ut.setUsername(rs.getString(6));
+                    ut.setPasswordHash(rs.getString(7));
+                    ut.setCellulare(rs.getString(8));
+                    ut.setTipo(rs.getInt(9));
+
                     list.add(ut);
                 }
             } catch (SQLException e) {

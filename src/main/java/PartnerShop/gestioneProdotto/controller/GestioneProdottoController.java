@@ -341,15 +341,18 @@ public class GestioneProdottoController extends HttpServlet {
         long prezzo_Cent;
         int disponibilita, id;
         ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
+        try {
+            id = Integer.parseInt(request.getParameter("id"));
+        } catch (Exception e) {
+            throw new MyServletException("Id prodotto errato.");
+        }
+        Prodotto p1 = gps.getProdottoById(id);
+        if(p1 == null)
+            throw new MyServletException("Prodotto non trovato.");
 
-        if(ut == null || ut.getTipo() == 0) {
+        if(ut == null || ut.getTipo() == 0 || !gps.getProdottoById(id).getEmail_Venditore().equals(ut.getEmail())) {
             throw new MyServletException("Non hai i permessi necessari.");
         }   else {
-            try {
-                id = Integer.parseInt(request.getParameter("id"));
-            } catch (Exception e) {
-                throw new MyServletException("Id prodotto errato.");
-            }
 
             if(request.getParameter("nome").matches(nomeReg))
                 nome = request.getParameter("nome");
@@ -383,15 +386,12 @@ public class GestioneProdottoController extends HttpServlet {
             prodotto.setCategoria(categoria);
             prodotto.setDescrizione(descrizione);
             prodotto.setPrezzo_Cent(prezzo_Cent);
-            Prodotto p = gps.getProdottoById(id);
-            if(p == null) {
-                throw new MyServletException("Prodotto non trovato.");
-            } else {
-                gps.doUpdateProdotto(prodotto);
-                prodotti.remove(p);
-                prodotti.add(prodotto);
-                request.getSession().setAttribute("prodotti",prodotti);
-            }
+
+            gps.doUpdateProdotto(prodotto);
+            prodotti.remove(p1);
+            prodotti.add(prodotto);
+            request.getSession().setAttribute("prodotti",prodotti);
+
             request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
             request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp").forward(request, response);
         }
