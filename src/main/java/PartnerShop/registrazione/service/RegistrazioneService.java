@@ -26,7 +26,7 @@ public interface RegistrazioneService {
      * @param Piva - partita iva del negozio inserita dal venditore
      * @return venditore da loggato
      */
-    public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut, String nomeNegozio,String Piva);
+    public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut, String nomeNegozio,String Piva) throws MyServletException;
 
     public UtenteRegistrato verificaUsernameEmail(String str,int tipo);
 }

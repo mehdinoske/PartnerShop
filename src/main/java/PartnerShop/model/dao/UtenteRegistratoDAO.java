@@ -160,12 +160,12 @@ public class UtenteRegistratoDAO {
     public void doUpdate(UtenteRegistrato ut) {
         try  {
             PreparedStatement ps = con.prepareStatement(
-                    "UPDATE utente_registrato SET nome = ?, cognome = ?,  indirizzo=?, cellulare=?, passwordhash=? WHERE email=?");
+                    "UPDATE utente_registrato SET nome = ?, cognome = ?,  indirizzo=?, cellulare=?, passwordhash=SHA1(?) WHERE email=?");
             ps.setString(1, ut.getNome());
             ps.setString(2, ut.getCognome());
             ps.setString(3, ut.getIndirizzo());
             ps.setString(4, ut.getCellulare());
-            ps.setString(5, ut.getPasswordHash());
+            ps.setString(5, ut.getPassword());
             ps.setString(6,ut.getEmail());
 
             if (ps.executeUpdate() != 1) {
