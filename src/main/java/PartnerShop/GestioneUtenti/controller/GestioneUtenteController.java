@@ -1,7 +1,7 @@
 package PartnerShop.GestioneUtenti.controller;
 
-import PartnerShop.GestioneUtenti.model.GestioneUtenteService;
-import PartnerShop.GestioneUtenti.model.GestioneUtenteServiceImp;
+import PartnerShop.GestioneUtenti.service.GestioneUtenteService;
+import PartnerShop.GestioneUtenti.service.GestioneUtenteServiceImp;
 
 import PartnerShop.model.entity.UtenteRegistrato;
 
@@ -21,7 +21,6 @@ import static java.lang.Integer.parseInt;
 public class GestioneUtenteController extends HttpServlet {
 
     private final GestioneUtenteService gestioneUtenteService = new GestioneUtenteServiceImp();
-    private ArrayList<UtenteRegistrato> listUtenti;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -78,12 +77,13 @@ public class GestioneUtenteController extends HttpServlet {
                 break;
             }
             case "/VisualizzaUtenti":{
-                listUtenti = gestioneUtenteService.VisualizzaUtenti();
+                ArrayList<UtenteRegistrato> listUtenti = gestioneUtenteService.VisualizzaUtenti();
                 request.getSession().setAttribute("utenti", listUtenti);
                 dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/visualizzaUtentiRegistrati.jsp"));
                 break;
             }
         }
-        dispatcher.forward(request, response);
+        if(dispatcher!=null)
+            dispatcher.forward(request, response);
     }
 }

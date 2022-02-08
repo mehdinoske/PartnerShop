@@ -210,7 +210,7 @@ public class RegistrazionClienteInclusoTest {
         assertThrows(MyServletException.class,()-> regContr.doPost(request,response));
     }
 
-    @Test
+    @Test @Ignore
     public void registrazioneOkTest() throws ServletException, IOException {
         String email = "marcooo@hotmail.it"; //Corretta
         String username = "Marco123"; // Corretto
