@@ -6,7 +6,7 @@ PartnerShop.GestioneAcquisti.service
 PartnerShop.gestioneProdotto.controller
 PartnerShop.gestioneProdotto.service
 PartnerShop.GestioneUtenti.controller
-PartnerShop.GestioneUtenti.model
+PartnerShop.GestioneUtenti.service
 PartnerShop.model.dao
 PartnerShop.model.entity
 PartnerShop.registrazione.controller

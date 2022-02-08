@@ -37,7 +37,7 @@ public class RegistrazioneClienteTest  {
         String username = "depalma1"; //Corretta
         String password = "asd";        //Corretta;
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
 
@@ -49,7 +49,7 @@ public class RegistrazioneClienteTest  {
          String username = "depalma1."; //Non Corretto
          String password = "asd";        //Corretta;
          when(utenteMock.getEmail()).thenReturn(email);
-         when(utenteMock.getPassword()).thenReturn(password);
+         when(utenteMock.getPasswordHash()).thenReturn(password);
          when(utenteMock.getUsername()).thenReturn(username);
 
          assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
@@ -61,7 +61,7 @@ public class RegistrazioneClienteTest  {
         String username = "depalma1"; // Corretto
         String password = "asd";        //Formato errato;
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
 
         assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
@@ -75,7 +75,7 @@ public class RegistrazioneClienteTest  {
         String nome = "peppe1";   //Errato
         String cognome="abbatiello";    //Corretto
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -89,7 +89,7 @@ public class RegistrazioneClienteTest  {
         String nome = "peppe";   //Corretto
         String cognome="abbatiello1";    //Errato
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -105,7 +105,7 @@ public class RegistrazioneClienteTest  {
         String cognome="abbatiello";    //Corretto
         String cellulare = "3219913211a"; //Errato
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -123,7 +123,7 @@ public class RegistrazioneClienteTest  {
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "20200-01-01"; //Errato
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -143,7 +143,7 @@ public class RegistrazioneClienteTest  {
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "via"; //Errato
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
@@ -164,7 +164,7 @@ public class RegistrazioneClienteTest  {
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPassword()).thenReturn(password);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
