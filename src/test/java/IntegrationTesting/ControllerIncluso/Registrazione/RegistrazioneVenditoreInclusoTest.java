@@ -4,7 +4,6 @@ import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.registrazione.controller.RegistrazioneController;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -13,10 +12,10 @@ import org.springframework.mock.web.MockHttpSession;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 
-public class RegistrazionClienteInclusoTest {
+public class RegistrazioneVenditoreInclusoTest {
 
     MockHttpServletRequest request;
     MockHttpServletResponse response;
@@ -45,8 +44,11 @@ public class RegistrazionClienteInclusoTest {
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
-
-        request.setParameter("id","cliente");
+        String nomeNegozio = "negozioo";//Corretto
+        String pIva = "AA123132889";  //Corretto
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
         request.setParameter("nome",nome);
         request.setParameter("cognome",cognome);
         request.setParameter("email",email);
@@ -59,7 +61,7 @@ public class RegistrazionClienteInclusoTest {
     }
 
     @Test
-    public void registraUsernameClienteErrato() throws ServletException, IOException {
+    public void registraUsernameVenditoreErrato() throws ServletException, IOException {
         String email = "peppe@hotmail.it"; //Corretto
         String username = "depalma."; //Errato
         String password = "Giuseppe99.";        //Corretta;
@@ -68,7 +70,11 @@ public class RegistrazionClienteInclusoTest {
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
-        request.setParameter("id","cliente");
+        String nomeNegozio = "negozioo";//Corretto
+        String pIva = "AA123132889";  //Corretto
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
         request.setParameter("nome",nome);
         request.setParameter("cognome",cognome);
         request.setParameter("email",email);
@@ -81,7 +87,7 @@ public class RegistrazionClienteInclusoTest {
     }
 
     @Test
-    public void registraPasswordClienteErrato() throws ServletException, IOException {
+    public void registraPasswordVenditoreErrato() throws ServletException, IOException {
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma123"; // Corretto
         String password = "asd";        //Formato errato;
@@ -90,7 +96,11 @@ public class RegistrazionClienteInclusoTest {
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
-        request.setParameter("id","cliente");
+        String nomeNegozio = "negozioo";//Corretto
+        String pIva = "AA123132889";  //Corretto
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
         request.setParameter("nome",nome);
         request.setParameter("cognome",cognome);
         request.setParameter("email",email);
@@ -103,7 +113,7 @@ public class RegistrazionClienteInclusoTest {
     }
 
     @Test
-    public void registraNomeClienteErrato() throws ServletException, IOException {
+    public void registraNomeVenditoreErrato() throws ServletException, IOException {
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -112,7 +122,11 @@ public class RegistrazionClienteInclusoTest {
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
-        request.setParameter("id","cliente");
+        String nomeNegozio = "negozioo";//Corretto
+        String pIva = "AA123132889";  //Corretto
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
         request.setParameter("nome",nome);
         request.setParameter("cognome",cognome);
         request.setParameter("email",email);
@@ -124,7 +138,7 @@ public class RegistrazionClienteInclusoTest {
         assertThrows(MyServletException.class,()-> regContr.doPost(request,response));
     }
     @Test
-    public void registraCognomeClienteErrato() throws ServletException, IOException {
+    public void registraCognomeVenditoreErrato() throws ServletException, IOException {
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -133,7 +147,11 @@ public class RegistrazionClienteInclusoTest {
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
-        request.setParameter("id","cliente");
+        String nomeNegozio = "negozioo";//Corretto
+        String pIva = "AA123132889";  //Corretto
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
         request.setParameter("nome",nome);
         request.setParameter("cognome",cognome);
         request.setParameter("email",email);
@@ -146,7 +164,7 @@ public class RegistrazionClienteInclusoTest {
     }
 
     @Test
-    public void registraCellulareClienteErrato() throws ServletException, IOException {
+    public void registraCellulareVenditoreErrato() throws ServletException, IOException {
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -155,7 +173,11 @@ public class RegistrazionClienteInclusoTest {
         String cellulare = "3219913211q"; //Errato
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
-        request.setParameter("id","cliente");
+        String nomeNegozio = "negozioo";//Corretto
+        String pIva = "AA123132889";  //Corretto
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
         request.setParameter("nome",nome);
         request.setParameter("cognome",cognome);
         request.setParameter("email",email);
@@ -168,7 +190,7 @@ public class RegistrazionClienteInclusoTest {
     }
 
     @Test
-    public void registraDataDiNascitaClienteErrato() throws ServletException, IOException {
+    public void registraDataDiNascitaVenditoreErrato() throws ServletException, IOException {
         String email = "peppe@hotmail.it"; //Corretto
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -177,7 +199,11 @@ public class RegistrazionClienteInclusoTest {
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "20200-01-01"; //Errato
         String indirizzo = "viaaa"; //Corretto
-        request.setParameter("id","cliente");
+        String nomeNegozio = "negozioo";//Corretto
+        String pIva = "AA123132889";  //Corretto
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
         request.setParameter("nome",nome);
         request.setParameter("cognome",cognome);
         request.setParameter("email",email);
@@ -190,7 +216,7 @@ public class RegistrazionClienteInclusoTest {
     }
 
     @Test
-    public void registraIndirizzoClienteErrato() throws ServletException, IOException {
+    public void registraIndirizzoVenditoreErrato() throws ServletException, IOException {
         String email = "peppe@hotmail.it"; //Corretto
         String username = "depalma1"; //Corretta
         String password = "Giuseppe99.";        //Corretta;
@@ -199,7 +225,11 @@ public class RegistrazionClienteInclusoTest {
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaa"; //errato
-        request.setParameter("id","cliente");
+        String nomeNegozio = "negozioo";//Corretto
+        String pIva = "AA123132889";  //Corretto
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
         request.setParameter("nome",nome);
         request.setParameter("cognome",cognome);
         request.setParameter("email",email);
@@ -211,17 +241,73 @@ public class RegistrazionClienteInclusoTest {
         assertThrows(MyServletException.class,()-> regContr.doPost(request,response));
     }
 
-    @Test @Ignore
+    @Test
+    public void registraNegozioVenditoreErrato() throws ServletException, IOException {
+        String email = "peppe@hotmail.it"; //Corretto
+        String username = "depalma1"; //Corretta
+        String password = "Giuseppe99.";        //Corretta;
+        String nome = "peppe";   //Corretto
+        String cognome="abbatiello";    //Corretto
+        String cellulare = "3219913211"; //Corretto
+        String DataDiNascita = "2020-01-01"; //Corretto
+        String indirizzo = "viaaa"; //Corretto
+        String nomeNegozio = "negozioo1";//Errato
+        String pIva = "AA123132889";  //Corretto
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
+        request.setParameter("nome",nome);
+        request.setParameter("cognome",cognome);
+        request.setParameter("email",email);
+        request.setParameter("username",username);
+        request.setParameter("indirizzo",indirizzo);
+        request.setParameter("password",password);
+        request.setParameter("ddn",DataDiNascita);
+        request.setParameter("cellulare",cellulare);
+        assertThrows(MyServletException.class,()-> regContr.doPost(request,response));
+    }
+
+    @Test
+    public void registraPIVAClienteErrato() throws ServletException, IOException {
+        String email = "peppe@hotmail.it"; //Corretto
+        String username = "depalma1"; //Corretta
+        String password = "Giuseppe99.";        //Corretta;
+        String nome = "peppe";   //Corretto
+        String cognome="abbatiello";    //Corretto
+        String cellulare = "3219913211"; //Corretto
+        String DataDiNascita = "2020-01-01"; //Corretto
+        String indirizzo = "viaaa"; //Corretto
+        String nomeNegozio = "negozioo";//Corretto
+        String pIva = "AA1231328";  //Errato
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
+        request.setParameter("nome",nome);
+        request.setParameter("cognome",cognome);
+        request.setParameter("email",email);
+        request.setParameter("username",username);
+        request.setParameter("indirizzo",indirizzo);
+        request.setParameter("password",password);
+        request.setParameter("ddn",DataDiNascita);
+        request.setParameter("cellulare",cellulare);
+        assertThrows(MyServletException.class,()-> regContr.doPost(request,response));
+    }
+
+    @Test
     public void registrazioneOkTest() throws ServletException, IOException {
-        String email = "marcooo@hotmail.it"; //Corretta
-        String username = "Marco123"; // Corretto
+        String email = "marcasdo@hotmail.it"; //Corretta
+        String username = "Marco12345"; // Corretto
         String password = "Peppe2699.";        //Corretto;
         String nome = "peppe";   //Corretto
         String cognome="abbatiello";    //Corretto
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
-        request.setParameter("id","cliente");
+        String nomeNegozio = "negozioo";//Corretto
+        String pIva = "AA123132889";  //Errato
+        request.setParameter("nomedelnegozio",nomeNegozio);
+        request.setParameter("p.iva",pIva);
+        request.setParameter("id","venditore");
         request.setParameter("nome",nome);
         request.setParameter("cognome",cognome);
         request.setParameter("email",email);
