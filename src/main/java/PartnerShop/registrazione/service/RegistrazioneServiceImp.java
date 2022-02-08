@@ -73,10 +73,9 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
      * @return venditore per essere loggato
      */
     @Override
-    public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut,String nomeNegozio,String Piva) {
+    public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut,String nomeNegozio,String Piva) throws MyServletException{
         VenditoreDAO vtDAO = new VenditoreDAO();
-        try{
-        if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPasswordHash().matches(passReg)
+        if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPassword().matches(passReg)
                 && ut.getNome().matches(nomeReg)&& ut.getCognome().matches(nomeReg)&& ut.getCellulare().matches(cellReg)
                 && ut.getDdn().matches(dataReg) && (ut.getIndirizzo().length())>=5
                 && nomeNegozio.matches(nomeReg) && Piva.matches(pIvaReg)) {
@@ -84,10 +83,7 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
             vtDAO.doSave(ut.getEmail(), nomeNegozio, Piva);
         }else{
             ut=null;
-          //  throw new IllegalArgumentException();
-        }}
-        catch (IllegalArgumentException e){
-            e.printStackTrace();
+            throw new MyServletException();
         }
         return ut;
     }
