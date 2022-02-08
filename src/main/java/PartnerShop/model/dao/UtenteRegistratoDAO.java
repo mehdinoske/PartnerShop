@@ -159,7 +159,7 @@ public class UtenteRegistratoDAO {
             ps.setString(2, ut.getCognome());
             ps.setString(3, ut.getIndirizzo());
             ps.setString(4, ut.getCellulare());
-            ps.setString(5, ut.getPasswordHash());
+            ps.setString(5, ut.getPassword());
             ps.setString(6,ut.getEmail());
 
             if (ps.executeUpdate() != 1) {
