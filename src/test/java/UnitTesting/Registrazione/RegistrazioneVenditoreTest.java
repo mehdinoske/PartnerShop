@@ -1,5 +1,6 @@
 package UnitTesting.Registrazione;
 
+import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.model.dao.CarrelloDAO;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
 import PartnerShop.model.dao.VenditoreDAO;
@@ -35,7 +36,7 @@ public class RegistrazioneVenditoreTest {
     }
 
     @Test
-    public void registraEmailVenditoreErrato(){
+    public void registraEmailVenditoreErrato() throws MyServletException {
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
@@ -58,7 +59,7 @@ public class RegistrazioneVenditoreTest {
     }
 
     @Test
-    public void registraUsernameClienteErrato(){
+    public void registraUsernameClienteErrato() throws MyServletException{
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
@@ -80,7 +81,7 @@ public class RegistrazioneVenditoreTest {
         assertEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
 
     @Test
-    public void registraPasswordClienteErrato(){
+    public void registraPasswordClienteErrato() throws MyServletException{
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
@@ -102,7 +103,7 @@ public class RegistrazioneVenditoreTest {
         assertEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
 
     @Test
-    public void registraNomeClienteErrato(){
+    public void registraNomeClienteErrato() throws MyServletException{
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
@@ -123,29 +124,7 @@ public class RegistrazioneVenditoreTest {
         when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
         assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
     @Test
-    public void registraCognomeClienteErrato(){
-        String email = "@gmail.com"; //Errata
-        String username = "depalma1"; // Corretto
-        String password = "Giuseppe99."; //Corretto;
-        String nome = "Marco";   //Corretto
-        String cognome="De Palma";    //Corretto
-        String cellulare = "3331122333"; //Corretto
-        String DataDiNascita = "2000-01-01"; //Corretto
-        String indirizzo = "via Napoli"; //Corretto
-        String PIva = "AA1231328";
-        String nomeNegozio="negozio";
-        when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPasswordHash()).thenReturn(password);
-        when(utenteMock.getUsername()).thenReturn(username);
-        when(utenteMock.getNome()).thenReturn(nome);
-        when(utenteMock.getCognome()).thenReturn(cognome);
-        when(utenteMock.getCellulare()).thenReturn(cellulare);
-        when(utenteMock.getDdn()).thenReturn(DataDiNascita);
-        when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
-        assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
-
-    @Test
-    public void registraCellulareClienteErrato(){
+    public void registraCognomeClienteErrato() throws MyServletException{
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
@@ -167,7 +146,7 @@ public class RegistrazioneVenditoreTest {
         assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
 
     @Test
-    public void registraDataDiNascitaClienteErrato(){
+    public void registraCellulareClienteErrato() throws MyServletException {
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
@@ -189,7 +168,7 @@ public class RegistrazioneVenditoreTest {
         assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
 
     @Test
-    public void registraIndirizzoClienteErrato(){
+    public void registraDataDiNascitaClienteErrato() throws MyServletException{
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
@@ -211,7 +190,29 @@ public class RegistrazioneVenditoreTest {
         assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
 
     @Test
-    public void registrazioneVenditoreOkTest(){
+    public void registraIndirizzoClienteErrato()throws MyServletException{
+        String email = "@gmail.com"; //Errata
+        String username = "depalma1"; // Corretto
+        String password = "Giuseppe99."; //Corretto;
+        String nome = "Marco";   //Corretto
+        String cognome="De Palma";    //Corretto
+        String cellulare = "3331122333"; //Corretto
+        String DataDiNascita = "2000-01-01"; //Corretto
+        String indirizzo = "via Napoli"; //Corretto
+        String PIva = "AA1231328";
+        String nomeNegozio="negozio";
+        when(utenteMock.getEmail()).thenReturn(email);
+        when(utenteMock.getPasswordHash()).thenReturn(password);
+        when(utenteMock.getUsername()).thenReturn(username);
+        when(utenteMock.getNome()).thenReturn(nome);
+        when(utenteMock.getCognome()).thenReturn(cognome);
+        when(utenteMock.getCellulare()).thenReturn(cellulare);
+        when(utenteMock.getDdn()).thenReturn(DataDiNascita);
+        when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
+        assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
+
+    @Test
+    public void registrazioneVenditoreOkTest() throws MyServletException {
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma1"; // Corretto
         String password = "Peppe2699.";        //Corretto;
