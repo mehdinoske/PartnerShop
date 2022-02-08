@@ -113,10 +113,10 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
                car.remove(i);
            }
            ord.setPrezzo_tot(car.sommaTot());
-           if(ord.getProdottoHash().size()!=0)
+           if(ord.getProdottoHash().size()==0){
+               return ord;
+           }
            gesDB.doSaveOrdine(ord);
-           else{
-               return ord;}
            var8 = car.getProdottoHash().keySet().iterator();
 
            while(var8.hasNext()) {

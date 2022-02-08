@@ -84,10 +84,10 @@ public class GestioneAcquistiController extends HttpServlet {
                     String indirizzo = request.getParameter("indirizzo");
                     String cardc = request.getParameter("cartadc");
                     Ordine ord = imp.acquistaProdotto(ut, car, nome, cognome, indirizzo, cardc);
-                    if (ord == null) {
-                        throw new MyServletException("Errore Acquisto Prodotto - formato non corretto");
-                    }else if(ord.getProdottoHash().size()==0)
+                    if (ord!=null && ord.getProdottoHash().size()==0) {
                         throw new MyServletException("Errore Acquisto Prodotto - Disponibilità prodotti assente");
+                    }else if(ord == null)
+                        throw new MyServletException("Errore Acquisto Prodotto - formato non corretto");
                     request.getSession().removeAttribute("Carrello");
                     request.getRequestDispatcher("/WEB-INF/jsp/ordineEffettuato.jsp").forward(request, response);
                 }
