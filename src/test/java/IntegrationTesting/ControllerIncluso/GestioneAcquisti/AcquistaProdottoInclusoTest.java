@@ -131,7 +131,7 @@ public class AcquistaProdottoInclusoTest {
         assertThrows(MyServletException.class,()-> gesCon.execute(request,response));
     }
 
-    @Test@Ignore
+    @Test
     public void acquistaProdottoOkTest() throws ServletException, IOException{
         String nome = "Bianca";//corretta
         String cognome = "Verdi";//corretta
