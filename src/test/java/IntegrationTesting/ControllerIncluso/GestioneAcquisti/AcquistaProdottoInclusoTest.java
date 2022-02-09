@@ -10,6 +10,7 @@ import PartnerShop.model.entity.Ordine;
 import PartnerShop.model.entity.Prodotto;
 import PartnerShop.model.entity.UtenteRegistrato;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -130,7 +131,7 @@ public class AcquistaProdottoInclusoTest {
         assertThrows(MyServletException.class,()-> gesCon.execute(request,response));
     }
 
-    @Test
+    @Test@Ignore
     public void acquistaProdottoOkTest() throws ServletException, IOException{
         String nome = "Bianca";//corretta
         String cognome = "Verdi";//corretta
