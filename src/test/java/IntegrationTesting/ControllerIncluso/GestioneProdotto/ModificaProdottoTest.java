@@ -1,4 +1,4 @@
-package IntegrationTesting.ControllerEscluso.GestioneProdotto;
+package IntegrationTesting.ControllerIncluso.GestioneProdotto;
 
 import PartnerShop.Exceptions.MyServletException;
 
@@ -39,7 +39,7 @@ public class ModificaProdottoTest {
     Prodotto prodotto;
 
     @Before
-    public void setUp(){
+    public void setUp() throws MyServletException {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         session = new MockHttpSession();
@@ -64,13 +64,48 @@ public class ModificaProdottoTest {
 
         request.getSession().setAttribute("utente", utente);
         request.getSession().setAttribute("prodotti", pr);
-
+        int id = prodotti.get(0).getId();
+        request.setParameter("id", String.valueOf(id));
         MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
         assertEquals("Non hai i permessi necessari.", mse.getMessage());
     }
 
     @Test
-    public void idProdottoNonPresenteTest() {
+    public void idProdottoNonPresente() {
+        for(int i = 0; i < utenti.size(); i++) {
+            utente = utenti.get(i);
+            if(utente.getTipo() == 1)
+                break;
+        }
+
+        int id = 10000;
+        request.setParameter("id", String.valueOf(id));
+        ArrayList<Prodotto> pr = new ArrayList<>();
+        request.getSession().setAttribute("utente", utente);
+        request.getSession().setAttribute("prodotti", pr);
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        assertEquals("Prodotto non trovato.", mse.getMessage());
+    }
+
+    @Test
+    public void idProdottoNonIntero() {
+        for(int i = 0; i < utenti.size(); i++) {
+            utente = utenti.get(i);
+            if(utente.getTipo() == 1)
+                break;
+        }
+
+        double id = 100.56;
+        request.setParameter("id", String.valueOf(id));
+        ArrayList<Prodotto> pr = new ArrayList<>();
+        request.getSession().setAttribute("utente", utente);
+        request.getSession().setAttribute("prodotti", pr);
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        assertEquals("Id prodotto errato.", mse.getMessage());
+    }
+
+    @Test
+    public void nomeProdottoNonRispettaFormato() {
         for(int i = 0; i < utenti.size(); i++) {
             utente = utenti.get(i);
             if(utente.getTipo() == 1)
@@ -83,37 +118,16 @@ public class ModificaProdottoTest {
                 break;
         }
 
-        System.out.println(utente.getEmail());
-        System.out.println(prodotto.getEmail_Venditore());
-        int id = 100;
-        String nome = prodotto.getNome();
-        String descrizione = prodotto.getDescrizione();
-        String categoria = prodotto.getCategoria();
-        long prezzo_Cent = prodotto.getPrezzo_Cent();
-        int disponibilita = prodotto.getDisponibilita();
-
-        ArrayList<Prodotto> pr = new ArrayList<>();
-        request.getSession().setAttribute("utente", utente);
-        request.getSession().setAttribute("prodotti", pr);
-
-        setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
-        assertEquals("Prodotto non trovato.", mse.getMessage());
-    }
-
-    @Test
-    public void nomeProdottoNonRispettaFormato() {
-        int id = 1;
+        int id = prodotto.getId();
         String nome = "g";
         String descrizione = "Cgjjjjjjjao";
         String categoria = "Poroco";
         int prezzo_Cent = 11;
         int disponibilita = 22;
 
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        request.getSession().setAttribute("utente", ut);
-        request.getSession().setAttribute("prodotti", prodotti);
+        ArrayList<Prodotto> pr = new ArrayList<>();
+        request.getSession().setAttribute("utente", utente);
+        request.getSession().setAttribute("prodotti", pr);
 
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
@@ -122,17 +136,28 @@ public class ModificaProdottoTest {
 
     @Test
     public void descrizioneProdottoNonRispettaFormato() {
-        int id = 1;
+        for(int i = 0; i < utenti.size(); i++) {
+            utente = utenti.get(i);
+            if(utente.getTipo() == 1)
+                break;
+        }
+
+        for(int i = 0; i < prodotti.size(); i++) {
+            prodotto = prodotti.get(i);
+            if(prodotti.get(i).getEmail_Venditore().equals(utente.getEmail()))
+                break;
+        }
+
+        int id = prodotto.getId();
         String nome = "Forbice";
         String descrizione = "j";
         String categoria = "Poroco";
         int prezzo_Cent = 11;
         int disponibilita = 22;
 
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        request.getSession().setAttribute("utente", ut);
-        request.getSession().setAttribute("prodotti", prodotti);
+        ArrayList<Prodotto> pr = new ArrayList<>();
+        request.getSession().setAttribute("utente", utente);
+        request.getSession().setAttribute("prodotti", pr);
 
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
@@ -141,17 +166,28 @@ public class ModificaProdottoTest {
 
     @Test
     public void categoriaProdottoNonRispettaFormato() {
-        int id = 1;
+        for(int i = 0; i < utenti.size(); i++) {
+            utente = utenti.get(i);
+            if(utente.getTipo() == 1)
+                break;
+        }
+
+        for(int i = 0; i < prodotti.size(); i++) {
+            prodotto = prodotti.get(i);
+            if(prodotti.get(i).getEmail_Venditore().equals(utente.getEmail()))
+                break;
+        }
+
+        int id = prodotto.getId();
         String nome = "Forbice";
         String descrizione = "Fooo oooooo";
         String categoria = "g";
         int prezzo_Cent = 11;
         int disponibilita = 22;
 
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        request.getSession().setAttribute("utente", ut);
-        request.getSession().setAttribute("prodotti", prodotti);
+        ArrayList<Prodotto> pr = new ArrayList<>();
+        request.getSession().setAttribute("utente", utente);
+        request.getSession().setAttribute("prodotti", pr);
 
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
@@ -160,17 +196,28 @@ public class ModificaProdottoTest {
 
     @Test
     public void prezzoProdottoNonRispettaFormato() {
-        int id = 1;
+        for(int i = 0; i < utenti.size(); i++) {
+            utente = utenti.get(i);
+            if(utente.getTipo() == 1)
+                break;
+        }
+
+        for(int i = 0; i < prodotti.size(); i++) {
+            prodotto = prodotti.get(i);
+            if(prodotti.get(i).getEmail_Venditore().equals(utente.getEmail()))
+                break;
+        }
+
+        int id = prodotto.getId();
         String nome = "Forbice";
         String descrizione = "Fooo oooooo";
         String categoria = "Utensili";
         int prezzo_Cent = 11;
         int disponibilita = 22;
 
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        request.getSession().setAttribute("utente", ut);
-        request.getSession().setAttribute("prodotti", prodotti);
+        ArrayList<Prodotto> pr = new ArrayList<>();
+        request.getSession().setAttribute("utente", utente);
+        request.getSession().setAttribute("prodotti", pr);
 
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         double prezzoErrato = 11.7;
@@ -180,64 +227,64 @@ public class ModificaProdottoTest {
     }
 
     @Test
-    public void disponibilitaProdottoNonRispettaFormato() {
-        int id = 1;
+    public void tuttoOk() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
+        for(int i = 0; i < utenti.size(); i++) {
+            utente = utenti.get(i);
+            if(utente.getTipo() == 1)
+                break;
+        }
+
+        for(int i = 0; i < prodotti.size(); i++) {
+            prodotto = prodotti.get(i);
+            if(prodotti.get(i).getEmail_Venditore().equals(utente.getEmail()))
+                break;
+        }
+
+        int id = prodotto.getId();
         String nome = "Forbice";
         String descrizione = "Fooo oooooo";
         String categoria = "Utensili";
         int prezzo_Cent = 11;
         int disponibilita = 22;
 
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        request.getSession().setAttribute("utente", ut);
-        request.getSession().setAttribute("prodotti", prodotti);
+        ArrayList<Prodotto> pr = new ArrayList<>();
+        request.getSession().setAttribute("utente", utente);
+        request.getSession().setAttribute("prodotti", pr);
+
+        setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
+        assertEquals(true, gpc.prodottoModifica(request,response,gps));
+    }
+
+    @Test
+    public void disponibilitaProdottoNonRispettaFormato() {
+        for(int i = 0; i < utenti.size(); i++) {
+            utente = utenti.get(i);
+            if(utente.getTipo() == 1)
+                break;
+        }
+
+        for(int i = 0; i < prodotti.size(); i++) {
+            prodotto = prodotti.get(i);
+            if(prodotti.get(i).getEmail_Venditore().equals(utente.getEmail()))
+                break;
+        }
+
+        int id = prodotto.getId();
+        String nome = "Forbice";
+        String descrizione = "Fooo oooooo";
+        String categoria = "Utensili";
+        int prezzo_Cent = 11;
+        int disponibilita = 22;
+
+        ArrayList<Prodotto> pr = new ArrayList<>();
+        request.getSession().setAttribute("utente", utente);
+        request.getSession().setAttribute("prodotti", pr);
 
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         double dispErrata = 11.7;
         request.setParameter("disponibilita", String.valueOf(dispErrata));
         MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
         assertEquals("Disponibilita prodotto errata.", mse.getMessage());
-    }
-
-    @Test
-    public void idProdottoNonIntero() {
-        int id = 1;
-        String nome = "Forbice";
-        String descrizione = "Fooo oooooo";
-        String categoria = "Utensili";
-        int prezzo_Cent = 11;
-        int disponibilita = 22;
-
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        request.getSession().setAttribute("utente", ut);
-        request.getSession().setAttribute("prodotti", prodotti);
-
-        setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
-        double idErrato = 11.7;
-        request.setParameter("id", String.valueOf(idErrato));
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
-        assertEquals("Id prodotto errato.", mse.getMessage());
-    }
-
-    @Test@Ignore
-    public void tuttoOk() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
-        int id = 1;
-        String nome = "Forbice";
-        String descrizione = "Fooo oooooo";
-        String categoria = "Utensili";
-        int prezzo_Cent = 11;
-        int disponibilita = 22;
-
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        request.getSession().setAttribute("utente", ut);
-        request.getSession().setAttribute("prodotti", prodotti);
-
-        setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
-        Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        assertEquals(true, gpc.prodottoModifica(request,response,gps));
     }
 
     private void setParametersRequest(int id, String nome, String descrizione, String categoria, long prezzo_Cent, int disponibilita) {

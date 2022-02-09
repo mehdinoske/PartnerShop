@@ -8,11 +8,11 @@ public interface GestioneProdottoService {
 
     public Prodotto getProdottoById(int id);
 
-    public void deleteProdottoById(int id);
+    public boolean deleteProdottoById(int id);
 
-    public void doSaveProdotto(Prodotto p);
+    public boolean doSaveProdotto(Prodotto p);
 
-    public void doUpdateProdotto(Prodotto p);
+    public boolean doUpdateProdotto(Prodotto p);
 
     public ArrayList<Prodotto> getAllProdotti();
 

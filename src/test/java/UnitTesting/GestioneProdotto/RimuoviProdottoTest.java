@@ -65,7 +65,7 @@ public class RimuoviProdottoTest {
     }
 
     @Test
-    public void idProdottoNonPresente() {
+    public void idProdottoNonPresente() throws MyServletException {
         UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
         request.getSession().setAttribute("utente", ut);
         int id = 1;
