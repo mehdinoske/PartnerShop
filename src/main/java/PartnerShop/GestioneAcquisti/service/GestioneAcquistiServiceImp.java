@@ -14,8 +14,8 @@ import java.util.Iterator;
 import java.util.logging.Logger;
 
 public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
-    private String nomeReg = "^[A-zÀ-ù ‘-]{2,30}$";
-    private String cognomeReg = "^[A-zÀ-ù ‘-]{2,30}$";
+    private String nomeReg = "^[ a-zA-Z]+$";
+    private String cognomeReg = "^[ a-zA-Z]+$";
     private String cardcReg = "^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$";
     private CarrelloDAO carDB;
     private GestioneAcquistiDAO gesDB;

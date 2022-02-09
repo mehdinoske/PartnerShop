@@ -16,15 +16,15 @@
             <form action="CompletaAcquisto" method="post">
 
                 <label for="nome">Nome (Solo lettere e spazi)</label>
-                <input type="text" name="nome" id="nome" value="${utente.nome}"/>
+                <input type="text" name="nome" id="nome" value="${utente.nome}" oninput="validaNome3()"/>
                 <label for="cognome">Cognome (Solo lettere e spazi)</label>
-                <input type="text" name="cognome" id="cognome" value="${utente.cognome}"/>
+                <input type="text" name="cognome" id="cognome" value="${utente.cognome}" oninput="validaCognome3()"/>
                 <label for="indir">Indirizzo</label>
-                <input type="text" name="indirizzo" id="indir" value=""/>
+                <input type="text" name="indirizzo" id="indir" value="" oninput="validaIndirizzo3()"/>
                 <label for="cartadc">Carta di credito</label>
-                <input type="text" name="cartadc" id="cartadc" value=""/>
+                <input type="text" name="cartadc" id="cartadc" value="" oninput="validaCartaDiCredito()"/>
 
-                <input type="submit" value="Completa Acquisto">
+                <input type="submit" value="Completa Acquisto" id="completaAcquisto"><span id="notificaMes3"></span>
 
             </form>
         </div>

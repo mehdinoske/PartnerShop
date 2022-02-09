@@ -54,7 +54,7 @@ public class RegistrazioneClienteTest  {
 
          assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
     }
-
+    @Ignore
     @Test
     public void registraPasswordClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
@@ -66,7 +66,7 @@ public class RegistrazioneClienteTest  {
 
         assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
     }
-
+    @Ignore
     @Test
     public void registraNomeClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
@@ -81,6 +81,7 @@ public class RegistrazioneClienteTest  {
         when(utenteMock.getCognome()).thenReturn(cognome);
         assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
     }
+    @Ignore
     @Test
     public void registraCognomeClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
@@ -95,7 +96,7 @@ public class RegistrazioneClienteTest  {
         when(utenteMock.getCognome()).thenReturn(cognome);
         assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
     }
-
+    @Ignore
     @Test
     public void registraCellulareClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
@@ -112,7 +113,7 @@ public class RegistrazioneClienteTest  {
         when(utenteMock.getCellulare()).thenReturn(cellulare);
         assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
     }
-
+    @Ignore
     @Test
     public void registraDataDiNascitaClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
@@ -131,7 +132,7 @@ public class RegistrazioneClienteTest  {
         when(utenteMock.getDdn()).thenReturn(DataDiNascita);
         assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
     }
-
+    @Ignore
     @Test
     public void registraIndirizzoClienteErrato() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
@@ -153,7 +154,8 @@ public class RegistrazioneClienteTest  {
         assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(utenteMock));
     }
 
-    @Test@Ignore
+    @Ignore
+    @Test
     public void registrazioneOkTest() throws MyServletException{
         String email = "peppe@hotmail.it"; //Corretta
         String username = "depalma1"; // Corretto
