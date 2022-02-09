@@ -85,7 +85,7 @@ public class GestioneAcquistiController extends HttpServlet {
                     String cardc = request.getParameter("cartadc");
                     Ordine ord = imp.acquistaProdotto(ut, car, nome, cognome, indirizzo, cardc);
                     if (ord!=null && ord.getProdottoHash().size()==0) {
-                        throw new MyServletException("Errore Acquisto Prodotto - Disponibilità prodotti assente");
+                        throw new MyServletException("Acquisto non effettuato - Disponibilità prodotti assente");
                     }else if(ord == null)
                         throw new MyServletException("Errore Acquisto Prodotto - formato non corretto");
                     request.getSession().removeAttribute("Carrello");
