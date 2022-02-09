@@ -83,45 +83,6 @@ public class Prodotto {
 					", disponibilità=" + disponibilita +
 					'}';
 		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Prodotto other = (Prodotto) obj;
-			if (categoria == null) {
-				if (other.categoria != null)
-					return false;
-			} else if (!categoria.equals(other.categoria))
-				return false;
-			if (descrizione == null) {
-				if (other.descrizione != null)
-					return false;
-			} else if (!descrizione.equals(other.descrizione))
-				return false;
-			if (id != other.id)
-				return false;
-			if (nome == null) {
-				if (other.nome != null)
-					return false;
-			} else if (!nome.equals(other.nome))
-				return false;
-			if (prezzo_Cent != other.prezzo_Cent)
-				return false;
-			if (email_Venditore == null) {
-				if (other.email_Venditore != null)
-					return false;
-			} else if (!email_Venditore.equals(other.email_Venditore))
-				return false;
-			if (disponibilita != other.disponibilita)
-				return false;
-			return true;
-		}
-
     }
 
 

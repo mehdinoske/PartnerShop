@@ -37,103 +37,7 @@ public class GestioneProdottoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String s = request.getServletPath();
-
-        switch (s) {
-
-            case "/prodotto-visualizza":
-                try {
-                    prodottoVisualizza(request, response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/prodotto-modifica-form":
-                try {
-                    prodottoModificaForm(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/prodotto-modifica":
-                try {
-                    prodottoModifica(request, response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/prodotto-aggiungi":
-                try {
-                    prodottoAggiungi(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/prodotto-aggiungi-form":
-                try {
-                    prodottoAggiungiForm(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/prodotto-rimuovi":
-                try {
-                    prodottoRimuovi(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/visualizza-prodotti":
-                try {
-                    visualizzaProdotti(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/visualizza-categoria":
-                try {
-                    visualizzaCategoria(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/ricercaAjax":
-                try {
-                    ricercaAjax(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "/ricerca":
-                ricerca(request,response,gps);
-                break;
-        }
+        switchPath(request,response, gps);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -329,6 +233,9 @@ public class GestioneProdottoController extends HttpServlet {
         if(!request.getParameter("p").isBlank()){
         String nome = request.getParameter("p")+"*";
         ArrayList<Prodotto> listProd = gps.getProdottiByNome(nome);
+        if(listProd == null) {
+            throw new MyServletException("Nessun prodotto per questa ricerca.");
+        }
         request.setAttribute("prodottiRicerca",listProd);}
         request.getRequestDispatcher("WEB-INF/jsp/risultatoRicerca.jsp").forward(request,response);
         return true;
@@ -396,5 +303,107 @@ public class GestioneProdottoController extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp").forward(request, response);
         }
         return true;
+    }
+
+    public boolean switchPath(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws ServletException, IOException {
+        String s = request.getServletPath();
+
+        switch (s) {
+
+            case "/prodotto-visualizza":
+                try {
+                    prodottoVisualizza(request, response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/prodotto-modifica-form":
+                try {
+                    prodottoModificaForm(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/prodotto-modifica":
+                try {
+                    prodottoModifica(request, response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/prodotto-aggiungi":
+                try {
+                    prodottoAggiungi(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/prodotto-aggiungi-form":
+                try {
+                    prodottoAggiungiForm(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/prodotto-rimuovi":
+                try {
+                    prodottoRimuovi(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/visualizza-prodotti":
+                try {
+                    visualizzaProdotti(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/visualizza-categoria":
+                try {
+                    visualizzaCategoria(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/ricercaAjax":
+                try {
+                    ricercaAjax(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/ricerca":
+                ricerca(request,response,gps);
+                return true;
+        }
+        return false;
     }
 }
