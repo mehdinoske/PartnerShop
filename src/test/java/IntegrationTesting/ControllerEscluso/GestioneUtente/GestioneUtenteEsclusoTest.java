@@ -5,14 +5,12 @@ import PartnerShop.GestioneUtenti.service.GestioneUtenteService;
 import PartnerShop.GestioneUtenti.service.GestioneUtenteServiceImp;
 import PartnerShop.model.entity.UtenteRegistrato;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
 
-public class ModificaDatiEsclusoTest {
+public class GestioneUtenteEsclusoTest {
 
    GestioneUtenteService utService;
    UtenteRegistrato ut;

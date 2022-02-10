@@ -2,9 +2,7 @@ package IntegrationTesting.ControllerIncluso.GestioneUtente;
 
 import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.GestioneUtenti.controller.GestioneUtenteController;
-import PartnerShop.model.entity.UtenteRegistrato;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -15,7 +13,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
-public class ModificaDatiInclusoTest {
+public class GestioneUtenteInclusoTest {
 
     MockHttpServletRequest request;
     MockHttpServletResponse response;
