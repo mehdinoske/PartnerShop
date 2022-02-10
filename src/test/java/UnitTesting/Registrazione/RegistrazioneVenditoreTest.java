@@ -2,6 +2,7 @@ package UnitTesting.Registrazione;
 
 import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.model.dao.CarrelloDAO;
+import PartnerShop.model.dao.ClienteDAO;
 import PartnerShop.model.dao.UtenteRegistratoDAO;
 import PartnerShop.model.dao.VenditoreDAO;
 import PartnerShop.model.entity.UtenteRegistrato;
@@ -16,7 +17,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@Ignore
+
 public class RegistrazioneVenditoreTest {
 
     RegistrazioneServiceImp regService;
@@ -25,6 +26,7 @@ public class RegistrazioneVenditoreTest {
     UtenteRegistratoDAO utDBMock;
     VenditoreDAO venditoreDAOMock;
     CarrelloDAO carrelloDAOMock;
+    ClienteDAO ctDAOMOCK;
 
     @Before
     public void setUp(){
@@ -32,7 +34,7 @@ public class RegistrazioneVenditoreTest {
         utDBMock= Mockito.mock(UtenteRegistratoDAO.class);
         venditoreDAOMock = Mockito.mock(VenditoreDAO.class);
         carrelloDAOMock = mock(CarrelloDAO.class);
-        this.regService = new RegistrazioneServiceImp(venditoreDAOMock,carrelloDAOMock);
+        this.regService = new RegistrazioneServiceImp(venditoreDAOMock,ctDAOMOCK,carrelloDAOMock);
     }
 
     @Test
@@ -55,11 +57,11 @@ public class RegistrazioneVenditoreTest {
         when(utenteMock.getCellulare()).thenReturn(cellulare);
         when(utenteMock.getDdn()).thenReturn(DataDiNascita);
         when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
-        assertEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));
+        assertThrows(MyServletException.class,()->regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));
     }
 
     @Test
-    public void registraUsernameClienteErrato() throws MyServletException{
+    public void registraUsernameVenditoreErrato() throws MyServletException{
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
@@ -78,10 +80,11 @@ public class RegistrazioneVenditoreTest {
         when(utenteMock.getCellulare()).thenReturn(cellulare);
         when(utenteMock.getDdn()).thenReturn(DataDiNascita);
         when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
-        assertEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
+        assertThrows(MyServletException.class,()->regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));
+    }
 
     @Test
-    public void registraPasswordClienteErrato() throws MyServletException{
+    public void registraPasswordVenditoreErrato() throws MyServletException{
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
@@ -100,20 +103,20 @@ public class RegistrazioneVenditoreTest {
         when(utenteMock.getCellulare()).thenReturn(cellulare);
         when(utenteMock.getDdn()).thenReturn(DataDiNascita);
         when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
-        assertEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
+        assertThrows(MyServletException.class,()->regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
 
     @Test
-    public void registraNomeClienteErrato() throws MyServletException{
+    public void registraNomeVenditoreErrato() throws MyServletException {
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
         String nome = "Marco";   //Corretto
-        String cognome="De Palma";    //Corretto
+        String cognome = "De Palma";    //Corretto
         String cellulare = "3331122333"; //Corretto
         String DataDiNascita = "2000-01-01"; //Corretto
         String indirizzo = "via Napoli"; //Corretto
         String PIva = "AA1231328";
-        String nomeNegozio="negozio";
+        String nomeNegozio = "negozio";
         when(utenteMock.getEmail()).thenReturn(email);
         when(utenteMock.getPasswordHash()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
@@ -122,7 +125,9 @@ public class RegistrazioneVenditoreTest {
         when(utenteMock.getCellulare()).thenReturn(cellulare);
         when(utenteMock.getDdn()).thenReturn(DataDiNascita);
         when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
-        assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
+        assertThrows(MyServletException.class, () -> regService.RegistrazioneVenditore(utenteMock, nomeNegozio, PIva));
+    }
+
     @Test
     public void registraCognomeClienteErrato() throws MyServletException{
         String email = "@gmail.com"; //Errata
@@ -143,7 +148,8 @@ public class RegistrazioneVenditoreTest {
         when(utenteMock.getCellulare()).thenReturn(cellulare);
         when(utenteMock.getDdn()).thenReturn(DataDiNascita);
         when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
-        assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
+        assertThrows(MyServletException.class,()->regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));
+    }
 
     @Test
     public void registraCellulareClienteErrato() throws MyServletException {
@@ -165,7 +171,8 @@ public class RegistrazioneVenditoreTest {
         when(utenteMock.getCellulare()).thenReturn(cellulare);
         when(utenteMock.getDdn()).thenReturn(DataDiNascita);
         when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
-        assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
+        assertThrows(MyServletException.class,()->regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));
+    }
 
     @Test
     public void registraDataDiNascitaClienteErrato() throws MyServletException{
@@ -187,10 +194,11 @@ public class RegistrazioneVenditoreTest {
         when(utenteMock.getCellulare()).thenReturn(cellulare);
         when(utenteMock.getDdn()).thenReturn(DataDiNascita);
         when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
-        assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
+        assertThrows(MyServletException.class,()->regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));
+    }
 
     @Test
-    public void registraIndirizzoClienteErrato()throws MyServletException{
+    public void registraIndirizzoVenditoreErrato()throws MyServletException{
         String email = "@gmail.com"; //Errata
         String username = "depalma1"; // Corretto
         String password = "Giuseppe99."; //Corretto;
@@ -209,27 +217,29 @@ public class RegistrazioneVenditoreTest {
         when(utenteMock.getCellulare()).thenReturn(cellulare);
         when(utenteMock.getDdn()).thenReturn(DataDiNascita);
         when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
-        assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));    }
+        assertThrows(MyServletException.class,()->regService.RegistrazioneVenditore(utenteMock,nomeNegozio, PIva));
+    }
 
     @Test
     public void registrazioneVenditoreOkTest() throws MyServletException {
         String email = "peppe@hotmail.it"; //Corretta
-        String username = "depalma1"; // Corretto
+        String username = "peppe23441"; // Corretto
         String password = "Peppe2699.";        //Corretto;
         String nome = "peppe";   //Corretto
         String cognome="abbatiello";    //Corretto
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
+
         when(utenteMock.getEmail()).thenReturn(email);
-        when(utenteMock.getPasswordHash()).thenReturn(password);
+        when(utenteMock.getPassword()).thenReturn(password);
         when(utenteMock.getUsername()).thenReturn(username);
         when(utenteMock.getNome()).thenReturn(nome);
         when(utenteMock.getCognome()).thenReturn(cognome);
         when(utenteMock.getCellulare()).thenReturn(cellulare);
         when(utenteMock.getDdn()).thenReturn(DataDiNascita);
         when(utenteMock.getIndirizzo()).thenReturn(indirizzo);
-        assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,"negozio1 ","piva1"));
+        assertNotEquals(null,regService.RegistrazioneVenditore(utenteMock,"nomeNegozio","AA123132889"));
     }
 
 }
