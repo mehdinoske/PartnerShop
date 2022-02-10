@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
-@Ignore
 public class UploadImageAjaxTest {
     MockHttpServletRequest request;
     MockHttpServletResponse response;
