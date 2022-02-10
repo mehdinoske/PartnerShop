@@ -14,6 +14,7 @@
     ${param.cssCarrello}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="scripts.js"></script>
+    <script src="scripts2.js"></script>
 </head>
 <body>
 <header>
@@ -21,7 +22,7 @@
     <nav>
         <ul class="ul_nav">
             <li>
-                <form action="ricerca" method="get">
+                <form action="ricerca" autocomplete="off" method="get">
                     <input type="text" id="searchTop" name="p" placeholder="Ricerca..." onkeyup="ricerca(this.value)"
                            value="${param.p}" list="datalist"/>
                     <datalist id="datalist">

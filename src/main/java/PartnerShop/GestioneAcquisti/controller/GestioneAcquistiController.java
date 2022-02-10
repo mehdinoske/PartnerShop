@@ -1,5 +1,6 @@
 package PartnerShop.GestioneAcquisti.controller;
 
+import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.GestioneAcquisti.service.GestioneAcquistiService;
 import PartnerShop.GestioneAcquisti.service.GestioneAcquistiServiceImp;
 import PartnerShop.model.entity.Carrello;
@@ -21,48 +22,56 @@ import java.util.ArrayList;
  */
 @WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "/CompletaAcquisto","/OrdiniVenditore","/OrdiniCliente"})
 public class GestioneAcquistiController extends HttpServlet {
-
+ private  GestioneAcquistiService imp = new GestioneAcquistiServiceImp();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        execute(request,response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+    }
+
+    public boolean execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         String s = request.getServletPath();
         RequestDispatcher dispatcher;
         UtenteRegistrato ut;
         Carrello car;
-        GestioneAcquistiService imp = new GestioneAcquistiServiceImp();
-        switch (s){
+        switch (s) {
             case "/Carrello":
                 HttpSession session = request.getSession();
                 ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
-                car = (Carrello)session.getAttribute("Carrello");
+                car = (Carrello) session.getAttribute("Carrello");
                 if (car == null) {
                     car = new Carrello();
                     session.setAttribute("Carrello", car);
                 }
-                if(ut!=null && ut.getTipo()==1){
+                if (ut != null && ut.getTipo() == 1) {
                     request.getRequestDispatcher("WEB-INF/jsp/registrazioneCliente.jsp").forward(request, response);
                     break;
                 }
                 String prodottoIdStr = request.getParameter("idProdotto");
                 String quantStr = request.getParameter("quant");
                 String setQuantStr = request.getParameter("setQuant");
-                if(quantStr!=null){
-                    if(Integer.parseInt(quantStr)<=0){
-                        request.getRequestDispatcher("/WEB-INF/jsp/carrello.jsp").forward(request,response);
+                if (quantStr != null) {
+                    if (Integer.parseInt(quantStr) <= 0) {
+                        request.getRequestDispatcher("/WEB-INF/jsp/carrello.jsp").forward(request, response);
                         break;
                     }
                 }
-                imp.aggiungiAlCarrello(car,ut,prodottoIdStr,quantStr);
-                if(setQuantStr!= null && Integer.parseInt(setQuantStr)<=0)
-                    imp.rimuovidalcarrello(ut,car,Integer.parseInt(prodottoIdStr),setQuantStr);
+                imp.aggiungiAlCarrello(car, ut, prodottoIdStr, quantStr);
+                if (setQuantStr != null && Integer.parseInt(setQuantStr) <= 0)
+                    imp.rimuovidalcarrello(ut, car, Integer.parseInt(prodottoIdStr), setQuantStr);
                 dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/carrello.jsp");
                 dispatcher.forward(request, response);
                 break;
             case "/Acquista":
-                ut =(UtenteRegistrato) request.getSession().getAttribute("utente");
-                if(ut!=null){
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                if (ut != null) {
                     dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/completaAcquisto.jsp");
                     dispatcher.forward(request, response);
-                }else {
+                } else {
                     request.getRequestDispatcher("/WEB-INF/jsp/registrazioneCliente.jsp").forward(request, response);
                 }
                 break;
@@ -71,31 +80,35 @@ public class GestioneAcquistiController extends HttpServlet {
                 if (ut != null) {
                     String nome = request.getParameter("nome");
                     String cognome = request.getParameter("cognome");
-                    car = (Carrello)request.getSession().getAttribute("Carrello");
+                    car = (Carrello) request.getSession().getAttribute("Carrello");
                     String indirizzo = request.getParameter("indirizzo");
                     String cardc = request.getParameter("cartadc");
-                    imp.acquistaProdotto(ut,car,nome,cognome,indirizzo,cardc);
+                    Ordine ord = imp.acquistaProdotto(ut, car, nome, cognome, indirizzo, cardc);
+                    if (ord!=null && ord.getProdottoHash().size()==0) {
+                        throw new MyServletException("Acquisto non effettuato - Disponibilità prodotti assente");
+                    }else if(ord == null)
+                        throw new MyServletException("Errore Acquisto Prodotto - formato non corretto");
                     request.getSession().removeAttribute("Carrello");
                     request.getRequestDispatcher("/WEB-INF/jsp/ordineEffettuato.jsp").forward(request, response);
                 }
                 break;
             case "/OrdiniCliente":
-                 ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
-                 if(ut != null && request.getParameter("idOrdine")!=null){
-                     int id = Integer.parseInt(request.getParameter("idOrdine"));
-                     Ordine or = new Ordine();
-                     ArrayList<Ordine> ordini =(ArrayList<Ordine>) request.getSession().getAttribute("ordini");
-                     for(int i=0;i<ordini.size();i++){
-                         if(ordini.get(i).getId()==id) {
+                ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+                if (ut != null && request.getParameter("idOrdine") != null) {
+                    int id = Integer.parseInt(request.getParameter("idOrdine"));
+                    Ordine or = new Ordine();
+                    ArrayList<Ordine> ordini = (ArrayList<Ordine>) request.getSession().getAttribute("ordini");
+                    for (int i = 0; i < ordini.size(); i++) {
+                        if (ordini.get(i).getId() == id) {
                             or = ordini.get(i);
                             break;
-                         }
-                     }
+                        }
+                    }
 
-                     request.getSession().setAttribute("ordine",or);
-                     request.getRequestDispatcher("WEB-INF/jsp/dettagliOrdine.jsp").forward(request,response);
-                     break;
-                 }
+                    request.getSession().setAttribute("ordine", or);
+                    request.getRequestDispatcher("WEB-INF/jsp/dettagliOrdine.jsp").forward(request, response);
+                    break;
+                }
                 if (ut != null && ut.getTipo() == 0) {
                     ArrayList<Ordine> ordini = imp.visualizzaOrdine(ut);
                     request.getSession().setAttribute("ordini", ordini);
@@ -106,18 +119,18 @@ public class GestioneAcquistiController extends HttpServlet {
                 break;
             case "/OrdiniVenditore":
                 ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
-                if(ut != null && request.getParameter("idOrdine")!=null){
+                if (ut != null && request.getParameter("idOrdine") != null) {
                     int id = Integer.parseInt(request.getParameter("idOrdine"));
                     Ordine or = new Ordine();
-                    ArrayList<Ordine> ordini =(ArrayList<Ordine>) request.getSession().getAttribute("ordini");
-                    for(int i=0;i<ordini.size();i++){
-                        if(ordini.get(i).getId()==id) {
+                    ArrayList<Ordine> ordini = (ArrayList<Ordine>) request.getSession().getAttribute("ordini");
+                    for (int i = 0; i < ordini.size(); i++) {
+                        if (ordini.get(i).getId() == id) {
                             or = ordini.get(i);
                             break;
                         }
                     }
-                    request.getSession().setAttribute("ordine",or);
-                    request.getRequestDispatcher("WEB-INF/jsp/dettagliOrdine.jsp").forward(request,response);
+                    request.getSession().setAttribute("ordine", or);
+                    request.getRequestDispatcher("WEB-INF/jsp/dettagliOrdine.jsp").forward(request, response);
                     break;
                 }
                 if (ut != null && ut.getTipo() == 1) {
@@ -129,12 +142,6 @@ public class GestioneAcquistiController extends HttpServlet {
                 }
                 break;
         }
-
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        return true;
     }
 }

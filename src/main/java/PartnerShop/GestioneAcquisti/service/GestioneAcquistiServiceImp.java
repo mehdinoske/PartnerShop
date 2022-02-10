@@ -1,5 +1,7 @@
 package PartnerShop.GestioneAcquisti.service;
 
+import PartnerShop.Exceptions.MyServletException;
+import PartnerShop.gestioneProdotto.service.GestioneProdottoServiceImp;
 import PartnerShop.model.dao.CarrelloDAO;
 import PartnerShop.model.dao.ClienteDAO;
 import PartnerShop.model.dao.GestioneAcquistiDAO;
@@ -12,27 +14,34 @@ import java.util.Iterator;
 import java.util.logging.Logger;
 
 public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
-    private String nomeReg = "^[A-zÀ-ù ‘-]{2,30}$";
-    private String cognomeReg = "^[A-zÀ-ù ‘-]{2,30}$";
+    private String nomeReg = "^[ a-zA-Z]+$";
+    private String cognomeReg = "^[ a-zA-Z]+$";
     private String cardcReg = "^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$";
-    private CarrelloDAO carDB = new CarrelloDAO();
+    private CarrelloDAO carDB;
     private GestioneAcquistiDAO gesDB;
     private GestioneProdottoDAO prodDAO = new GestioneProdottoDAO();
-    private Ordine ord = null;
     private ClienteDAO clDB;
 
     public GestioneAcquistiServiceImp(){
         gesDB = new GestioneAcquistiDAO();
+        clDB = new ClienteDAO();
+        carDB = new CarrelloDAO();
+    }
+
+
+    public GestioneAcquistiServiceImp(CarrelloDAO carDB){
+        gesDB = new GestioneAcquistiDAO();
+        this.carDB = carDB;
         clDB = new ClienteDAO();
     }
 
     public GestioneAcquistiServiceImp(GestioneAcquistiDAO gesDB,ClienteDAO clDB){
         this.gesDB = gesDB;
         this.clDB = clDB;
+        carDB = new CarrelloDAO();
     }
 
    public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr){
-       CarrelloDAO carDB = new CarrelloDAO();
        if (ut != null) {
            carDB.UpdateSession(car,ut.getEmail(), ut.getId_Carrello());
            car = carDB.doRetrieveByEmailCliente(ut.getEmail(), car);
@@ -76,7 +85,7 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
     }
 
    public Ordine acquistaProdotto(UtenteRegistrato ut,Carrello car,String nome,String cognome,String indirizzo,String cardc){
-
+        Ordine ord = null;
        if (car != null && nome.matches(nomeReg) && cognome.matches(cognomeReg) && indirizzo.length()>=7 && cardc.matches(cardcReg)){
                ord = new Ordine();
                ord.setNome(nome);
@@ -104,6 +113,9 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
                car.remove(i);
            }
            ord.setPrezzo_tot(car.sommaTot());
+           if(ord.getProdottoHash().size()==0){
+               return ord;
+           }
            gesDB.doSaveOrdine(ord);
            var8 = car.getProdottoHash().keySet().iterator();
 

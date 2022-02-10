@@ -67,6 +67,6 @@ public class VisualizzaProdottoTest {
         int id = 1;
         request.setParameter("id", String.valueOf(id));
         Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        gpc.prodottoVisualizza(request,response,gps);
+        assertEquals(true, gpc.prodottoVisualizza(request,response,gps));
     }
 }

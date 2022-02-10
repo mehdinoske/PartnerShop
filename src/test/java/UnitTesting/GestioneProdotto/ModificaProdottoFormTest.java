@@ -82,6 +82,6 @@ public class ModificaProdottoFormTest {
         int id = 1;
         request.setParameter("id", String.valueOf(id));
         Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        gpc.prodottoModificaForm(request,response,gps);
+        assertEquals(true, gpc.prodottoModificaForm(request,response,gps));
     }
 }

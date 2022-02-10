@@ -1,5 +1,6 @@
 package PartnerShop.GestioneAcquisti.service;
 
+import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.model.entity.Carrello;
 import PartnerShop.model.entity.Ordine;
 import PartnerShop.model.entity.UtenteRegistrato;

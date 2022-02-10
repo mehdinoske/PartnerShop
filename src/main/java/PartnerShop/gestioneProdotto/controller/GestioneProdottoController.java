@@ -37,103 +37,7 @@ public class GestioneProdottoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String s = request.getServletPath();
-
-        switch (s) {
-
-            case "/prodotto-visualizza":
-                try {
-                    prodottoVisualizza(request, response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/prodotto-modifica-form":
-                try {
-                    prodottoModificaForm(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/prodotto-modifica":
-                try {
-                    prodottoModifica(request, response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/prodotto-aggiungi":
-                try {
-                    prodottoAggiungi(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/prodotto-aggiungi-form":
-                try {
-                    prodottoAggiungiForm(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/prodotto-rimuovi":
-                try {
-                    prodottoRimuovi(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/visualizza-prodotti":
-                try {
-                    visualizzaProdotti(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/visualizza-categoria":
-                try {
-                    visualizzaCategoria(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case "/ricercaAjax":
-                try {
-                    ricercaAjax(request,response, gps);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "/ricerca":
-                ricerca(request,response,gps);
-                break;
-        }
+        switchPath(request,response, gps);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -141,7 +45,7 @@ public class GestioneProdottoController extends HttpServlet {
         doGet(request, response);
     }
 
-    public void prodottoVisualizza(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+    public boolean prodottoVisualizza(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         int id;
         try {
             id = Integer.parseInt(request.getParameter("id"));
@@ -156,9 +60,10 @@ public class GestioneProdottoController extends HttpServlet {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/prodotto.jsp");
             requestDispatcher.forward(request, response);
         }
+        return true;
     }
 
-    public void prodottoModificaForm(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+    public boolean prodottoModificaForm(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         int id;
         if(ut == null || ut.getTipo() == 0) {
@@ -178,9 +83,10 @@ public class GestioneProdottoController extends HttpServlet {
                 requestDispatcher.forward(request, response);
             }
         }
+        return true;
     }
 
-    public void prodottoAggiungi(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+    public boolean prodottoAggiungi(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         String nome, descrizione, categoria;
         int disponibilita;
@@ -237,9 +143,10 @@ public class GestioneProdottoController extends HttpServlet {
         } else {
             throw new MyServletException("Non hai i permessi necessari.");
         }
+        return true;
     }
 
-    public void prodottoRimuovi(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+    public boolean prodottoRimuovi(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         Amministratore adm = (Amministratore) request.getSession().getAttribute("admin");
         ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
@@ -264,9 +171,10 @@ public class GestioneProdottoController extends HttpServlet {
         request.setAttribute("messaggio", "Prodotto eliminato con successo.");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp");
         requestDispatcher.forward(request, response);
+        return true;
     }
 
-    public void prodottoAggiungiForm(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+    public boolean prodottoAggiungiForm(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         if(ut != null && ut.getTipo() == 1) {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/aggiungiProdotto.jsp");
@@ -274,9 +182,10 @@ public class GestioneProdottoController extends HttpServlet {
         } else {
             throw new MyServletException("Non hai i permessi necessari.");
         }
+        return true;
     }
 
-    public void visualizzaProdotti(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+    public boolean visualizzaProdotti(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
         if(prodotti == null)
             throw new MyServletException("Nessun prodotto disponibile.");
@@ -285,9 +194,10 @@ public class GestioneProdottoController extends HttpServlet {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
             requestDispatcher.forward(request, response);
         }
+        return true;
     }
 
-    public void visualizzaCategoria(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+    public boolean visualizzaCategoria(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         String categoria;
         if(request.getParameter("categoria").matches(categoriaReg))
             categoria = request.getParameter("categoria");
@@ -301,9 +211,10 @@ public class GestioneProdottoController extends HttpServlet {
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaProdotti.jsp");
             requestDispatcher.forward(request, response);
         }
+        return true;
     }
 
-    public void ricercaAjax(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+    public boolean ricercaAjax(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         String app = (request.getParameter("p") +"*");
         ArrayList<Prodotto> listProd = gps.getProdottiByNome(app);
         if(listProd == null) {
@@ -315,32 +226,40 @@ public class GestioneProdottoController extends HttpServlet {
         }
         response.setContentType("application/json");
         response.getWriter().append(listaJson.toString());
+        return true;
     }
 
-    public void ricerca(HttpServletRequest request,HttpServletResponse response,GestioneProdottoService gps)throws ServletException, IOException{
+    public boolean ricerca(HttpServletRequest request,HttpServletResponse response,GestioneProdottoService gps)throws ServletException, IOException{
         if(!request.getParameter("p").isBlank()){
         String nome = request.getParameter("p")+"*";
         ArrayList<Prodotto> listProd = gps.getProdottiByNome(nome);
+        if(listProd == null) {
+            throw new MyServletException("Nessun prodotto per questa ricerca.");
+        }
         request.setAttribute("prodottiRicerca",listProd);}
         request.getRequestDispatcher("WEB-INF/jsp/risultatoRicerca.jsp").forward(request,response);
+        return true;
     }
 
-    public void prodottoModifica(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+    public boolean prodottoModifica(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         Prodotto prodotto;
         String nome, descrizione, categoria;
         long prezzo_Cent;
         int disponibilita, id;
         ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
+        try {
+            id = Integer.parseInt(request.getParameter("id"));
+        } catch (Exception e) {
+            throw new MyServletException("Id prodotto errato.");
+        }
+        Prodotto p1 = gps.getProdottoById(id);
+        if(p1 == null)
+            throw new MyServletException("Prodotto non trovato.");
 
-        if(ut == null || ut.getTipo() == 0) {
+        if(ut == null || ut.getTipo() == 0 || !gps.getProdottoById(id).getEmail_Venditore().equals(ut.getEmail())) {
             throw new MyServletException("Non hai i permessi necessari.");
         }   else {
-            try {
-                id = Integer.parseInt(request.getParameter("id"));
-            } catch (Exception e) {
-                throw new MyServletException("Id prodotto errato.");
-            }
 
             if(request.getParameter("nome").matches(nomeReg))
                 nome = request.getParameter("nome");
@@ -374,17 +293,117 @@ public class GestioneProdottoController extends HttpServlet {
             prodotto.setCategoria(categoria);
             prodotto.setDescrizione(descrizione);
             prodotto.setPrezzo_Cent(prezzo_Cent);
-            Prodotto p = gps.getProdottoById(id);
-            if(p == null) {
-                throw new MyServletException("Prodotto non trovato.");
-            } else {
-                gps.doUpdateProdotto(prodotto);
-                prodotti.remove(p);
-                prodotti.add(prodotto);
-                request.getSession().setAttribute("prodotti",prodotti);
-            }
+
+            gps.doUpdateProdotto(prodotto);
+            prodotti.remove(p1);
+            prodotti.add(prodotto);
+            request.getSession().setAttribute("prodotti",prodotti);
+
             request.setAttribute("messaggio", "Prodotto aggiornato con successo.");
             request.getRequestDispatcher("WEB-INF/jsp/notifica.jsp").forward(request, response);
         }
+        return true;
+    }
+
+    public boolean switchPath(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws ServletException, IOException {
+        String s = request.getServletPath();
+
+        switch (s) {
+
+            case "/prodotto-visualizza":
+                try {
+                    prodottoVisualizza(request, response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/prodotto-modifica-form":
+                try {
+                    prodottoModificaForm(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/prodotto-modifica":
+                try {
+                    prodottoModifica(request, response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/prodotto-aggiungi":
+                try {
+                    prodottoAggiungi(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/prodotto-aggiungi-form":
+                try {
+                    prodottoAggiungiForm(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/prodotto-rimuovi":
+                try {
+                    prodottoRimuovi(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/visualizza-prodotti":
+                try {
+                    visualizzaProdotti(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/visualizza-categoria":
+                try {
+                    visualizzaCategoria(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/ricercaAjax":
+                try {
+                    ricercaAjax(request,response, gps);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            case "/ricerca":
+                ricerca(request,response,gps);
+                return true;
+        }
+        return false;
     }
 }

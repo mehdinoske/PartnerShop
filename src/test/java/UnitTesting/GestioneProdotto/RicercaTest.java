@@ -19,10 +19,9 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
-public class RicercaAjaxTest {
+public class RicercaTest {
     MockHttpServletRequest request;
     MockHttpServletResponse response;
     MockHttpSession session;
@@ -51,7 +50,7 @@ public class RicercaAjaxTest {
         String app = p + "*";
         request.setParameter("p", p);
         Mockito.when(gps.getProdottiByNome(app)).thenReturn(null);
-        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.ricercaAjax(request,response,gps));
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.ricerca(request,response,gps));
         assertEquals("Nessun prodotto per questa ricerca.", mse.getMessage());
     }
 
@@ -63,6 +62,6 @@ public class RicercaAjaxTest {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         prodotti.add(prodotto);
         Mockito.when(gps.getProdottiByNome(app)).thenReturn(prodotti);
-        assertEquals(true, gpc.ricercaAjax(request,response,gps));
+        assertEquals(true, gpc.ricerca(request,response,gps));
     }
 }

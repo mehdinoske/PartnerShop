@@ -12,7 +12,7 @@ public class SegnalazioneDAO {
     public SegnalazioneDAO(){
         this.con = ConPool.getConnection();
     }
-    public void doSave(Segnalazione segn) {
+    public boolean doSave(Segnalazione segn) {
         try  {
             PreparedStatement ps = con.prepareStatement(
                     "INSERT INTO segnalazione (email_Cliente,stato,motivazione,commento) VALUES(?,?,?,?)",
@@ -30,11 +30,12 @@ public class SegnalazioneDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return true;
     }
 
     public ArrayList<Segnalazione> doRetrieveAll(int stato) {
         ArrayList<Segnalazione> list = new ArrayList<>();
-        Segnalazione segn =null;
+        Segnalazione segn;
         try  {
             PreparedStatement ps = con.prepareStatement("SELECT id,email_cliente,stato, motivazione,commento  FROM segnalazione where stato=?");
             ps.setInt(1,stato);
@@ -75,7 +76,7 @@ public class SegnalazioneDAO {
         }
     }
 
-    public void aggiornaStato( int id) {
+    public boolean aggiornaStato( int id) {
         try {
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE segnalazione SET stato=1 WHERE id=?");
@@ -88,5 +89,6 @@ public class SegnalazioneDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return true;
     }
 }

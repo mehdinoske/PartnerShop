@@ -50,7 +50,7 @@ public class GestioneProdottoDAO {
     public ArrayList<Prodotto> doRetrieveAllProdotti() {
         ArrayList<Prodotto> list = new ArrayList<>();
         try {
-            PreparedStatement ps = con.prepareStatement("SELECT id,nome,descrizione,categoria,prezzo_cent,quantita_disponibile FROM prodotto");
+            PreparedStatement ps = con.prepareStatement("SELECT id,nome,descrizione,categoria,prezzo_cent,quantita_disponibile,email_venditore FROM prodotto");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Prodotto pr = new Prodotto();
@@ -60,6 +60,7 @@ public class GestioneProdottoDAO {
                 pr.setCategoria(rs.getString(4));
                 pr.setPrezzo_Cent(rs.getLong(5));
                 pr.setDisponibilita(rs.getInt(6));
+                pr.setEmail_Venditore(rs.getString(7));
                 list.add(pr);
             }
         } catch (SQLException e) {

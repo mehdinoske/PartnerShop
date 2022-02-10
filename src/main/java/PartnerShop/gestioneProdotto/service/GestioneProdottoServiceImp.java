@@ -16,16 +16,19 @@ public class GestioneProdottoServiceImp implements GestioneProdottoService {
         return p;
     }
 
-    public void deleteProdottoById(int id) {
+    public boolean deleteProdottoById(int id) {
         pr.doDeleteById(id);
+        return true;
     }
 
-    public void doSaveProdotto(Prodotto p) {
+    public boolean doSaveProdotto(Prodotto p) {
         pr.doSave(p);
+        return true;
     }
 
-    public void doUpdateProdotto(Prodotto p) {
+    public boolean doUpdateProdotto(Prodotto p) {
         pr.doUpdate(p);
+        return true;
     }
 
     public ArrayList<Prodotto> getProdottiByVenditore(String email) {
@@ -39,14 +42,12 @@ public class GestioneProdottoServiceImp implements GestioneProdottoService {
     }
 
     public ArrayList<Prodotto> getProdottiByCategoria(String cat) {
-        GestioneProdottoDAO pr = new GestioneProdottoDAO();
         ArrayList<Prodotto> p = pr.doRetrieveByCategoria(cat);
         return p;
     }
 
 
     public ArrayList<Prodotto> getProdottiByNome(String nome) {
-        GestioneProdottoDAO pr = new GestioneProdottoDAO();
         ArrayList<Prodotto> p = pr.doRetrieveByNome(nome);
         return p;
     }

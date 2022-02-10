@@ -194,7 +194,7 @@ public class AggiungiProdottoTest {
         request.getSession().setAttribute("img", pr);
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        gpc.prodottoAggiungi(request,response,gps);
+        assertEquals(true, gpc.prodottoAggiungi(request,response,gps));
     }
 
     private void setParametersRequest(int id, String nome, String descrizione, String categoria, int prezzo_Cent, int disponibilita) {

@@ -192,7 +192,7 @@ public class RegistrazioneClienteEsclusoTest {
         assertThrows(MyServletException.class,()->regService.RegistrazioneCliente(ut));
     }
 
-    @Test @Ignore
+    @Test@Ignore
     public void registrazioneOkTest() throws MyServletException{
         String email = "peppeee@hotmail.it"; //Corretta
         String username = "peppe123"; // Corretto

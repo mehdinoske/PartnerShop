@@ -58,6 +58,6 @@ public class VisualizzaProdottiTest {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         prodotti.add(prodotto);
         request.getSession().setAttribute("prodotti", prodotti);
-        gpc.visualizzaProdotti(request,response,gps);
+        assertEquals(true, gpc.visualizzaProdotti(request,response,gps));
     }
 }

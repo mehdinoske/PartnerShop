@@ -62,7 +62,7 @@ public class RegistrazionClienteInclusoTest {
     public void registraUsernameClienteErrato() throws ServletException, IOException {
         String email = "peppe@hotmail.it"; //Corretto
         String username = "depalma."; //Errato
-        String password = "Giuseppe99.";        //Corretta;
+        String password = "Giuseppe99.";  //Corretta;
         String nome = "peppe";   //Corretto
         String cognome="abbatiello";    //Corretto
         String cellulare = "3219913211"; //Corretto
@@ -211,7 +211,7 @@ public class RegistrazionClienteInclusoTest {
         assertThrows(MyServletException.class,()-> regContr.doPost(request,response));
     }
 
-    @Test @Ignore
+    @Test@Ignore
     public void registrazioneOkTest() throws ServletException, IOException {
         String email = "marcooo@hotmail.it"; //Corretta
         String username = "Marco123"; // Corretto

@@ -65,7 +65,7 @@ public class RimuoviProdottoTest {
     }
 
     @Test
-    public void idProdottoNonPresente() {
+    public void idProdottoNonPresente() throws MyServletException {
         UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
         request.getSession().setAttribute("utente", ut);
         int id = 1;
@@ -84,6 +84,6 @@ public class RimuoviProdottoTest {
         request.getSession().setAttribute("prodotti", prodotti);
         request.setParameter("id", String.valueOf(id));
         Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        gpc.prodottoRimuovi(request,response,gps);
+        assertEquals(true, gpc.prodottoRimuovi(request,response,gps));
     }
 }
