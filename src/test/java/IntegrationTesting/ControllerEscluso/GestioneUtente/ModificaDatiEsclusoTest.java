@@ -22,8 +22,8 @@ public class ModificaDatiEsclusoTest {
         this.utService = new GestioneUtenteServiceImp();
         ut = new UtenteRegistrato();
         ut.setDdn("1212-12-12");
-        ut.setUsername("ancona1");
-        ut.setEmail("anconamarco@gmail.com");
+        ut.setUsername("peppe1");
+        ut.setEmail("peppe.abbatiello@gmail.com");
         ut.setTipo(0);
     }
 
