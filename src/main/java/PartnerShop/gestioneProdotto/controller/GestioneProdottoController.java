@@ -22,6 +22,12 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Questa classe implemmenta il controller che si occupa del sottosistema gestione prodotto
+ * @see HttpServlet fornisce l'interfaccia per creare una servlet
+ * @version 1.0
+ * @author Marco De Palma
+ */
 @WebServlet(name = "GP", urlPatterns = {"/prodotto-visualizza", "/prodotto-modifica-form", "/prodotto-aggiungi", "/prodotto-rimuovi",
         "/prodotto-modifica", "/prodotto-aggiungi-form", "/visualizza-prodotti","/visualizza-categoria","/ricercaAjax", "/ricerca"})
 public class GestioneProdottoController extends HttpServlet {
@@ -34,12 +40,26 @@ public class GestioneProdottoController extends HttpServlet {
     private final String disponibilitaReg ="^[1-9][0-9]*$";
     private final GestioneProdottoService gps = new GestioneProdottoServiceImp();
 
+    /**
+     * Il metodo ereditato dalla classe HttpServlet che esplicita i parametri della request e permette di usare il metodo switchPath
+     * @param request Oggetto della servlet, che contiene i parametri inviati nella request e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         switchPath(request,response, gps);
     }
 
+    /**
+     * Il metodo ereditato dalla classe HttpServlet che fa in questo caso fa le stesse cose del metodo doGet ma senza esplicitarne i parametri
+     * @param request Oggetto della servlet, che contiene i parametri inviati nella request e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
