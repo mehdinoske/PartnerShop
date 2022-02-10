@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: marco
@@ -10,29 +11,31 @@
     <jsp:param name="pageTitle" value="Tutti gli utenti"/>
 </jsp:include>
 <main>
-    <section>
+    <c:if test="${not empty utenti}">
         <table>
-            <thead>
             <tr>
-                <th>Nome</th>
-                <th>Cognome</th>
-                <th>E-mail</th>
-                <th>Username</th>
-                <!--<th>  </th>-->
+                <th>NOME</th>
+                <th>COGNOME</th>
+                <th>USERNAME</th>
+                <th>EMAIL</th>
+                <th>    </th>
             </tr>
-            </thead>
-            <tbody>
             <c:forEach items="${utenti}" var="utente">
                 <tr>
                     <td>${utente.nome}</td>
                     <td>${utente.cognome}</td>
-                    <td>${utente.email}</td>
                     <td>${utente.username}</td>
-                    <!-- <td><a href="CancellaDatiUtenti?email" >Rimuovi</a></td> -->
+                    <td>${utente.email}</td>
+                    <td><a href="CancellaDatiUtenti?email=${utente.email}" >RIMUOVI</a></td>
                 </tr>
             </c:forEach>
-            </tbody>
         </table>
-    </section>
+    </c:if>
+
+    <c:if test="${empty utenti}">
+        <div class="error_display">
+            <h1>NESSUN UTENTE REGISTRATO.</h1>
+        </div>
+    </c:if>
 </main>
 <%@include file="footer.jsp"%>

@@ -3,6 +3,7 @@ package PartnerShop.GestioneUtenti.controller;
 import PartnerShop.GestioneUtenti.service.GestioneUtenteService;
 import PartnerShop.GestioneUtenti.service.GestioneUtenteServiceImp;
 
+import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.UtenteRegistrato;
 
 
@@ -70,15 +71,22 @@ public class GestioneUtenteController extends HttpServlet {
                 break;
             }
             case "/CancellaDatiUtenti": {
-                String email = request.getParameter("email");
-                gestioneUtenteService.CancellaUtente(email);
-                request.getSession().removeAttribute("utente");
-                dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/index.jsp"));
-                break;
+                if((UtenteRegistrato)request.getSession().getAttribute("utente")!=null && ((Amministratore)request.getSession().getAttribute("admin")) == null){
+                    String email = request.getParameter("email");
+                    gestioneUtenteService.CancellaUtente(email);
+                    request.getSession().removeAttribute("utente");
+                    dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/index.jsp"));
+                    break;
+                }else if((Amministratore)request.getSession().getAttribute("admin") != null){
+                    String email = request.getParameter("email");
+                    gestioneUtenteService.CancellaUtente(email);
+                    dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/visualizzaUtentiRegistrati.jsp"));
+                    break;
+                }
             }
             case "/VisualizzaUtenti":{
                 ArrayList<UtenteRegistrato> listUtenti = gestioneUtenteService.VisualizzaUtenti();
-                request.getSession().setAttribute("utenti", listUtenti);
+                request.setAttribute("utenti", listUtenti);
                 dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/visualizzaUtentiRegistrati.jsp"));
                 break;
             }
