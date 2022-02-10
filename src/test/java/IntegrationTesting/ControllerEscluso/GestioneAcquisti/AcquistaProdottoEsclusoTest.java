@@ -10,6 +10,7 @@ import PartnerShop.model.entity.Ordine;
 import PartnerShop.model.entity.Prodotto;
 import PartnerShop.model.entity.UtenteRegistrato;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -82,7 +83,7 @@ public class AcquistaProdottoEsclusoTest {
         assertNull(gesServ.acquistaProdotto(ut,car,nome,cognome,indirizzo,cardc));
     }
 
-    @Test
+    @Test @Ignore
     public void acquistaProdottoOkTest(){
         String nome = "Bianca";//corretta
         String cognome = "Verdi";//corretta
