@@ -8,6 +8,12 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 /* The Java file upload Servlet example */
 
+/**
+ * Questa classe implemmenta la Servlet che si occupa del caricamento dell'immagine di un prodotto caricato da un venditore
+ * @see HttpServlet fornisce l'interfaccia per creare una servlet
+ * @version 1.0
+ * @author Marco De Palma
+ */
 @WebServlet(urlPatterns = { "/fileuploadservlet" })
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
@@ -16,24 +22,17 @@ import javax.servlet.annotation.*;
 )
 public class UploadImageAjax extends HttpServlet {
 
-    private final GestioneProdottoService PrDAO = new GestioneProdottoServiceImp();
-
+    /**
+     *
+     * @param request Oggetto della servlet, che contiene l'immagine del prodotto caricato e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        /* Receive file uploaded to the Servlet from the HTML5 form */
         Part filePart = request.getPart("file");
         request.getSession().setAttribute("img", filePart);
-
-
-        //String fileName = filePart.getSubmittedFileName();
-        /*ArrayList<Prodotto> prodotti = PrDAO.getAllProdotti();
-        getServletContext().setAttribute("prodotti",prodotti);
-        Prodotto p = prodotti.get(prodotti.size() - 1);
-        int i = p.getId();
-        for (Part part : request.getParts()) {
-            part.write("C:\\Users\\depal\\Desktop\\img\\" + i +".jpg");
-        }
-        //response.getWriter().print("The file uploaded sucessfully.");*/
     }
 
 }
