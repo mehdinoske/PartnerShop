@@ -8,6 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLDecoder;
 
+/**
+ * Questa classe implemmenta la Servlet che si occupa del caricamento delle immagini dei prodotti già
+ * presenti, salvate in un determinato punto del sistema
+ * @see HttpServlet fornisce l'interfaccia per creare una servlet
+ * @version 1.0
+ * @author Marco De Palma
+ */
 @WebServlet(urlPatterns = "/file/*")
 public class LoadImages extends HttpServlet {
 

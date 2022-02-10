@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  *  interfaccia per i metodi del sottosistema autenticazione
- * @
  *  @author Giuseppe Abbatiello
  */
 public interface AutenticazioneService {
