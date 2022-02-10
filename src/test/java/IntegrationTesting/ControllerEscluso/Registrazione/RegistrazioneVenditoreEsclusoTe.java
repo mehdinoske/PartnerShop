@@ -274,8 +274,8 @@ public class RegistrazioneVenditoreEsclusoTe {
 
     @Test
     public void registrazioneOkTest() throws MyServletException{
-        String email = "marcooo@hotmail.it"; //Corretta
-        String username = "peppe123"; // Corretto
+        String email = "marcooadso@hotmail.it"; //Corretta
+        String username = "peppe132123"; // Corretto
         String password = "Peppe2699.";        //Corretto;
         String nome = "peppe";   //Corretto
         String cognome="abbatiello";    //Corretto

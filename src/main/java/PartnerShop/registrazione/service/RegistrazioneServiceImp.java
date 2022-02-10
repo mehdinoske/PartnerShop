@@ -25,20 +25,18 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
     private ClienteDAO ctDAO;
     private VenditoreDAO vtDAO;
     private CarrelloDAO carDAO;
+    UtenteRegistratoDAO utDao;
 
 
     public RegistrazioneServiceImp(){
         carDAO = new CarrelloDAO();
         ctDAO = new ClienteDAO();
+        vtDAO = new VenditoreDAO();
     }
 
-    public RegistrazioneServiceImp(ClienteDAO ctDAO,CarrelloDAO carDAO){
+    public RegistrazioneServiceImp(VenditoreDAO vtDAO,ClienteDAO ctDAO,CarrelloDAO carDAO){
         this.carDAO = carDAO;
         this.ctDAO = ctDAO;
-    }
-
-    public RegistrazioneServiceImp(VenditoreDAO vtDAO,CarrelloDAO carDAO){
-        this.carDAO = carDAO;
         this.vtDAO = vtDAO;
     }
 
@@ -74,7 +72,7 @@ public class  RegistrazioneServiceImp implements RegistrazioneService{
      */
     @Override
     public UtenteRegistrato RegistrazioneVenditore(UtenteRegistrato ut,String nomeNegozio,String Piva) throws MyServletException{
-        VenditoreDAO vtDAO = new VenditoreDAO();
+
         if(ut.getEmail().matches(emailReg) && ut.getUsername().matches(usernameReg) && ut.getPassword().matches(passReg)
                 && ut.getNome().matches(nomeReg)&& ut.getCognome().matches(nomeReg)&& ut.getCellulare().matches(cellReg)
                 && ut.getDdn().matches(dataReg) && (ut.getIndirizzo().length())>=5

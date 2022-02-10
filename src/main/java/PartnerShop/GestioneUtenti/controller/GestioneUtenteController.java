@@ -19,6 +19,11 @@ import java.util.ArrayList;
 
 import static java.lang.Integer.parseInt;
 
+/**
+ * implementa il controller che si occupa  del sottosistema GestioneUtente
+ * @author Marco Ancona
+ */
+
 @WebServlet(urlPatterns = {"/VisualizzaDatiUtente", "/VisualizzaModifica", "/ModificaForm","/CancellaDatiUtenti", "/VisualizzaUtenti","/AggiungiListaDesideri","/RimuoviListaDesideri","/VisualizzaListaDesideri"})
 public class GestioneUtenteController extends HttpServlet {
 

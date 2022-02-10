@@ -294,7 +294,7 @@ public class RegistrazioneVenditoreInclusoTest {
         assertThrows(MyServletException.class,()-> regContr.doPost(request,response));
     }
 
-    @Test @Ignore
+    @Test
     public void registrazioneOkTest() throws ServletException, IOException {
         String email = "marcasdo@hotmail.it"; //Corretta
         String username = "Marco12345"; // Corretto
