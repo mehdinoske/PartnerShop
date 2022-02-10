@@ -42,7 +42,7 @@ public class GestioneProdottoController extends HttpServlet {
 
     /**
      * Il metodo ereditato dalla classe HttpServlet che esplicita i parametri della request e permette di usare il metodo switchPath
-     * @param request Oggetto della servlet, che contiene i parametri inviati nella request e la sessione corrente
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
      * @param response Oggetto della servlet, che contiene i parametri della risposta
      * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
      * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
@@ -54,8 +54,8 @@ public class GestioneProdottoController extends HttpServlet {
     }
 
     /**
-     * Il metodo ereditato dalla classe HttpServlet che fa in questo caso fa le stesse cose del metodo doGet ma senza esplicitarne i parametri
-     * @param request Oggetto della servlet, che contiene i parametri inviati nella request e la sessione corrente
+     * Il metodo ereditato dalla classe HttpServlet che in questo caso fa le stesse cose del metodo doGet ma senza esplicitarne i parametri
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
      * @param response Oggetto della servlet, che contiene i parametri della risposta
      * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
      * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
@@ -65,6 +65,17 @@ public class GestioneProdottoController extends HttpServlet {
         doGet(request, response);
     }
 
+    /**
+     * Il metodo che permette la visualizzazione in dettaglio di un prodotto
+     * @param request Oggetto della servlet, che contiene l'id del prodotto da visualizzare e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public boolean prodottoVisualizza(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         int id;
         try {
@@ -83,6 +94,17 @@ public class GestioneProdottoController extends HttpServlet {
         return true;
     }
 
+    /**
+     * Il metodo che permette la visualizzazione del form per modificare un prodotto, effettuabile solo dal venditore a cui appartiene quel prodotto
+     * @param request Oggetto della servlet, che contiene l'id del prodotto da visualizzare e la sessione corrente che contiene l'attributo utente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public boolean prodottoModificaForm(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         int id;
@@ -106,6 +128,17 @@ public class GestioneProdottoController extends HttpServlet {
         return true;
     }
 
+    /**
+     * Il metodo che permette l'aggiunta di un prodotto al database, effettuabile solo dai venditori
+     * @param request Oggetto della servlet, che contiene le variabili usate per aggiungere un nuovo prodotto e la sessione corrente che contiene l'attributo utente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public boolean prodottoAggiungi(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         String nome, descrizione, categoria;
@@ -166,6 +199,17 @@ public class GestioneProdottoController extends HttpServlet {
         return true;
     }
 
+    /**
+     * Il metodo che permette la rimozione di un prodotto dal database, effettuabile solo dai venditori e dagli admin
+     * @param request Oggetto della servlet, che contiene l'id del prodotto da rimuovere e la sessione corrente che contiene l'attributo utente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public boolean prodottoRimuovi(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         Amministratore adm = (Amministratore) request.getSession().getAttribute("admin");
@@ -194,6 +238,17 @@ public class GestioneProdottoController extends HttpServlet {
         return true;
     }
 
+    /**
+     * Il metodo che permette la visualizzazione del form per aggiungere un prodotto, effettuabile solo dai venditori
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente che contiene l'attributo utente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public boolean prodottoAggiungiForm(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         if(ut != null && ut.getTipo() == 1) {
@@ -205,6 +260,16 @@ public class GestioneProdottoController extends HttpServlet {
         return true;
     }
 
+    /**Il metodo che permette la visualizzazione di una lista di prodotti
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public boolean visualizzaProdotti(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         ArrayList<Prodotto> prodotti = (ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
         if(prodotti == null)
@@ -217,6 +282,17 @@ public class GestioneProdottoController extends HttpServlet {
         return true;
     }
 
+    /**
+     * Il metodo che permette la visualizzazione di tutti i prodotti di una determinata categoria
+     * @param request Oggetto della servlet, che contiene la categoria dei prodotti da visualizzare e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public boolean visualizzaCategoria(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         String categoria;
         if(request.getParameter("categoria").matches(categoriaReg))
@@ -234,6 +310,17 @@ public class GestioneProdottoController extends HttpServlet {
         return true;
     }
 
+    /**
+     * Il metodo che permette la visualizzazione di una lista dei prodotti ottenuta tramite ricerca ajax
+     * @param request Oggetto della servlet, che contiene la stringa da cercare e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public boolean ricercaAjax(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         String app = (request.getParameter("p") +"*");
         ArrayList<Prodotto> listProd = gps.getProdottiByNome(app);
@@ -249,7 +336,16 @@ public class GestioneProdottoController extends HttpServlet {
         return true;
     }
 
-    public boolean ricerca(HttpServletRequest request,HttpServletResponse response,GestioneProdottoService gps)throws ServletException, IOException{
+    /**
+     * Il metodo che permette la visualizzazione di una lista dei prodotti ottenuta tramite una ricerca
+     * @param request Oggetto della servlet, che contiene la stringa da cercare e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean ricerca(HttpServletRequest request,HttpServletResponse response,GestioneProdottoService gps)throws ServletException, IOException {
         if(!request.getParameter("p").isBlank()){
         String nome = request.getParameter("p")+"*";
         ArrayList<Prodotto> listProd = gps.getProdottiByNome(nome);
@@ -261,6 +357,16 @@ public class GestioneProdottoController extends HttpServlet {
         return true;
     }
 
+    /**Il metodo che permette la modifica di un prodotto, effettuabile solo dal venditore a cui appartiene quel prodotto
+     * @param request Oggetto della servlet, che contiene le variabili relative al prodotto da modificare e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public boolean prodottoModifica(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         Prodotto prodotto;
@@ -325,6 +431,16 @@ public class GestioneProdottoController extends HttpServlet {
         return true;
     }
 
+    /**
+     * Il metodo che seleziona in base al ServletPath quale metodo richiamare
+     * @param request Oggetto della servlet, che contiene il ServletPath usato in uno switch per decretare quale meotodo richiamare
+     *               , i parametri relativi al quel metodo e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
     public boolean switchPath(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws ServletException, IOException {
         String s = request.getServletPath();
 
