@@ -8,7 +8,14 @@
 
         <div class="visualizza_prodotto">
             <div class="image_prodotto"><img src="file/${prodotto.id}.jpg"></div>
-            <div class="div_descrizione"> <div id="titolo">${prodotto.nome}</div> <h5>${prodotto.descrizione}</h5> <div id="prezzo">${prodotto.getPrezzo_Euro()} &euro;</div></div>
+            <div class="div_descrizione"> <div id="titolo">${prodotto.nome}</div> <h5>${prodotto.descrizione}</h5> <div id="prezzo">${prodotto.getPrezzo_Euro()} &euro;</div>
+               <a href="AggiungiListaDesideri?idProdotto=${prodotto.id}"><div class="preferitiButton">
+                   <span class="material-icons">
+                        bookmark_add
+                    </span>
+                </div>
+               </a>
+            </div>
             <div class="form_container_prodotto">
             <c:if test="${utente.tipo != 1 && admin == null}">
                 <form action="Carrello" method="get">

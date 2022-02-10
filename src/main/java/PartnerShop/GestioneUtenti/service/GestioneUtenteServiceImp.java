@@ -73,6 +73,7 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
     }
 
     public ArrayList<Prodotto> getListaDesideri(String email){
+        System.out.println("DAO"+email);
         return lisDB.doRetrieveByEmailCliente(email);
     }
 }

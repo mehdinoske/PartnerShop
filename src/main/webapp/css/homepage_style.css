@@ -220,6 +220,22 @@ li, a, button{
     background-color: white;
 }
 
+.preferitiButton{
+    padding: 8px;
+    background-color: black;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0px 4px 11px -4px black;
+    color: white;
+}
+
+.preferitiButton:hover{
+    background-color: white;
+    color: black;
+}
+
 .div_descrizione div#titolo{
     font-weight: bold;
     font-size: 20px;
@@ -236,7 +252,7 @@ li, a, button{
 .div_descrizione div{
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: auto;
+    margin-bottom: 30px;
     word-break: break-word;
 }
 

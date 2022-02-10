@@ -41,4 +41,5 @@ public class Cliente extends UtenteRegistrato{
     public void setCartaDiCredito(String cartaDiCredito) {
         this.cartaDiCredito = cartaDiCredito;
     }
+
 }

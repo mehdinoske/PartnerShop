@@ -68,8 +68,9 @@ create table segnalazione(
 );
 
 create table lista_desideri(
-                               id integer not null auto_increment primary key,
-                               email_cliente varchar(50) unique not null,
+                               id integer not null auto_increment,
+                               email_cliente varchar(50) not null,
+                               primary key (id,email_cliente),
                                foreign key(email_cliente) references cliente(email) on delete cascade on update cascade
 );
 
@@ -124,6 +125,7 @@ insert into carrello values (1, 'anconamarco@gmail.com');
 insert into carrello values (2, 'peppe.abbatiello@gmail.com');
 
 insert into lista_desideri values (1, 'anconamarco@gmail.com');
+insert into lista_desideri values (1, 'peppe.abbatiello@gmail.com');
 insert into prodotto values (1, 'depalmamarco@gmail.com', 'Penna', 'Penna blu molto costosa', 'Cancelleria', 100, 2000);
 insert into prodotto values (2, 'depalmamarco@gmail.com', 'Macbook', 'MacBook che fa schifo', 'Elettronica', 150000, 400);
 insert into prodotto values (3, 'boudad@gmail.com', 'LG V40', 'LG V40 uno dei miglori smartphone mai creati', 'Elettronica', 50000, 500);

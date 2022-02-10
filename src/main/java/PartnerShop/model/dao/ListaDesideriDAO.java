@@ -1,6 +1,7 @@
 package PartnerShop.model.dao;
 
 import PartnerShop.model.entity.Prodotto;
+import PartnerShop.utils.ConPool;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,15 +10,14 @@ public class ListaDesideriDAO {
 
     private GestioneProdottoDAO prodDB = new GestioneProdottoDAO();
     private Connection con;
-
+public ListaDesideriDAO(){this.con = ConPool.getConnection();}
     public ArrayList<Prodotto> doRetrieveByEmailCliente(String email) {
         ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
         try{
-            PreparedStatement ps = con
-                    .prepareStatement("SELECT id FROM lista_desideri WHERE email_cliente=?");
-            ps.setString(1, email);
+            PreparedStatement ps = con.prepareStatement("SELECT id FROM lista_desideri WHERE email_cliente=?");
+            ps.setString(1,email);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            while(rs.next()) {
                 Prodotto p = prodDB.doRetrieveById(rs.getInt(1));
                 lista.add(p);
             }
