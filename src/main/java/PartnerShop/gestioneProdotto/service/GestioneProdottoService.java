@@ -3,7 +3,9 @@ package PartnerShop.gestioneProdotto.service;
 import PartnerShop.model.entity.Prodotto;
 
 import java.util.ArrayList;
-
+/**
+ * Questa classe rappresenta l'interfaccia utilizzata da GestioneProdottoServiceImp e implementata per rispettare il facade pattern
+ */
 public interface GestioneProdottoService {
 
     public Prodotto getProdottoById(int id);

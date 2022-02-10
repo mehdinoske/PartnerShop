@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 
 /**
  *  implementa la classe che esplicita i metodi definiti nell'interfaccia di autenticazione
- * 
  */
 public class AutenticazioneServiceImp implements AutenticazioneService{
 

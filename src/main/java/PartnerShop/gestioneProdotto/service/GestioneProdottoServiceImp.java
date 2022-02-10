@@ -5,6 +5,9 @@ import PartnerShop.model.entity.Prodotto;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class GestioneProdottoServiceImp implements GestioneProdottoService {
 
     GestioneProdottoDAO pr = new GestioneProdottoDAO();
