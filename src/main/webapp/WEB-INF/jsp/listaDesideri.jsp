@@ -27,6 +27,7 @@
                         </span>
                         </div>
                         </a>
+                        <h3></h3>
                     </div>
                 </div>
             </c:forEach>
