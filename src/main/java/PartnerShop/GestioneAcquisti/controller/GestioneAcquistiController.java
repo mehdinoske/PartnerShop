@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 /**
  *  implementa il controller per il sottosistema Gestione Acquisti.
+ * @author El Mehdi Boudad
  */
 @WebServlet(urlPatterns = {"/Carrello" , "/Acquista" , "/CompletaAcquisto","/OrdiniVenditore","/OrdiniCliente"})
 public class GestioneAcquistiController extends HttpServlet {
@@ -33,6 +34,12 @@ public class GestioneAcquistiController extends HttpServlet {
         doGet(req, resp);
     }
 
+    /**
+     * Si occupa di chiamare e passare i parametri necessari ai metodi della service in base al servletPath.
+     * @return boolean
+     * @throws ServletException
+     * @throws IOException
+     */
     public boolean execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
         String s = request.getServletPath();
         RequestDispatcher dispatcher;

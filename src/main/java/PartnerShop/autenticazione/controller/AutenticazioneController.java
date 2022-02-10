@@ -34,6 +34,8 @@ public  class AutenticazioneController extends HttpServlet {
             int mes = 1;
             if(amm==null)
             request.getSession().setAttribute("mes",mes);
+            else
+                request.getSession().removeAttribute("mes");
         }else{
             request.getSession().removeAttribute("mes");
         }

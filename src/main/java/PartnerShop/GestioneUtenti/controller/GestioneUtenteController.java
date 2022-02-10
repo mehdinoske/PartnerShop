@@ -3,6 +3,7 @@ package PartnerShop.GestioneUtenti.controller;
 import PartnerShop.GestioneUtenti.service.GestioneUtenteService;
 import PartnerShop.GestioneUtenti.service.GestioneUtenteServiceImp;
 
+import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.UtenteRegistrato;
 
 
@@ -23,13 +24,16 @@ public class GestioneUtenteController extends HttpServlet {
     private final GestioneUtenteService gestioneUtenteService = new GestioneUtenteServiceImp();
 
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        execute(request, response);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    public boolean execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = null;
         String s = request.getServletPath();
         switch (s) {
@@ -63,27 +67,35 @@ public class GestioneUtenteController extends HttpServlet {
                 ut.setTipo(tipo);
 
                 boolean mod = gestioneUtenteService.ModificaDati(ut);
-                if(mod) {
+                if (mod) {
                     request.getSession().setAttribute("utente", ut);
                 }
                 dispatcher = request.getRequestDispatcher("WEB-INF/jsp/visualizzaDatiUtente.jsp");
                 break;
             }
             case "/CancellaDatiUtenti": {
-                String email = request.getParameter("email");
-                gestioneUtenteService.CancellaUtente(email);
-                request.getSession().removeAttribute("utente");
-                dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/index.jsp"));
-                break;
+                if ((UtenteRegistrato) request.getSession().getAttribute("utente") != null && ((Amministratore) request.getSession().getAttribute("admin")) == null) {
+                    String email = request.getParameter("email");
+                    gestioneUtenteService.CancellaUtente(email);
+                    request.getSession().removeAttribute("utente");
+                    dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/index.jsp"));
+                    break;
+                } else if ((Amministratore) request.getSession().getAttribute("admin") != null) {
+                    String email = request.getParameter("email");
+                    gestioneUtenteService.CancellaUtente(email);
+                    dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/visualizzaUtentiRegistrati.jsp"));
+                    break;
+                }
             }
-            case "/VisualizzaUtenti":{
+            case "/VisualizzaUtenti": {
                 ArrayList<UtenteRegistrato> listUtenti = gestioneUtenteService.VisualizzaUtenti();
-                request.getSession().setAttribute("utenti", listUtenti);
+                request.setAttribute("utenti", listUtenti);
                 dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/visualizzaUtentiRegistrati.jsp"));
                 break;
             }
         }
-        if(dispatcher!=null)
+        if (dispatcher != null)
             dispatcher.forward(request, response);
+        return true;
     }
 }

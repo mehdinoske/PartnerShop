@@ -233,5 +233,6 @@ public class RegistrazionClienteInclusoTest {
         regContr.doPost(request,response);
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         assertNotNull(ut);
+
     }
 }
