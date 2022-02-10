@@ -1,6 +1,15 @@
+IntegrationTesting.ControllerEscluso.Autenticazione
+IntegrationTesting.ControllerEscluso.GestioneAcquisti
+IntegrationTesting.ControllerEscluso.GestioneProdotto
+IntegrationTesting.ControllerEscluso.Registrazione
+IntegrationTesting.ControllerIncluso.Autenticazione
+IntegrationTesting.ControllerIncluso.GestioneAcquisti
+IntegrationTesting.ControllerIncluso.GestioneProdotto
+IntegrationTesting.ControllerIncluso.Registrazione
 PartnerShop
 PartnerShop.autenticazione.controller
 PartnerShop.autenticazione.service
+PartnerShop.Exceptions
 PartnerShop.GestioneAcquisti.controller
 PartnerShop.GestioneAcquisti.service
 PartnerShop.gestioneProdotto.controller
@@ -14,3 +23,9 @@ PartnerShop.registrazione.service
 PartnerShop.segnalazione.controller
 PartnerShop.segnalazione.service
 PartnerShop.utils
+UnitTesting.Autenticazione
+UnitTesting.GestioneAcquisti
+UnitTesting.GestioneProdotto
+UnitTesting.GestioneSegnalazione
+UnitTesting.GestioneUtente
+UnitTesting.Registrazione
