@@ -14,18 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SegnalazioneDAOTest {
 
     private SegnalazioneDAO segnalazioneDAO;
-    private Connection connection;
 
     @Before
     public void setUp(){
-        this.connection= ConPool.getConnection();
         this.segnalazioneDAO=new SegnalazioneDAO();
     }
 
     @Test
     public void doGetByIdNonPresente() {
         int id = 16666666;
-        assertEquals(null, segnalazioneDAO.doRetrieveById(id));
+        assertNull(segnalazioneDAO.doRetrieveById(id));
     }
 
     @Test
@@ -43,14 +41,14 @@ public class SegnalazioneDAOTest {
         assertThrows(RuntimeException.class, ()->segnalazioneDAO.doSave(segnalazione));
     }
 
-    @Test@Ignore
+    @Test
     public void doSaveOk() {
         Segnalazione segnalazione = new Segnalazione();
         segnalazione.setEmail("anconamarco@gmail.com");
         segnalazione.setStato(0);
         segnalazione.setMotivazione("ffffff");
         segnalazione.setCommento("fffffffff");
-        assertEquals(true, segnalazioneDAO.doSave(segnalazione));
+        assertTrue(segnalazioneDAO.doSave(segnalazione));
     }
 
 
@@ -63,7 +61,7 @@ public class SegnalazioneDAOTest {
     @Test
     public void cambiaStatoOk() {
         int id = 1;
-        assertEquals(true, segnalazioneDAO.aggiornaStato(id));
+        assertTrue(segnalazioneDAO.aggiornaStato(id));
     }
 
 
