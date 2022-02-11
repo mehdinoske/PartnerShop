@@ -38,6 +38,12 @@
     min-width: 360px;
 }
 
+div #inner_div .preferitiButton{
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
 .carrello_layout > div #inner_div button{
     font-family: 'Montserrat';
     background-color: coral;

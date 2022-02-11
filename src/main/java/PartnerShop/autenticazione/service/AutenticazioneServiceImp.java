@@ -99,6 +99,7 @@ public class AutenticazioneServiceImp implements AutenticazioneService{
             sessione.removeAttribute("Carrello");
             sessione.removeAttribute("ordini");
             sessione.removeAttribute("mes");
+            sessione.removeAttribute("cliente");
             return true;
         }else if(sessione.getAttribute("admin")!=null){
             sessione.removeAttribute("admin");

@@ -51,7 +51,7 @@
        <button>${utente.nome}</button>
        <div class="dropdown-content">
            <a href="VisualizzaDatiUtente">La mia Anagrafica</a>
-           <a href="ListaDesideri">La mia lista desideri</a>
+           <a href="VisualizzaListaDesideri">La mia lista desideri</a>
            <a href="OrdiniCliente">I miei Ordini</a>
            <a href="AggiungiSegnalazione">Invia Segnalazione</a>
            <a href="Autenticazione" method="get">Logout</a>

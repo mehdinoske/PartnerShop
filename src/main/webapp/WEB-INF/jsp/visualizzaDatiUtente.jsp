@@ -12,7 +12,7 @@
 </jsp:include>
 
 <main>
-    <h1> Benvenuto ${utente.nome}</h1>
+    <h1> Ciao ${utente.nome}!</h1>
     <div class="visualizza_dati_container">
         <div class="inner_div_dati">
             <h3>Nome e cognome: </h3> <h4>${utente.nome} ${utente.cognome}</h4>

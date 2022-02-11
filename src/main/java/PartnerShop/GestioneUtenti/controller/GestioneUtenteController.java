@@ -4,6 +4,7 @@ import PartnerShop.GestioneUtenti.service.GestioneUtenteService;
 import PartnerShop.GestioneUtenti.service.GestioneUtenteServiceImp;
 
 import PartnerShop.model.entity.Amministratore;
+import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 
 
@@ -23,7 +24,7 @@ import static java.lang.Integer.parseInt;
  * @author Marco Ancona
  */
 
-@WebServlet(urlPatterns = {"/VisualizzaDatiUtente", "/VisualizzaModifica", "/ModificaForm","/CancellaDatiUtenti", "/VisualizzaUtenti"})
+@WebServlet(urlPatterns = {"/VisualizzaDatiUtente", "/VisualizzaModifica", "/ModificaForm","/CancellaDatiUtenti", "/VisualizzaUtenti","/AggiungiListaDesideri","/RimuoviListaDesideri","/VisualizzaListaDesideri"})
 public class GestioneUtenteController extends HttpServlet {
 
     private final GestioneUtenteService gestioneUtenteService = new GestioneUtenteServiceImp();
@@ -96,6 +97,33 @@ public class GestioneUtenteController extends HttpServlet {
                 ArrayList<UtenteRegistrato> listUtenti = gestioneUtenteService.VisualizzaUtenti();
                 request.setAttribute("utenti", listUtenti);
                 dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/visualizzaUtentiRegistrati.jsp"));
+                break;
+            }
+            case "/AggiungiListaDesideri": {
+                String idProdStr=request.getParameter("idProdotto");
+                Cliente cl=(Cliente) request.getSession().getAttribute("cliente");
+                if(idProdStr!=null && cl!=null){
+                    int id=Integer.parseInt(idProdStr);
+                    gestioneUtenteService.aggiungiListaDesideri(cl,id);
+                    dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/listaDesideri.jsp"));
+                }
+                break;
+            }
+            case "/RimuoviListaDesideri": {
+                String idProdStr=request.getParameter("idProdotto");
+                Cliente cl=(Cliente) request.getSession().getAttribute("cliente");
+                if(idProdStr!=null && cl!=null){
+                    int id=Integer.parseInt(idProdStr);
+                    gestioneUtenteService.rimuoviListaDesideri(cl,id);
+                    dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/listaDesideri.jsp"));
+                }
+                break;
+            }
+            case "/VisualizzaListaDesideri":{
+                Cliente cl=(Cliente) request.getSession().getAttribute("cliente");
+                if(cl!=null){
+                    dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/listaDesideri.jsp"));
+                }
                 break;
             }
         }
