@@ -16,9 +16,9 @@
             <form action="CompletaAcquisto" method="post">
 
                 <label for="nome">Nome (Solo lettere e spazi)</label>
-                <input type="text" name="nome" id="nome" value="${utente.nome}" oninput="validaNome3()"/>
+                <input type="text" name="nome" id="nome" value="" oninput="validaNome3()"/>
                 <label for="cognome">Cognome (Solo lettere e spazi)</label>
-                <input type="text" name="cognome" id="cognome" value="${utente.cognome}" oninput="validaCognome3()"/>
+                <input type="text" name="cognome" id="cognome" value="" oninput="validaCognome3()"/>
                 <label for="indir">Indirizzo</label>
                 <input type="text" name="indirizzo" id="indir" value="" oninput="validaIndirizzo3()"/>
                 <label for="cartadc">Carta di credito</label>
