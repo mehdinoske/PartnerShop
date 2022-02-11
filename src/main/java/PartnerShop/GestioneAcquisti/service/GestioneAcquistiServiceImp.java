@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
+/**
+ * Implementa la classe che esplicita i metodi definiti nell'interfaccia service per il sottosistema Gestione Acquisti.
+ */
 public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
     private String nomeReg = "^[ a-zA-Z]+$";
     private String cognomeReg = "^[ a-zA-Z]+$";
@@ -41,6 +44,12 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
         carDB = new CarrelloDAO();
     }
 
+    /** Implementa la funzionalità per aggiungere un prodotto al carrello.
+     * @param car           oggetto di tipo Carrello prelevato dalla sessione.
+     * @param ut            oggetto di tipo UtenteRegistrato prelevato dalla sessione con le informazioni dell'utente loggato.
+     * @param prodottoIdStr stringa contenente l'id del prodotto da aggiungere al carrello.
+     * @param quantStr      string contenente la quantità da aggiugere al carrello.
+     */
    public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr){
        if (ut != null) {
            carDB.UpdateSession(car,ut.getEmail(), ut.getId_Carrello());
@@ -72,6 +81,12 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
     }
 
 
+    /** Implementa la funzionalità per rimuovere un prodotto dal carrello.
+     * @param ut          oggetto di tipo UtenteRegistrato prelevato dalla sessione passato tramite controller contenente le informazioni dell'utente loggato in quel momento.
+     * @param car         oggetto di tipo Carrello prelevato dalla sessione passato tramite cotroller.
+     * @param prodottoId  intero contenente l'id del prodotto da rimuovere dal carrello.
+     * @param setQuantStr stringa contenente quantita da rimuovere dal carrello.
+     */
     public void rimuovidalcarrello(UtenteRegistrato ut,Carrello car,int prodottoId,String setQuantStr){
         if (setQuantStr != null) {
             int setQuant = Integer.parseInt(setQuantStr);
@@ -84,6 +99,15 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
         }
     }
 
+    /** Implementa la funzionalità per acquistare prodotti.
+     * @param ut        oggetto di tipo UtenteRegistrato prelevato dalla sessione passato tramite controller contenente le informazioni dell'utente loggato in quel momento.
+     * @param car       oggetto di tipo Carrello prelevato dalla sessione passato tramite cotroller.
+     * @param nome      stringa inviata dall'utente.
+     * @param cognome   stringa inviata dall'utente.
+     * @param indirizzo stringa inviata dall'utente.
+     * @param cardc     stringa inviata dall'utente.
+     * @return oggetto di tipo Ordine contenete l'ordine appena creato.
+     */
    public Ordine acquistaProdotto(UtenteRegistrato ut,Carrello car,String nome,String cognome,String indirizzo,String cardc){
         Ordine ord = null;
        if (car != null && nome.matches(nomeReg) && cognome.matches(cognomeReg) && indirizzo.length()>=7 && cardc.matches(cardcReg)){
@@ -135,6 +159,10 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
        return ord;
    }
 
+    /** Implementa la funzionalità per visualizzare la lista di ordini.
+     * @param ut oggetto di tipo UtenteRegistrato prelevato dalla sessione passato tramite controller contenente le informazioni dell'utente loggato in quel momento.
+     * @return lista di oggetti di tipo Ordine.
+     */
    public ArrayList<Ordine> visualizzaOrdine(UtenteRegistrato ut){
        if(ut!=null && ut.getTipo() == 0)
         return gesDB.doRetrieveOrdiniByEmailCliente(ut.getEmail());

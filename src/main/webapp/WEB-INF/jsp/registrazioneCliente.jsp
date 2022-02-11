@@ -10,7 +10,7 @@
                 <input type="text" name="nome" id="nome" value="" oninput="validaNome()"/>
                 <label for="cognome">Cognome (Solo lettere e spazi)</label>
                 <input type="text" name="cognome" id="cognome" value="" oninput="validaCognome()"/>
-                <input type="date" name="ddn" value="1999-12-07" hidden/>
+                <input type="date" name="ddn" value="1999-12-07"/>
                 <label for="email">Email</label>
                 <input type="text" name="email" id="email" value="" oninput="validaEmail()"/>
                 <label for="username">Username (almeno 6 caratteri,solo lettere e numeri)</label>
