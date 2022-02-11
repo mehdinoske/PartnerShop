@@ -33,7 +33,25 @@ public interface GestioneUtenteService {
      * @return un ArrayList di UtenteRegistrato che contiene la lista di utenti
      */
     ArrayList<UtenteRegistrato> VisualizzaUtenti();
+
+    /**
+     *
+     * @param cl
+     * @param idProdotto
+     */
     void aggiungiListaDesideri(Cliente cl,int idProdotto);
+
+    /**
+     *
+     * @param cl
+     * @param idProdotto
+     */
     void rimuoviListaDesideri(Cliente cl,int idProdotto);
+
+    /**
+     *
+     * @param email
+     * @return
+     */
     ArrayList<Prodotto> getListaDesideri(String email);
 }

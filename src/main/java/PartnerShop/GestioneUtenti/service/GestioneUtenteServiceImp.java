@@ -72,6 +72,11 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
         return utDAO.doRetrieveAll();
     }
 
+    /**
+     *
+     * @param cl
+     * @param idProdotto
+     */
     public void aggiungiListaDesideri(Cliente cl, int idProdotto){
         if(cl!=null && idProdotto!=0){
             Prodotto pr = prodDB.doRetrieveById(idProdotto);
@@ -82,7 +87,11 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
         }
     }
 
-
+    /**
+     *
+     * @param cl
+     * @param idProdotto
+     */
     public void rimuoviListaDesideri(Cliente cl, int idProdotto){
             if(cl!=null && idProdotto!=0){
                 Prodotto pr = prodDB.doRetrieveById(idProdotto);
@@ -93,6 +102,11 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
             }
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     public ArrayList<Prodotto> getListaDesideri(String email){
         System.out.println("DAO"+email);
         return lisDB.doRetrieveByEmailCliente(email);
