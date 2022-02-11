@@ -62,7 +62,7 @@ create table segnalazione(
                              stato boolean default false not null,
                              motivazione varchar(500) not null,
                              commento varchar(500) not null,
-                             id_amministratore integer default 0,
+                             id_amministratore integer default null,
                              foreign key(id_amministratore) references amministratore(id),
                              foreign key(email_cliente) references cliente(email)
 );
