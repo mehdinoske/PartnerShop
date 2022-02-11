@@ -1,5 +1,6 @@
 package PartnerShop.GestioneUtenti.controller;
 
+import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.GestioneUtenti.service.GestioneUtenteService;
 import PartnerShop.GestioneUtenti.service.GestioneUtenteServiceImp;
 
@@ -59,22 +60,27 @@ public class GestioneUtenteController extends HttpServlet {
                 String ddn = request.getParameter("ddn");
                 String indirizzo = request.getParameter("indirizzo");
                 String cellulare = request.getParameter("cellulare");
+                String passwordConf = request.getParameter("passwordConferma");
                 int tipo = parseInt(request.getParameter("tipo"));
-                UtenteRegistrato ut = new UtenteRegistrato();
-                ut.setNome(nome);
-                ut.setCognome(cognome);
-                ut.setDdn(ddn);
-                ut.setUsername(username);
-                ut.setIndirizzo(indirizzo);
-                ut.setEmail(email);
-                ut.setPassword(password);
-                ut.setPasswordHash(password);
-                ut.setCellulare(cellulare);
-                ut.setTipo(tipo);
-
-                boolean mod = gestioneUtenteService.ModificaDati(ut);
-                if (mod) {
-                    request.getSession().setAttribute("utente", ut);
+                System.out.println(password + " " + passwordConf);
+                if(password.equals(passwordConf)) {
+                    UtenteRegistrato ut = new UtenteRegistrato();
+                    ut.setNome(nome);
+                    ut.setCognome(cognome);
+                    ut.setDdn(ddn);
+                    ut.setUsername(username);
+                    ut.setIndirizzo(indirizzo);
+                    ut.setEmail(email);
+                    ut.setPassword(password);
+                    ut.setPasswordHash(password);
+                    ut.setCellulare(cellulare);
+                    ut.setTipo(tipo);
+                    boolean mod = gestioneUtenteService.ModificaDati(ut);
+                    if (mod) {
+                        request.getSession().setAttribute("utente", ut);
+                    }
+                }else{
+                    throw new MyServletException("Modifica non andata a buon fine");
                 }
                 dispatcher = request.getRequestDispatcher("WEB-INF/jsp/visualizzaDatiUtente.jsp");
                 break;

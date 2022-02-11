@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *  interfaccia per i metodi del sottosistema GestioneUtente implementata per rispettare il Facade Pattern
- *  @author Marco Ancona
+ *  @author Marco Ancona, El Mehdi Boudad
  */
 
 public interface GestioneUtenteService {
@@ -35,23 +35,23 @@ public interface GestioneUtenteService {
     ArrayList<UtenteRegistrato> VisualizzaUtenti();
 
     /**
-     *
-     * @param cl
-     * @param idProdotto
+     *firma del metodo che permette l'aggiunta di un prodotto alla lista desideri personale
+     * @param cl oggetto Clinte che contiene i dati dell'utente
+     * @param idProdotto intero che identifica il prodotto da aggiungere alla lista
      */
     void aggiungiListaDesideri(Cliente cl,int idProdotto);
 
     /**
-     *
-     * @param cl
-     * @param idProdotto
+     *firma del metodo che permette la rimozione di un prodotto dalla lista desideri personale
+     * @param cl oggetto Cliente che contiene i dati dell'utente
+     * @param idProdotto intero che identifica il prodotto da rimuovere dalla lista
      */
     void rimuoviListaDesideri(Cliente cl,int idProdotto);
 
     /**
-     *
-     * @param email
-     * @return
+     *firma del metodo che recupera la lista desideri dell'utente loggato dal DB
+     * @param email stringa che identifica l'utente
+     * @return ArrayList di oggetti Prodotto che contiene tutti i prodotti inseriti nella lista desideri
      */
     ArrayList<Prodotto> getListaDesideri(String email);
 }

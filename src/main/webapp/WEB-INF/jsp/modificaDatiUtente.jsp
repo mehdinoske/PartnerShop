@@ -14,9 +14,9 @@
         <div class="inner_form_container_registrazione">
             <form action="ModificaForm">
                 <label for="nome">Nome (Solo lettere e spazi)</label>
-                <input type="text" name="nome" id="nome" value="${utente.nome}" oninput="validaNome()"/>
+                <input type="text" name="nome" id="nome" value="${utente.nome}" />
                 <label for="cognome">Cognome (Solo lettere e spazi)</label>
-                <input type="text" name="cognome" id="cognome" value="${utente.cognome}" oninput="validaCognome()"/>
+                <input type="text" name="cognome" id="cognome" value="${utente.cognome}" />
 
                 <input type="date" name="ddn" value="1999-12-07" hidden/>
                 <input type="text" name="email" id="email" value="${utente.email}" hidden/>
@@ -24,13 +24,13 @@
                 <input type="text" name="tipo" value="${utente.tipo}" id="tipo" hidden/>
 
                 <label for="cell">Cellulare</label>
-                <input type="text" name="cellulare" id="cell" value="${utente.cellulare}" oninput="validaCellulare()"/>
+                <input type="text" name="cellulare" id="cell" value="${utente.cellulare}"/>
                 <label for="indir">Indirizzo</label>
-                <input type="text" name="indirizzo" id="indir" value="${utente.indirizzo}" oninput="validaIndirizzo()"/>
+                <input type="text" name="indirizzo" id="indir" value="${utente.indirizzo}"/>
                 <label for="pass">Password (almeno 8 caratteri tra cui: una lettera minuscola, una lettera maiuscola, un numero)</label>
-                <input type="password" name="password" id="pass" value="" oninput="validaPassword()"/>
+                <input type="password" name="password" id="pass" value=""/>
                 <label for="passConf">Conferma Password</label>
-                <input type="password" name="passwordConferma" id="passConf" value="" oninput="validaPassword()"/>
+                <input type="password" name="passwordConferma" id="passConf" value=""/>
                 <input type="submit" value="Modifica">
             </form>
         </div>

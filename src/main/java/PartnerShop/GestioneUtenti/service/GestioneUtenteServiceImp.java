@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Implementa la classe che esplicita i metodi definiti nell'interfaccia di GestioneUtente
- * @author Marco Ancona
+ * @author Marco Ancona, El Mehdi Boudad
  */
 
 public class GestioneUtenteServiceImp implements GestioneUtenteService {
@@ -37,7 +37,7 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
     }
 
     /**
-     *firma del metodo che implementa la modifica dei dati personali
+     *implementazione del metodo che realizza la modifica dei dati personali
      * @param ut UtenteRegistrato che contiene le modifiche da applicare
      * @return un boolean che indica se la modifica va a buon fine
      * @throws MyServletException eccezione
@@ -55,7 +55,7 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
     }
 
     /**
-     * firma del metodo che implementa la rimozione dell'utente dal db
+     * implementazione del metodo che realizza  la rimozione dell'utente dal db
      * @param email stringa che identifica il cliente
      */
     @Override
@@ -64,7 +64,7 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
     }
 
     /**
-     *firma del metodo che permette la visualizzazione della lista degli utenti registrati
+     *implementazione del metodo che realizza la visualizzazione della lista degli utenti registrati
      * @return un ArrayList di UtenteRegistrato che contiene la lista di utenti
      */
     @Override
@@ -73,9 +73,9 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
     }
 
     /**
-     *
-     * @param cl
-     * @param idProdotto
+     * implementazione del metodo che realizza l'aggiunta di un prodotto alla lista desideri
+     * @param cl oggetto Clinte che contiene i dati dell'utente
+     * @param idProdotto intero che identifica il prodotto da aggiungere alla lista
      */
     public void aggiungiListaDesideri(Cliente cl, int idProdotto){
         if(cl!=null && idProdotto!=0){
@@ -88,9 +88,9 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
     }
 
     /**
-     *
-     * @param cl
-     * @param idProdotto
+     * implementazione del metodo che realizza la rimozione di un prodotto dalla lista desideri
+     * @param cl oggetto Cliente che contiene i dati dell'utente
+     * @param idProdotto intero che identifica il prodotto da rimuovere dalla lista
      */
     public void rimuoviListaDesideri(Cliente cl, int idProdotto){
             if(cl!=null && idProdotto!=0){
@@ -103,8 +103,8 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
     }
 
     /**
-     *
-     * @param email
+     * implementazione del metodo che realizza il recupero della lista di un utente loggato dal DB
+     * @param email stringa che identifica l'utente
      * @return
      */
     public ArrayList<Prodotto> getListaDesideri(String email){
