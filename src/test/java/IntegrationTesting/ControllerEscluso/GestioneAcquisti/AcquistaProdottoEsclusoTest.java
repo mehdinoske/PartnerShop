@@ -22,18 +22,15 @@ public class AcquistaProdottoEsclusoTest {
     private UtenteRegistrato ut;
     private Carrello car;
     private GestioneAcquistiService gesServ;
-    private Ordine ord;
-    private Prodotto pr;
-    private CarrelloDAO carDB;
 
     @Before
     public void setUp(){
-        carDB = Mockito.mock(CarrelloDAO.class);
+        CarrelloDAO carDB = Mockito.mock(CarrelloDAO.class);
         ut = new UtenteRegistrato();
         car = new Carrello();
         gesServ = new GestioneAcquistiServiceImp();
-        ord = new Ordine();
-        pr = new Prodotto();
+        Ordine ord = new Ordine();
+        Prodotto pr = new Prodotto();
         ut.setEmail("anconamarco@gmail.com");
         ut.setId_Carrello(1);
         pr.setId(1);
@@ -83,7 +80,7 @@ public class AcquistaProdottoEsclusoTest {
         assertNull(gesServ.acquistaProdotto(ut,car,nome,cognome,indirizzo,cardc));
     }
 
-    @Test @Ignore
+    @Test
     public void acquistaProdottoOkTest(){
         String nome = "Bianca";//corretta
         String cognome = "Verdi";//corretta
