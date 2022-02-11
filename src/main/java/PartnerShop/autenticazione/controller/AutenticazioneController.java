@@ -10,6 +10,7 @@ import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ public  class AutenticazioneController extends HttpServlet {
     private  AutenticazioneService autenticazioneService = new AutenticazioneServiceImp();
     private GestioneUtenteService gestioneUtenteService = new GestioneUtenteServiceImp();
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws  IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,  IOException {
         String username = request.getParameter("usernameLogin");
         String password = request.getParameter("passwordLogin");
 
@@ -36,11 +37,11 @@ public  class AutenticazioneController extends HttpServlet {
             request.getSession().setAttribute("admin", amm);
             int mes = 1;
             if(amm==null)
-            request.getSession().setAttribute("mes",mes);
+            request.setAttribute("mes",mes);
             else
-                request.getSession().removeAttribute("mes");
+                request.removeAttribute("mes");
         }else{
-            request.getSession().removeAttribute("mes");
+            request.removeAttribute("mes");
         }
         if(ut!=null && ut.getTipo()==0){
             Cliente cl = new Cliente();
@@ -50,7 +51,7 @@ public  class AutenticazioneController extends HttpServlet {
         }
 
         request.getSession().setAttribute("utente", ut);
-        response.sendRedirect(".");
+        request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request,response);
     }
 
 

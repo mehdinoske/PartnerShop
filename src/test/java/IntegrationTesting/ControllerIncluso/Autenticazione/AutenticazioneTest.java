@@ -45,7 +45,7 @@ public class AutenticazioneTest {
     }
 
     @Test
-    public void loginUtenteUsernameFormatoErratoTest() throws IOException {
+    public void loginUtenteUsernameFormatoErratoTest() throws ServletException, IOException {
         request.setParameter("usernameLogin","ancona1."); //errato
         request.setParameter("passwordLogin","asd");    //corretto
         autenticazioneController.doPost(request,response);
@@ -55,7 +55,7 @@ public class AutenticazioneTest {
 
 
     @Test
-    public void loginUtentePasswordNonAssociataNessunUtente() throws IOException {
+    public void loginUtentePasswordNonAssociataNessunUtente() throws ServletException, IOException {
         request.setParameter("usernameLogin","ancona1"); //corretto
         request.setParameter("passwordLogin","asd.");   //errato
         autenticazioneController.doPost(request,response);

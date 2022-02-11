@@ -208,6 +208,7 @@ li, a, button{
     border-radius: 8px;
     height: 300px;
     width: 300px;
+    border: 2px solid coral;
 }
 
 .div_descrizione{
@@ -215,9 +216,11 @@ li, a, button{
     justify-content: center;
     flex-direction: column;
     width: 450px;
+    height: 300px;
     border-radius: 8px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     background-color: white;
+    border: 2px solid coral;
 }
 
 .preferitiButton{
@@ -232,7 +235,7 @@ li, a, button{
 }
 
 .preferitiButton:hover{
-    background-color: white;
+    background-color: coral;
     color: black;
 }
 
