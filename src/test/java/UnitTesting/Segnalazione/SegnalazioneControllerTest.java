@@ -1,4 +1,4 @@
-package UnitTesting.GestioneSegnalazione;
+package UnitTesting.Segnalazione;
 
 import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.gestioneProdotto.controller.GestioneProdottoController;
@@ -10,6 +10,7 @@ import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.segnalazione.controller.SegnalazioneController;
 import PartnerShop.segnalazione.service.SegnalazioneService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -65,6 +66,7 @@ public class SegnalazioneControllerTest {
         MyServletException mse = assertThrows(MyServletException.class, () -> sc.switchPath(request,response,ss));
         assertEquals("Non sei loggato come cliente.", mse.getMessage());
     }
+
 
     @Test
     public void aggiungiSegnalazioneOk() throws ServletException, IOException {
@@ -197,21 +199,6 @@ public class SegnalazioneControllerTest {
         MyServletException mse = assertThrows(MyServletException.class, () -> sc.aggiungiSegnalazione(request,response,ss));
         assertEquals("Non sei loggato come cliente.", mse.getMessage());
     }
-
-    @Test
-    public void aggiungiSegnalazioneTuttoOk() throws ServletException, IOException {
-        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 0);
-        request.getSession().setAttribute("utente", ut);
-        request.setServletPath("/AggiungiSegnalazione");
-        request.setParameter("motivazione", "Ciao");
-        request.setParameter("commentiAggiuntivi", "Ciao");
-        assertTrue(sc.aggiungiSegnalazione(request, response, ss));
-    }
-
-
-
-
-
 
 
     @Test

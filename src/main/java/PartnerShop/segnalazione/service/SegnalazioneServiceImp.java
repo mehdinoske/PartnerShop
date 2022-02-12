@@ -10,15 +10,25 @@ public class SegnalazioneServiceImp implements SegnalazioneService{
     private SegnalazioneDAO segnalazioneDAO;
     private Segnalazione segn;
 
-    @Override
-    public void aggiungiSegnalazione(Segnalazione segn) {
+    public SegnalazioneServiceImp(){
         segnalazioneDAO = new SegnalazioneDAO();
-        segnalazioneDAO.doSave(segn);
+    }
+
+    public SegnalazioneServiceImp(SegnalazioneDAO segnalazioneDAO){
+        this.segnalazioneDAO = segnalazioneDAO;
+    }
+
+    @Override
+    public boolean aggiungiSegnalazione(Segnalazione segn) {
+        if(segn.getCommento().trim().length()<=100){
+            segnalazioneDAO.doSave(segn);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public ArrayList<Segnalazione> visualizzaListaSegnalazioni(int par) {
-        segnalazioneDAO = new SegnalazioneDAO();
         ArrayList<Segnalazione> listSegnalazioni;
         listSegnalazioni = segnalazioneDAO.doRetrieveAll(par);
         return listSegnalazioni;
@@ -26,7 +36,6 @@ public class SegnalazioneServiceImp implements SegnalazioneService{
 
     @Override
     public Segnalazione visualizzaSegnalazione(int id) {
-        SegnalazioneDAO segnalazioneDAO = new SegnalazioneDAO();
         segn = segnalazioneDAO.doRetrieveById(id);
         return segn;
     }

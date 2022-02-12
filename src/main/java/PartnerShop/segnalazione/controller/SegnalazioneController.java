@@ -102,9 +102,10 @@ public class SegnalazioneController extends HttpServlet {
         if (s.equals("/AggiungiSegnalazione")) {
             String motivazione = request.getParameter("motivazione");
             String commentiAggiuntivi = request.getParameter("commentiAggiuntivi");
-            String email = ((UtenteRegistrato) request.getSession().getAttribute("utente")).getEmail();
+            String email = ut.getEmail();
             Segnalazione segn = new Segnalazione(email, 0, motivazione, commentiAggiuntivi);
-            ss.aggiungiSegnalazione(segn);
+            if(!ss.aggiungiSegnalazione(segn))
+                return false;
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/notificaSegnalazione.jsp");
             dispatcher.forward(request, response);
             return true;
