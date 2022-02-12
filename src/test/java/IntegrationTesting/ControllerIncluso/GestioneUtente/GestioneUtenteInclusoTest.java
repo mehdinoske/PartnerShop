@@ -140,6 +140,8 @@ public class GestioneUtenteInclusoTest {
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
         request.setParameter("passwordConferma", passConf);
+
+        assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
 
     @Test

@@ -38,15 +38,17 @@ public interface GestioneUtenteService {
      *firma del metodo che permette l'aggiunta di un prodotto alla lista desideri personale
      * @param cl oggetto Clinte che contiene i dati dell'utente
      * @param idProdotto intero che identifica il prodotto da aggiungere alla lista
+     * @return un boolean che indica il successo o meno dell'operazione di aggiunta
      */
-    void aggiungiListaDesideri(Cliente cl,int idProdotto);
+    boolean aggiungiListaDesideri(Cliente cl,int idProdotto);
 
     /**
      *firma del metodo che permette la rimozione di un prodotto dalla lista desideri personale
      * @param cl oggetto Cliente che contiene i dati dell'utente
      * @param idProdotto intero che identifica il prodotto da rimuovere dalla lista
+     * @return un boolean che indica il successo o meno dell'operazione di rimozione
      */
-    void rimuoviListaDesideri(Cliente cl,int idProdotto);
+    boolean rimuoviListaDesideri(Cliente cl,int idProdotto);
 
     /**
      *firma del metodo che recupera la lista desideri dell'utente loggato dal DB

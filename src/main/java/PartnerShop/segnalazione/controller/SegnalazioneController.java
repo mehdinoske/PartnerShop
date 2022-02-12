@@ -38,13 +38,13 @@ public class SegnalazioneController extends HttpServlet {
         String s = request.getServletPath();
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         Amministratore admin = (Amministratore) request.getSession().getAttribute("admin");
-        RequestDispatcher dispatcher = null;
         switch (s) {
 
             case "/AggiungiSegnalazione": {
                 if(ut == null ||  ut.getTipo() != 0)
                     throw new MyServletException("Non sei loggato come cliente.");
-                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/aggiungiSegnalazione.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/aggiungiSegnalazione.jsp");
+                dispatcher.forward(request, response);
             }
             return true;
             case "/VisualizzaSegnalazioni": {
@@ -54,7 +54,8 @@ public class SegnalazioneController extends HttpServlet {
                 if(listSegnalazioni == null)
                     throw new MyServletException("Non ci sono segnalazioni in sospeso.");
                 request.getSession().setAttribute("segnalazioni", listSegnalazioni);
-                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaSegnalazioni.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaSegnalazioni.jsp");
+                dispatcher.forward(request, response);
             }
             return true;
             case "/visualizzaDettagliSegn": {
@@ -71,41 +72,43 @@ public class SegnalazioneController extends HttpServlet {
                 if (segn == null)
                     throw new MyServletException("Segnalazione non trovata.");
                 request.getSession().setAttribute("segnalazione", segn);
-                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/segnalazione.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/segnalazione.jsp");
+                dispatcher.forward(request, response);
             }
             return true;
             case "/chiudiSegnalazione": {
                 if(admin == null)
                     throw new MyServletException("Non sei loggato come admin.");
-                int id = Integer.parseInt(request.getParameter("id"));
+                int id;
+                try {
+                    id = Integer.parseInt(request.getParameter("id"));
+                } catch (Exception e) {
+                    throw new MyServletException("Id prodotto errato.");
+                }
                 ss.chiudiSegnalazione(id);
-                dispatcher = request.getRequestDispatcher("/VisualizzaSegnalazioni");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/VisualizzaSegnalazioni");
+                dispatcher.forward(request, response);
             }
             return true;
-
         }
-        assert dispatcher != null;
-        dispatcher.forward(request, response);
         return false;
     }
 
     public boolean aggiungiSegnalazione(HttpServletRequest request, HttpServletResponse response, SegnalazioneService ss) throws ServletException, IOException {
-            String s = request.getServletPath();
-            UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
-            RequestDispatcher dispatcher = null;
-            if(ut == null || ut.getTipo() != 0)
-                throw new MyServletException("Non sei loggato come cliente.");
-            if ("/AggiungiSegnalazione".equals(s)) {
-                String motivazione = request.getParameter("motivazione");
-                String commentiAggiuntivi = request.getParameter("commentiAggiuntivi");
-                String email = ((UtenteRegistrato) request.getSession().getAttribute("utente")).getEmail();
-                Segnalazione segn = new Segnalazione(email, 0, motivazione, commentiAggiuntivi);
-                ss.aggiungiSegnalazione(segn);
-                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/notificaSegnalazione.jsp");
-            }
-
-            assert dispatcher != null;
+        String s = request.getServletPath();
+        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+        if (ut == null || ut.getTipo() != 0)
+            throw new MyServletException("Non sei loggato come cliente.");
+        if (s.equals("/AggiungiSegnalazione")) {
+            String motivazione = request.getParameter("motivazione");
+            String commentiAggiuntivi = request.getParameter("commentiAggiuntivi");
+            String email = ((UtenteRegistrato) request.getSession().getAttribute("utente")).getEmail();
+            Segnalazione segn = new Segnalazione(email, 0, motivazione, commentiAggiuntivi);
+            ss.aggiungiSegnalazione(segn);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/notificaSegnalazione.jsp");
             dispatcher.forward(request, response);
-        return true;
+            return true;
+        }
+        return false;
     }
 }

@@ -40,7 +40,7 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
      *implementazione del metodo che realizza la modifica dei dati personali
      * @param ut UtenteRegistrato che contiene le modifiche da applicare
      * @return un boolean che indica se la modifica va a buon fine
-     * @throws MyServletException eccezione
+     * @throws MyServletException eccezione quando alcuni campi non matchano con la REGEX
      */
     @Override
     public boolean ModificaDati(UtenteRegistrato ut) throws MyServletException {
@@ -76,36 +76,42 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
      * implementazione del metodo che realizza l'aggiunta di un prodotto alla lista desideri
      * @param cl oggetto Clinte che contiene i dati dell'utente
      * @param idProdotto intero che identifica il prodotto da aggiungere alla lista
+     * @return un boolean che indica il successo o meno dell'operazione di aggiunta
      */
-    public void aggiungiListaDesideri(Cliente cl, int idProdotto){
+    public boolean aggiungiListaDesideri(Cliente cl, int idProdotto){
         if(cl!=null && idProdotto!=0){
             Prodotto pr = prodDB.doRetrieveById(idProdotto);
             if(!cl.containsListaDesideri(pr)){
                 cl.addListaDesideri(pr);
                 lisDB.doSave(pr, cl.getEmail());
+                return true;
             }
         }
+        return false;
     }
 
     /**
      * implementazione del metodo che realizza la rimozione di un prodotto dalla lista desideri
      * @param cl oggetto Cliente che contiene i dati dell'utente
      * @param idProdotto intero che identifica il prodotto da rimuovere dalla lista
+     * @return un boolean che indica il successo o meno dell'operazione di aggiunta
      */
-    public void rimuoviListaDesideri(Cliente cl, int idProdotto){
+    public boolean rimuoviListaDesideri(Cliente cl, int idProdotto){
             if(cl!=null && idProdotto!=0){
                 Prodotto pr = prodDB.doRetrieveById(idProdotto);
                 if(cl.containsListaDesideri(pr)){
                     cl.removeListaDesideri(pr);
                     lisDB.doDeleteByIdEmailCliente(idProdotto,cl.getEmail());
+                    return true;
                 }
             }
+            return false;
     }
 
     /**
-     * implementazione del metodo che realizza il recupero della lista di un utente loggato dal DB
+     * implementazione del metodo che realizza il recupero della lista desideri di un utente loggato dal DB
      * @param email stringa che identifica l'utente
-     * @return
+     * @return ArrayList di oggetti Prodotto
      */
     public ArrayList<Prodotto> getListaDesideri(String email){
         return lisDB.doRetrieveByEmailCliente(email);
