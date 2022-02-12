@@ -37,13 +37,15 @@ public class GestioneUtenteInclusoTest {
         String cellulare = "3482697548";
         String indirizzo = "Via Pecereca";
         String password = "@Password1";
-
+        String passConf = "@Password1";
         request.setServletPath("/ModificaForm");
         request.setParameter("nome", nome);
         request.setParameter("cognome", cognome);
         request.setParameter("cellulare", cellulare);
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
+        request.setParameter("passwordConferma", passConf);
+
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
 
@@ -54,12 +56,15 @@ public class GestioneUtenteInclusoTest {
         String cellulare = "3472589763";
         String indirizzo = "Via Pago Veiano";
         String password = "Hotel36.";
+        String passConf = "Hotel36.";
         request.setServletPath("/ModificaForm");
         request.setParameter("nome", nome);
         request.setParameter("cognome", cognome);
         request.setParameter("cellulare", cellulare);
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
+        request.setParameter("passwordConferma", passConf);
+
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
 
@@ -70,12 +75,15 @@ public class GestioneUtenteInclusoTest {
         String cellulare = "333256478";
         String indirizzo = "Bivio Cioffi";
         String password = ".Fastweb99.";
+        String passConf = ".Fastweb99.";
         request.setServletPath("/ModificaForm");
         request.setParameter("nome", nome);
         request.setParameter("cognome", cognome);
         request.setParameter("cellulare", cellulare);
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
+        request.setParameter("passwordConferma", passConf);
+
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
 
@@ -86,12 +94,15 @@ public class GestioneUtenteInclusoTest {
         String cellulare = "3663524789";
         String indirizzo = "Via";
         String password = "@Pollastra9";
+        String passConf = "@Pollastra9";
         request.setServletPath("/ModificaForm");
         request.setParameter("nome", nome);
         request.setParameter("cognome", cognome);
         request.setParameter("cellulare", cellulare);
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
+        request.setParameter("passwordConferma", passConf);
+
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
 
@@ -102,13 +113,33 @@ public class GestioneUtenteInclusoTest {
         String cellulare = "3894856791";
         String indirizzo = "Via Padula";
         String password = "Password1";
+        String passConf = "Password1";
         request.setServletPath("/ModificaForm");
         request.setParameter("nome", nome);
         request.setParameter("cognome", cognome);
         request.setParameter("cellulare", cellulare);
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
+        request.setParameter("passwordConferma", passConf);
+
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
+    }
+
+    @Test
+    public void modificaPasswordNonCoincidonoTest(){
+        String nome = "Sara";
+        String cognome = "Lilia";
+        String cellulare = "3684579214";
+        String indirizzo = "Via Luperto";
+        String password = "Giuseppe99.";
+        String passConf = "Giuseppe99";
+        request.setServletPath("/ModificaForm");
+        request.setParameter("nome", nome);
+        request.setParameter("cognome", cognome);
+        request.setParameter("cellulare", cellulare);
+        request.setParameter("indirizzo", indirizzo);
+        request.setParameter("password", password);
+        request.setParameter("passwordConferma", passConf);
     }
 
     @Test
@@ -118,12 +149,14 @@ public class GestioneUtenteInclusoTest {
         String cellulare = "3451637097";
         String indirizzo = "Via Strettolone";
         String password = "@Giostra99";
+        String passConf = "@Giostra99";
         request.setServletPath("/ModificaForm");
         request.setParameter("nome", nome);
         request.setParameter("cognome", cognome);
         request.setParameter("cellulare", cellulare);
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
+        request.setParameter("passwordConferma", passConf);
         assertTrue(utController.execute(request, response));
     }
 }
