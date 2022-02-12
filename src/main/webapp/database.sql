@@ -110,7 +110,7 @@ create table ordine_prodotto(
 
 
 insert into utente_registrato values ('anconamarco@gmail.com', 'Marco', 'Ancona', '1212-12-12', 'napoli, contrada  n° 1', '3333333333', 'ancona1', sha1('asd'), 0),
-                                     ('peppe.abbatiello@gmail.com', 'Giuseppe', 'Abbatiello', '1212-12-12', 'napoli, contrada  n° 1', '3333333333', 'peppe1', sha1('Giuseppe99'), 0),
+                                     ('peppe.abbatiello@gmail.com', 'Giuseppe', 'Abbatiello', '1212-12-12', 'napoli, contrada  n° 1', '3333333333', 'peppe1', sha1('Giuseppe99.'), 0),
                                      ('depalmamarco@gmail.com', 'Marco', 'Depalma', '1212-12-12', 'Benevento, contrada  n° 1', '2222222222', 'depalma1', sha1('asd'), 1),
                                      ('boudad@gmail.com','Mehdi','Boudad','1212-12-12', 'Salerno, vicolo cioffi', '2222222222', 'noske', sha1('root'), 1);
 

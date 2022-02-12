@@ -37,7 +37,7 @@
             <li>
                 <c:if test="${utente == null && admin ==null}">
                     <div class="dropdown">
-                        <button>ACCOUNT</button>
+                        <button id="btnAccount">ACCOUNT</button>
                         <div class="dropdown-content">
                             <a href="Registrazione?id=cliente" >Registra Cliente </a>
                             <a href="Registrazione?id=venditore" >Registra Venditore  </a>

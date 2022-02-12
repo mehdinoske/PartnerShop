@@ -1,5 +1,8 @@
 package PartnerShop.registrazione.controller;
 
+import PartnerShop.GestioneUtenti.service.GestioneUtenteService;
+import PartnerShop.GestioneUtenti.service.GestioneUtenteServiceImp;
+import PartnerShop.model.entity.Cliente;
 import PartnerShop.model.entity.UtenteRegistrato;
 import PartnerShop.registrazione.service.RegistrazioneService;
 import PartnerShop.registrazione.service.RegistrazioneServiceImp;
@@ -20,8 +23,8 @@ import java.nio.channels.Channels;
 @WebServlet(urlPatterns = {"/Registrazione","/usernameAjax","/emailAjax"})
 public final class RegistrazioneController extends HttpServlet {
 
-    private final RegistrazioneService registrazioneService = new RegistrazioneServiceImp();
-
+    private  RegistrazioneService registrazioneService = new RegistrazioneServiceImp();
+    private GestioneUtenteService gestioneUtenteService = new GestioneUtenteServiceImp();
     /**
      * metodo che reindirizza un cliente o un venditore alla propria pagine per la registrazione
      * @param request
@@ -96,7 +99,12 @@ public final class RegistrazioneController extends HttpServlet {
 
 
         if(request.getParameter("id").equals("cliente")){
+
+            Cliente cl = new Cliente();
+            cl.setEmail(ut.getEmail());
+            cl.setListaDesideri(gestioneUtenteService.getListaDesideri(ut.getEmail()));
             registrazioneService.RegistrazioneCliente(ut);
+            request.getSession().setAttribute("cliente",cl);
             request.getSession().setAttribute("utente", ut);
         }
 
