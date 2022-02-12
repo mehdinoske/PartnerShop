@@ -12,6 +12,7 @@ import org.springframework.mock.web.MockHttpSession;
 import javax.servlet.ServletException;
 import java.io.IOException;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 public class ListaDesideriInclusoTest {
@@ -35,6 +36,15 @@ public class ListaDesideriInclusoTest {
         cl.addListaDesideri(pr);
         cl.setEmail("peppe.abbatiello@gmail.com");
         cl.setCartaDiCredito(null);
+    }
+
+    @Test
+    public void aggiuntaProdottoProdottoNull(){
+        request.setServletPath("/AggiungiListaDesideri");
+        request.setParameter("idProdotto", "null");
+        request.getSession().setAttribute("cliente", cl);
+
+        assertThrows(NumberFormatException.class,()-> utController.execute(request, response));
     }
 
     @Test

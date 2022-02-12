@@ -133,7 +133,6 @@ public class GestioneUtenteController extends HttpServlet {
                 break;
             }
         }
-        if (dispatcher != null)
             dispatcher.forward(request, response);
         return true;
     }

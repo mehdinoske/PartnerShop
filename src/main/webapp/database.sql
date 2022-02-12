@@ -113,7 +113,9 @@ insert into utente_registrato values ('anconamarco@gmail.com', 'Marco', 'Ancona'
                                      ('peppe.abbatiello@gmail.com', 'Giuseppe', 'Abbatiello', '1212-12-12', 'napoli, contrada  n° 1', '3333333333', 'peppe1', sha1('Giuseppe99.'), 0),
                                      ('depalmamarco@gmail.com', 'Marco', 'De Palma', '1999-12-12', 'Benevento, contrada  n° 1', '3858938946', 'depalma99', sha1('SuperNova56$'), 1),
                                      ('boudad@gmail.com','Mehdi','Boudad','1212-12-12', 'Salerno, vicolo cioffi', '2222222222', 'noske1', sha1('Root123.'), 1),
-                                     ('elmehdi.boudad@gmail.com','Mehdi','Boudad','1212-12-12', 'Salerno, vicolo cioffi', '2222222222', 'nosuke', sha1('Qwerty123.'), 0);
+                                     ('elmehdi.boudad@gmail.com','Mehdi','Boudad','1212-12-12', 'Salerno, vicolo cioffi', '2222222222', 'nosuke', sha1('Qwerty123.'), 0),
+                                     ('lionelmessi@gmail.com', 'Lionel', 'Messi', '1989-10-02', 'Parigi', '3487596412', 'lionel', sha1('ForzaPSG9.'), 0);
+
 
 insert into amministratore values (1, 'admin', sha1('admin'));
 insert into cliente values ('anconamarco@gmail.com', null);
