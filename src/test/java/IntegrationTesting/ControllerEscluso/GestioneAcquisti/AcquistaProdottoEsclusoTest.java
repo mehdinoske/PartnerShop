@@ -33,7 +33,7 @@ public class AcquistaProdottoEsclusoTest {
         Prodotto pr = new Prodotto();
         ut.setEmail("anconamarco@gmail.com");
         ut.setId_Carrello(1);
-        pr.setId(1);
+        pr.setId(5);
         pr.setEmail_Venditore("depalmamarco@gmail.com");
         pr.setNome("Penna");
         pr.setCategoria("Cancelleria");
