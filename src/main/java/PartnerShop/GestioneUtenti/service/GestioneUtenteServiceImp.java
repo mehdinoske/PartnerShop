@@ -57,10 +57,15 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
     /**
      * implementazione del metodo che realizza  la rimozione dell'utente dal db
      * @param email stringa che identifica il cliente
+     * @throws MyServletException eccezione quando l'utente non esiste nel db
      */
     @Override
-    public void CancellaUtente(String email) {
-        utDAO.doDelete(email);
+    public void CancellaUtente(String email) throws MyServletException {
+        if(utDAO.doRetrieveByEmail(email) != null) {
+            utDAO.doDelete(email);
+        }else{
+            throw new MyServletException("Utente non esiste");
+        }
     }
 
     /**
@@ -77,35 +82,34 @@ public class GestioneUtenteServiceImp implements GestioneUtenteService {
      * @param cl oggetto Clinte che contiene i dati dell'utente
      * @param idProdotto intero che identifica il prodotto da aggiungere alla lista
      * @return un boolean che indica il successo o meno dell'operazione di aggiunta
+     * @throws MyServletException eccezione che indica se il prodotto è già in lista
      */
-    public boolean aggiungiListaDesideri(Cliente cl, int idProdotto){
-        if(cl!=null && idProdotto!=0){
-            Prodotto pr = prodDB.doRetrieveById(idProdotto);
-            if(!cl.containsListaDesideri(pr)){
-                cl.addListaDesideri(pr);
-                lisDB.doSave(pr, cl.getEmail());
-                return true;
-            }
+    public boolean aggiungiListaDesideri(Cliente cl, int idProdotto) throws MyServletException {
+        Prodotto pr = prodDB.doRetrieveById(idProdotto);
+        if(!cl.containsListaDesideri(pr)){
+            cl.addListaDesideri(pr);
+            lisDB.doSave(pr, cl.getEmail());
+            return true;
+        }else{
+            throw new MyServletException("Prodotto già in lista!");
         }
-        return false;
     }
 
     /**
      * implementazione del metodo che realizza la rimozione di un prodotto dalla lista desideri
      * @param cl oggetto Cliente che contiene i dati dell'utente
      * @param idProdotto intero che identifica il prodotto da rimuovere dalla lista
-     * @return un boolean che indica il successo o meno dell'operazione di aggiunta
+     * @throws MyServletException eccezione che indica se il prodotto non è in lista
      */
-    public boolean rimuoviListaDesideri(Cliente cl, int idProdotto){
-            if(cl!=null && idProdotto!=0){
-                Prodotto pr = prodDB.doRetrieveById(idProdotto);
-                if(cl.containsListaDesideri(pr)){
-                    cl.removeListaDesideri(pr);
-                    lisDB.doDeleteByIdEmailCliente(idProdotto,cl.getEmail());
-                    return true;
-                }
+    public boolean rimuoviListaDesideri(Cliente cl, int idProdotto) throws MyServletException {
+            Prodotto pr = prodDB.doRetrieveById(idProdotto);
+            if (cl.containsListaDesideri(pr)) {
+                cl.removeListaDesideri(pr);
+                lisDB.doDeleteByIdEmailCliente(idProdotto, cl.getEmail());
+                return true;
+            }else{
+                throw new MyServletException("Prodotto non in lista!");
             }
-            return false;
     }
 
     /**

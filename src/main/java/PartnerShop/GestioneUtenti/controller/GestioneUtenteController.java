@@ -97,6 +97,8 @@ public class GestioneUtenteController extends HttpServlet {
                     gestioneUtenteService.CancellaUtente(email);
                     dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/visualizzaUtentiRegistrati.jsp"));
                     break;
+                }else{
+                    throw new MyServletException("Admin e Utente non validi");
                 }
             }
             case "/VisualizzaUtenti": {
