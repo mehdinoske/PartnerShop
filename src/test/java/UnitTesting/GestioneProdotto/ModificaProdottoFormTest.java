@@ -19,8 +19,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
 public class ModificaProdottoFormTest {
     MockHttpServletRequest request;
@@ -55,6 +54,15 @@ public class ModificaProdottoFormTest {
     }
 
     @Test
+    public void utenteNonAutorizzatoNull() {
+        UtenteRegistrato ut = null;
+        request.getSession().setAttribute("utente", ut);
+
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModificaForm(request,response,gps));
+        assertEquals("Non hai i permessi necessari.", mse.getMessage());
+    }
+
+    @Test
     public void idProdottoErrato() {
         UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
         request.getSession().setAttribute("utente", ut);
@@ -82,6 +90,6 @@ public class ModificaProdottoFormTest {
         int id = 1;
         request.setParameter("id", String.valueOf(id));
         Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        assertEquals(true, gpc.prodottoModificaForm(request,response,gps));
+        assertTrue(gpc.prodottoModificaForm(request, response, gps));
     }
 }

@@ -20,8 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
 public class AggiungiProdottoTest {
     MockHttpServletRequest request;
@@ -52,6 +51,16 @@ public class AggiungiProdottoTest {
         UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 0);
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         request.getSession().setAttribute("utente", ut);
+        request.getSession().setAttribute("prodotti", prodotti);
+
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoAggiungi(request,response,gps));
+        assertEquals("Non hai i permessi necessari.", mse.getMessage());
+    }
+
+    @Test
+    public void utenteNonAutorizzatoNull() {
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        request.getSession().setAttribute("utente", null);
         request.getSession().setAttribute("prodotti", prodotti);
 
         MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoAggiungi(request,response,gps));
@@ -194,7 +203,7 @@ public class AggiungiProdottoTest {
         request.getSession().setAttribute("img", pr);
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
         Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        assertEquals(true, gpc.prodottoAggiungi(request,response,gps));
+        assertTrue(gpc.prodottoAggiungi(request, response, gps));
     }
 
     private void setParametersRequest(int id, String nome, String descrizione, String categoria, int prezzo_Cent, int disponibilita) {

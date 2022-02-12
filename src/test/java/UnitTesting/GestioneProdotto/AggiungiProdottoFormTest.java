@@ -17,8 +17,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
 public class AggiungiProdottoFormTest {
     MockHttpServletRequest request;
@@ -53,9 +52,18 @@ public class AggiungiProdottoFormTest {
     }
 
     @Test
+    public void utenteNonAutorizzatoNull() {
+        UtenteRegistrato ut = null;
+        request.getSession().setAttribute("utente", ut);
+
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoAggiungiForm(request,response,gps));
+        assertEquals("Non hai i permessi necessari.", mse.getMessage());
+    }
+
+    @Test
     public void tuttoOk() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
         UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
         request.getSession().setAttribute("utente", ut);
-        assertEquals(true, gpc.prodottoAggiungiForm(request,response,gps));
+        assertTrue(gpc.prodottoAggiungiForm(request, response, gps));
     }
 }

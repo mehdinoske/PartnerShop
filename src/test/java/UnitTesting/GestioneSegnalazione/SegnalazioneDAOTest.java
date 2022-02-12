@@ -2,12 +2,8 @@ package UnitTesting.GestioneSegnalazione;
 
 import PartnerShop.model.dao.SegnalazioneDAO;
 import PartnerShop.model.entity.Segnalazione;
-import PartnerShop.utils.ConPool;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import java.sql.Connection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +16,7 @@ public class SegnalazioneDAOTest {
         this.segnalazioneDAO=new SegnalazioneDAO();
     }
 
+
     @Test
     public void doGetByIdNonPresente() {
         int id = 16666666;
@@ -31,6 +28,8 @@ public class SegnalazioneDAOTest {
         int id = 1;
         assertNotNull(segnalazioneDAO.doRetrieveById(id));
     }
+
+
 
 
     @Test
@@ -52,6 +51,8 @@ public class SegnalazioneDAOTest {
     }
 
 
+
+
     @Test
     public void cambiaStatoIdNonPresente() {
         int id = 14444444;
@@ -63,6 +64,8 @@ public class SegnalazioneDAOTest {
         int id = 1;
         assertTrue(segnalazioneDAO.aggiornaStato(id));
     }
+
+
 
 
     @Test

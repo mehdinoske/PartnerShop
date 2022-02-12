@@ -3,6 +3,7 @@ package UnitTesting.GestioneProdotto;
 import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.gestioneProdotto.controller.GestioneProdottoController;
 import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
+import PartnerShop.model.entity.Amministratore;
 import PartnerShop.model.entity.Prodotto;
 import PartnerShop.model.entity.UtenteRegistrato;
 import org.junit.Before;
@@ -19,8 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
 public class RimuoviProdottoTest {
     MockHttpServletRequest request;
@@ -30,6 +30,7 @@ public class RimuoviProdottoTest {
     GestioneProdottoService gps;
     Prodotto prodotto;
     UtenteRegistrato utente;
+    Amministratore admin;
 
     @Before
     public void setUp() {
@@ -41,7 +42,7 @@ public class RimuoviProdottoTest {
         prodotto = Mockito.mock(Prodotto.class);
         session = new MockHttpSession();
         utente = Mockito.mock(UtenteRegistrato.class);
-
+        admin = Mockito.mock(Amministratore.class);
         request.setSession(session);
     }
 
@@ -65,7 +66,7 @@ public class RimuoviProdottoTest {
     }
 
     @Test
-    public void idProdottoNonPresente() throws MyServletException {
+    public void idProdottoNonPresente() {
         UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
         request.getSession().setAttribute("utente", ut);
         int id = 1;
@@ -84,6 +85,17 @@ public class RimuoviProdottoTest {
         request.getSession().setAttribute("prodotti", prodotti);
         request.setParameter("id", String.valueOf(id));
         Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
-        assertEquals(true, gpc.prodottoRimuovi(request,response,gps));
+        assertTrue(gpc.prodottoRimuovi(request, response, gps));
+    }
+
+    @Test
+    public void tuttoOkAdmin() throws ServletException, SQLException, NoSuchAlgorithmException, IOException {
+        request.getSession().setAttribute("admin", admin);
+        int id = 1;
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        request.getSession().setAttribute("prodotti", prodotti);
+        request.setParameter("id", String.valueOf(id));
+        Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
+        assertTrue(gpc.prodottoRimuovi(request, response, gps));
     }
 }
