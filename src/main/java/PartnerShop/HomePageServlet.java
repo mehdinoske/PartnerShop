@@ -28,6 +28,16 @@ public class HomePageServlet extends HttpServlet {
     private final GestioneProdottoService PrDAO = new GestioneProdottoServiceImp();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        execute(request,response);
+    }
+
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
+
+    public boolean execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         ArrayList<Prodotto> prodotti;
@@ -41,11 +51,6 @@ public class HomePageServlet extends HttpServlet {
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
         dispatcher.forward(request, response);
-    }
-
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
+        return true;
     }
 }
