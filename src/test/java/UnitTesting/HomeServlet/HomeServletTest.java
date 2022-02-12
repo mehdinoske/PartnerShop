@@ -38,6 +38,9 @@ private HomePageServlet homectrl;
 
     @Test
     public void homeServlet() throws ServletException, IOException {
+
+        assertTrue(homectrl.execute(request,response));
+        request.setAttribute("utente","");
         assertTrue(homectrl.execute(request,response));
     }
 }

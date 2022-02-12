@@ -19,21 +19,47 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Questa classe implemmenta il controller che si occupa del sottosistema gestione segnalazione
+ * @see HttpServlet fornisce l'interfaccia per creare una servlet
+ * @version 1.0
+ * @author Marco De Palma, Giuseppe Abbatiello
+ */
 @WebServlet(urlPatterns = {"/AggiungiSegnalazione","/VisualizzaSegnalazioni","/visualizzaDettagliSegn","/chiudiSegnalazione"})
 public class SegnalazioneController extends HttpServlet {
 
     private final SegnalazioneService segnalazioneService = new SegnalazioneServiceImp();
 
+    /**
+     * Il metodo ereditato dalla classe HttpServlet che esplicita i parametri della request e permette di usare il metodo switchPath
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-            switchPath(request,response, segnalazioneService);
-        }
+        switchPath(request,response, segnalazioneService);
+    }
 
-        public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            aggiungiSegnalazione(request,response, segnalazioneService);
-        }
+    /**
+     * Il metodo ereditato dalla classe HttpServlet che non esplicita i parametri della request e permette di usare il metodo aggiungiSegnalazione
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
+    public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        aggiungiSegnalazione(request,response, segnalazioneService);
+    }
 
-
+    /**
+     * Il metodo che seleziona in base al ServletPath quale istruzioni eseguire
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
     public boolean switchPath(HttpServletRequest request, HttpServletResponse response, SegnalazioneService ss) throws ServletException, IOException {
         String s = request.getServletPath();
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
@@ -94,6 +120,13 @@ public class SegnalazioneController extends HttpServlet {
         return false;
     }
 
+    /**
+     * Il metodo che permette l'aggiunta di una segnalazione
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
     public boolean aggiungiSegnalazione(HttpServletRequest request, HttpServletResponse response, SegnalazioneService ss) throws ServletException, IOException {
         String s = request.getServletPath();
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");

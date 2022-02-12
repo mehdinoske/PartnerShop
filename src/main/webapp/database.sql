@@ -113,22 +113,29 @@ insert into utente_registrato values ('anconamarco@gmail.com', 'Marco', 'Ancona'
                                      ('peppe.abbatiello@gmail.com', 'Giuseppe', 'Abbatiello', '1212-12-12', 'napoli, contrada  n° 1', '3333333333', 'peppe1', sha1('Giuseppe99.'), 0),
                                      ('depalmamarco@gmail.com', 'Marco', 'De Palma', '1999-12-12', 'Benevento, contrada  n° 1', '3858938946', 'depalma99', sha1('SuperNova56$'), 1),
                                      ('boudad@gmail.com','Mehdi','Boudad','1212-12-12', 'Salerno, vicolo cioffi', '2222222222', 'noske1', sha1('Root123.'), 1),
-                                     ('elmehdi.boudad@gmail.com','Mehdi','Boudad','1212-12-12', 'Salerno, vicolo cioffi', '2222222222', 'nosuke', sha1('Qwerty123.'), 0);
+                                     ('elmehdi.boudad@gmail.com','Mehdi','Boudad','1212-12-12', 'Salerno, vicolo cioffi', '2222222222', 'nosuke', sha1('Qwerty123.'), 0),
+                                     ('lionelmessi@gmail.com', 'Lionel', 'Messi', '1989-10-02', 'Parigi', '3487596412', 'lionel', sha1('ForzaPSG9.'), 0),
+                                     ('marcovanbasten@gmail.com', 'Marco', 'Van Basten', '1978-12-03', 'Utrecht', '3665748912', 'VanBasten9', sha1('@ForzaMilan1899'), 1);
+
 
 insert into amministratore values (1, 'admin', sha1('admin'));
 insert into cliente values ('anconamarco@gmail.com', null);
 insert into cliente values ('peppe.abbatiello@gmail.com', null);
 insert into cliente value ('elmehdi.boudad@gmail.com',NULL);
+insert into cliente value('lionelmessi@gmail.com', NULL);
 
 insert into venditore values ('depalmamarco@gmail.com', 'nomeNegozio', 'AZ123456789');
 insert into venditore values ('boudad@gmail.com', 'nomeNegozioo', 'ZA987654321');
+insert into venditore values ('marcovanbasten@gmail.com', 'scuola calcio', 'OL35264897L');
 
 
 insert into carrello values (1, 'anconamarco@gmail.com');
 insert into carrello values (2, 'peppe.abbatiello@gmail.com');
 
 insert into lista_desideri values (1, 'anconamarco@gmail.com');
-insert into lista_desideri values (1, 'peppe.abbatiello@gmail.com');
+insert into lista_desideri values (6, 'peppe.abbatiello@gmail.com');
+insert into lista_desideri values (7, 'peppe.abbatiello@gmail.com');
+
 insert into prodotto values (1, 'depalmamarco@gmail.com', 'Penna', 'Penna blu molto costosa', 'Cancelleria', 100, 2000);
 insert into prodotto values (2, 'depalmamarco@gmail.com', 'Macbook', 'MacBook che fa schifo', 'Elettronica', 150000, 400);
 insert into prodotto values (3, 'boudad@gmail.com', 'LG V40', 'LG V40 uno dei miglori smartphone mai creati', 'Elettronica', 50000, 500);

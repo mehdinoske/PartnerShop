@@ -2,6 +2,9 @@ package IntegrationTesting.ControllerIncluso.GestioneUtente;
 
 import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.GestioneUtenti.controller.GestioneUtenteController;
+import PartnerShop.model.dao.UtenteRegistratoDAO;
+import PartnerShop.model.entity.Amministratore;
+import PartnerShop.model.entity.UtenteRegistrato;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -18,16 +21,17 @@ public class GestioneUtenteInclusoTest {
     MockHttpServletRequest request;
     MockHttpServletResponse response;
     GestioneUtenteController utController;
+    UtenteRegistrato ut;
+    UtenteRegistratoDAO utDAO;
+    Amministratore admin;
 
     @Before
     public void setUp(){
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
         utController = new GestioneUtenteController();
-        request.setParameter("ddn", "1212-12-12");
-        request.setParameter("username","ancona1");
-        request.setParameter("email", "anconamarco@gmail.com");
-        request.setParameter("tipo", "0");
+        admin = new Amministratore();
+        utDAO = new UtenteRegistratoDAO();
     }
 
     @Test
@@ -45,6 +49,10 @@ public class GestioneUtenteInclusoTest {
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
         request.setParameter("passwordConferma", passConf);
+        request.setParameter("ddn", "1212-12-12");
+        request.setParameter("username","ancona1");
+        request.setParameter("email", "anconamarco@gmail.com");
+        request.setParameter("tipo", "0");
 
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
@@ -64,6 +72,10 @@ public class GestioneUtenteInclusoTest {
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
         request.setParameter("passwordConferma", passConf);
+        request.setParameter("ddn", "1212-12-12");
+        request.setParameter("username","ancona1");
+        request.setParameter("email", "anconamarco@gmail.com");
+        request.setParameter("tipo", "0");
 
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
@@ -83,6 +95,10 @@ public class GestioneUtenteInclusoTest {
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
         request.setParameter("passwordConferma", passConf);
+        request.setParameter("ddn", "1212-12-12");
+        request.setParameter("username","ancona1");
+        request.setParameter("email", "anconamarco@gmail.com");
+        request.setParameter("tipo", "0");
 
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
@@ -102,6 +118,10 @@ public class GestioneUtenteInclusoTest {
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
         request.setParameter("passwordConferma", passConf);
+        request.setParameter("ddn", "1212-12-12");
+        request.setParameter("username","ancona1");
+        request.setParameter("email", "anconamarco@gmail.com");
+        request.setParameter("tipo", "0");
 
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
@@ -121,6 +141,10 @@ public class GestioneUtenteInclusoTest {
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
         request.setParameter("passwordConferma", passConf);
+        request.setParameter("ddn", "1212-12-12");
+        request.setParameter("username","ancona1");
+        request.setParameter("email", "anconamarco@gmail.com");
+        request.setParameter("tipo", "0");
 
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
@@ -140,6 +164,10 @@ public class GestioneUtenteInclusoTest {
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
         request.setParameter("passwordConferma", passConf);
+        request.setParameter("ddn", "1212-12-12");
+        request.setParameter("username","ancona1");
+        request.setParameter("email", "anconamarco@gmail.com");
+        request.setParameter("tipo", "0");
 
         assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
@@ -159,6 +187,62 @@ public class GestioneUtenteInclusoTest {
         request.setParameter("indirizzo", indirizzo);
         request.setParameter("password", password);
         request.setParameter("passwordConferma", passConf);
+        request.setParameter("ddn", "1212-12-12");
+        request.setParameter("username","ancona1");
+        request.setParameter("email", "anconamarco@gmail.com");
+        request.setParameter("tipo", "0");
+
         assertTrue(utController.execute(request, response));
+    }
+
+    @Test
+    public void cancellaDatiUtentiOk() throws ServletException, IOException {
+        ut = utDAO.doRetrieveByEmail("lionelmessi@gmail.com");
+        request.setServletPath("/CancellaDatiUtenti");
+        request.getSession().setAttribute("utente", ut);
+        request.setParameter("email", "lionelmessi@gmail.com");
+        request.getSession().setAttribute("admin", null);
+
+        assertTrue(utController.execute(request, response));
+    }
+
+    @Test
+    public void cancellaDatiAdminOk() throws ServletException, IOException {
+        admin.setId(1);
+        request.setServletPath("/CancellaDatiUtenti");
+        request.getSession().setAttribute("admin", admin);
+        request.setParameter("email", "marcovanbasten@gmail.com");
+
+        assertTrue(utController.execute(request, response));
+    }
+
+    @Test
+    public void cancellaDatiAdminFailTest(){
+        admin.setId(1);
+        request.setServletPath("/CancellaDatiUtenti");
+        request.getSession().setAttribute("admin", admin);
+        request.setParameter("email", "ruudgullit@gmail.com");
+
+        assertThrows(MyServletException.class,()-> utController.execute(request, response));
+    }
+
+    @Test
+    public void cancellaDatiAdminEUtenteNullTest(){
+        request.setServletPath("/CancellaDatiUtenti");
+        request.getSession().setAttribute("admin", null);
+        request.setParameter("email", "marcovanbasten@gmail.com");
+
+        assertThrows(MyServletException.class,()-> utController.execute(request, response));
+    }
+
+    @Test
+    public void cancellaDatiAdminOkUtenteOk(){
+        admin.setId(1);
+        ut = utDAO.doRetrieveByEmail("anconamarco@gmail.com");
+        request.setServletPath("/CancellaDatiUtenti");
+        request.getSession().setAttribute("admin", admin);
+        request.getSession().setAttribute("utente", ut);
+
+        assertThrows(MyServletException.class,()-> utController.execute(request, response));
     }
 }
