@@ -57,58 +57,6 @@ public class GestioneAcquistiDAO {
         }
     }
 
-    public ArrayList<Ordine> doRetrieveAllOrdine() {
-        ArrayList list = new ArrayList();
-
-        try {
-            try {
-                PreparedStatement ps = con.prepareStatement("SELECT id,nome,cognome, email_cliente, data_ordine,indirizzo,prezzo_tot FROM ordine");
-                ResultSet rs = ps.executeQuery();
-
-                label50:
-                while(true) {
-                    if (!rs.next()) {
-                        int i = 0;
-
-                        while(true) {
-                            if (i >= list.size()) {
-                                break label50;
-                            }
-
-                            ps = con.prepareStatement("SELECT id_ordine,id_prodotto,quantita FROM ordine_prodotto where id_ordine = ?");
-                            ps.setInt(1, ((Ordine)list.get(i)).getId());
-                            rs = ps.executeQuery();
-
-                            while(rs.next()) {
-                                ((Ordine)list.get(i)).setProdottoHash(this.prodDB.doRetrieveById(rs.getInt(2)));
-                                ((Ordine)list.get(i)).setQuantHash(rs.getInt(2), rs.getInt(3));
-                                ((Ordine)list.get(i)).getProdotto(rs.getInt(2)).setDisponibilita(rs.getInt(4));
-                            }
-
-                            ++i;
-                        }
-                    }
-
-                    Ordine p = new Ordine();
-                    p.setId(rs.getInt(1));
-                    p.setNome(rs.getString(2));
-                    p.setCognome(rs.getString(3));
-                    p.setEmailCliente(rs.getString(4));
-                    p.setDataSql(rs.getDate(5));
-                    p.setIndirizzo(rs.getString(6));
-                    p.setPrezzo_tot(rs.getFloat(7));
-                    list.add(p);
-                }
-            } catch (Throwable var7) {
-                throw var7;
-            }
-
-            return list;
-        } catch (SQLException var8) {
-            throw new RuntimeException(var8);
-        }
-    }
-
 
     public ArrayList<Ordine> doRetrieveOrdiniByEmailCliente(String email_cliente) {
         ArrayList list = new ArrayList();

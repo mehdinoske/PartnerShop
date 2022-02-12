@@ -164,9 +164,12 @@ public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
      * @return lista di oggetti di tipo Ordine.
      */
    public ArrayList<Ordine> visualizzaOrdine(UtenteRegistrato ut){
-       if(ut!=null && ut.getTipo() == 0)
-        return gesDB.doRetrieveOrdiniByEmailCliente(ut.getEmail());
-       else
+       if(ut!=null && ut.getTipo() == 0){
+           return gesDB.doRetrieveOrdiniByEmailCliente(ut.getEmail());
+       }
+       else if(ut!=null && ut.getTipo() == 1){
            return gesDB.doRetrieveOrdiniByEmailVenditore(ut.getEmail());
+       }
+       return null;
    }
 }
