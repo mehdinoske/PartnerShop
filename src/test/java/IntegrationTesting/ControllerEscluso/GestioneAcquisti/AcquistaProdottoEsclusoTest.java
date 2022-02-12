@@ -34,7 +34,7 @@ public class AcquistaProdottoEsclusoTest {
         ut.setEmail("anconamarco@gmail.com");
         ut.setId_Carrello(1);
         pr.setId(5);
-        pr.setEmail_Venditore("depalmamarco@gmail.com");
+        pr.setEmail_Venditore("boudad@gmail.com");
         pr.setNome("Penna");
         pr.setCategoria("Cancelleria");
         pr.setDescrizione("Penna blu molto costosa");
