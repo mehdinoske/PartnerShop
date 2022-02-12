@@ -47,7 +47,7 @@ public class AutenticazioneTest {
     @Test
     public void loginUtenteUsernameFormatoErratoTest() throws ServletException, IOException {
         request.setParameter("usernameLogin","ancona1."); //errato
-        request.setParameter("passwordLogin","asd");    //corretto
+        request.setParameter("passwordLogin","Marco99.");    //corretto
         autenticazioneController.doPost(request,response);
         UtenteRegistrato ut = (UtenteRegistrato)request.getSession().getAttribute("utente");
         Assert.assertEquals(null,ut);
@@ -67,7 +67,7 @@ public class AutenticazioneTest {
     @Test
     public void loginOkTest() throws IOException, ServletException {
         request.setParameter("usernameLogin","ancona1");
-        request.setParameter("passwordLogin","asd");
+        request.setParameter("passwordLogin","Marco99.");
         autenticazioneController.doPost(request,response);
         UtenteRegistrato ut = (UtenteRegistrato)request.getSession().getAttribute("utente");
         Assert.assertNotEquals(null,ut);

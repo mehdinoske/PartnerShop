@@ -44,7 +44,7 @@ public class AutenticazioneTest {
     @Test
     public void loginUtenteUsernameFormatoErratoTest() throws IOException, ServletException {
         String username = "ancona1.";
-        String password = "asd";
+        String password = "Marco99.";
         UtenteRegistrato ut =autService.login(username,password);
         Assert.assertEquals(null,ut);
     }
@@ -60,7 +60,7 @@ public class AutenticazioneTest {
     @Test
     public void loginOkTest() throws IOException, ServletException {
         String username = "ancona1";
-        String password = "asd";
+        String password = "Marco99.";
         UtenteRegistrato ut =autService.login(username,password);
         Assert.assertNotEquals(null,ut);
     }
