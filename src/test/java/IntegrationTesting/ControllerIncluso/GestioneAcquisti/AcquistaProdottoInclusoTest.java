@@ -49,13 +49,13 @@ public class AcquistaProdottoInclusoTest {
         pr = new Prodotto();
         ut.setEmail("anconamarco@gmail.com");
         ut.setId_Carrello(1);
-        pr.setId(5);
-        pr.setEmail_Venditore("depalmamarco@gmail.com");
+        pr.setId(6);
+        pr.setEmail_Venditore("boudad@gmail.com");
         pr.setNome("Cacciavite");
         pr.setCategoria("Utensili");
         pr.setDescrizione("Utensile molto utile");
         pr.setPrezzo_Cent(1000);
-        pr.setDisponibilita(700);
+        pr.setDisponibilita(699);
         car.setProdottoHash(pr);
         car.setQuantHash(pr.getId(),1);
         request = new MockHttpServletRequest();

@@ -143,6 +143,7 @@ insert into ordine values (1, 'nome','cognome','anconamarco@gmail.com', '1212-12
 insert into carrello_prodotto values (1, 1, 20);
 insert into carrello_prodotto values (1, 2, 20);
 insert into carrello_prodotto values (1, 5, 20);
+insert into carrello_prodotto values (1, 6, 20);
 insert into ordine_prodotto values (1, 1, 30);
 insert into desideri_prodotto values (1, 1, 20);
 
