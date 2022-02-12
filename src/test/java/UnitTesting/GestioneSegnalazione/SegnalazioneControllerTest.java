@@ -144,4 +144,89 @@ public class SegnalazioneControllerTest {
         Mockito.when(ss.visualizzaSegnalazione(id)).thenReturn(Mockito.mock(Segnalazione.class));
         assertTrue(sc.switchPath(request, response, ss));
     }
+
+
+
+
+
+    @Test
+    public void chiudiSegnalazioneSegnAdminNull() {
+        request.getSession().setAttribute("admin", null);
+        request.setServletPath("/chiudiSegnalazione");
+        MyServletException mse = assertThrows(MyServletException.class, () -> sc.switchPath(request,response,ss));
+        assertEquals("Non sei loggato come admin.", mse.getMessage());
+    }
+
+    @Test
+    public void chiudiSegnalazioneIdErrato() {
+        request.getSession().setAttribute("admin", admin);
+        request.setServletPath("/chiudiSegnalazione");
+        double id = 13.55;
+        request.setParameter("id", String.valueOf(id));
+        MyServletException mse = assertThrows(MyServletException.class, () -> sc.switchPath(request,response,ss));
+        assertEquals("Id prodotto errato.", mse.getMessage());
+    }
+
+    @Test
+    public void chiudiSegnalazioneOk() throws ServletException, IOException {
+        request.getSession().setAttribute("admin", admin);
+        request.setServletPath("/chiudiSegnalazione");
+        int id = 1;
+        request.setParameter("id", String.valueOf(id));
+        assertTrue(sc.switchPath(request, response, ss));
+    }
+
+
+
+
+
+
+    @Test
+    public void aggiungiSegnalazioneUtenteNNull() {
+        request.getSession().setAttribute("utente", null);
+        request.setServletPath("/AggiungiSegnalazione");
+        MyServletException mse = assertThrows(MyServletException.class, () -> sc.aggiungiSegnalazione(request,response,ss));
+        assertEquals("Non sei loggato come cliente.", mse.getMessage());
+    }
+
+    @Test
+    public void aggiungiSegnalazioneUtenteNonAutorizzato2() {
+        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
+        request.getSession().setAttribute("utente", ut);
+        request.setServletPath("/AggiungiSegnalazione");
+        MyServletException mse = assertThrows(MyServletException.class, () -> sc.aggiungiSegnalazione(request,response,ss));
+        assertEquals("Non sei loggato come cliente.", mse.getMessage());
+    }
+
+    @Test
+    public void aggiungiSegnalazioneTuttoOk() throws ServletException, IOException {
+        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 0);
+        request.getSession().setAttribute("utente", ut);
+        request.setServletPath("/AggiungiSegnalazione");
+        request.setParameter("motivazione", "Ciao");
+        request.setParameter("commentiAggiuntivi", "Ciao");
+        assertTrue(sc.aggiungiSegnalazione(request, response, ss));
+    }
+
+
+
+
+
+
+
+    @Test
+    public void aggiungiSegnalazioneServletPathErrata() throws ServletException, IOException {
+        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 0);
+        request.getSession().setAttribute("utente", ut);
+        request.setServletPath("pippo");
+        assertFalse(sc.aggiungiSegnalazione(request,response,ss));
+    }
+
+    @Test
+    public void switchPathServletPathErrata() throws ServletException, IOException {
+        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 0);
+        request.getSession().setAttribute("utente", ut);
+        request.setServletPath("pippo");
+        assertFalse(sc.switchPath(request,response,ss));
+    }
 }

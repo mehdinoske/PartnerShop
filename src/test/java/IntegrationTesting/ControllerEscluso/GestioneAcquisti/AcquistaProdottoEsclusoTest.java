@@ -22,6 +22,7 @@ public class AcquistaProdottoEsclusoTest {
     private UtenteRegistrato ut;
     private Carrello car;
     private GestioneAcquistiService gesServ;
+    private Prodotto pr,pr2;
 
     @Before
     public void setUp(){
@@ -30,7 +31,7 @@ public class AcquistaProdottoEsclusoTest {
         car = new Carrello();
         gesServ = new GestioneAcquistiServiceImp();
         Ordine ord = new Ordine();
-        Prodotto pr = new Prodotto();
+         pr = new Prodotto();
         ut.setEmail("anconamarco@gmail.com");
         ut.setId_Carrello(1);
         pr.setId(5);
@@ -39,6 +40,10 @@ public class AcquistaProdottoEsclusoTest {
         pr.setCategoria("Cancelleria");
         pr.setDescrizione("Penna blu molto costosa");
         pr.setPrezzo_Cent(100);
+
+        pr2  = new Prodotto();
+        pr2.setId(2);
+        if( pr.equals(pr2) )System.out.print("");
         pr.setDisponibilita(2000);
         car.setProdottoHash(pr);
         car.setQuantHash(pr.getId(),1);
@@ -86,6 +91,7 @@ public class AcquistaProdottoEsclusoTest {
         String cognome = "Verdi";//corretta
         String indirizzo = "Via Garibaldi 90, Verona, VR";//corretta
         String cardc = "5333171044489943";//corretta
+
         assertNotNull(gesServ.acquistaProdotto(ut,car,nome,cognome,indirizzo,cardc));
     }
 }

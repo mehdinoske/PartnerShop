@@ -1,5 +1,6 @@
 package PartnerShop.registrazione.controller;
 
+import PartnerShop.Exceptions.MyServletException;
 import PartnerShop.GestioneUtenti.service.GestioneUtenteService;
 import PartnerShop.GestioneUtenti.service.GestioneUtenteServiceImp;
 import PartnerShop.model.entity.Cliente;
@@ -20,9 +21,9 @@ import java.nio.channels.Channels;
  * implementa il controller che si occupa  del sottosistema registrazione
  * @author Giuseppe Abbatiello
  */
+
 @WebServlet(urlPatterns = {"/Registrazione","/usernameAjax","/emailAjax"})
 public final class RegistrazioneController extends HttpServlet {
-
     private  RegistrazioneService registrazioneService = new RegistrazioneServiceImp();
     private GestioneUtenteService gestioneUtenteService = new GestioneUtenteServiceImp();
     /**
@@ -33,40 +34,7 @@ public final class RegistrazioneController extends HttpServlet {
      * @throws IOException
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String s = request.getServletPath();
-        switch (s){
-            case "/Registrazione":
-                RequestDispatcher dispatcher=null;
-                if(request.getParameter("id").equals("cliente")) {
-                    dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registrazioneCliente.jsp");
-
-                }else if(request.getParameter("id").equals("venditore"))
-                {
-                    dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registrazioneVenditore.jsp");
-                }
-                dispatcher.forward(request, response);
-                break;
-            case "/usernameAjax":
-                String user = request.getParameter("username");
-                response.setContentType("text/xml");
-                if (user != null && user.length() >= 6 && user.matches("^[0-9a-zA-z]+$") && registrazioneService.verificaUsernameEmail(user,0) == null) {
-                    response.getWriter().append("<ok/>");
-                } else {
-                    response.getWriter().append("<no/>");
-                }
-
-                break;
-            case "/emailAjax":
-                String email = request.getParameter("email");
-                response.setContentType("text/xml");
-                if (email != null && email.matches("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w+)+$") && registrazioneService.verificaUsernameEmail(email,1) == null) {
-                    response.getWriter().append("<ok/>");
-                } else {
-                    response.getWriter().append("<no/>");
-                }
-                break;
-        }
-
+       reindirizza(request,response);
     }
 
     /**
@@ -108,11 +76,52 @@ public final class RegistrazioneController extends HttpServlet {
             request.getSession().setAttribute("utente", ut);
         }
 
-        else if(request.getParameter("id").equals("venditore")) {
+        if(request.getParameter("id").equals("venditore")) {
             registrazioneService.RegistrazioneVenditore(ut, request.getParameter("nomedelnegozio"), request.getParameter("p.iva"));
             request.getSession().setAttribute("utente", ut);
         }
         RequestDispatcher disp = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
         disp.forward(request,response);
     }
+
+    public boolean reindirizza(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String s = request.getServletPath();
+        switch (s){
+            case "/Registrazione":
+                RequestDispatcher dispatcher=null;
+                if(request.getParameter("id").equals("cliente")) {
+                    dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registrazioneCliente.jsp");
+
+                }
+
+                if(request.getParameter("id").equals("venditore"))
+                {
+                    dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registrazioneVenditore.jsp");
+                }
+
+                dispatcher.forward(request, response);
+                return true;
+            case "/usernameAjax":
+                String user = request.getParameter("username");
+                response.setContentType("text/xml");
+                if (user != null && user.length() >= 6 && user.matches("^[0-9a-zA-z]+$") && registrazioneService.verificaUsernameEmail(user,0) == null) {
+                    response.getWriter().append("<ok/>");
+                } else {
+                    response.getWriter().append("<no/>");
+                }
+
+                return true;
+            case "/emailAjax":
+                String email = request.getParameter("email");
+                response.setContentType("text/xml");
+                if (email != null && email.matches("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w+)+$") && registrazioneService.verificaUsernameEmail(email,1) == null) {
+                    response.getWriter().append("<ok/>");
+                } else {
+                    response.getWriter().append("<no/>");
+                }
+                return true;
+        }return false;
+    }
+
+
 }

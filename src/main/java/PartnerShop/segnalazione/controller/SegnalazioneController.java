@@ -19,32 +19,58 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Questa classe implemmenta il controller che si occupa del sottosistema gestione segnalazione
+ * @see HttpServlet fornisce l'interfaccia per creare una servlet
+ * @version 1.0
+ * @author Marco De Palma, Giuseppe Abbatiello
+ */
 @WebServlet(urlPatterns = {"/AggiungiSegnalazione","/VisualizzaSegnalazioni","/visualizzaDettagliSegn","/chiudiSegnalazione"})
 public class SegnalazioneController extends HttpServlet {
 
     private final SegnalazioneService segnalazioneService = new SegnalazioneServiceImp();
 
+    /**
+     * Il metodo ereditato dalla classe HttpServlet che esplicita i parametri della request e permette di usare il metodo switchPath
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-            switchPath(request,response, segnalazioneService);
-        }
+        switchPath(request,response, segnalazioneService);
+    }
 
-        public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            aggiungiSegnalazione(request,response, segnalazioneService);
-        }
+    /**
+     * Il metodo ereditato dalla classe HttpServlet che non esplicita i parametri della request e permette di usare il metodo aggiungiSegnalazione
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
+    public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        aggiungiSegnalazione(request,response, segnalazioneService);
+    }
 
-
+    /**
+     * Il metodo che seleziona in base al ServletPath quale istruzioni eseguire
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
     public boolean switchPath(HttpServletRequest request, HttpServletResponse response, SegnalazioneService ss) throws ServletException, IOException {
         String s = request.getServletPath();
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         Amministratore admin = (Amministratore) request.getSession().getAttribute("admin");
-        RequestDispatcher dispatcher = null;
         switch (s) {
 
             case "/AggiungiSegnalazione": {
                 if(ut == null ||  ut.getTipo() != 0)
                     throw new MyServletException("Non sei loggato come cliente.");
-                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/aggiungiSegnalazione.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/aggiungiSegnalazione.jsp");
+                dispatcher.forward(request, response);
             }
             return true;
             case "/VisualizzaSegnalazioni": {
@@ -54,7 +80,8 @@ public class SegnalazioneController extends HttpServlet {
                 if(listSegnalazioni == null)
                     throw new MyServletException("Non ci sono segnalazioni in sospeso.");
                 request.getSession().setAttribute("segnalazioni", listSegnalazioni);
-                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaSegnalazioni.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/listaSegnalazioni.jsp");
+                dispatcher.forward(request, response);
             }
             return true;
             case "/visualizzaDettagliSegn": {
@@ -71,41 +98,50 @@ public class SegnalazioneController extends HttpServlet {
                 if (segn == null)
                     throw new MyServletException("Segnalazione non trovata.");
                 request.getSession().setAttribute("segnalazione", segn);
-                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/segnalazione.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/segnalazione.jsp");
+                dispatcher.forward(request, response);
             }
             return true;
             case "/chiudiSegnalazione": {
                 if(admin == null)
                     throw new MyServletException("Non sei loggato come admin.");
-                int id = Integer.parseInt(request.getParameter("id"));
+                int id;
+                try {
+                    id = Integer.parseInt(request.getParameter("id"));
+                } catch (Exception e) {
+                    throw new MyServletException("Id prodotto errato.");
+                }
                 ss.chiudiSegnalazione(id);
-                dispatcher = request.getRequestDispatcher("/VisualizzaSegnalazioni");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/VisualizzaSegnalazioni");
+                dispatcher.forward(request, response);
             }
             return true;
-
         }
-        assert dispatcher != null;
-        dispatcher.forward(request, response);
         return false;
     }
 
+    /**
+     * Il metodo che permette l'aggiunta di una segnalazione
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
     public boolean aggiungiSegnalazione(HttpServletRequest request, HttpServletResponse response, SegnalazioneService ss) throws ServletException, IOException {
-            String s = request.getServletPath();
-            UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
-            RequestDispatcher dispatcher = null;
-            if(ut == null || ut.getTipo() != 0)
-                throw new MyServletException("Non sei loggato come cliente.");
-            if ("/AggiungiSegnalazione".equals(s)) {
-                String motivazione = request.getParameter("motivazione");
-                String commentiAggiuntivi = request.getParameter("commentiAggiuntivi");
-                String email = ((UtenteRegistrato) request.getSession().getAttribute("utente")).getEmail();
-                Segnalazione segn = new Segnalazione(email, 0, motivazione, commentiAggiuntivi);
-                ss.aggiungiSegnalazione(segn);
-                dispatcher = request.getRequestDispatcher("WEB-INF/jsp/notificaSegnalazione.jsp");
-            }
-
-            assert dispatcher != null;
+        String s = request.getServletPath();
+        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
+        if (ut == null || ut.getTipo() != 0)
+            throw new MyServletException("Non sei loggato come cliente.");
+        if (s.equals("/AggiungiSegnalazione")) {
+            String motivazione = request.getParameter("motivazione");
+            String commentiAggiuntivi = request.getParameter("commentiAggiuntivi");
+            String email = ((UtenteRegistrato) request.getSession().getAttribute("utente")).getEmail();
+            Segnalazione segn = new Segnalazione(email, 0, motivazione, commentiAggiuntivi);
+            ss.aggiungiSegnalazione(segn);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/notificaSegnalazione.jsp");
             dispatcher.forward(request, response);
-        return true;
+            return true;
+        }
+        return false;
     }
 }

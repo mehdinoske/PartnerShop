@@ -75,6 +75,19 @@ public class CarrelloInclusoTest {
     }
 
     @Test
+    public void carrelloNullTest() throws ServletException, IOException{
+        String prodottoIdStr = "4";
+        String quantStr = "20";
+        request.setServletPath("/Carrello");
+        session.setAttribute("utente",ut);
+        request.setParameter("idProdotto",prodottoIdStr);
+        request.setParameter("quant",quantStr);
+        request.setSession(session);
+        assertTrue(gesCon.execute(request,response));
+    }
+
+
+    @Test
     public void rimuoviDalCarrelloTest()throws ServletException, IOException{
         String prodottoIdStr = "2";
         String setQuantStr = "0";
@@ -86,5 +99,6 @@ public class CarrelloInclusoTest {
         request.setSession(session);
         assertTrue(gesCon.execute(request,response));
     }
+
 
 }
