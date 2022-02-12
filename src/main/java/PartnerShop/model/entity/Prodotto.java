@@ -87,6 +87,14 @@ public class Prodotto {
 		}
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Prodotto prodotto = (Prodotto) o;
+        return id == prodotto.id;
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(id, email_Venditore, nome, descrizione, categoria, prezzo_Cent, disponibilita);
     }
