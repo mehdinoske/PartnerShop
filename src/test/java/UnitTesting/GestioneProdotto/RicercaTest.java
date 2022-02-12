@@ -44,6 +44,15 @@ public class RicercaTest {
         request.setSession(session);
     }
 
+
+    @Test
+    public void nessunParolaInseritaPerLaRicerca() {
+        String p = "";
+        request.setParameter("p", p);
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.ricerca(request,response,gps));
+        assertEquals("Nessun parola chiave inserita.", mse.getMessage());
+    }
+
     @Test
     public void nessunRisultatoPerLaRicerca() {
         String p = "Piatto";
@@ -62,6 +71,6 @@ public class RicercaTest {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         prodotti.add(prodotto);
         Mockito.when(gps.getProdottiByNome(app)).thenReturn(prodotti);
-        assertEquals(true, gpc.ricerca(request,response,gps));
+        assertTrue(gpc.ricerca(request, response, gps));
     }
 }

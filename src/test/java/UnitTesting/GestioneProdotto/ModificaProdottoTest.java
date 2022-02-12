@@ -19,8 +19,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
 public class ModificaProdottoTest {
     MockHttpServletRequest request;
@@ -55,6 +54,35 @@ public class ModificaProdottoTest {
         assertEquals("Non hai i permessi necessari.", mse.getMessage());
     }
 
+    @Test
+    public void utenteNonAutorizzatoNull() {
+        request.getSession().setAttribute("utente", null);
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        request.getSession().setAttribute("prodotti", prodotti);
+        int id = 1;
+        request.setParameter("id", String.valueOf(id));
+        Mockito.when(gps.getProdottoById(id)).thenReturn(prodotto);
+
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        assertEquals("Non hai i permessi necessari.", mse.getMessage());
+    }
+
+    @Test
+    public void utenteNonAutorizzatoVenditoreProdottoNonCoincidono() {
+        UtenteRegistrato ut = new UtenteRegistrato("pinco", "palla", "12-12-1122", "ciaociao", "qazwsx2", "pinco@palla.com", "aaaaa", "222222", 1);
+        request.getSession().setAttribute("utente", ut);
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        request.getSession().setAttribute("prodotti", prodotti);
+        int id = 1;
+        request.setParameter("id", String.valueOf(id));
+        Prodotto p = new Prodotto();
+        p.setId(1);
+        p.setEmail_Venditore("");
+        Mockito.when(gps.getProdottoById(id)).thenReturn(p);
+
+        MyServletException mse = assertThrows(MyServletException.class, () -> gpc.prodottoModifica(request,response,gps));
+        assertEquals("Non hai i permessi necessari.", mse.getMessage());
+    }
     @Test
     public void idProdottoNonPresente() {
         int id = 1;
@@ -224,7 +252,7 @@ public class ModificaProdottoTest {
         p.setEmail_Venditore("pinco@palla.com");
         Mockito.when(gps.getProdottoById(id)).thenReturn(p);
         setParametersRequest(id, nome, descrizione, categoria, prezzo_Cent, disponibilita);
-        assertEquals(true, gpc.prodottoModifica(request,response,gps));
+        assertTrue(gpc.prodottoModifica(request, response, gps));
     }
 
     private void setParametersRequest(int id, String nome, String descrizione, String categoria, int prezzo_Cent, int disponibilita) {
