@@ -21,11 +21,6 @@
                     <div id="inner_div">
                         <h2>${prodotto.nome}</h2>
                         <h3>Prezzo: ${prodotto.getPrezzo_Euro()} &euro;</h3>
-                        <a href="AggiungiListaDesideri?idProdotto=${prodotto.id}"><div class="preferitiButton">
-                    <span class="material-icons">
-                        bookmark_added
-                    </span>
-                        </div>
                     </div>
                 </div>
             </c:forEach>

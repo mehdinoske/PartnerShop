@@ -46,7 +46,7 @@ public  class AutenticazioneController extends HttpServlet {
         if(ut!=null && ut.getTipo()==0){
             Cliente cl = new Cliente();
             cl.setEmail(ut.getEmail());
-            cl.setListaDesideri(gestioneUtenteService.getListaDesideri(ut.getEmail()));
+            cl.setListaDesideri(gestioneUtenteService.getListaDesideri(cl.getEmail()));
             request.getSession().setAttribute("cliente",cl);
         }
 
