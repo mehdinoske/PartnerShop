@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.mock.web.MockRequestDispatcher;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -23,6 +24,7 @@ public class RegistrazionClienteInclusoTest {
     MockHttpSession session;
     RegistrazioneController regContr;
     UtenteRegistrato ut;
+
 
     UtenteRegistrato utente;
 
@@ -221,6 +223,7 @@ public class RegistrazionClienteInclusoTest {
         String cellulare = "3219913211"; //Corretto
         String DataDiNascita = "2020-01-01"; //Corretto
         String indirizzo = "viaaa"; //Corretto
+
         request.setParameter("id","cliente");
         request.setParameter("nome",nome);
         request.setParameter("cognome",cognome);
@@ -233,6 +236,26 @@ public class RegistrazionClienteInclusoTest {
         regContr.doPost(request,response);
         UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute("utente");
         assertNotNull(ut);
+    }
+
+    @Test
+    public void registrazioneDoGet() throws ServletException, IOException {
+       request.setServletPath("/Registrazione");
+       request.setParameter("email","");
+       request.setParameter("id","cliente");
+        assertTrue(regContr.reindirizza(request,response));
+        System.out.println("prova");
+        request.setServletPath("/Registrazione");
+        request.setParameter("id","venditore");
+        request.setParameter("email","@gmail");
+        assertTrue(regContr.reindirizza(request,response));
+        request.setServletPath("/usernameAjax");
+        request.setParameter("username","diablo2699");
+        assertTrue(regContr.reindirizza(request,response));
+        request.setParameter("email","peppe@hotmail.it");
+        request.setServletPath("/emailAjax");
+        assertTrue(regContr.reindirizza(request,response));
 
     }
+
 }
