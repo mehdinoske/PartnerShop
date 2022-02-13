@@ -8,11 +8,12 @@ import java.util.ArrayList;
  * Questa classe rappresenta l'interfaccia utilizzata da SegnalazioneService e implementata per rispettare il facade pattern
  */
 public interface SegnalazioneService {
+
      /**
       * Questo metodo salva nel database la segnalazione passata come parametro
       * @param segn segnalazione da salvare
       */
-     void aggiungiSegnalazione(Segnalazione segn);
+     boolean aggiungiSegnalazione(Segnalazione segn);
 
      /**
       * Questo metodo restituisce un ArrayList contenente tutte le segnalazioni ancora aperte oppure ancora chiuse

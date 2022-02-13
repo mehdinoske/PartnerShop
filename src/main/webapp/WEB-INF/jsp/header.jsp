@@ -46,9 +46,9 @@
                     </div>
                 </c:if>
 
-<c:if test="${utente.tipo== 0}">
+<c:if test="${utente.tipo == 0}">
    <div class="dropdown">
-       <button>${utente.nome}</button>
+       <button id="btnAccount2">${utente.nome}</button>
        <div class="dropdown-content">
            <a href="VisualizzaDatiUtente">La mia Anagrafica</a>
            <a href="VisualizzaListaDesideri">La mia lista desideri</a>

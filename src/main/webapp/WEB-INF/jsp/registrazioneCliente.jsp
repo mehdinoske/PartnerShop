@@ -23,8 +23,7 @@
                 <input type="password" name="password" id="pass" value="" oninput="validaPassword()"/>
                 <label for="passConf">Conferma Password</label>
                 <input type="password" name="passwordConferma" id="passConf" value="" oninput="validaPassword()"/>
-                <input type="submit" value="Registrami" id="registrami" disabled><span id="notificaMes"></span>
-
+                <input type="submit" value="Registrami" id="registrami"><span id="notificaMes"></span>
             </form>
         </div>
     </div>

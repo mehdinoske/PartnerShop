@@ -1,8 +1,9 @@
-package UnitTesting.GestioneSegnalazione;
+package UnitTesting.Segnalazione;
 
 import PartnerShop.model.dao.SegnalazioneDAO;
 import PartnerShop.model.entity.Segnalazione;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
