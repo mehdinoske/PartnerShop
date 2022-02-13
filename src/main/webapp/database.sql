@@ -60,8 +60,8 @@ create table segnalazione(
                              id integer not null auto_increment primary key,
                              email_cliente varchar(50) not null,
                              stato boolean default false not null,
-                             motivazione varchar(500) not null,
-                             commento varchar(500) not null,
+                             motivazione varchar(500),
+                             commento varchar(500),
                              id_amministratore integer default null,
                              foreign key(id_amministratore) references amministratore(id),
                              foreign key(email_cliente) references cliente(email)
