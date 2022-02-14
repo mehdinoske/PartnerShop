@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoadImages.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.gestioneProdotto.controller</a> &gt; <span class="el_source">LoadImages.java</span></div><h1>LoadImages.java</h1><pre class="source lang-java linenums">package PartnerShop.gestioneProdotto.controller;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLDecoder;
+
+/**
+ * Questa classe implemmenta la Servlet che si occupa del caricamento delle immagini dei prodotti già
+ * presenti, salvate in un determinato punto del sistema
+ * @see HttpServlet fornisce l'interfaccia per creare una servlet
+ * @version 1.0
+ * @author Marco De Palma
+ */
+@WebServlet(urlPatterns = &quot;/file/*&quot;)
+<span class="nc" id="L19">public class LoadImages extends HttpServlet {</span>
+
+    private static final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
+
+    // Properties ---------------------------------------------------------------------------------
+
+    private String filePath;
+
+    // Actions ------------------------------------------------------------------------------------
+
+    public void init() throws ServletException {
+
+        // Define base path somehow. You can define it as init-param of the servlet.
+<span class="nc" id="L32">        this.filePath = &quot;C:\\img\\&quot;;</span>
+
+        // In a Windows environment with the Applicationserver running on the
+        // c: volume, the above path is exactly the same as &quot;c:\files&quot;.
+        // In UNIX, it is just straightforward &quot;/files&quot;.
+<span class="nc" id="L37">    }</span>
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException
+    {
+        // Get requested file by path info.
+<span class="nc" id="L43">        String requestedFile = request.getPathInfo();</span>
+
+        // Check if file is actually supplied to the request URI.
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (requestedFile == null) {</span>
+            // Do your thing if the file is not supplied to the request URI.
+            // Throw an exception, or send 404, or show default/warning page, or just ignore it.
+<span class="nc" id="L49">            response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.</span>
+<span class="nc" id="L50">            return;</span>
+        }
+
+        // Decode the file name (might contain spaces and on) and prepare file object.
+<span class="nc" id="L54">        File file = new File(filePath, URLDecoder.decode(requestedFile, &quot;UTF-8&quot;));</span>
+
+        // Check if file actually exists in filesystem.
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (!file.exists()) {</span>
+            // Do your thing if the file appears to be non-existing.
+            // Throw an exception, or send 404, or show default/warning page, or just ignore it.
+<span class="nc" id="L60">            response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.</span>
+<span class="nc" id="L61">            return;</span>
+        }
+
+        // Get content type by filename.
+<span class="nc" id="L65">        String contentType = getServletContext().getMimeType(file.getName());</span>
+
+        // If content type is unknown, then set the default value.
+        // For all content types, see: http://www.w3schools.com/media/media_mimeref.asp
+        // To add new content types, add new mime-mapping entry in web.xml.
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (contentType == null) {</span>
+<span class="nc" id="L71">            contentType = &quot;application/octet-stream&quot;;</span>
+        }
+
+        // Init servlet response.
+<span class="nc" id="L75">        response.reset();</span>
+<span class="nc" id="L76">        response.setBufferSize(DEFAULT_BUFFER_SIZE);</span>
+<span class="nc" id="L77">        response.setContentType(contentType);</span>
+<span class="nc" id="L78">        response.setHeader(&quot;Content-Length&quot;, String.valueOf(file.length()));</span>
+<span class="nc" id="L79">        response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=\&quot;&quot; + file.getName() + &quot;\&quot;&quot;);</span>
+
+        // Prepare streams.
+<span class="nc" id="L82">        BufferedInputStream input = null;</span>
+<span class="nc" id="L83">        BufferedOutputStream output = null;</span>
+
+        try {
+            // Open streams.
+<span class="nc" id="L87">            input = new BufferedInputStream(new FileInputStream(file), DEFAULT_BUFFER_SIZE);</span>
+<span class="nc" id="L88">            output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);</span>
+
+            // Write file contents to response.
+<span class="nc" id="L91">            byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];</span>
+            int length;
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            while ((length = input.read(buffer)) &gt; 0) {</span>
+<span class="nc" id="L94">                output.write(buffer, 0, length);</span>
+            }
+        } finally {
+            // Gently close streams.
+<span class="nc" id="L98">            close(output);</span>
+<span class="nc" id="L99">            close(input);</span>
+        }
+<span class="nc" id="L101">    }</span>
+
+    // Helpers (can be refactored to public utility class) ----------------------------------------
+
+    private static void close(Closeable resource) {
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (resource != null) {</span>
+            try {
+<span class="nc" id="L108">                resource.close();</span>
+<span class="nc" id="L109">            } catch (IOException e) {</span>
+                // Do your thing with the exception. Print it, log it or mail it.
+<span class="nc" id="L111">                e.printStackTrace();</span>
+<span class="nc" id="L112">            }</span>
+        }
+<span class="nc" id="L114">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

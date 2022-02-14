@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestioneUtenteServiceImp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.GestioneUtenti.service</a> &gt; <span class="el_source">GestioneUtenteServiceImp.java</span></div><h1>GestioneUtenteServiceImp.java</h1><pre class="source lang-java linenums">package PartnerShop.GestioneUtenti.service;
+
+import PartnerShop.Exceptions.MyServletException;
+import PartnerShop.model.dao.GestioneProdottoDAO;
+import PartnerShop.model.dao.ListaDesideriDAO;
+import PartnerShop.model.dao.UtenteRegistratoDAO;
+import PartnerShop.model.entity.Cliente;
+import PartnerShop.model.entity.Prodotto;
+import PartnerShop.model.entity.UtenteRegistrato;
+
+import java.util.ArrayList;
+
+/**
+ * Implementa la classe che esplicita i metodi definiti nell'interfaccia di GestioneUtente
+ * @author Marco Ancona, El Mehdi Boudad
+ */
+
+public class GestioneUtenteServiceImp implements GestioneUtenteService {
+
+<span class="fc" id="L20">    private String nomeMod=&quot;^[A-zÀ-ù ‘-]{2,30}$&quot;;</span>
+<span class="fc" id="L21">    private String cognomeMod=&quot;^[A-zÀ-ù ‘-]{2,30}$&quot;;</span>
+<span class="fc" id="L22">    private String cellMod = &quot;^[0-9]\\d{9}$&quot;;</span>
+<span class="fc" id="L23">    private String passMod = &quot;^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_.,\\-+*!#@?])([a-zA-Z0-9_.,\\-+*!#@?]{6,25})$&quot;;</span>
+
+    private UtenteRegistratoDAO utDAO;
+    private GestioneProdottoDAO prodDB;
+    private ListaDesideriDAO lisDB;
+
+<span class="fc" id="L29">    public GestioneUtenteServiceImp(){</span>
+<span class="fc" id="L30">        utDAO = new UtenteRegistratoDAO();</span>
+<span class="fc" id="L31">        prodDB = new GestioneProdottoDAO();</span>
+<span class="fc" id="L32">        lisDB = new ListaDesideriDAO();</span>
+<span class="fc" id="L33">    }</span>
+
+<span class="fc" id="L35">    public GestioneUtenteServiceImp(UtenteRegistratoDAO utenteDAO){</span>
+<span class="fc" id="L36">        this.utDAO = utenteDAO;</span>
+<span class="fc" id="L37">    }</span>
+
+    /**
+     *implementazione del metodo che realizza la modifica dei dati personali
+     * @param ut UtenteRegistrato che contiene le modifiche da applicare
+     * @return un boolean che indica se la modifica va a buon fine
+     * @throws MyServletException eccezione quando alcuni campi non matchano con la REGEX
+     */
+    @Override
+    public boolean ModificaDati(UtenteRegistrato ut) throws MyServletException {
+<span class="fc bfc" id="L47" title="All 4 branches covered.">        if(ut.getNome().matches(nomeMod) &amp;&amp; ut.getCognome().matches(cognomeMod)</span>
+<span class="fc bfc" id="L48" title="All 4 branches covered.">                &amp;&amp; ut.getCellulare().matches(cellMod) &amp;&amp; (ut.getIndirizzo().length())&gt;5</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">                &amp;&amp; ut.getPassword().matches(passMod)){</span>
+<span class="fc" id="L50">            utDAO.doUpdate(ut);</span>
+<span class="fc" id="L51">            return true;</span>
+        }else{
+<span class="fc" id="L53">            throw new MyServletException(&quot;Modifica non andata a buon fine&quot;);</span>
+        }
+    }
+
+    /**
+     * implementazione del metodo che realizza  la rimozione dell'utente dal db
+     * @param email stringa che identifica il cliente
+     * @throws MyServletException eccezione quando l'utente non esiste nel db
+     */
+    @Override
+    public void CancellaUtente(String email) throws MyServletException {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if(utDAO.doRetrieveByEmail(email) != null) {</span>
+<span class="fc" id="L65">            utDAO.doDelete(email);</span>
+        }else{
+<span class="fc" id="L67">            throw new MyServletException(&quot;Utente non esiste&quot;);</span>
+        }
+<span class="fc" id="L69">    }</span>
+
+    /**
+     *implementazione del metodo che realizza la visualizzazione della lista degli utenti registrati
+     * @return un ArrayList di UtenteRegistrato che contiene la lista di utenti
+     */
+    @Override
+    public ArrayList&lt;UtenteRegistrato&gt; VisualizzaUtenti() {
+<span class="fc" id="L77">        return utDAO.doRetrieveAll();</span>
+    }
+
+    /**
+     * implementazione del metodo che realizza l'aggiunta di un prodotto alla lista desideri
+     * @param cl oggetto Clinte che contiene i dati dell'utente
+     * @param idProdotto intero che identifica il prodotto da aggiungere alla lista
+     * @return un boolean che indica il successo o meno dell'operazione di aggiunta
+     * @throws MyServletException eccezione che indica se il prodotto è già in lista
+     */
+    public boolean aggiungiListaDesideri(Cliente cl, int idProdotto) throws MyServletException {
+<span class="fc" id="L88">        Prodotto pr = prodDB.doRetrieveById(idProdotto);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if(!cl.containsListaDesideri(pr)){</span>
+<span class="fc" id="L90">            cl.addListaDesideri(pr);</span>
+<span class="fc" id="L91">            lisDB.doSave(pr, cl.getEmail());</span>
+<span class="fc" id="L92">            return true;</span>
+        }else{
+<span class="fc" id="L94">            throw new MyServletException(&quot;Prodotto già in lista!&quot;);</span>
+        }
+    }
+
+    /**
+     * implementazione del metodo che realizza la rimozione di un prodotto dalla lista desideri
+     * @param cl oggetto Cliente che contiene i dati dell'utente
+     * @param idProdotto intero che identifica il prodotto da rimuovere dalla lista
+     * @throws MyServletException eccezione che indica se il prodotto non è in lista
+     */
+    public boolean rimuoviListaDesideri(Cliente cl, int idProdotto) throws MyServletException {
+<span class="fc" id="L105">            Prodotto pr = prodDB.doRetrieveById(idProdotto);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            if (cl.containsListaDesideri(pr)) {</span>
+<span class="fc" id="L107">                cl.removeListaDesideri(pr);</span>
+<span class="fc" id="L108">                lisDB.doDeleteByIdEmailCliente(idProdotto, cl.getEmail());</span>
+<span class="fc" id="L109">                return true;</span>
+            }else{
+<span class="fc" id="L111">                throw new MyServletException(&quot;Prodotto non in lista!&quot;);</span>
+            }
+    }
+
+    /**
+     * implementazione del metodo che realizza il recupero della lista desideri di un utente loggato dal DB
+     * @param email stringa che identifica l'utente
+     * @return ArrayList di oggetti Prodotto
+     */
+    public ArrayList&lt;Prodotto&gt; getListaDesideri(String email){
+<span class="fc" id="L121">        return lisDB.doRetrieveByEmailCliente(email);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

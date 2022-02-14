@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarrelloDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.model.dao</a> &gt; <span class="el_source">CarrelloDAO.java</span></div><h1>CarrelloDAO.java</h1><pre class="source lang-java linenums">package PartnerShop.model.dao;
+
+import PartnerShop.model.entity.Carrello;
+import PartnerShop.model.entity.Prodotto;
+import PartnerShop.utils.ConPool;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Iterator;
+
+public class CarrelloDAO {
+    private Connection con;
+
+<span class="fc" id="L16">    public CarrelloDAO(){</span>
+<span class="fc" id="L17">        this.con = ConPool.getConnection();</span>
+<span class="fc" id="L18">    }</span>
+<span class="fc" id="L19">    private GestioneProdottoDAO prodottoDB = new GestioneProdottoDAO();</span>
+
+
+
+    public Carrello doRetrieveByEmailCliente(String emailCliente, Carrello car) {
+
+            try {
+<span class="fc" id="L26">                PreparedStatement ps = con.prepareStatement(&quot;SELECT cp.id_Prodotto, cp.quantita FROM carrello_prodotto cp, carrello c WHERE c.id = cp.id_Carrello and email_Cliente = ?&quot;);</span>
+<span class="fc" id="L27">                ps.setString(1, emailCliente);</span>
+<span class="fc" id="L28">                ResultSet rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L30" title="All 2 branches covered.">                while(rs.next()) {</span>
+<span class="fc" id="L31">                    int cod = rs.getInt(1);</span>
+<span class="fc" id="L32">                    int quant = rs.getInt(2);</span>
+<span class="fc" id="L33">                    Prodotto prodCar = car.getProdotto(cod);</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">                    if (prodCar == null) {</span>
+<span class="fc" id="L35">                        car.setProdottoHash(this.prodottoDB.doRetrieveById(cod));</span>
+<span class="fc" id="L36">                        car.setQuantHash(cod, quant);</span>
+                    }
+<span class="fc" id="L38">                }</span>
+
+
+<span class="fc" id="L41">            return car;</span>
+<span class="nc" id="L42">        } catch (SQLException var11) {</span>
+<span class="nc" id="L43">            throw new RuntimeException(var11);</span>
+        }
+    }
+
+    public int doRetrieveIdCarrelloByEmailCliente(String emailCliente) {
+<span class="fc" id="L48">            int id_carrello=0;</span>
+            try {
+<span class="fc" id="L50">                PreparedStatement ps = con.prepareStatement(&quot;SELECT id FROM carrello WHERE email_Cliente = ?&quot;);</span>
+<span class="fc" id="L51">                ps.setString(1, emailCliente);</span>
+<span class="fc" id="L52">                ResultSet rs = ps.executeQuery();</span>
+
+<span class="fc bfc" id="L54" title="All 2 branches covered.">                while(rs.next()) {</span>
+<span class="fc" id="L55">                    id_carrello = rs.getInt(1);</span>
+                }
+
+<span class="fc" id="L58">            return id_carrello;</span>
+<span class="nc" id="L59">        } catch (SQLException var11) {</span>
+<span class="nc" id="L60">            throw new RuntimeException(var11);</span>
+        }
+    }
+
+    public void UpdateSession(Carrello car, String emailCliente,int id_Carrello) {
+            try {
+<span class="fc" id="L66">                PreparedStatement ps = con.prepareStatement(&quot;SELECT cp.id_Prodotto,cp.quantita FROM carrello_prodotto cp, carrello c WHERE c.id = cp.id_Carrello and email_Cliente = ? and id_Prodotto = ?&quot;);</span>
+<span class="fc" id="L67">                Iterator var5 = car.getProdottoHash().keySet().iterator();</span>
+
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">                while(var5.hasNext()) {</span>
+<span class="nc" id="L70">                    Integer key = (Integer)var5.next();</span>
+<span class="nc" id="L71">                    ps.setString(1, emailCliente);</span>
+<span class="nc" id="L72">                    ps.setInt(2, key);</span>
+<span class="nc" id="L73">                    ResultSet rs = ps.executeQuery();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">                    if (!rs.next()) {</span>
+<span class="nc" id="L75">                        this.doSave(key, id_Carrello, car.getQuant(key));</span>
+                    }
+
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                    if (rs.next()) {</span>
+<span class="nc" id="L79">                        this.doUpdate(id_Carrello, key, car.getQuant(key));</span>
+                    }
+<span class="nc" id="L81">                }</span>
+
+<span class="nc" id="L83">        } catch (SQLException var10) {</span>
+<span class="nc" id="L84">            throw new RuntimeException(var10);</span>
+<span class="fc" id="L85">        }</span>
+<span class="fc" id="L86">    }</span>
+
+    public boolean doSave(int id_Prodotto,int id_Carrello, int quant) {
+            try {
+<span class="fc" id="L90">                PreparedStatement ps = con.prepareStatement(&quot;INSERT INTO carrello_prodotto (id_carrello,id_prodotto,quantita) VALUES(?,?,?)&quot;);</span>
+<span class="fc" id="L91">                ps.setInt(1, id_Carrello);</span>
+<span class="fc" id="L92">                ps.setInt(2, id_Prodotto);</span>
+<span class="fc" id="L93">                ps.setInt(3, quant);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">                if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L95">                    throw new RuntimeException(&quot;Insert error.&quot;);</span>
+                }
+
+<span class="nc" id="L98">        } catch (SQLException var9) {</span>
+<span class="nc" id="L99">            throw new RuntimeException(var9);</span>
+<span class="fc" id="L100">        }</span>
+<span class="fc" id="L101">           return true;</span>
+    }
+
+    public void doCreateCarrello(String emailCliente) {
+            try {
+<span class="fc" id="L106">                PreparedStatement ps = con.prepareStatement(&quot;INSERT INTO carrello (email_Cliente) VALUES(?)&quot;);</span>
+<span class="fc" id="L107">                ps.setString(1, emailCliente);</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">                if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L109">                    throw new RuntimeException(&quot;Insert error.&quot;);</span>
+                }
+
+<span class="nc" id="L112">        } catch (SQLException var9) {</span>
+<span class="nc" id="L113">            throw new RuntimeException(var9);</span>
+<span class="fc" id="L114">        }</span>
+<span class="fc" id="L115">    }</span>
+
+    public void doUpdate(int id_Carrello, int idProd, int quant) {
+            try {
+<span class="fc" id="L119">                PreparedStatement ps = con.prepareStatement(&quot;UPDATE carrello_prodotto SET quantita=? WHERE  id_Prodotto=? AND id_Carrello=?&quot;);</span>
+<span class="fc" id="L120">                ps.setInt(1, quant);</span>
+<span class="fc" id="L121">                ps.setInt(2, idProd);</span>
+<span class="fc" id="L122">                ps.setInt(3, id_Carrello);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">                if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L124">                    throw new RuntimeException(&quot;Update error.&quot;);</span>
+                }
+
+<span class="nc" id="L127">        } catch (SQLException var9) {</span>
+<span class="nc" id="L128">            throw new RuntimeException(var9);</span>
+<span class="fc" id="L129">        }</span>
+<span class="fc" id="L130">    }</span>
+
+    public void doDelete(int idCarrello, int idProd) {
+            try {
+<span class="fc" id="L134">                PreparedStatement ps = con.prepareStatement(&quot;DELETE FROM carrello_prodotto WHERE  id_Carrello=? AND id_Prodotto=?&quot;);</span>
+<span class="fc" id="L135">                ps.setInt(1, idCarrello);</span>
+<span class="fc" id="L136">                ps.setInt(2, idProd);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">                if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L138">                    throw new RuntimeException(&quot;DELETE error.&quot;);</span>
+                }
+
+
+<span class="nc" id="L142">        } catch (SQLException var8) {</span>
+<span class="nc" id="L143">            throw new RuntimeException(var8);</span>
+<span class="fc" id="L144">        }</span>
+<span class="fc" id="L145">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

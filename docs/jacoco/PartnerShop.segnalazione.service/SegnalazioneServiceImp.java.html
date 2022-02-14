@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SegnalazioneServiceImp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.segnalazione.service</a> &gt; <span class="el_source">SegnalazioneServiceImp.java</span></div><h1>SegnalazioneServiceImp.java</h1><pre class="source lang-java linenums">package PartnerShop.segnalazione.service;
+
+import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
+import PartnerShop.model.dao.SegnalazioneDAO;
+import PartnerShop.model.entity.Segnalazione;
+import PartnerShop.model.entity.UtenteRegistrato;
+
+import java.util.ArrayList;
+
+/**
+ *Questa classe contieni i metodi per la gestione della segnalazione
+ * @version 1.0
+ * @see SegnalazioneService interfaccia della classe
+ */
+public class SegnalazioneServiceImp implements SegnalazioneService{
+    private SegnalazioneDAO segnalazioneDAO;
+    private Segnalazione segn;
+
+<span class="fc" id="L19">    public SegnalazioneServiceImp(){</span>
+<span class="fc" id="L20">        segnalazioneDAO = new SegnalazioneDAO();</span>
+<span class="fc" id="L21">    }</span>
+
+<span class="fc" id="L23">    public SegnalazioneServiceImp(SegnalazioneDAO segnalazioneDAO){</span>
+<span class="fc" id="L24">        this.segnalazioneDAO = segnalazioneDAO;</span>
+<span class="fc" id="L25">    }</span>
+
+    /**
+     * Questo metodo salva nel database la segnalazione passata come parametro
+     * @param segn segnalazione da salvare
+     */
+    @Override
+    public boolean aggiungiSegnalazione(Segnalazione segn) {
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if(segn.getCommento().trim().length()&lt;=100){</span>
+<span class="fc" id="L34">            segnalazioneDAO.doSave(segn);</span>
+<span class="fc" id="L35">            return true;</span>
+        }
+<span class="fc" id="L37">        return false;</span>
+    }
+
+    /**
+     * Questo metodo restituisce un ArrayList contenente tutte le segnalazioni ancora aperte oppure ancora chiuse
+     * @param par quando sarà 0 restituire tutte le segnalazioni aperte, se 1 tutte quelle chiuse
+     * @return restituisce un ArrayList contenente tutte le segnalazioni aperte o chiuse
+     */
+    @Override
+    public ArrayList&lt;Segnalazione&gt; visualizzaListaSegnalazioni(int par) {
+        ArrayList&lt;Segnalazione&gt; listSegnalazioni;
+<span class="nc" id="L48">        listSegnalazioni = segnalazioneDAO.doRetrieveAll(par);</span>
+<span class="nc" id="L49">        return listSegnalazioni;</span>
+    }
+
+    /**
+     * Questo metodo restituisce la segnalazione che ha come id l'intero passato come parametro
+     * @param id id della segnalazione da restituire
+     * @return l'oggetto segnalazione
+     */
+    @Override
+    public Segnalazione visualizzaSegnalazione(int id) {
+<span class="nc" id="L59">        segn = segnalazioneDAO.doRetrieveById(id);</span>
+<span class="nc" id="L60">        return segn;</span>
+    }
+
+    /**
+     * Questo metodo chiude la segnalazione che ha come id l'intero passato come parametro
+     * @param id id della segnalazione da chiudere
+     */
+    @Override
+    public void chiudiSegnalazione(int id) {
+<span class="nc" id="L69">        segnalazioneDAO.aggiornaStato(id);</span>
+<span class="nc" id="L70">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

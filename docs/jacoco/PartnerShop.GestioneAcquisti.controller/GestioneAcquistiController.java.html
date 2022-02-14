@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestioneAcquistiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.GestioneAcquisti.controller</a> &gt; <span class="el_source">GestioneAcquistiController.java</span></div><h1>GestioneAcquistiController.java</h1><pre class="source lang-java linenums">package PartnerShop.GestioneAcquisti.controller;
+
+import PartnerShop.Exceptions.MyServletException;
+import PartnerShop.GestioneAcquisti.service.GestioneAcquistiService;
+import PartnerShop.GestioneAcquisti.service.GestioneAcquistiServiceImp;
+import PartnerShop.model.entity.Carrello;
+import PartnerShop.model.entity.Ordine;
+import PartnerShop.model.entity.UtenteRegistrato;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ *  implementa il controller per il sottosistema Gestione Acquisti.
+ * @author El Mehdi Boudad
+ */
+@WebServlet(urlPatterns = {&quot;/Carrello&quot; , &quot;/Acquista&quot; , &quot;/CompletaAcquisto&quot;,&quot;/OrdiniVenditore&quot;,&quot;/OrdiniCliente&quot;})
+<span class="fc" id="L25">public class GestioneAcquistiController extends HttpServlet {</span>
+<span class="fc" id="L26"> private  GestioneAcquistiService imp = new GestioneAcquistiServiceImp();</span>
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+<span class="nc" id="L29">        execute(request,response);</span>
+<span class="nc" id="L30">    }</span>
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<span class="nc" id="L34">        doGet(req, resp);</span>
+<span class="nc" id="L35">    }</span>
+
+    /**
+     * Si occupa di chiamare e passare i parametri necessari ai metodi della service in base al servletPath.
+     * @return boolean
+     * @throws ServletException
+     * @throws IOException
+     */
+    public boolean execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+<span class="fc" id="L44">        String s = request.getServletPath();</span>
+        RequestDispatcher dispatcher;
+        UtenteRegistrato ut;
+        Carrello car;
+<span class="pc bpc" id="L48" title="2 of 6 branches missed.">        switch (s) {</span>
+            case &quot;/Carrello&quot;:
+<span class="fc" id="L50">                HttpSession session = request.getSession();</span>
+<span class="fc" id="L51">                ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+<span class="fc" id="L52">                car = (Carrello) session.getAttribute(&quot;Carrello&quot;);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                if (car == null) {</span>
+<span class="fc" id="L54">                    car = new Carrello();</span>
+<span class="fc" id="L55">                    session.setAttribute(&quot;Carrello&quot;, car);</span>
+                }
+<span class="pc bpc" id="L57" title="2 of 4 branches missed.">                if (ut != null &amp;&amp; ut.getTipo() == 1) {</span>
+<span class="nc" id="L58">                    request.getRequestDispatcher(&quot;WEB-INF/jsp/registrazioneCliente.jsp&quot;).forward(request, response);</span>
+<span class="nc" id="L59">                    break;</span>
+                }
+<span class="fc" id="L61">                String prodottoIdStr = request.getParameter(&quot;idProdotto&quot;);</span>
+<span class="fc" id="L62">                String quantStr = request.getParameter(&quot;quant&quot;);</span>
+<span class="fc" id="L63">                String setQuantStr = request.getParameter(&quot;setQuant&quot;);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">                if (quantStr != null) {</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">                    if (Integer.parseInt(quantStr) &lt;= 0) {</span>
+<span class="nc" id="L66">                        request.getRequestDispatcher(&quot;/WEB-INF/jsp/carrello.jsp&quot;).forward(request, response);</span>
+<span class="nc" id="L67">                        break;</span>
+                    }
+                }
+<span class="fc" id="L70">                imp.aggiungiAlCarrello(car, ut, prodottoIdStr, quantStr);</span>
+<span class="pc bpc" id="L71" title="1 of 4 branches missed.">                if (setQuantStr != null &amp;&amp; Integer.parseInt(setQuantStr) &lt;= 0)</span>
+<span class="fc" id="L72">                    imp.rimuovidalcarrello(ut, car, Integer.parseInt(prodottoIdStr), setQuantStr);</span>
+<span class="fc" id="L73">                dispatcher = request.getRequestDispatcher(&quot;/WEB-INF/jsp/carrello.jsp&quot;);</span>
+<span class="fc" id="L74">                dispatcher.forward(request, response);</span>
+<span class="fc" id="L75">                break;</span>
+            case &quot;/Acquista&quot;:
+<span class="nc" id="L77">                ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                if (ut != null) {</span>
+<span class="nc" id="L79">                    dispatcher = request.getRequestDispatcher(&quot;/WEB-INF/jsp/completaAcquisto.jsp&quot;);</span>
+<span class="nc" id="L80">                    dispatcher.forward(request, response);</span>
+                } else {
+<span class="nc" id="L82">                    request.getRequestDispatcher(&quot;/WEB-INF/jsp/registrazioneCliente.jsp&quot;).forward(request, response);</span>
+                }
+<span class="nc" id="L84">                break;</span>
+            case &quot;/CompletaAcquisto&quot;:
+<span class="fc" id="L86">                ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">                if (ut != null) {</span>
+<span class="fc" id="L88">                    String nome = request.getParameter(&quot;nome&quot;);</span>
+<span class="fc" id="L89">                    String cognome = request.getParameter(&quot;cognome&quot;);</span>
+<span class="fc" id="L90">                    car = (Carrello) request.getSession().getAttribute(&quot;Carrello&quot;);</span>
+<span class="fc" id="L91">                    String indirizzo = request.getParameter(&quot;indirizzo&quot;);</span>
+<span class="fc" id="L92">                    String cardc = request.getParameter(&quot;cartadc&quot;);</span>
+<span class="fc" id="L93">                    Ordine ord = imp.acquistaProdotto(ut, car, nome, cognome, indirizzo, cardc);</span>
+<span class="pc bpc" id="L94" title="1 of 4 branches missed.">                    if (ord!=null &amp;&amp; ord.getProdottoHash().size()==0) {</span>
+<span class="nc" id="L95">                        throw new MyServletException(&quot;Acquisto non effettuato - Disponibilità prodotti assente&quot;);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">                    }else if(ord == null)</span>
+<span class="fc" id="L97">                        throw new MyServletException(&quot;Errore Acquisto Prodotto - formato non corretto&quot;);</span>
+<span class="fc" id="L98">                    request.getSession().removeAttribute(&quot;Carrello&quot;);</span>
+<span class="fc" id="L99">                    request.getRequestDispatcher(&quot;/WEB-INF/jsp/ordineEffettuato.jsp&quot;).forward(request, response);</span>
+<span class="fc" id="L100">                }</span>
+                break;
+            case &quot;/OrdiniCliente&quot;:
+<span class="fc" id="L103">                ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+<span class="pc bpc" id="L104" title="2 of 4 branches missed.">                if (ut != null &amp;&amp; request.getParameter(&quot;idOrdine&quot;) != null) {</span>
+<span class="nc" id="L105">                    int id = Integer.parseInt(request.getParameter(&quot;idOrdine&quot;));</span>
+<span class="nc" id="L106">                    Ordine or = new Ordine();</span>
+<span class="nc" id="L107">                    ArrayList&lt;Ordine&gt; ordini = (ArrayList&lt;Ordine&gt;) request.getSession().getAttribute(&quot;ordini&quot;);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                    for (int i = 0; i &lt; ordini.size(); i++) {</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                        if (ordini.get(i).getId() == id) {</span>
+<span class="nc" id="L110">                            or = ordini.get(i);</span>
+<span class="nc" id="L111">                            break;</span>
+                        }
+                    }
+
+<span class="nc" id="L115">                    request.getSession().setAttribute(&quot;ordine&quot;, or);</span>
+<span class="nc" id="L116">                    request.getRequestDispatcher(&quot;WEB-INF/jsp/dettagliOrdine.jsp&quot;).forward(request, response);</span>
+<span class="nc" id="L117">                    break;</span>
+                }
+<span class="pc bpc" id="L119" title="2 of 4 branches missed.">                if (ut != null &amp;&amp; ut.getTipo() == 0) {</span>
+<span class="fc" id="L120">                    ArrayList&lt;Ordine&gt; ordini = imp.visualizzaOrdine(ut);</span>
+<span class="fc" id="L121">                    request.getSession().setAttribute(&quot;ordini&quot;, ordini);</span>
+<span class="fc" id="L122">                    request.getRequestDispatcher(&quot;WEB-INF/jsp/visualizzaOrdini.jsp&quot;).forward(request, response);</span>
+<span class="fc" id="L123">                } else {</span>
+<span class="nc" id="L124">                    request.getRequestDispatcher(&quot;WEB-INF/jsp/registrazioneCliente.jsp&quot;).forward(request, response);</span>
+                }
+<span class="nc" id="L126">                break;</span>
+            case &quot;/OrdiniVenditore&quot;:
+<span class="fc" id="L128">                ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">                if (ut != null &amp;&amp; request.getParameter(&quot;idOrdine&quot;) != null) {</span>
+<span class="nc" id="L130">                    int id = Integer.parseInt(request.getParameter(&quot;idOrdine&quot;));</span>
+<span class="nc" id="L131">                    Ordine or = new Ordine();</span>
+<span class="nc" id="L132">                    ArrayList&lt;Ordine&gt; ordini = (ArrayList&lt;Ordine&gt;) request.getSession().getAttribute(&quot;ordini&quot;);</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                    for (int i = 0; i &lt; ordini.size(); i++) {</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                        if (ordini.get(i).getId() == id) {</span>
+<span class="nc" id="L135">                            or = ordini.get(i);</span>
+<span class="nc" id="L136">                            break;</span>
+                        }
+                    }
+<span class="nc" id="L139">                    request.getSession().setAttribute(&quot;ordine&quot;, or);</span>
+<span class="nc" id="L140">                    request.getRequestDispatcher(&quot;WEB-INF/jsp/dettagliOrdine.jsp&quot;).forward(request, response);</span>
+<span class="nc" id="L141">                    break;</span>
+                }
+<span class="pc bpc" id="L143" title="1 of 4 branches missed.">                if (ut != null &amp;&amp; ut.getTipo() == 1) {</span>
+<span class="fc" id="L144">                    ArrayList&lt;Ordine&gt; ordini = imp.visualizzaOrdine(ut);</span>
+<span class="fc" id="L145">                    request.getSession().setAttribute(&quot;ordini&quot;, ordini);</span>
+<span class="fc" id="L146">                    request.getRequestDispatcher(&quot;WEB-INF/jsp/visualizzaOrdini.jsp&quot;).forward(request, response);</span>
+<span class="fc" id="L147">                } else {</span>
+<span class="fc" id="L148">                    request.getRequestDispatcher(&quot;WEB-INF/jsp/registrazioneVenditore.jsp&quot;).forward(request, response);</span>
+                }
+                break;
+        }
+<span class="fc" id="L152">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
