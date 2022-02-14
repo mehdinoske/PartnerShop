@@ -17,14 +17,16 @@
             <form action="AggiungiSegnalazione" method="post">
             <select name="motivazione" id="segnalazioni">
                 <option disabled selected>Scegli motivazione</option>
-                <option value="mot1">Venditore poco serio</option>
-                <option value="mot2">mot2</option>
-                <option value="mot3">mot3</option>
-                <option value="mot4">mot4</option>
+                <option value="mot1">Prodotto danneggiato</option>
+                <option value="mot2">Descrizione prodotto fuorviante</option>
+                <option value="mot3">Ordine non ricevuto</option>
+                <option value="mot4">Ordine in ritardo</option>
             </select>
-            <textarea class="text" name="commentiAggiuntivi"  id="commentiAggiuntivi" placeholder="inserisci dei commenti aggiuntivi..." ></textarea>
-                <input type="submit" value="Invia Segnalazione">
+            <textarea class="text" name="commentiAggiuntivi"  id="commentiAggiuntivi" placeholder="inserisci dei commenti aggiuntivi..." oninput="validaCommentoAggiuntivo()"></textarea>
+                <input type="submit" id="segnalazioneInvio" value="Invia Segnalazione" disabled>
+                <span style="color: white" id="notificaMes4"></span>
             </form>
+
         </div>
     </div>
 

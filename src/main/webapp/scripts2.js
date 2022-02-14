@@ -10,6 +10,7 @@ var indirizzoOk = false;
 var nomenegozioOk = false;
 var pivaOk = false;
 var cardcOk = false;
+var commentoOk = false;
 
 function validaUsername2() {
     var input = document.getElementById("username");
@@ -224,5 +225,28 @@ function cambiaStatoSubmit3() {
     } else {
         document.getElementById('completaAcquisto').disabled = true;
         document.getElementById('notificaMes3').innerHTML = ' Verifica che tutti i campi siano in verde';
+    }
+}
+
+
+function validaCommentoAggiuntivo() {
+    var input = document.getElementById("commentiAggiuntivi");
+    if (input.value.trim().length <= 100) {
+        input.style.border = "2px solid green";
+        commentoOk = true;
+    } else {
+        input.style.border = "2px solid red";
+        commentoOk = false;
+    }
+    cambiaStatoSubmit4();
+}
+
+function cambiaStatoSubmit4() {
+    if (commentoOk) {
+        document.getElementById('segnalazioneInvio').disabled = false;
+        document.getElementById('notificaMes4').innerHTML = '';
+    } else {
+        document.getElementById('segnalazioneInvio').disabled = true;
+        document.getElementById('notificaMes4').innerHTML = ' Verifica che tutti i campi siano in verde';
     }
 }

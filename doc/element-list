@@ -30,4 +30,5 @@ UnitTesting.GestioneAcquisti
 UnitTesting.GestioneProdotto
 UnitTesting.GestioneSegnalazione
 UnitTesting.GestioneUtente
+UnitTesting.HomeServlet
 UnitTesting.Registrazione

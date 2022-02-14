@@ -27,7 +27,7 @@
                 <input type="text" name="cellulare" id="cell" value="${utente.cellulare}"/>
                 <label for="indir">Indirizzo</label>
                 <input type="text" name="indirizzo" id="indir" value="${utente.indirizzo}"/>
-                <label for="pass">Password (almeno 8 caratteri tra cui: una lettera minuscola, una lettera maiuscola, un numero)</label>
+                <label for="pass">Password (almeno 8 caratteri tra cui: una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale)</label>
                 <input type="password" name="password" id="pass" value=""/>
                 <label for="passConf">Conferma Password</label>
                 <input type="password" name="passwordConferma" id="passConf" value=""/>

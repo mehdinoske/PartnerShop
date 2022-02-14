@@ -26,7 +26,7 @@ public interface GestioneUtenteService {
      * firma del metodo che implementa la rimozione dell'utente dal db
      * @param email stringa che identifica il cliente
      */
-    void CancellaUtente(String email);
+    void CancellaUtente(String email) throws MyServletException;
 
     /**
      *firma del metodo che permette la visualizzazione della lista degli utenti registrati
@@ -40,7 +40,7 @@ public interface GestioneUtenteService {
      * @param idProdotto intero che identifica il prodotto da aggiungere alla lista
      * @return un boolean che indica il successo o meno dell'operazione di aggiunta
      */
-    boolean aggiungiListaDesideri(Cliente cl,int idProdotto);
+    boolean aggiungiListaDesideri(Cliente cl,int idProdotto) throws MyServletException;
 
     /**
      *firma del metodo che permette la rimozione di un prodotto dalla lista desideri personale
@@ -48,7 +48,7 @@ public interface GestioneUtenteService {
      * @param idProdotto intero che identifica il prodotto da rimuovere dalla lista
      * @return un boolean che indica il successo o meno dell'operazione di rimozione
      */
-    boolean rimuoviListaDesideri(Cliente cl,int idProdotto);
+    boolean rimuoviListaDesideri(Cliente cl, int idProdotto) throws MyServletException;
 
     /**
      *firma del metodo che recupera la lista desideri dell'utente loggato dal DB
