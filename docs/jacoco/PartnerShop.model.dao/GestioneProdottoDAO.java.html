@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestioneProdottoDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.model.dao</a> &gt; <span class="el_source">GestioneProdottoDAO.java</span></div><h1>GestioneProdottoDAO.java</h1><pre class="source lang-java linenums">package PartnerShop.model.dao;
+
+import PartnerShop.model.entity.Prodotto;
+import PartnerShop.utils.ConPool;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class GestioneProdottoDAO {
+
+    private Connection con;
+
+<span class="fc" id="L23">    public GestioneProdottoDAO(){</span>
+<span class="fc" id="L24">        this.con = ConPool.getConnection();</span>
+<span class="fc" id="L25">    }</span>
+
+    public Prodotto doRetrieveById(int id) {
+        try{
+<span class="fc" id="L29">            PreparedStatement ps = con</span>
+<span class="fc" id="L30">                    .prepareStatement(&quot;SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE id=?&quot;);</span>
+<span class="fc" id="L31">            ps.setInt(1, id);</span>
+<span class="fc" id="L32">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            if (rs.next()) {</span>
+<span class="fc" id="L34">                Prodotto p = new Prodotto();</span>
+<span class="fc" id="L35">                p.setId(rs.getInt(1));</span>
+<span class="fc" id="L36">                p.setEmail_Venditore(rs.getString(2));</span>
+<span class="fc" id="L37">                p.setNome(rs.getString(3));</span>
+<span class="fc" id="L38">                p.setDescrizione(rs.getString(4));</span>
+<span class="fc" id="L39">                p.setCategoria(rs.getString(5));</span>
+<span class="fc" id="L40">                p.setPrezzo_Cent(rs.getInt(6));</span>
+<span class="fc" id="L41">                p.setDisponibilita(rs.getInt(7));</span>
+<span class="fc" id="L42">                return p;</span>
+            }
+<span class="fc" id="L44">            return null;</span>
+<span class="nc" id="L45">        } catch (SQLException e) {</span>
+<span class="nc" id="L46">            throw new RuntimeException(e);</span>
+        }
+    }
+
+    public ArrayList&lt;Prodotto&gt; doRetrieveAllProdotti() {
+<span class="fc" id="L51">        ArrayList&lt;Prodotto&gt; list = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L53">            PreparedStatement ps = con.prepareStatement(&quot;SELECT id,nome,descrizione,categoria,prezzo_cent,quantita_disponibile,email_venditore FROM prodotto&quot;);</span>
+<span class="fc" id="L54">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L56">                Prodotto pr = new Prodotto();</span>
+<span class="fc" id="L57">                pr.setId(rs.getInt(1));</span>
+<span class="fc" id="L58">                pr.setNome(rs.getString(2));</span>
+<span class="fc" id="L59">                pr.setDescrizione(rs.getString(3));</span>
+<span class="fc" id="L60">                pr.setCategoria(rs.getString(4));</span>
+<span class="fc" id="L61">                pr.setPrezzo_Cent(rs.getLong(5));</span>
+<span class="fc" id="L62">                pr.setDisponibilita(rs.getInt(6));</span>
+<span class="fc" id="L63">                pr.setEmail_Venditore(rs.getString(7));</span>
+<span class="fc" id="L64">                list.add(pr);</span>
+<span class="fc" id="L65">            }</span>
+<span class="nc" id="L66">        } catch (SQLException e) {</span>
+<span class="nc" id="L67">            throw new RuntimeException(e);</span>
+<span class="fc" id="L68">        }</span>
+<span class="fc" id="L69">        return list;</span>
+    }
+
+    public ArrayList&lt;Prodotto&gt; doRetrieveByVenditore(String email_venditore) {
+<span class="fc" id="L73">        ArrayList&lt;Prodotto&gt; list = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L75">            PreparedStatement ps = con</span>
+<span class="fc" id="L76">                    .prepareStatement(&quot;SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE email_venditore=?&quot;);</span>
+<span class="fc" id="L77">            ps.setString(1, email_venditore);</span>
+<span class="fc" id="L78">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L80">                Prodotto p = new Prodotto();</span>
+<span class="fc" id="L81">                p.setId(rs.getInt(1));</span>
+<span class="fc" id="L82">                p.setEmail_Venditore(rs.getString(2));</span>
+<span class="fc" id="L83">                p.setNome(rs.getString(3));</span>
+<span class="fc" id="L84">                p.setDescrizione(rs.getString(4));</span>
+<span class="fc" id="L85">                p.setCategoria(rs.getString(5));</span>
+<span class="fc" id="L86">                p.setPrezzo_Cent(rs.getInt(6));</span>
+<span class="fc" id="L87">                p.setDisponibilita(rs.getInt(7));</span>
+<span class="fc" id="L88">                list.add(p);</span>
+<span class="fc" id="L89">            }</span>
+<span class="nc" id="L90">        } catch (SQLException e) {</span>
+<span class="nc" id="L91">            throw new RuntimeException(e);</span>
+<span class="fc" id="L92">        }</span>
+<span class="fc" id="L93">        return list;</span>
+    }
+
+    public void doSave(Prodotto prodotto) {
+        try  {
+<span class="fc" id="L98">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;INSERT INTO prodotto (email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile) VALUES(?,?,?,?,?,?)&quot;,
+                    Statement.RETURN_GENERATED_KEYS);
+<span class="fc" id="L101">            ps.setString(1, prodotto.getEmail_Venditore());</span>
+<span class="fc" id="L102">            ps.setString(2, prodotto.getNome());</span>
+<span class="fc" id="L103">            ps.setString(3, prodotto.getDescrizione());</span>
+<span class="fc" id="L104">            ps.setString(4, prodotto.getCategoria());</span>
+<span class="fc" id="L105">            ps.setLong(5, prodotto.getPrezzo_Cent());</span>
+<span class="fc" id="L106">            ps.setInt(6, prodotto.getDisponibilita());</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L108">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+<span class="fc" id="L110">            ResultSet rs = ps.getGeneratedKeys();</span>
+<span class="fc" id="L111">            rs.next();</span>
+<span class="fc" id="L112">            int id = rs.getInt(1);</span>
+<span class="fc" id="L113">            prodotto.setId(id);</span>
+
+<span class="nc" id="L115">        } catch (SQLException e) {</span>
+<span class="nc" id="L116">            throw new RuntimeException(e);</span>
+<span class="fc" id="L117">        }</span>
+<span class="fc" id="L118">    }</span>
+
+    public void doUpdate(Prodotto prodotto) {
+        try{
+<span class="fc" id="L122">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;UPDATE prodotto SET nome=?, descrizione=?, categoria=?, prezzo_cent=?, quantita_disponibile=? WHERE id=?&quot;,
+                    Statement.RETURN_GENERATED_KEYS);
+<span class="fc" id="L125">            ps.setString(1, prodotto.getNome());</span>
+<span class="fc" id="L126">            ps.setString(2, prodotto.getDescrizione());</span>
+<span class="fc" id="L127">            ps.setString(3, prodotto.getCategoria());</span>
+<span class="fc" id="L128">            ps.setLong(4, prodotto.getPrezzo_Cent());</span>
+<span class="fc" id="L129">            ps.setInt(5, prodotto.getDisponibilita());</span>
+<span class="fc" id="L130">            ps.setInt(6, prodotto.getId());</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L132">                throw new RuntimeException(&quot;INSERT error.&quot;);</span>
+            }
+
+<span class="nc" id="L135">        } catch (SQLException e) {</span>
+<span class="nc" id="L136">            throw new RuntimeException(e);</span>
+<span class="fc" id="L137">        }</span>
+<span class="fc" id="L138">    }</span>
+
+    public void doDeleteById(int id) {
+        try  {
+<span class="fc" id="L142">            PreparedStatement ps = con</span>
+<span class="fc" id="L143">                    .prepareStatement(&quot;DELETE FROM prodotto WHERE id=?&quot;);</span>
+<span class="fc" id="L144">            ps.setInt(1, id);</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">            if (ps.executeUpdate() != 1) {</span>
+<span class="nc" id="L146">                throw new RuntimeException(&quot;DELETE error.&quot;);</span>
+            }
+<span class="nc" id="L148">        } catch (SQLException e) {</span>
+<span class="nc" id="L149">            throw new RuntimeException(e);</span>
+<span class="fc" id="L150">        }</span>
+<span class="fc" id="L151">    }</span>
+
+    public ArrayList&lt;Prodotto&gt; doRetrieveByCategoria(String cat){
+<span class="fc" id="L154">        ArrayList&lt;Prodotto&gt; list = new ArrayList&lt;&gt;();</span>
+        try  {
+<span class="fc" id="L156">            PreparedStatement ps = con</span>
+<span class="fc" id="L157">                    .prepareStatement(&quot;SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE categoria=?&quot;);</span>
+<span class="fc" id="L158">            ps.setString(1, cat);</span>
+<span class="fc" id="L159">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L161">                Prodotto p = new Prodotto();</span>
+<span class="fc" id="L162">                p.setId(rs.getInt(1));</span>
+<span class="fc" id="L163">                p.setEmail_Venditore(rs.getString(2));</span>
+<span class="fc" id="L164">                p.setNome(rs.getString(3));</span>
+<span class="fc" id="L165">                p.setDescrizione(rs.getString(4));</span>
+<span class="fc" id="L166">                p.setCategoria(rs.getString(5));</span>
+<span class="fc" id="L167">                p.setPrezzo_Cent(rs.getInt(6));</span>
+<span class="fc" id="L168">                p.setDisponibilita(rs.getInt(7));</span>
+<span class="fc" id="L169">                list.add(p);</span>
+<span class="fc" id="L170">            }</span>
+<span class="nc" id="L171">        } catch (SQLException e) {</span>
+<span class="nc" id="L172">            throw new RuntimeException(e);</span>
+<span class="fc" id="L173">        }</span>
+<span class="fc" id="L174">        return list;</span>
+    }
+
+
+    public ArrayList&lt;Prodotto&gt; doRetrieveByNome(String nome){
+<span class="fc" id="L179">        ArrayList&lt;Prodotto&gt; list = new ArrayList&lt;&gt;();</span>
+        try  {
+<span class="fc" id="L181">            PreparedStatement ps = con</span>
+<span class="fc" id="L182">                    .prepareStatement(&quot;SELECT id, email_venditore, nome, descrizione, categoria, prezzo_cent, quantita_disponibile FROM prodotto WHERE MATCH(nome) AGAINST(? IN BOOLEAN MODE)&quot;);</span>
+<span class="fc" id="L183">            ps.setString(1, nome);</span>
+<span class="fc" id="L184">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L186">                Prodotto p = new Prodotto();</span>
+<span class="fc" id="L187">                p.setId(rs.getInt(1));</span>
+<span class="fc" id="L188">                p.setEmail_Venditore(rs.getString(2));</span>
+<span class="fc" id="L189">                p.setNome(rs.getString(3));</span>
+<span class="fc" id="L190">                p.setDescrizione(rs.getString(4));</span>
+<span class="fc" id="L191">                p.setCategoria(rs.getString(5));</span>
+<span class="fc" id="L192">                p.setPrezzo_Cent(rs.getInt(6));</span>
+<span class="fc" id="L193">                p.setDisponibilita(rs.getInt(7));</span>
+<span class="fc" id="L194">                list.add(p);</span>
+<span class="fc" id="L195">            }</span>
+<span class="nc" id="L196">        } catch (SQLException e) {</span>
+<span class="nc" id="L197">            throw new RuntimeException(e);</span>
+<span class="fc" id="L198">        }</span>
+<span class="fc" id="L199">        return list;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

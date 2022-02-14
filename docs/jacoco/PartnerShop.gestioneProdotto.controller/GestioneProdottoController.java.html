@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestioneProdottoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.gestioneProdotto.controller</a> &gt; <span class="el_source">GestioneProdottoController.java</span></div><h1>GestioneProdottoController.java</h1><pre class="source lang-java linenums">package PartnerShop.gestioneProdotto.controller;
+
+
+import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
+import PartnerShop.gestioneProdotto.service.GestioneProdottoServiceImp;
+import PartnerShop.model.entity.Amministratore;
+import PartnerShop.model.entity.Prodotto;
+import PartnerShop.model.entity.UtenteRegistrato;
+import PartnerShop.Exceptions.MyServletException;
+import org.json.JSONArray;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ * Questa classe implemmenta il controller che si occupa del sottosistema gestione prodotto
+ * @see HttpServlet fornisce l'interfaccia per creare una servlet
+ * @version 1.0
+ * @author Marco De Palma
+ */
+@WebServlet(name = &quot;GP&quot;, urlPatterns = {&quot;/prodotto-visualizza&quot;, &quot;/prodotto-modifica-form&quot;, &quot;/prodotto-aggiungi&quot;, &quot;/prodotto-rimuovi&quot;,
+        &quot;/prodotto-modifica&quot;, &quot;/prodotto-aggiungi-form&quot;, &quot;/visualizza-prodotti&quot;,&quot;/visualizza-categoria&quot;,&quot;/ricercaAjax&quot;, &quot;/ricerca&quot;})
+<span class="fc" id="L33">public class GestioneProdottoController extends HttpServlet {</span>
+
+    private static final long serialVersionUID = 1L;
+<span class="fc" id="L36">    private final String nomeReg =&quot;^[A-Z][a-zA-Z\\s]{2,49}$&quot;;</span>
+<span class="fc" id="L37">    private final String descrizioneReg =&quot;^[A-Z][a-zA-Z\\s.,:]{10,499}$&quot;;</span>
+<span class="fc" id="L38">    private final String categoriaReg =&quot;^[A-Z][a-zA-Z\\s]{3,49}$&quot;;</span>
+<span class="fc" id="L39">    private final String prezzo_CentReg =&quot;^[1-9][0-9]*$&quot;;</span>
+<span class="fc" id="L40">    private final String disponibilitaReg =&quot;^[1-9][0-9]*$&quot;;</span>
+<span class="fc" id="L41">    private final GestioneProdottoService gps = new GestioneProdottoServiceImp();</span>
+
+    /**
+     * Il metodo ereditato dalla classe HttpServlet che esplicita i parametri della request e permette di usare il metodo switchPath
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+<span class="nc" id="L53">        switchPath(request,response, gps);</span>
+<span class="nc" id="L54">    }</span>
+
+    /**
+     * Il metodo ereditato dalla classe HttpServlet che in questo caso fa le stesse cose del metodo doGet ma senza esplicitarne i parametri
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+<span class="nc" id="L65">        doGet(request, response);</span>
+<span class="nc" id="L66">    }</span>
+
+    /**
+     * Il metodo che permette la visualizzazione in dettaglio di un prodotto
+     * @param request Oggetto della servlet, che contiene l'id del prodotto da visualizzare e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean prodottoVisualizza(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+        int id;
+        try {
+<span class="fc" id="L82">            id = Integer.parseInt(request.getParameter(&quot;id&quot;));</span>
+<span class="fc" id="L83">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L84">            throw new MyServletException(&quot;Id prodotto non corretto.&quot;);</span>
+<span class="fc" id="L85">        }</span>
+<span class="fc" id="L86">        Prodotto prodotto = gps.getProdottoById(id);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if(prodotto == null) {</span>
+<span class="fc" id="L88">            throw new MyServletException(&quot;Prodotto non trovato.&quot;);</span>
+        } else {
+<span class="fc" id="L90">            request.setAttribute(&quot;prodotto&quot;, prodotto);</span>
+<span class="fc" id="L91">            RequestDispatcher requestDispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/prodotto.jsp&quot;);</span>
+<span class="fc" id="L92">            requestDispatcher.forward(request, response);</span>
+        }
+<span class="fc" id="L94">        return true;</span>
+    }
+
+    /**
+     * Il metodo che permette la visualizzazione del form per modificare un prodotto, effettuabile solo dal venditore a cui appartiene quel prodotto
+     * @param request Oggetto della servlet, che contiene l'id del prodotto da visualizzare e la sessione corrente che contiene l'attributo utente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean prodottoModificaForm(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+<span class="fc" id="L109">        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+        int id;
+<span class="fc bfc" id="L111" title="All 4 branches covered.">        if(ut == null || ut.getTipo() == 0) {</span>
+<span class="fc" id="L112">            throw new MyServletException(&quot;Non hai i permessi necessari.&quot;);</span>
+        }   else {
+            try {
+<span class="fc" id="L115">                id = Integer.parseInt(request.getParameter(&quot;id&quot;));</span>
+<span class="fc" id="L116">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L117">                throw new MyServletException(&quot;Id prodotto non corretto.&quot;);</span>
+<span class="fc" id="L118">            }</span>
+<span class="fc" id="L119">            Prodotto prodotto = gps.getProdottoById(id);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">            if(prodotto == null) {</span>
+<span class="fc" id="L121">                throw new MyServletException(&quot;Prodotto non trovato.&quot;);</span>
+            } else {
+<span class="fc" id="L123">                request.setAttribute(&quot;prodotto&quot;, prodotto);</span>
+<span class="fc" id="L124">                RequestDispatcher requestDispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/modificaProdotto.jsp&quot;);</span>
+<span class="fc" id="L125">                requestDispatcher.forward(request, response);</span>
+            }
+        }
+<span class="fc" id="L128">        return true;</span>
+    }
+
+    /**
+     * Il metodo che permette l'aggiunta di un prodotto al database, effettuabile solo dai venditori
+     * @param request Oggetto della servlet, che contiene le variabili usate per aggiungere un nuovo prodotto e la sessione corrente che contiene l'attributo utente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean prodottoAggiungi(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+<span class="fc" id="L143">        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+        String nome, descrizione, categoria;
+        int disponibilita;
+        long prezzo_Cent;
+<span class="fc" id="L147">        ArrayList&lt;Prodotto&gt; prodotti = (ArrayList&lt;Prodotto&gt;) request.getSession().getAttribute(&quot;prodotti&quot;);</span>
+<span class="fc bfc" id="L148" title="All 4 branches covered.">        if(ut != null &amp;&amp; ut.getTipo() == 1) {</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">            if(request.getParameter(&quot;nome&quot;).matches(nomeReg))</span>
+<span class="fc" id="L150">                nome = request.getParameter(&quot;nome&quot;);</span>
+            else
+<span class="fc" id="L152">                throw new MyServletException(&quot;Nome prodotto errato.&quot;);</span>
+
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            if(request.getParameter(&quot;descrizione&quot;).matches(descrizioneReg))</span>
+<span class="fc" id="L155">                descrizione = request.getParameter(&quot;descrizione&quot;);</span>
+            else
+<span class="fc" id="L157">                throw new MyServletException(&quot;Descrizione prodotto errata.&quot;);</span>
+
+<span class="fc bfc" id="L159" title="All 2 branches covered.">            if(request.getParameter(&quot;categoria&quot;).matches(categoriaReg))</span>
+<span class="fc" id="L160">                categoria = request.getParameter(&quot;categoria&quot;);</span>
+            else
+<span class="fc" id="L162">                throw new MyServletException(&quot;Categoria prodotto errata.&quot;);</span>
+
+<span class="fc bfc" id="L164" title="All 2 branches covered.">            if(request.getParameter(&quot;prezzo_Cent&quot;).matches(prezzo_CentReg))</span>
+<span class="fc" id="L165">                prezzo_Cent = Long.parseLong(request.getParameter(&quot;prezzo_Cent&quot;));</span>
+            else
+<span class="fc" id="L167">                throw new MyServletException(&quot;Prezzo prodotto errato.&quot;);</span>
+
+<span class="fc bfc" id="L169" title="All 2 branches covered.">            if(request.getParameter(&quot;disponibilita&quot;).matches(disponibilitaReg))</span>
+<span class="fc" id="L170">                disponibilita = Integer.parseInt(request.getParameter(&quot;disponibilita&quot;));</span>
+            else
+<span class="fc" id="L172">                throw new MyServletException(&quot;Disponibilita prodotto errata.&quot;);</span>
+
+<span class="fc" id="L174">            Prodotto prodotto = new Prodotto();</span>
+<span class="fc" id="L175">            prodotto.setNome(nome);</span>
+<span class="fc" id="L176">            prodotto.setEmail_Venditore(ut.getEmail());</span>
+<span class="fc" id="L177">            prodotto.setDisponibilita(disponibilita);</span>
+<span class="fc" id="L178">            prodotto.setCategoria(categoria);</span>
+<span class="fc" id="L179">            prodotto.setDescrizione(descrizione);</span>
+<span class="fc" id="L180">            prodotto.setPrezzo_Cent(prezzo_Cent);</span>
+<span class="fc" id="L181">            gps.doSaveProdotto(prodotto);</span>
+<span class="fc" id="L182">            prodotti.add(prodotto);</span>
+<span class="fc" id="L183">            request.getSession().setAttribute(&quot;prodotti&quot;,prodotti);</span>
+<span class="fc" id="L184">            prodotti = (ArrayList&lt;Prodotto&gt;) request.getSession().getAttribute(&quot;prodotti&quot;);</span>
+<span class="fc" id="L185">            Part filePart = (Part) request.getSession().getAttribute(&quot;img&quot;);</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">            if(filePart == null) {</span>
+
+            } else {
+<span class="fc" id="L189">                Prodotto p = prodotti.get(prodotti.size() - 1);</span>
+<span class="fc" id="L190">                int i = p.getId();</span>
+<span class="fc" id="L191">                filePart.write(&quot;C:\\img\\&quot; + i +&quot;.jpg&quot;);</span>
+            }
+<span class="fc" id="L193">            request.setAttribute(&quot;messaggio&quot;, &quot;Prodotto aggiunto con successo.&quot;);</span>
+<span class="fc" id="L194">            RequestDispatcher requestDispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/notifica.jsp&quot;);</span>
+<span class="fc" id="L195">            requestDispatcher.forward(request, response);</span>
+<span class="fc" id="L196">        } else {</span>
+<span class="fc" id="L197">            throw new MyServletException(&quot;Non hai i permessi necessari.&quot;);</span>
+        }
+<span class="fc" id="L199">        return true;</span>
+    }
+
+    /**
+     * Il metodo che permette la rimozione di un prodotto dal database, effettuabile solo dai venditori e dagli admin
+     * @param request Oggetto della servlet, che contiene l'id del prodotto da rimuovere e la sessione corrente che contiene l'attributo utente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean prodottoRimuovi(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+<span class="fc" id="L214">        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+<span class="fc" id="L215">        Amministratore adm = (Amministratore) request.getSession().getAttribute(&quot;admin&quot;);</span>
+<span class="fc" id="L216">        ArrayList&lt;Prodotto&gt; prodotti = (ArrayList&lt;Prodotto&gt;) request.getSession().getAttribute(&quot;prodotti&quot;);</span>
+        int id;
+<span class="fc bfc" id="L218" title="All 6 branches covered.">        if((ut != null &amp;&amp; ut.getTipo() == 1) || adm != null) {</span>
+            try {
+<span class="fc" id="L220">                id = Integer.parseInt(request.getParameter(&quot;id&quot;));</span>
+<span class="fc" id="L221">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L222">                throw new MyServletException(&quot;Id prodotto non corretto.&quot;);</span>
+<span class="fc" id="L223">            }</span>
+<span class="fc" id="L224">            Prodotto p2 = gps.getProdottoById(id);</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">            if(p2 == null)</span>
+<span class="fc" id="L226">                throw new MyServletException(&quot;Prodotto non trovato.&quot;);</span>
+            else {
+<span class="fc" id="L228">                gps.deleteProdottoById(id);</span>
+<span class="fc" id="L229">                prodotti.remove(p2);</span>
+<span class="fc" id="L230">                request.getSession().setAttribute(&quot;prodotti&quot;,prodotti);</span>
+            }
+<span class="fc" id="L232">        } else {</span>
+<span class="fc" id="L233">            throw new MyServletException(&quot;Non hai i permessi necessari.&quot;);</span>
+        }
+<span class="fc" id="L235">        request.setAttribute(&quot;messaggio&quot;, &quot;Prodotto eliminato con successo.&quot;);</span>
+<span class="fc" id="L236">        RequestDispatcher requestDispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/notifica.jsp&quot;);</span>
+<span class="fc" id="L237">        requestDispatcher.forward(request, response);</span>
+<span class="fc" id="L238">        return true;</span>
+    }
+
+    /**
+     * Il metodo che permette la visualizzazione del form per aggiungere un prodotto, effettuabile solo dai venditori
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente che contiene l'attributo utente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean prodottoAggiungiForm(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+<span class="fc" id="L253">        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+<span class="fc bfc" id="L254" title="All 4 branches covered.">        if(ut != null &amp;&amp; ut.getTipo() == 1) {</span>
+<span class="fc" id="L255">            RequestDispatcher requestDispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/aggiungiProdotto.jsp&quot;);</span>
+<span class="fc" id="L256">            requestDispatcher.forward(request, response);</span>
+<span class="fc" id="L257">        } else {</span>
+<span class="fc" id="L258">            throw new MyServletException(&quot;Non hai i permessi necessari.&quot;);</span>
+        }
+<span class="fc" id="L260">        return true;</span>
+    }
+
+    /**Il metodo che permette la visualizzazione di una lista di prodotti
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean visualizzaProdotti(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+<span class="fc" id="L274">        ArrayList&lt;Prodotto&gt; prodotti = (ArrayList&lt;Prodotto&gt;) request.getSession().getAttribute(&quot;prodotti&quot;);</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">        if(prodotti == null)</span>
+<span class="fc" id="L276">            throw new MyServletException(&quot;Nessun prodotto disponibile.&quot;);</span>
+        else {
+<span class="fc" id="L278">            request.getSession().setAttribute(&quot;listProdotti&quot;, prodotti);</span>
+<span class="fc" id="L279">            RequestDispatcher requestDispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/listaProdotti.jsp&quot;);</span>
+<span class="fc" id="L280">            requestDispatcher.forward(request, response);</span>
+        }
+<span class="fc" id="L282">        return true;</span>
+    }
+
+    /**
+     * Il metodo che permette la visualizzazione di tutti i prodotti di una determinata categoria
+     * @param request Oggetto della servlet, che contiene la categoria dei prodotti da visualizzare e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean visualizzaCategoria(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+        String categoria;
+<span class="fc bfc" id="L298" title="All 2 branches covered.">        if(request.getParameter(&quot;categoria&quot;).matches(categoriaReg))</span>
+<span class="fc" id="L299">            categoria = request.getParameter(&quot;categoria&quot;);</span>
+        else
+<span class="fc" id="L301">            throw new MyServletException(&quot;Categoria prodotto errata.&quot;);</span>
+<span class="fc" id="L302">        ArrayList&lt;Prodotto&gt; listaProd = gps.getProdottiByCategoria(categoria);</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">        if(listaProd == null)</span>
+<span class="fc" id="L304">            throw new MyServletException(&quot;Nessun prodotto per questa categoria.&quot;);</span>
+        else {
+<span class="fc" id="L306">            request.getSession().setAttribute(&quot;listProdotti&quot;,listaProd);</span>
+<span class="fc" id="L307">            RequestDispatcher requestDispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/listaProdotti.jsp&quot;);</span>
+<span class="fc" id="L308">            requestDispatcher.forward(request, response);</span>
+        }
+<span class="fc" id="L310">        return true;</span>
+    }
+
+    /**
+     * Il metodo che permette la visualizzazione di una lista dei prodotti ottenuta tramite ricerca ajax
+     * @param request Oggetto della servlet, che contiene la stringa da cercare e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean ricercaAjax(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+<span class="fc" id="L325">        String app = (request.getParameter(&quot;p&quot;) +&quot;*&quot;);</span>
+<span class="fc" id="L326">        ArrayList&lt;Prodotto&gt; listProd = gps.getProdottiByNome(app);</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">        if(listProd == null) {</span>
+<span class="fc" id="L328">            throw new MyServletException(&quot;Nessun prodotto per questa ricerca.&quot;);</span>
+        }
+<span class="fc" id="L330">        JSONArray listaJson = new JSONArray();</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">        for(Prodotto p : listProd){</span>
+<span class="fc" id="L332">            listaJson.put(p.getNome());</span>
+<span class="fc" id="L333">        }</span>
+<span class="fc" id="L334">        response.setContentType(&quot;application/json&quot;);</span>
+<span class="fc" id="L335">        response.getWriter().append(listaJson.toString());</span>
+<span class="fc" id="L336">        return true;</span>
+    }
+
+    /**
+     * Il metodo che permette la visualizzazione di una lista dei prodotti ottenuta tramite una ricerca
+     * @param request Oggetto della servlet, che contiene la stringa da cercare e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean ricerca(HttpServletRequest request,HttpServletResponse response,GestioneProdottoService gps)throws ServletException, IOException {
+<span class="fc bfc" id="L349" title="All 2 branches covered.">        if(!request.getParameter(&quot;p&quot;).isBlank()) {</span>
+<span class="fc" id="L350">            String nome = request.getParameter(&quot;p&quot;) + &quot;*&quot;;</span>
+<span class="fc" id="L351">            ArrayList&lt;Prodotto&gt; listProd = gps.getProdottiByNome(nome);</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">            if (listProd == null) {</span>
+<span class="fc" id="L353">                throw new MyServletException(&quot;Nessun prodotto per questa ricerca.&quot;);</span>
+            }
+<span class="fc" id="L355">            request.setAttribute(&quot;prodottiRicerca&quot;,listProd);</span>
+<span class="fc" id="L356">        }else {</span>
+<span class="fc" id="L357">            throw new MyServletException(&quot;Nessun parola chiave inserita.&quot;);</span>
+        }
+<span class="fc" id="L359">        request.getRequestDispatcher(&quot;WEB-INF/jsp/risultatoRicerca.jsp&quot;).forward(request,response);</span>
+<span class="fc" id="L360">        return true;</span>
+    }
+
+    /**Il metodo che permette la modifica di un prodotto, effettuabile solo dal venditore a cui appartiene quel prodotto
+     * @param request Oggetto della servlet, che contiene le variabili relative al prodotto da modificare e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws SQLException Un'eccezione che fornisce informazioni su un errore di accesso al database o altri errori
+     * @throws NoSuchAlgorithmException Un'eccezione lanciata quando è richiesto un particolare algoritmo ma che non e disponibile
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean prodottoModifica(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws SQLException, NoSuchAlgorithmException, IOException, ServletException {
+<span class="fc" id="L374">        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+        Prodotto prodotto;
+        String nome, descrizione, categoria;
+        long prezzo_Cent;
+        int disponibilita, id;
+<span class="fc" id="L379">        ArrayList&lt;Prodotto&gt; prodotti = (ArrayList&lt;Prodotto&gt;) request.getSession().getAttribute(&quot;prodotti&quot;);</span>
+        try {
+<span class="fc" id="L381">            id = Integer.parseInt(request.getParameter(&quot;id&quot;));</span>
+<span class="fc" id="L382">        } catch (Exception e) {</span>
+<span class="fc" id="L383">            throw new MyServletException(&quot;Id prodotto errato.&quot;);</span>
+<span class="fc" id="L384">        }</span>
+<span class="fc" id="L385">        Prodotto p1 = gps.getProdottoById(id);</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">        if(p1 == null)</span>
+<span class="fc" id="L387">            throw new MyServletException(&quot;Prodotto non trovato.&quot;);</span>
+
+<span class="fc bfc" id="L389" title="All 6 branches covered.">        if(ut == null || ut.getTipo() == 0 || !gps.getProdottoById(id).getEmail_Venditore().equals(ut.getEmail())) {</span>
+<span class="fc" id="L390">            throw new MyServletException(&quot;Non hai i permessi necessari.&quot;);</span>
+        }   else {
+
+<span class="fc bfc" id="L393" title="All 2 branches covered.">            if(request.getParameter(&quot;nome&quot;).matches(nomeReg))</span>
+<span class="fc" id="L394">                nome = request.getParameter(&quot;nome&quot;);</span>
+            else
+<span class="fc" id="L396">                throw new MyServletException(&quot;Nome prodotto errato.&quot;);</span>
+
+<span class="fc bfc" id="L398" title="All 2 branches covered.">            if(request.getParameter(&quot;descrizione&quot;).matches(descrizioneReg))</span>
+<span class="fc" id="L399">                descrizione = request.getParameter(&quot;descrizione&quot;);</span>
+            else
+<span class="fc" id="L401">                throw new MyServletException(&quot;Descrizione prodotto errata.&quot;);</span>
+
+<span class="fc bfc" id="L403" title="All 2 branches covered.">            if(request.getParameter(&quot;categoria&quot;).matches(categoriaReg))</span>
+<span class="fc" id="L404">                categoria = request.getParameter(&quot;categoria&quot;);</span>
+           else
+<span class="fc" id="L406">                throw new MyServletException(&quot;Categoria prodotto errata.&quot;);</span>
+
+<span class="fc bfc" id="L408" title="All 2 branches covered.">            if(request.getParameter(&quot;prezzo_Cent&quot;).matches(prezzo_CentReg))</span>
+<span class="fc" id="L409">                prezzo_Cent = Long.parseLong(request.getParameter(&quot;prezzo_Cent&quot;));</span>
+            else
+<span class="fc" id="L411">                throw new MyServletException(&quot;Prezzo prodotto errato.&quot;);</span>
+
+<span class="fc bfc" id="L413" title="All 2 branches covered.">            if(request.getParameter(&quot;disponibilita&quot;).matches(disponibilitaReg))</span>
+<span class="fc" id="L414">                disponibilita = Integer.parseInt(request.getParameter(&quot;disponibilita&quot;));</span>
+            else
+<span class="fc" id="L416">                throw new MyServletException(&quot;Disponibilita prodotto errata.&quot;);</span>
+
+<span class="fc" id="L418">            prodotto = new Prodotto();</span>
+<span class="fc" id="L419">            prodotto.setId(id);</span>
+<span class="fc" id="L420">            prodotto.setNome(nome);</span>
+<span class="fc" id="L421">            prodotto.setDisponibilita(disponibilita);</span>
+<span class="fc" id="L422">            prodotto.setCategoria(categoria);</span>
+<span class="fc" id="L423">            prodotto.setDescrizione(descrizione);</span>
+<span class="fc" id="L424">            prodotto.setPrezzo_Cent(prezzo_Cent);</span>
+
+<span class="fc" id="L426">            gps.doUpdateProdotto(prodotto);</span>
+<span class="fc" id="L427">            prodotti.remove(p1);</span>
+<span class="fc" id="L428">            prodotti.add(prodotto);</span>
+<span class="fc" id="L429">            request.getSession().setAttribute(&quot;prodotti&quot;,prodotti);</span>
+
+<span class="fc" id="L431">            request.setAttribute(&quot;messaggio&quot;, &quot;Prodotto aggiornato con successo.&quot;);</span>
+<span class="fc" id="L432">            request.getRequestDispatcher(&quot;WEB-INF/jsp/notifica.jsp&quot;).forward(request, response);</span>
+        }
+<span class="fc" id="L434">        return true;</span>
+    }
+
+    /**
+     * Il metodo che seleziona in base al ServletPath quale metodo richiamare
+     * @param request Oggetto della servlet, che contiene il ServletPath usato in uno switch per decretare quale meotodo richiamare
+     *               , i parametri relativi al quel metodo e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @param gps l'interfaccia di GestioneProdottoServiceImp che permette il collegamento con il database
+     * @return variabile booleana usata per indicare che tutto è andato a buon fine quando restituisce true
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     */
+    public boolean switchPath(HttpServletRequest request, HttpServletResponse response, GestioneProdottoService gps) throws ServletException, IOException {
+<span class="fc" id="L448">        String s = request.getServletPath();</span>
+
+<span class="fc bfc" id="L450" title="All 11 branches covered.">        switch (s) {</span>
+
+            case &quot;/prodotto-visualizza&quot;:
+                try {
+<span class="fc" id="L454">                    prodottoVisualizza(request, response, gps);</span>
+<span class="nc" id="L455">                } catch (SQLException | NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L456">                    e.printStackTrace();</span>
+<span class="fc" id="L457">                }</span>
+<span class="fc" id="L458">                return true;</span>
+
+            case &quot;/prodotto-modifica-form&quot;:
+                try {
+<span class="fc" id="L462">                    prodottoModificaForm(request,response, gps);</span>
+<span class="nc" id="L463">                } catch (SQLException | NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L464">                    e.printStackTrace();</span>
+<span class="fc" id="L465">                }</span>
+<span class="fc" id="L466">                return true;</span>
+
+            case &quot;/prodotto-modifica&quot;:
+                try {
+<span class="fc" id="L470">                    prodottoModifica(request, response, gps);</span>
+<span class="nc" id="L471">                } catch (SQLException | NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L472">                    e.printStackTrace();</span>
+<span class="fc" id="L473">                }</span>
+<span class="fc" id="L474">                return true;</span>
+
+            case &quot;/prodotto-aggiungi&quot;:
+                try {
+<span class="fc" id="L478">                    prodottoAggiungi(request,response, gps);</span>
+<span class="nc" id="L479">                } catch (SQLException | NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L480">                    e.printStackTrace();</span>
+<span class="fc" id="L481">                }</span>
+<span class="fc" id="L482">                return true;</span>
+
+            case &quot;/prodotto-aggiungi-form&quot;:
+                try {
+<span class="fc" id="L486">                    prodottoAggiungiForm(request,response, gps);</span>
+<span class="nc" id="L487">                } catch (SQLException | NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L488">                    e.printStackTrace();</span>
+<span class="fc" id="L489">                }</span>
+<span class="fc" id="L490">                return true;</span>
+
+            case &quot;/prodotto-rimuovi&quot;:
+                try {
+<span class="fc" id="L494">                    prodottoRimuovi(request,response, gps);</span>
+<span class="nc" id="L495">                } catch (SQLException | NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L496">                    e.printStackTrace();</span>
+<span class="fc" id="L497">                }</span>
+<span class="fc" id="L498">                return true;</span>
+
+            case &quot;/visualizza-prodotti&quot;:
+                try {
+<span class="fc" id="L502">                    visualizzaProdotti(request,response, gps);</span>
+<span class="nc" id="L503">                } catch (SQLException | NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L504">                    e.printStackTrace();</span>
+<span class="fc" id="L505">                }</span>
+<span class="fc" id="L506">                return true;</span>
+
+            case &quot;/visualizza-categoria&quot;:
+                try {
+<span class="fc" id="L510">                    visualizzaCategoria(request,response, gps);</span>
+<span class="nc" id="L511">                } catch (SQLException | NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L512">                    e.printStackTrace();</span>
+<span class="fc" id="L513">                }</span>
+<span class="fc" id="L514">                return true;</span>
+
+            case &quot;/ricercaAjax&quot;:
+                try {
+<span class="fc" id="L518">                    ricercaAjax(request,response, gps);</span>
+<span class="nc" id="L519">                } catch (SQLException | NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L520">                    e.printStackTrace();</span>
+<span class="fc" id="L521">                }</span>
+<span class="fc" id="L522">                return true;</span>
+
+            case &quot;/ricerca&quot;:
+<span class="fc" id="L525">                ricerca(request,response,gps);</span>
+<span class="fc" id="L526">                return true;</span>
+        }
+<span class="fc" id="L528">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

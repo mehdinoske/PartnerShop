@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Venditore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.model.entity</a> &gt; <span class="el_source">Venditore.java</span></div><h1>Venditore.java</h1><pre class="source lang-java linenums">package PartnerShop.model.entity;
+
+public class Venditore extends UtenteRegistrato{
+    private String nomeNegozio;
+    private String pIva;
+
+    public Venditore(String nome, String cognome, String dataDiNascita, String username, String password, String email, String indirizzo, String cellulare,int tipo, String nomeNegozio, String pIva) {
+<span class="nc" id="L8">        super(nome, cognome, dataDiNascita, username, password, email, indirizzo,cellulare, tipo);</span>
+<span class="nc" id="L9">        this.nomeNegozio = nomeNegozio;</span>
+<span class="nc" id="L10">        this.pIva = pIva;</span>
+<span class="nc" id="L11">    }</span>
+
+    public String getNomeNegozio() {
+<span class="nc" id="L14">        return nomeNegozio;</span>
+    }
+
+    public void setNomeNegozio(String nomeNegozio) {
+<span class="nc" id="L18">        this.nomeNegozio = nomeNegozio;</span>
+<span class="nc" id="L19">    }</span>
+
+    public String getpIva() {
+<span class="nc" id="L22">        return pIva;</span>
+    }
+
+    public void setpIva(String pIva) {
+<span class="nc" id="L26">        this.pIva = pIva;</span>
+<span class="nc" id="L27">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

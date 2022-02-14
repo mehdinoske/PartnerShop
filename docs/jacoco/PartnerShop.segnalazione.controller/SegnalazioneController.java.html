@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SegnalazioneController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.segnalazione.controller</a> &gt; <span class="el_source">SegnalazioneController.java</span></div><h1>SegnalazioneController.java</h1><pre class="source lang-java linenums">package PartnerShop.segnalazione.controller;
+
+
+import PartnerShop.Exceptions.MyServletException;
+import PartnerShop.gestioneProdotto.service.GestioneProdottoService;
+import PartnerShop.model.dao.SegnalazioneDAO;
+import PartnerShop.model.entity.Amministratore;
+import PartnerShop.model.entity.Segnalazione;
+import PartnerShop.model.entity.UtenteRegistrato;
+import PartnerShop.segnalazione.service.SegnalazioneService;
+import PartnerShop.segnalazione.service.SegnalazioneServiceImp;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ * Questa classe implemmenta il controller che si occupa del sottosistema gestione segnalazione
+ * @see HttpServlet fornisce l'interfaccia per creare una servlet
+ * @version 1.0
+ * @author Marco De Palma, Giuseppe Abbatiello
+ */
+@WebServlet(urlPatterns = {&quot;/AggiungiSegnalazione&quot;,&quot;/VisualizzaSegnalazioni&quot;,&quot;/visualizzaDettagliSegn&quot;,&quot;/chiudiSegnalazione&quot;})
+<span class="fc" id="L29">public class SegnalazioneController extends HttpServlet {</span>
+
+<span class="fc" id="L31">    private final SegnalazioneService segnalazioneService = new SegnalazioneServiceImp();</span>
+
+    /**
+     * Il metodo ereditato dalla classe HttpServlet che esplicita i parametri della request e permette di usare il metodo switchPath
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+<span class="nc" id="L42">        switchPath(request,response, segnalazioneService);</span>
+<span class="nc" id="L43">    }</span>
+
+    /**
+     * Il metodo ereditato dalla classe HttpServlet che non esplicita i parametri della request e permette di usare il metodo aggiungiSegnalazione
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
+    public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+<span class="nc" id="L53">        aggiungiSegnalazione(request,response, segnalazioneService);</span>
+<span class="nc" id="L54">    }</span>
+
+    /**
+     * Il metodo che seleziona in base al ServletPath quale istruzioni eseguire
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
+    public boolean switchPath(HttpServletRequest request, HttpServletResponse response, SegnalazioneService ss) throws ServletException, IOException {
+<span class="fc" id="L64">        String s = request.getServletPath();</span>
+<span class="fc" id="L65">        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+<span class="fc" id="L66">        Amministratore admin = (Amministratore) request.getSession().getAttribute(&quot;admin&quot;);</span>
+<span class="fc bfc" id="L67" title="All 5 branches covered.">        switch (s) {</span>
+
+            case &quot;/AggiungiSegnalazione&quot;: {
+<span class="fc bfc" id="L70" title="All 4 branches covered.">                if(ut == null ||  ut.getTipo() != 0)</span>
+<span class="fc" id="L71">                    throw new MyServletException(&quot;Non sei loggato come cliente.&quot;);</span>
+<span class="fc" id="L72">                RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/aggiungiSegnalazione.jsp&quot;);</span>
+<span class="fc" id="L73">                dispatcher.forward(request, response);</span>
+            }
+<span class="fc" id="L75">            return true;</span>
+            case &quot;/VisualizzaSegnalazioni&quot;: {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">                if(admin == null)</span>
+<span class="fc" id="L78">                    throw new MyServletException(&quot;Non sei loggato come admin.&quot;);</span>
+<span class="fc" id="L79">                ArrayList&lt;Segnalazione&gt; listSegnalazioni = ss.visualizzaListaSegnalazioni(0);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">                if(listSegnalazioni == null)</span>
+<span class="fc" id="L81">                    throw new MyServletException(&quot;Non ci sono segnalazioni in sospeso.&quot;);</span>
+<span class="fc" id="L82">                request.getSession().setAttribute(&quot;segnalazioni&quot;, listSegnalazioni);</span>
+<span class="fc" id="L83">                RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/listaSegnalazioni.jsp&quot;);</span>
+<span class="fc" id="L84">                dispatcher.forward(request, response);</span>
+            }
+<span class="fc" id="L86">            return true;</span>
+            case &quot;/visualizzaDettagliSegn&quot;: {
+<span class="fc bfc" id="L88" title="All 2 branches covered.">                if (admin == null)</span>
+<span class="fc" id="L89">                    throw new MyServletException(&quot;Non sei loggato come admin.&quot;);</span>
+                int id;
+                try {
+<span class="fc" id="L92">                    id = Integer.parseInt(request.getParameter(&quot;id&quot;));</span>
+<span class="fc" id="L93">                } catch (Exception e) {</span>
+<span class="fc" id="L94">                    throw new MyServletException(&quot;Id prodotto errato.&quot;);</span>
+<span class="fc" id="L95">                }</span>
+                Segnalazione segn;
+<span class="fc" id="L97">                segn = ss.visualizzaSegnalazione(id);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">                if (segn == null)</span>
+<span class="fc" id="L99">                    throw new MyServletException(&quot;Segnalazione non trovata.&quot;);</span>
+<span class="fc" id="L100">                request.getSession().setAttribute(&quot;segnalazione&quot;, segn);</span>
+<span class="fc" id="L101">                RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/segnalazione.jsp&quot;);</span>
+<span class="fc" id="L102">                dispatcher.forward(request, response);</span>
+            }
+<span class="fc" id="L104">            return true;</span>
+            case &quot;/chiudiSegnalazione&quot;: {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">                if(admin == null)</span>
+<span class="fc" id="L107">                    throw new MyServletException(&quot;Non sei loggato come admin.&quot;);</span>
+                int id;
+                try {
+<span class="fc" id="L110">                    id = Integer.parseInt(request.getParameter(&quot;id&quot;));</span>
+<span class="fc" id="L111">                } catch (Exception e) {</span>
+<span class="fc" id="L112">                    throw new MyServletException(&quot;Id prodotto errato.&quot;);</span>
+<span class="fc" id="L113">                }</span>
+<span class="fc" id="L114">                ss.chiudiSegnalazione(id);</span>
+<span class="fc" id="L115">                RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/VisualizzaSegnalazioni&quot;);</span>
+<span class="fc" id="L116">                dispatcher.forward(request, response);</span>
+            }
+<span class="fc" id="L118">            return true;</span>
+        }
+<span class="fc" id="L120">        return false;</span>
+    }
+
+    /**
+     * Il metodo che permette l'aggiunta di una segnalazione
+     * @param request Oggetto della servlet, che contiene i parametri inviati e la sessione corrente
+     * @param response Oggetto della servlet, che contiene i parametri della risposta
+     * @throws ServletException Un'eccezione lanciata quando si verifica un errore nella servlet
+     * @throws IOException Un'eccezione lanciata quando si verifica un errore I/O
+     */
+    public boolean aggiungiSegnalazione(HttpServletRequest request, HttpServletResponse response, SegnalazioneService ss) throws ServletException, IOException {
+<span class="fc" id="L131">        String s = request.getServletPath();</span>
+<span class="fc" id="L132">        UtenteRegistrato ut = (UtenteRegistrato) request.getSession().getAttribute(&quot;utente&quot;);</span>
+<span class="fc bfc" id="L133" title="All 4 branches covered.">        if (ut == null || ut.getTipo() != 0)</span>
+<span class="fc" id="L134">            throw new MyServletException(&quot;Non sei loggato come cliente.&quot;);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (s.equals(&quot;/AggiungiSegnalazione&quot;)) {</span>
+<span class="fc" id="L136">            String motivazione = request.getParameter(&quot;motivazione&quot;);</span>
+<span class="fc" id="L137">            String commentiAggiuntivi = request.getParameter(&quot;commentiAggiuntivi&quot;);</span>
+<span class="fc" id="L138">            String email = ut.getEmail();</span>
+<span class="fc" id="L139">            Segnalazione segn = new Segnalazione(email, 0, motivazione, commentiAggiuntivi);</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">            if(!ss.aggiungiSegnalazione(segn))</span>
+<span class="fc" id="L141">                return false;</span>
+<span class="fc" id="L142">            RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;WEB-INF/jsp/notificaSegnalazione.jsp&quot;);</span>
+<span class="fc" id="L143">            dispatcher.forward(request, response);</span>
+<span class="fc" id="L144">            return true;</span>
+        }
+<span class="fc" id="L146">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

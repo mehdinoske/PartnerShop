@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ordine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.model.entity</a> &gt; <span class="el_source">Ordine.java</span></div><h1>Ordine.java</h1><pre class="source lang-java linenums">package PartnerShop.model.entity;
+
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.LinkedHashMap;
+
+public class Ordine {
+    private int id;
+    private String nome;
+    private String cognome;
+
+    public String getNome() {
+<span class="fc" id="L14">        return nome;</span>
+    }
+
+    public void setNome(String nome) {
+<span class="fc" id="L18">        this.nome = nome;</span>
+<span class="fc" id="L19">    }</span>
+
+    public String getCognome() {
+<span class="fc" id="L22">        return cognome;</span>
+    }
+
+    public void setCognome(String cognome) {
+<span class="fc" id="L26">        this.cognome = cognome;</span>
+<span class="fc" id="L27">    }</span>
+
+<span class="fc" id="L29">    private LinkedHashMap&lt;Integer, Prodotto&gt; prodottoHash = new LinkedHashMap();</span>
+<span class="fc" id="L30">    private LinkedHashMap&lt;Integer, Integer&gt; quantHash = new LinkedHashMap();</span>
+    private String email_cliente;
+    private String indirizzo;
+    private float prezzo_tot;
+    private Date data;
+<span class="fc" id="L35">    private Calendar today = Calendar.getInstance();</span>
+    private java.sql.Date dataSql;
+
+<span class="fc" id="L38">    public Ordine() {</span>
+<span class="fc" id="L39">    }</span>
+
+    public Collection&lt;Prodotto&gt; getProdotti() {
+<span class="nc" id="L42">        return this.getProdottoHash().values();</span>
+    }
+
+    public int getId() {
+<span class="fc" id="L46">        return this.id;</span>
+    }
+
+    public Prodotto getProdotto(int idProdotto) {
+<span class="fc" id="L50">        return (Prodotto) this.getProdottoHash().get(idProdotto);</span>
+    }
+
+    public void setId(int id) {
+<span class="fc" id="L54">        this.id = id;</span>
+<span class="fc" id="L55">    }</span>
+
+    public void setProdottoHash(Prodotto pr) {
+<span class="fc" id="L58">        this.getProdottoHash().put(pr.getId(), pr);</span>
+<span class="fc" id="L59">    }</span>
+
+    public void setQuantHash(int idProdotto, int quant) {
+<span class="fc" id="L62">        this.getQuantHash().put(idProdotto, quant);</span>
+<span class="fc" id="L63">    }</span>
+
+    public int getQuant(int idProdotto) {
+<span class="fc" id="L66">        return (Integer)this.getQuantHash().get(idProdotto);</span>
+    }
+
+    public long getPrezzoEuro(int idProdotto) {
+<span class="nc" id="L70">        return (long)(Integer)this.getQuantHash().get(idProdotto) * (long)((Prodotto)this.getProdottoHash().get(idProdotto)).getPrezzo_Cent();</span>
+    }
+
+    public LinkedHashMap&lt;Integer, Prodotto&gt; getProdottoHash() {
+<span class="fc" id="L74">        return this.prodottoHash;</span>
+    }
+
+    public LinkedHashMap&lt;Integer, Integer&gt; getQuantHash() {
+<span class="fc" id="L78">        return this.quantHash;</span>
+    }
+
+    public void setQuantHash(LinkedHashMap&lt;Integer, Integer&gt; quantHash) {
+<span class="nc" id="L82">        this.quantHash = quantHash;</span>
+<span class="nc" id="L83">    }</span>
+
+    public String getEmailCliente() {
+<span class="fc" id="L86">        return this.email_cliente;</span>
+    }
+
+    public void setEmailCliente(String email_cliente) {
+<span class="fc" id="L90">        this.email_cliente = email_cliente;</span>
+<span class="fc" id="L91">    }</span>
+
+    public Date getData() {
+<span class="fc" id="L94">        return this.data;</span>
+    }
+
+    public void setData() {
+<span class="fc" id="L98">        this.today.set(11, 0);</span>
+<span class="fc" id="L99">        this.data = this.today.getTime();</span>
+<span class="fc" id="L100">    }</span>
+
+    public java.sql.Date getDataSql() {
+<span class="nc" id="L103">        return this.dataSql;</span>
+    }
+
+    public void setDataSql(java.sql.Date dataSql) {
+<span class="fc" id="L107">        this.dataSql = dataSql;</span>
+<span class="fc" id="L108">    }</span>
+
+    public String getIndirizzo() {
+<span class="fc" id="L111">        return indirizzo;</span>
+    }
+
+    public void setIndirizzo(String indirizzo) {
+<span class="fc" id="L115">        this.indirizzo = indirizzo;</span>
+<span class="fc" id="L116">    }</span>
+
+    public float getPrezzo_tot() {
+<span class="fc" id="L119">        return prezzo_tot;</span>
+    }
+
+    public void setPrezzo_tot(float prezzo_tot) {
+<span class="fc" id="L123">        this.prezzo_tot = prezzo_tot;</span>
+<span class="fc" id="L124">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

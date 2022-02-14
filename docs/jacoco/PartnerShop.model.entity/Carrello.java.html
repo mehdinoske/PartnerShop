@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Carrello.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.model.entity</a> &gt; <span class="el_source">Carrello.java</span></div><h1>Carrello.java</h1><pre class="source lang-java linenums">package PartnerShop.model.entity;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+
+public class Carrello {
+<span class="fc" id="L8">    private LinkedHashMap&lt;Integer, Prodotto&gt; prodottoHash = new LinkedHashMap();</span>
+<span class="fc" id="L9">    private LinkedHashMap&lt;Integer, Integer&gt; quantHash = new LinkedHashMap();</span>
+
+<span class="fc" id="L11">    public Carrello() {</span>
+<span class="fc" id="L12">    }</span>
+
+    public Collection&lt;Prodotto&gt; getProdotti() {
+<span class="nc" id="L15">        return this.getProdottoHash().values();</span>
+    }
+
+    public Prodotto getProdotto(int idProdotto) {
+<span class="fc" id="L19">        return (Prodotto) this.getProdottoHash().get(idProdotto);</span>
+    }
+
+    public int getQuant(int idProdotto) {
+<span class="fc" id="L23">        return (Integer)this.getQuantHash().get(idProdotto);</span>
+    }
+
+    public void remove(int idProdotto) {
+<span class="fc" id="L27">        this.getProdottoHash().remove(idProdotto);</span>
+<span class="fc" id="L28">        this.getQuantHash().remove(idProdotto);</span>
+<span class="fc" id="L29">    }</span>
+
+    public float getPrezzoEuro(int idProdotto) {
+<span class="fc" id="L32">        return (float)(Integer)this.getQuantHash().get(idProdotto) * (float)((Prodotto)this.getProdottoHash().get(idProdotto)).getPrezzo_Euro();</span>
+    }
+
+    public float sommaTot() {
+<span class="fc" id="L36">        float somma = 0.0F;</span>
+<span class="fc" id="L37">        Iterator it = this.getProdottoHash().keySet().iterator();</span>
+
+        Integer key;
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for(Iterator var3 = this.getProdottoHash().keySet().iterator(); var3.hasNext(); somma += (float)this.getPrezzoEuro(key)) {</span>
+<span class="fc" id="L41">            key = (Integer)var3.next();</span>
+        }
+
+<span class="fc" id="L44">        return somma;</span>
+    }
+
+    public void setProdottoHash(Prodotto pr) {
+<span class="fc" id="L48">        this.getProdottoHash().put(pr.getId(), pr);</span>
+<span class="fc" id="L49">    }</span>
+
+    public void setQuantHash(int idProdotto, int quant) {
+<span class="fc" id="L52">        this.getQuantHash().put(idProdotto, quant);</span>
+<span class="fc" id="L53">    }</span>
+
+    public LinkedHashMap&lt;Integer, Prodotto&gt; getProdottoHash() {
+<span class="fc" id="L56">        return this.prodottoHash;</span>
+    }
+
+    public LinkedHashMap&lt;Integer, Integer&gt; getQuantHash() {
+<span class="fc" id="L60">        return this.quantHash;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestioneAcquistiServiceImp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PartnerShop</a> &gt; <a href="index.source.html" class="el_package">PartnerShop.GestioneAcquisti.service</a> &gt; <span class="el_source">GestioneAcquistiServiceImp.java</span></div><h1>GestioneAcquistiServiceImp.java</h1><pre class="source lang-java linenums">package PartnerShop.GestioneAcquisti.service;
+
+import PartnerShop.Exceptions.MyServletException;
+import PartnerShop.gestioneProdotto.service.GestioneProdottoServiceImp;
+import PartnerShop.model.dao.CarrelloDAO;
+import PartnerShop.model.dao.ClienteDAO;
+import PartnerShop.model.dao.GestioneAcquistiDAO;
+import PartnerShop.model.dao.GestioneProdottoDAO;
+import PartnerShop.model.entity.*;
+
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Logger;
+
+/**
+ * Implementa la classe che esplicita i metodi definiti nell'interfaccia service per il sottosistema Gestione Acquisti.
+ */
+public class GestioneAcquistiServiceImp implements GestioneAcquistiService{
+<span class="fc" id="L20">    private String nomeReg = &quot;^[ a-zA-Z]+$&quot;;</span>
+<span class="fc" id="L21">    private String cognomeReg = &quot;^[ a-zA-Z]+$&quot;;</span>
+<span class="fc" id="L22">    private String cardcReg = &quot;^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$&quot;;</span>
+    private CarrelloDAO carDB;
+    private GestioneAcquistiDAO gesDB;
+<span class="fc" id="L25">    private GestioneProdottoDAO prodDAO = new GestioneProdottoDAO();</span>
+    private ClienteDAO clDB;
+
+<span class="fc" id="L28">    public GestioneAcquistiServiceImp(){</span>
+<span class="fc" id="L29">        gesDB = new GestioneAcquistiDAO();</span>
+<span class="fc" id="L30">        clDB = new ClienteDAO();</span>
+<span class="fc" id="L31">        carDB = new CarrelloDAO();</span>
+<span class="fc" id="L32">    }</span>
+
+
+<span class="fc" id="L35">    public GestioneAcquistiServiceImp(CarrelloDAO carDB){</span>
+<span class="fc" id="L36">        gesDB = new GestioneAcquistiDAO();</span>
+<span class="fc" id="L37">        this.carDB = carDB;</span>
+<span class="fc" id="L38">        clDB = new ClienteDAO();</span>
+<span class="fc" id="L39">    }</span>
+
+<span class="fc" id="L41">    public GestioneAcquistiServiceImp(GestioneAcquistiDAO gesDB,ClienteDAO clDB){</span>
+<span class="fc" id="L42">        this.gesDB = gesDB;</span>
+<span class="fc" id="L43">        this.clDB = clDB;</span>
+<span class="fc" id="L44">        carDB = new CarrelloDAO();</span>
+<span class="fc" id="L45">    }</span>
+
+    /** Implementa la funzionalità per aggiungere un prodotto al carrello.
+     * @param car           oggetto di tipo Carrello prelevato dalla sessione.
+     * @param ut            oggetto di tipo UtenteRegistrato prelevato dalla sessione con le informazioni dell'utente loggato.
+     * @param prodottoIdStr stringa contenente l'id del prodotto da aggiungere al carrello.
+     * @param quantStr      string contenente la quantità da aggiugere al carrello.
+     */
+   public void aggiungiAlCarrello(Carrello car,UtenteRegistrato ut,String prodottoIdStr,String quantStr){
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">       if (ut != null) {</span>
+<span class="fc" id="L55">           carDB.UpdateSession(car,ut.getEmail(), ut.getId_Carrello());</span>
+<span class="fc" id="L56">           car = carDB.doRetrieveByEmailCliente(ut.getEmail(), car);</span>
+       }
+
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">       if (prodottoIdStr != null) {</span>
+<span class="fc" id="L60">           int prodottoId = Integer.parseInt(prodottoIdStr);</span>
+<span class="fc" id="L61">           Prodotto pr = prodDAO.doRetrieveById(prodottoId);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">           if (quantStr != null) {</span>
+<span class="fc" id="L63">               int quant = Integer.parseInt(quantStr);</span>
+<span class="fc" id="L64">               Prodotto prodottoCar = new Prodotto();</span>
+<span class="fc" id="L65">               prodottoCar = car.getProdotto(prodottoId);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">               if (prodottoCar != null ) {</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">                   if (ut != null) {</span>
+<span class="fc" id="L68">                       carDB.doUpdate(ut.getId_Carrello(), prodottoId, car.getQuant(prodottoId) + quant);</span>
+                   }
+
+<span class="fc" id="L71">                   car.setQuantHash(prodottoId, car.getQuant(prodottoId) + quant);</span>
+               } else {
+<span class="fc" id="L73">                   car.setProdottoHash(pr);</span>
+<span class="fc" id="L74">                   car.setQuantHash(prodottoId, quant);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">                   if (ut != null) {</span>
+<span class="fc" id="L76">                       carDB.doSave(prodottoId, ut.getId_Carrello(), quant);</span>
+                   }
+               }
+           }
+       }
+<span class="fc" id="L81">    }</span>
+
+
+    /** Implementa la funzionalità per rimuovere un prodotto dal carrello.
+     * @param ut          oggetto di tipo UtenteRegistrato prelevato dalla sessione passato tramite controller contenente le informazioni dell'utente loggato in quel momento.
+     * @param car         oggetto di tipo Carrello prelevato dalla sessione passato tramite cotroller.
+     * @param prodottoId  intero contenente l'id del prodotto da rimuovere dal carrello.
+     * @param setQuantStr stringa contenente quantita da rimuovere dal carrello.
+     */
+    public void rimuovidalcarrello(UtenteRegistrato ut,Carrello car,int prodottoId,String setQuantStr){
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (setQuantStr != null) {</span>
+<span class="fc" id="L92">            int setQuant = Integer.parseInt(setQuantStr);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">            if (setQuant &lt;= 0) {</span>
+<span class="fc" id="L94">                car.remove(prodottoId);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">                if (ut != null) {</span>
+<span class="fc" id="L96">                    carDB.doDelete(ut.getId_Carrello(), prodottoId);</span>
+                }
+            }
+        }
+<span class="fc" id="L100">    }</span>
+
+    /** Implementa la funzionalità per acquistare prodotti.
+     * @param ut        oggetto di tipo UtenteRegistrato prelevato dalla sessione passato tramite controller contenente le informazioni dell'utente loggato in quel momento.
+     * @param car       oggetto di tipo Carrello prelevato dalla sessione passato tramite cotroller.
+     * @param nome      stringa inviata dall'utente.
+     * @param cognome   stringa inviata dall'utente.
+     * @param indirizzo stringa inviata dall'utente.
+     * @param cardc     stringa inviata dall'utente.
+     * @return oggetto di tipo Ordine contenete l'ordine appena creato.
+     */
+   public Ordine acquistaProdotto(UtenteRegistrato ut,Carrello car,String nome,String cognome,String indirizzo,String cardc){
+<span class="fc" id="L112">        Ordine ord = null;</span>
+<span class="pc bpc" id="L113" title="1 of 10 branches missed.">       if (car != null &amp;&amp; nome.matches(nomeReg) &amp;&amp; cognome.matches(cognomeReg) &amp;&amp; indirizzo.length()&gt;=7 &amp;&amp; cardc.matches(cardcReg)){</span>
+<span class="fc" id="L114">               ord = new Ordine();</span>
+<span class="fc" id="L115">               ord.setNome(nome);</span>
+<span class="fc" id="L116">               ord.setCognome(cognome);</span>
+<span class="fc" id="L117">               ord.setEmailCliente(ut.getEmail());</span>
+<span class="fc" id="L118">               ord.setData();</span>
+<span class="fc" id="L119">               ord.setIndirizzo(indirizzo);</span>
+<span class="fc" id="L120">               Cliente cl = new Cliente();</span>
+<span class="fc" id="L121">               cl.setEmail(ut.getEmail());</span>
+<span class="fc" id="L122">               cl.setCartaDiCredito(cardc);</span>
+<span class="fc" id="L123">               clDB.doSave(cl);</span>
+
+<span class="fc" id="L125">           Iterator var8 = car.getProdottoHash().keySet().iterator();</span>
+
+           Integer key;
+<span class="fc" id="L128">           ArrayList&lt;Integer&gt; badProduct = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">           while(var8.hasNext()) {</span>
+<span class="fc" id="L130">               key = (Integer)var8.next();</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">               if(car.getProdotto(key).getDisponibilita()&gt;=car.getQuant(key)){</span>
+<span class="fc" id="L132">                   ord.setProdottoHash(car.getProdotto(key));</span>
+<span class="fc" id="L133">                   ord.setQuantHash(key, car.getQuant(key));</span>
+<span class="nc" id="L134">               }else{badProduct.add(key);}</span>
+           }
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">           for(int i : badProduct){</span>
+<span class="nc" id="L137">               car.remove(i);</span>
+<span class="nc" id="L138">           }</span>
+<span class="fc" id="L139">           ord.setPrezzo_tot(car.sommaTot());</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">           if(ord.getProdottoHash().size()==0){</span>
+<span class="fc" id="L141">               return ord;</span>
+           }
+<span class="fc" id="L143">           gesDB.doSaveOrdine(ord);</span>
+<span class="fc" id="L144">           var8 = car.getProdottoHash().keySet().iterator();</span>
+
+<span class="fc bfc" id="L146" title="All 2 branches covered.">           while(var8.hasNext()) {</span>
+<span class="fc" id="L147">               key = (Integer)var8.next();</span>
+<span class="fc" id="L148">               Prodotto pr = ord.getProdotto(key);</span>
+<span class="fc" id="L149">               pr.setDisponibilita(pr.getDisponibilita()-ord.getQuant(key));</span>
+<span class="fc" id="L150">               prodDAO.doUpdate(pr);</span>
+<span class="fc" id="L151">           }</span>
+
+<span class="fc" id="L153">           var8 = car.getProdottoHash().keySet().iterator();</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">           while(var8.hasNext()) {</span>
+<span class="fc" id="L155">               key = (Integer)var8.next();</span>
+<span class="fc" id="L156">               carDB.doDelete(ut.getId_Carrello(), key);</span>
+           }
+       }
+<span class="fc" id="L159">       return ord;</span>
+   }
+
+    /** Implementa la funzionalità per visualizzare la lista di ordini.
+     * @param ut oggetto di tipo UtenteRegistrato prelevato dalla sessione passato tramite controller contenente le informazioni dell'utente loggato in quel momento.
+     * @return lista di oggetti di tipo Ordine.
+     */
+   public ArrayList&lt;Ordine&gt; visualizzaOrdine(UtenteRegistrato ut){
+<span class="pc bpc" id="L167" title="1 of 4 branches missed.">       if(ut!=null &amp;&amp; ut.getTipo() == 0){</span>
+<span class="fc" id="L168">           return gesDB.doRetrieveOrdiniByEmailCliente(ut.getEmail());</span>
+       }
+<span class="pc bpc" id="L170" title="2 of 4 branches missed.">       else if(ut!=null &amp;&amp; ut.getTipo() == 1){</span>
+<span class="fc" id="L171">           return gesDB.doRetrieveOrdiniByEmailVenditore(ut.getEmail());</span>
+       }
+<span class="nc" id="L173">       return null;</span>
+   }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
