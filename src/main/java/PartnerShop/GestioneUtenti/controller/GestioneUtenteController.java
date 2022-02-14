@@ -95,7 +95,7 @@ public class GestioneUtenteController extends HttpServlet {
                 } else if ((Amministratore) request.getSession().getAttribute("admin") != null) {
                     String email = request.getParameter("email");
                     gestioneUtenteService.CancellaUtente(email);
-                    dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/visualizzaUtentiRegistrati.jsp"));
+                    dispatcher = request.getRequestDispatcher(("WEB-INF/jsp/index.jsp"));
                     break;
                 }else{
                     throw new MyServletException("Admin e Utente non validi");
