@@ -7,8 +7,8 @@ PartnerShop è una piattaforma dove ogni negozio può iscriversi e vendere i pro
 - Il javadoc del progetto è presente al seguente link - [JavaDoc](https://depalma99.github.io/PartnerShop/javadoc)
 - Il report di JaCoco è presente al seguente link - [Jacoco](https://depalma99.github.io/PartnerShop/jacoco/)
 ## Autori
-- Giuseppe Abbatiello - [Giuseppe2699](https://github.com/Giuseppe2699).
-- Marco Ancona - [gitmarcuzz](https://github.com/gitmarcuzz).
+- Giuseppe Abbatiello - [Giuseppe2699](https://github.com/Giuseppe2699)
+- Marco Ancona - [gitmarcuzz](https://github.com/gitmarcuzz)
 - Marco De Palma - [depalma99](https://github.com/depalma99)
 - El Mehdi Boudad - [mehdinoske](https://github.com/mehdinoske)
 
