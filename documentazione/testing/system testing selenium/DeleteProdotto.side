@@ -1,0 +1,158 @@
+{
+  "id": "2cb62886-e604-4265-857b-672baea0c7f8",
+  "version": "2.0",
+  "name": "DeleteProdotto",
+  "url": "http://localhost:8080/PartnerShop_war/",
+  "tests": [{
+    "id": "ddc77d15-2895-4f1d-9746-30aad6107c8f",
+    "name": "Tutto OK",
+    "commands": [{
+      "id": "df3627e2-7726-4f95-884f-8a4c5121ed50",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/PartnerShop_war/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a35f1111-52c0-478b-b736-dfad424e869f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1393x767",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f31ab3ee-d0cd-4acc-9a29-3261f794662e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=LOGIN",
+      "targets": [
+        ["linkText=LOGIN", "linkText"],
+        ["css=a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'LOGIN')]", "xpath:link"],
+        ["xpath=//a[@onclick='toggleForm()']", "xpath:attributes"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'LOGIN')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b3a17c2-71bb-4130-8ac4-f8f1ade33032",
+      "comment": "",
+      "command": "click",
+      "target": "name=usernameLogin",
+      "targets": [
+        ["name=usernameLogin", "name"],
+        ["css=.inner_form_container_login input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='usernameLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='form_login']/div/form/input", "xpath:idRelative"],
+        ["xpath=//div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "55276793-1723-470a-8fbd-f47e6ef3880f",
+      "comment": "",
+      "command": "type",
+      "target": "name=usernameLogin",
+      "targets": [
+        ["name=usernameLogin", "name"],
+        ["css=.inner_form_container_login input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='usernameLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='form_login']/div/form/input", "xpath:idRelative"],
+        ["xpath=//div/form/input", "xpath:position"]
+      ],
+      "value": "depalma99"
+    }, {
+      "id": "c3fe1ed9-bda7-40cb-9a08-66731f5f03b4",
+      "comment": "",
+      "command": "click",
+      "target": "name=passwordLogin",
+      "targets": [
+        ["name=passwordLogin", "name"],
+        ["css=.inner_form_container_login_submit", "css:finder"],
+        ["xpath=//input[@name='passwordLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='form_login']/div/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0e722ba3-97d0-4435-9c70-7d9b8e473e86",
+      "comment": "",
+      "command": "type",
+      "target": "name=passwordLogin",
+      "targets": [
+        ["name=passwordLogin", "name"],
+        ["css=.inner_form_container_login_submit", "css:finder"],
+        ["xpath=//input[@name='passwordLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='form_login']/div/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "SuperNova56$"
+    }, {
+      "id": "c8b1e79a-acaf-4ad6-97c7-492f2031c900",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "name=passwordLogin",
+      "targets": [
+        ["name=passwordLogin", "name"],
+        ["css=.inner_form_container_login_submit", "css:finder"],
+        ["xpath=//input[@name='passwordLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='form_login']/div/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }, {
+      "id": "9b1a449b-d343-4408-aa30-fd65f004c203",
+      "comment": "",
+      "command": "click",
+      "target": "css=div:nth-child(1) > a",
+      "targets": [
+        ["css=div:nth-child(1) > a", "css:finder"],
+        ["xpath=//a[contains(@href, 'prodotto-visualizza?id=9')]", "xpath:href"],
+        ["xpath=//main/div[2]/div/div/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f908dc31-307e-4a76-b898-8be6af2517fa",
+      "comment": "",
+      "command": "click",
+      "target": "css=form:nth-child(2) > input:nth-child(2)",
+      "targets": [
+        ["css=form:nth-child(2) > input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@value='Rimuovi']", "xpath:attributes"],
+        ["xpath=//form[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2850e1cf-4333-4a84-b3f0-fbc91ea5b1fe",
+      "comment": "",
+      "command": "click",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Prodotto eliminato con successo.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "68043bee-6fa2-41a7-bf12-7b4a130f504f",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Prodotto eliminato con successo.')]", "xpath:innerText"]
+      ],
+      "value": "Prodotto eliminato con successo."
+    }]
+  }],
+  "suites": [{
+    "id": "52b0cd65-6ca0-4e67-a18a-b420460938dc",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/", "http://localhost:8080/PartnerShop_war_exploded/", "localhost:8080/PartnerShop_war_exploded/prodotto-visualizza?id=fujkuy", "localhost:8080/PartnerShop_war_exploded/"],
+  "plugins": []
+}

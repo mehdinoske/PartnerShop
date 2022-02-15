@@ -1,0 +1,996 @@
+{
+  "id": "ec35d4e7-248a-4861-902b-16040c81466a",
+  "version": "2.0",
+  "name": "AggiuntaProdotto",
+  "url": "http://localhost:8080/PartnerShop_war/",
+  "tests": [{
+    "id": "ce91ae86-ef5b-4fd1-85dc-868b6478ec38",
+    "name": "TC_2.1_1 Nome Errato",
+    "commands": [{
+      "id": "490db6bf-9ea9-4e2d-b605-a8dcd9e41ceb",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/PartnerShop_war/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a9b86622-8f37-4e4e-b5af-ad434b418a48",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1393x764",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9dd8e29d-f6f9-4165-8b09-5ab0944d6708",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=LOGIN",
+      "targets": [
+        ["linkText=LOGIN", "linkText"],
+        ["css=a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'LOGIN')]", "xpath:link"],
+        ["xpath=//a[@onclick='toggleForm()']", "xpath:attributes"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'LOGIN')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ed0c80d-5b08-4371-85cc-7a0deea66ad3",
+      "comment": "",
+      "command": "click",
+      "target": "name=usernameLogin",
+      "targets": [
+        ["name=usernameLogin", "name"],
+        ["css=.inner_form_container_login input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='usernameLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='form_login']/div/form/input", "xpath:idRelative"],
+        ["xpath=//div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8b1ac0cc-b189-47ec-9e08-f600120e8e1f",
+      "comment": "",
+      "command": "type",
+      "target": "name=usernameLogin",
+      "targets": [
+        ["name=usernameLogin", "name"],
+        ["css=.inner_form_container_login input:nth-child(1)", "css:finder"],
+        ["xpath=//input[@name='usernameLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='form_login']/div/form/input", "xpath:idRelative"],
+        ["xpath=//div/form/input", "xpath:position"]
+      ],
+      "value": "depalma99"
+    }, {
+      "id": "fd2f6a70-7954-4d56-9e05-35b5096a3d92",
+      "comment": "",
+      "command": "click",
+      "target": "name=passwordLogin",
+      "targets": [
+        ["name=passwordLogin", "name"],
+        ["css=.inner_form_container_login_submit", "css:finder"],
+        ["xpath=//input[@name='passwordLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='form_login']/div/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "edb7e14a-9887-4450-962e-a0788df119c4",
+      "comment": "",
+      "command": "type",
+      "target": "name=passwordLogin",
+      "targets": [
+        ["name=passwordLogin", "name"],
+        ["css=.inner_form_container_login_submit", "css:finder"],
+        ["xpath=//input[@name='passwordLogin']", "xpath:attributes"],
+        ["xpath=//div[@id='form_login']/div/form/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "SuperNova56$"
+    }, {
+      "id": "3be679b0-976e-4134-8eb7-8a10f73c7c83",
+      "comment": "",
+      "command": "click",
+      "target": "css=input:nth-child(5)",
+      "targets": [
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@value='Login']", "xpath:attributes"],
+        ["xpath=//div[@id='form_login']/div/form/input[3]", "xpath:idRelative"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "377407df-69aa-4af7-ba64-f6e4375a2a92",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Aggiungi Prodotti",
+      "targets": [
+        ["linkText=Aggiungi Prodotti", "linkText"],
+        ["css=a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Aggiungi Prodotti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'prodotto-aggiungi-form')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Aggiungi Prodotti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "84a76435-f740-4a14-8c26-9e1354d83464",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6740848b-1ed5-4746-83c8-1b14d1fa43a4",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": "piatto"
+    }, {
+      "id": "ef0d53fc-7534-43be-89eb-6e33b4e42b90",
+      "comment": "",
+      "command": "click",
+      "target": "css=input:nth-child(5)",
+      "targets": [
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@value='Aggiungi Prodotto']", "xpath:attributes"],
+        ["xpath=//div/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1de1d31b-d931-4a40-a6dd-484208066580",
+      "comment": "",
+      "command": "click",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Nome prodotto errato.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6c0d255d-d1e5-4d4a-9707-58907f965435",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Nome prodotto errato.')]", "xpath:innerText"]
+      ],
+      "value": "Nome prodotto errato."
+    }]
+  }, {
+    "id": "572a1b65-14fe-4e2c-9d83-e1574189fe37",
+    "name": "TC_2.1_3 Descrizione Errata",
+    "commands": [{
+      "id": "a264398c-8bcc-47db-b64e-7582289b3abf",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/PartnerShop_war/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ea278fe3-85cd-4a7e-ae5d-154b1a9a75dd",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1393x760",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "458f8c3a-50a8-4981-a0b4-fdd9279b8d69",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Aggiungi Prodotti",
+      "targets": [
+        ["linkText=Aggiungi Prodotti", "linkText"],
+        ["css=a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Aggiungi Prodotti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'prodotto-aggiungi-form')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Aggiungi Prodotti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "656e00b4-3cf2-4d93-87a4-ec9ea8d75acd",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "51eefaf0-f372-474e-94d2-c0de1079d6eb",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": "Piatto"
+    }, {
+      "id": "fcbb3c62-6a8e-4f9c-a572-7358b027e083",
+      "comment": "",
+      "command": "click",
+      "target": "id=descrizione",
+      "targets": [
+        ["id=descrizione", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descrizione", "css:finder"],
+        ["xpath=//input[@id='descrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "86f8a98c-1391-432a-b0ff-613f0d4cb12b",
+      "comment": "",
+      "command": "type",
+      "target": "id=descrizione",
+      "targets": [
+        ["id=descrizione", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descrizione", "css:finder"],
+        ["xpath=//input[@id='descrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[2]", "xpath:position"]
+      ],
+      "value": "piatto per mangiare"
+    }, {
+      "id": "ba0097d3-6d3a-4356-9098-145f31b65687",
+      "comment": "",
+      "command": "type",
+      "target": "id=categoria",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3de1db80-ed69-448d-b12b-bb2c13b0c8cf",
+      "comment": "",
+      "command": "type",
+      "target": "id=categoria",
+      "targets": [],
+      "value": "Cucina"
+    }, {
+      "id": "dce5d0b5-6c95-4268-9660-c765e1d61c03",
+      "comment": "",
+      "command": "click",
+      "target": "css=input:nth-child(5)",
+      "targets": [
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@value='Aggiungi Prodotto']", "xpath:attributes"],
+        ["xpath=//div/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "884cba3f-ba4e-4ee0-a866-720a5eee0ecd",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Descrizione prodotto errata.')]", "xpath:innerText"]
+      ],
+      "value": "Descrizione prodotto errata."
+    }]
+  }, {
+    "id": "129f9f00-5103-41b6-9696-e24e9a6f6d03",
+    "name": "TC_2.1_2 Categoria Errata",
+    "commands": [{
+      "id": "9e9f0856-4741-4b52-a943-aafd7a93cc2b",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/PartnerShop_war/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e8913a49-19d5-48b9-a022-81affc9a1a41",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1393x760",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c25edcef-89e5-40c5-a616-1b858ba8392d",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Aggiungi Prodotti",
+      "targets": [
+        ["linkText=Aggiungi Prodotti", "linkText"],
+        ["css=a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Aggiungi Prodotti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'prodotto-aggiungi-form')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Aggiungi Prodotti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a42c6653-a402-4329-9438-d32d8c161965",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "be5b97ba-e823-471a-8c4f-ecce05dc9ecc",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": "Piatto"
+    }, {
+      "id": "68b0b0a7-d9f0-4432-a621-983d4f4bf92d",
+      "comment": "",
+      "command": "click",
+      "target": "id=descrizione",
+      "targets": [
+        ["id=descrizione", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descrizione", "css:finder"],
+        ["xpath=//input[@id='descrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "119f8db3-eff0-4ab5-91aa-d95341a5546a",
+      "comment": "",
+      "command": "type",
+      "target": "id=descrizione",
+      "targets": [
+        ["id=descrizione", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descrizione", "css:finder"],
+        ["xpath=//input[@id='descrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[2]", "xpath:position"]
+      ],
+      "value": "Piatto per mangiare"
+    }, {
+      "id": "17f955e8-4817-4441-99ee-bdcf2b7ba6ba",
+      "comment": "",
+      "command": "click",
+      "target": "id=categoria",
+      "targets": [
+        ["id=categoria", "id"],
+        ["css=#categoria", "css:finder"],
+        ["xpath=//input[@id='categoria']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d34f7dbd-bc26-449c-b992-0b0f72c89c44",
+      "comment": "",
+      "command": "type",
+      "target": "id=categoria",
+      "targets": [
+        ["id=categoria", "id"],
+        ["css=#categoria", "css:finder"],
+        ["xpath=//input[@id='categoria']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[3]", "xpath:position"]
+      ],
+      "value": "cucina"
+    }, {
+      "id": "18304d6d-206a-411e-8d37-59fd02a6b2f6",
+      "comment": "",
+      "command": "click",
+      "target": "css=input:nth-child(5)",
+      "targets": [
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@value='Aggiungi Prodotto']", "xpath:attributes"],
+        ["xpath=//div/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "36bbdad4-77b5-4219-b10a-588073431808",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Categoria prodotto errata.')]", "xpath:innerText"]
+      ],
+      "value": "Categoria prodotto errata."
+    }]
+  }, {
+    "id": "7678e128-9edc-43b8-9065-774accd88c44",
+    "name": "TC_2.1_4 Prezzo Errato",
+    "commands": [{
+      "id": "6c7fb5b5-38ea-44d7-bb6c-1487620822ec",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/PartnerShop_war/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7e35767a-2f2a-4bb3-b02c-a13a155acaa9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1393x760",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d5cd66fb-0dbf-4bdc-9507-e4fdffd05cd7",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Aggiungi Prodotti",
+      "targets": [
+        ["linkText=Aggiungi Prodotti", "linkText"],
+        ["css=a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Aggiungi Prodotti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'prodotto-aggiungi-form')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Aggiungi Prodotti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5cd7f115-27b2-40f1-8f91-bc2543d489a7",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b71f6cec-8afc-4fb7-b8d5-970d7f310d4d",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": "Piatto"
+    }, {
+      "id": "d8146a6c-74fe-41eb-81ca-ecd39ce8087c",
+      "comment": "",
+      "command": "click",
+      "target": "id=descrizione",
+      "targets": [
+        ["id=descrizione", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descrizione", "css:finder"],
+        ["xpath=//input[@id='descrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e8f84a75-e32c-4009-94ac-7f9546d4cada",
+      "comment": "",
+      "command": "type",
+      "target": "id=descrizione",
+      "targets": [
+        ["id=descrizione", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descrizione", "css:finder"],
+        ["xpath=//input[@id='descrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[2]", "xpath:position"]
+      ],
+      "value": "Piatto per mangiare"
+    }, {
+      "id": "5a2cc31c-97ad-4f62-8375-131deea6da21",
+      "comment": "",
+      "command": "click",
+      "target": "id=categoria",
+      "targets": [
+        ["id=categoria", "id"],
+        ["css=#categoria", "css:finder"],
+        ["xpath=//input[@id='categoria']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "355943ba-0de9-4cb1-995b-6b059e0b38bc",
+      "comment": "",
+      "command": "type",
+      "target": "id=categoria",
+      "targets": [
+        ["id=categoria", "id"],
+        ["css=#categoria", "css:finder"],
+        ["xpath=//input[@id='categoria']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[3]", "xpath:position"]
+      ],
+      "value": "Cucina"
+    }, {
+      "id": "2b73e4f1-3153-451f-803e-38c70db33087",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzo_Cent",
+      "targets": [
+        ["id=prezzo_Cent", "id"],
+        ["name=prezzo_Cent", "name"],
+        ["css=#prezzo_Cent", "css:finder"],
+        ["xpath=//input[@id='prezzo_Cent']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "057a287c-405b-427f-8b1f-8c86c386c2e3",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzo_Cent",
+      "targets": [
+        ["id=prezzo_Cent", "id"],
+        ["name=prezzo_Cent", "name"],
+        ["css=#prezzo_Cent", "css:finder"],
+        ["xpath=//input[@id='prezzo_Cent']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": "23.6656.6v"
+    }, {
+      "id": "42771460-ea23-4e4a-826b-bd088bf9c927",
+      "comment": "",
+      "command": "click",
+      "target": "css=input:nth-child(5)",
+      "targets": [
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@value='Aggiungi Prodotto']", "xpath:attributes"],
+        ["xpath=//div/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ed6046c8-0dee-4d02-8a88-67d16269d570",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Prezzo prodotto errato.')]", "xpath:innerText"]
+      ],
+      "value": "Prezzo prodotto errato."
+    }]
+  }, {
+    "id": "33aff8fe-cbfe-4599-93d5-c88c3b44daf3",
+    "name": "TC_2.1_5 Disponibilità Errata",
+    "commands": [{
+      "id": "92c14338-e388-40af-b420-5447a3f32733",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/PartnerShop_war/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "802abe9e-3c3c-44fb-b473-bfa97f2424a5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1393x760",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2b8ae6ae-6fc1-4cbe-97e3-2a3e614d9a70",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Aggiungi Prodotti",
+      "targets": [
+        ["linkText=Aggiungi Prodotti", "linkText"],
+        ["css=a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Aggiungi Prodotti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'prodotto-aggiungi-form')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Aggiungi Prodotti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2ca6698-d17f-44a2-9173-e897cc583886",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1ea0f6c5-dbd5-4147-93bf-9a3aaf599a07",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": "Piatto"
+    }, {
+      "id": "c3556aec-c400-498f-8545-8b3af9e2fa2b",
+      "comment": "",
+      "command": "click",
+      "target": "id=descrizione",
+      "targets": [
+        ["id=descrizione", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descrizione", "css:finder"],
+        ["xpath=//input[@id='descrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad73be21-5630-4948-9ac4-096430d456e0",
+      "comment": "",
+      "command": "type",
+      "target": "id=descrizione",
+      "targets": [
+        ["id=descrizione", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descrizione", "css:finder"],
+        ["xpath=//input[@id='descrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[2]", "xpath:position"]
+      ],
+      "value": "Piatto per mangiare"
+    }, {
+      "id": "78aade93-5758-4c5c-a6e2-c99db6e935c7",
+      "comment": "",
+      "command": "click",
+      "target": "id=categoria",
+      "targets": [
+        ["id=categoria", "id"],
+        ["css=#categoria", "css:finder"],
+        ["xpath=//input[@id='categoria']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f4d22820-88a3-44bd-9d40-af63dafe2166",
+      "comment": "",
+      "command": "type",
+      "target": "id=categoria",
+      "targets": [
+        ["id=categoria", "id"],
+        ["css=#categoria", "css:finder"],
+        ["xpath=//input[@id='categoria']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[3]", "xpath:position"]
+      ],
+      "value": "Cucina"
+    }, {
+      "id": "7e80c735-f497-4ee8-a2c0-6a201dca93f4",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzo_Cent",
+      "targets": [
+        ["id=prezzo_Cent", "id"],
+        ["name=prezzo_Cent", "name"],
+        ["css=#prezzo_Cent", "css:finder"],
+        ["xpath=//input[@id='prezzo_Cent']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8d00a395-5ca4-49af-a2cb-5fd8da316dc6",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzo_Cent",
+      "targets": [
+        ["id=prezzo_Cent", "id"],
+        ["name=prezzo_Cent", "name"],
+        ["css=#prezzo_Cent", "css:finder"],
+        ["xpath=//input[@id='prezzo_Cent']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": "500"
+    }, {
+      "id": "b5f9fb98-4fe1-4b02-aea0-b23a40af91f3",
+      "comment": "",
+      "command": "click",
+      "target": "id=disponibilita",
+      "targets": [
+        ["id=disponibilita", "id"],
+        ["name=disponibilita", "name"],
+        ["css=#disponibilita", "css:finder"],
+        ["xpath=//input[@id='disponibilita']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[5]", "xpath:idRelative"],
+        ["xpath=//input[5]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b2a506c-8c37-4240-972e-50c0f465e191",
+      "comment": "",
+      "command": "type",
+      "target": "id=disponibilita",
+      "targets": [
+        ["id=disponibilita", "id"],
+        ["name=disponibilita", "name"],
+        ["css=#disponibilita", "css:finder"],
+        ["xpath=//input[@id='disponibilita']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[5]", "xpath:idRelative"],
+        ["xpath=//input[5]", "xpath:position"]
+      ],
+      "value": "12,.77"
+    }, {
+      "id": "a4b308e6-ef9a-405b-bf0e-07f33122593e",
+      "comment": "",
+      "command": "click",
+      "target": "css=input:nth-child(5)",
+      "targets": [
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@value='Aggiungi Prodotto']", "xpath:attributes"],
+        ["xpath=//div/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7c94695c-92dd-4628-884f-2e5ceadfd329",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Disponibilita prodotto errata.')]", "xpath:innerText"]
+      ],
+      "value": "Disponibilita prodotto errata."
+    }]
+  }, {
+    "id": "384b7cac-cdc5-4171-a4e0-218d198d1e18",
+    "name": "TC_2.1_6 Tutto OK",
+    "commands": [{
+      "id": "0b0956cd-0934-4c31-9880-54f5342ad04e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/PartnerShop_war/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9a924589-4024-4aa2-9365-2fc8d4852cab",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1393x760",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a65eebdc-261d-49c7-936c-9ae7278fb6fb",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Aggiungi Prodotti",
+      "targets": [
+        ["linkText=Aggiungi Prodotti", "linkText"],
+        ["css=a:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Aggiungi Prodotti')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'prodotto-aggiungi-form')]", "xpath:href"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Aggiungi Prodotti')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "aaea5472-e709-4cd1-b0df-b54399701a22",
+      "comment": "",
+      "command": "click",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ec35edf8-61ef-46d5-a5b7-ada243a6876a",
+      "comment": "",
+      "command": "type",
+      "target": "id=nome",
+      "targets": [
+        ["id=nome", "id"],
+        ["name=nome", "name"],
+        ["css=#nome", "css:finder"],
+        ["xpath=//input[@id='nome']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input", "xpath:position"]
+      ],
+      "value": "Piatto"
+    }, {
+      "id": "48b45f3c-dd07-4e9e-843b-d3a078efd120",
+      "comment": "",
+      "command": "click",
+      "target": "id=descrizione",
+      "targets": [
+        ["id=descrizione", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descrizione", "css:finder"],
+        ["xpath=//input[@id='descrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "53688fd9-125d-45ba-82c8-bb51a33e6d8b",
+      "comment": "",
+      "command": "type",
+      "target": "id=descrizione",
+      "targets": [
+        ["id=descrizione", "id"],
+        ["name=descrizione", "name"],
+        ["css=#descrizione", "css:finder"],
+        ["xpath=//input[@id='descrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[2]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[2]", "xpath:position"]
+      ],
+      "value": "Piatto per mangiare"
+    }, {
+      "id": "f8ebbe17-2a47-442b-8f4f-5e769baf6a19",
+      "comment": "",
+      "command": "click",
+      "target": "id=categoria",
+      "targets": [
+        ["id=categoria", "id"],
+        ["css=#categoria", "css:finder"],
+        ["xpath=//input[@id='categoria']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "437e004c-d437-43e8-aac6-6206f824b353",
+      "comment": "",
+      "command": "type",
+      "target": "id=categoria",
+      "targets": [
+        ["id=categoria", "id"],
+        ["css=#categoria", "css:finder"],
+        ["xpath=//input[@id='categoria']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[3]", "xpath:idRelative"],
+        ["xpath=//main/div/div/form/input[3]", "xpath:position"]
+      ],
+      "value": "Cucina"
+    }, {
+      "id": "fdb42913-d29d-40eb-aace-859c94581a45",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzo_Cent",
+      "targets": [
+        ["id=prezzo_Cent", "id"],
+        ["name=prezzo_Cent", "name"],
+        ["css=#prezzo_Cent", "css:finder"],
+        ["xpath=//input[@id='prezzo_Cent']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "04ec124b-a746-48fb-8180-d8516cd637cf",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzo_Cent",
+      "targets": [
+        ["id=prezzo_Cent", "id"],
+        ["name=prezzo_Cent", "name"],
+        ["css=#prezzo_Cent", "css:finder"],
+        ["xpath=//input[@id='prezzo_Cent']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[4]", "xpath:idRelative"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": "5"
+    }, {
+      "id": "22acde43-60cc-4dcb-a577-683b1766b257",
+      "comment": "",
+      "command": "click",
+      "target": "id=disponibilita",
+      "targets": [
+        ["id=disponibilita", "id"],
+        ["name=disponibilita", "name"],
+        ["css=#disponibilita", "css:finder"],
+        ["xpath=//input[@id='disponibilita']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[5]", "xpath:idRelative"],
+        ["xpath=//input[5]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bf2ed609-1d70-43a5-9905-011b0788c81d",
+      "comment": "",
+      "command": "type",
+      "target": "id=disponibilita",
+      "targets": [
+        ["id=disponibilita", "id"],
+        ["name=disponibilita", "name"],
+        ["css=#disponibilita", "css:finder"],
+        ["xpath=//input[@id='disponibilita']", "xpath:attributes"],
+        ["xpath=//form[@id='form']/input[5]", "xpath:idRelative"],
+        ["xpath=//input[5]", "xpath:position"]
+      ],
+      "value": "200"
+    }, {
+      "id": "c217a884-8bd4-407a-a3e0-c3c5129c1dc6",
+      "comment": "",
+      "command": "click",
+      "target": "css=input:nth-child(5)",
+      "targets": [
+        ["css=input:nth-child(5)", "css:finder"],
+        ["xpath=//input[@value='Aggiungi Prodotto']", "xpath:attributes"],
+        ["xpath=//div/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d04312cf-bc20-4961-a698-7712977df6d3",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=h1",
+      "targets": [
+        ["css=h1", "css:finder"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Prodotto aggiunto con successo.')]", "xpath:innerText"]
+      ],
+      "value": "Prodotto aggiunto con successo."
+    }]
+  }],
+  "suites": [{
+    "id": "b432a08d-3aaa-4dce-96ee-004aa36f4962",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/PartnerShop_war_exploded/"],
+  "plugins": []
+}
